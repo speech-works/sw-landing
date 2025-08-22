@@ -1,4 +1,4 @@
-import { SW_CALL_PHRASE, SW_SLOGAN } from "../constants";
+import { SW_CALL_PHRASE, SW_SLOGAN, SW_TARGET_AUDIENCE } from "../constants";
 import heroImg from "../../../public/assets/hero_img.png";
 import Image from "next/image";
 
@@ -18,6 +18,9 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 text-white px-6">
+        <h3 className="text-2xl md:text-3xl font-bold mb-5 text-orange-400">
+          {SW_TARGET_AUDIENCE}
+        </h3>
         <h1 className="text-5xl md:text-6xl font-bold">{SW_CALL_PHRASE}</h1>
         <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto">{SW_SLOGAN}</p>
         <div className="mt-6 flex gap-4 justify-center">
