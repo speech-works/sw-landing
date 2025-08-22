@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import mayankImg from "../../../public/mayank_avatar.jpeg";
+import mayankImg from "../../../public/assets/mayank_avatar.jpeg";
 import alexImg from "../../../public/assets/alex_avatar.jpg";
 import alexaImg from "../../../public/assets/alexa_avatar.jpg";
 import josephImg from "../../../public/assets/joseph_avatar.jpg";
