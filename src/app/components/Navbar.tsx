@@ -1,5 +1,5 @@
 import { SW_NAME } from "../constants";
-import logo from "../assets/logo.png";
+import logo from "../../../public/assets/logo.png";
 import Image from "next/image";
 export default function Navbar() {
   return (

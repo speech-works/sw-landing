@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import mayankImg from "../assets/mayank_avatar.jpeg";
-import alexImg from "../assets/alex_avatar.jpg";
-import alexaImg from "../assets/alexa_avatar.jpg";
-import josephImg from "../assets/joseph_avatar.jpg";
-import nicolasImg from "../assets/nicolas_avatar.jpg";
-import alexanderImg from "../assets/alexander_avatar.jpg";
+import mayankImg from "../../../public/mayank_avatar.jpeg";
+import alexImg from "../../../public/assets/alex_avatar.jpg";
+import alexaImg from "../../../public/assets/alexa_avatar.jpg";
+import josephImg from "../../../public/assets/joseph_avatar.jpg";
+import nicolasImg from "../../../public/assets/nicolas_avatar.jpg";
+import alexanderImg from "../../../public/assets/alexander_avatar.jpg";
 
 const testimonials = [
   {

@@ -1,8 +1,7 @@
 import Image from "next/image";
-import communityImg from "../assets/community_img.png";
-import therapyImg from "../assets/therapy_img.png";
-import resourcesImg from "../assets/resources_img.png";
-
+import communityImg from "../../../public/assets/community_img.png";
+import therapyImg from "../../../public/assets/therapy_img.png";
+import resourcesImg from "../../../public/assets/resources_img.png";
 const features = [
   {
     title: "Join Our Community",
