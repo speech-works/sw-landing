@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
 import Navbar from "./components/Navbar";
 import Pricing from "./components/Pricing";
+import TestimonialStack from "./components/Testimonials";
 import { SW_NAME, SW_SLOGAN } from "./constants";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <HowItWorks />
       <Pricing />
       <Faq />
+      <TestimonialStack />
       <Cta />
     </main>
   );

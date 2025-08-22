@@ -36,7 +36,7 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a href="#community" className="hover:text-(--brand-brown)">
+            <a href="#testimonials" className="hover:text-(--brand-brown)">
               Community
             </a>
           </li>
