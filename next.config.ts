@@ -5,4 +5,4 @@ const nextConfig: NextConfig = {
   basePath: "/sw-landing",
 };
 
-export default nextConfig;
+module.exports = nextConfig;
