@@ -13,6 +13,7 @@ export default function Navbar() {
             fill
             className="object-contain"
             priority
+            unoptimized
           />
         </div>
         {/* End of corrected code */}

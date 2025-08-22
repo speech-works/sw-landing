@@ -76,6 +76,7 @@ export default function TestimonialStack() {
                   fill
                   className="object-cover rounded-full"
                   priority
+                  unoptimized
                 />
               </div>
 

@@ -40,6 +40,7 @@ export default function HowItWorks() {
                   fill
                   className="object-cover"
                   priority
+                  unoptimized
                 />
               </div>
               <h3 className="text-xl font-semibold text-(--brand-brown)">
