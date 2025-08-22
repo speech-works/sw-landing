@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # This line grants write permission to the workflow
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
