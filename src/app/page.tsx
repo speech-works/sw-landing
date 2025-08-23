@@ -5,7 +5,28 @@ import HowItWorks from "./components/HowItWorks";
 import Navbar from "./components/Navbar";
 import Pricing from "./components/Pricing";
 import TestimonialStack from "./components/Testimonials";
-import { SW_NAME, SW_SLOGAN } from "./constants";
+
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Speechworks",
+  description: "Your voice can change how the world listens.",
+  openGraph: {
+    title: "Speechworks",
+    description: "Your voice can change how the world listens.",
+    url: "https://speechworks.in",
+    siteName: "Speechworks",
+    images: [
+      {
+        url: "/assets/logo.png",
+        height: 630,
+        alt: "Speechworks Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+};
 
 export default function Home() {
   return (
