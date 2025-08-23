@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     siteName: "Speechworks",
     images: [
       {
-        url: "/assets/logo.png",
+        url: "/assets/logo_big.png",
         height: 630,
         alt: "Speechworks Logo",
       },
