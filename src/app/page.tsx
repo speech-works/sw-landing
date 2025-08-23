@@ -11,6 +11,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Speechworks",
   description: "Your voice can change how the world listens.",
+  metadataBase: new URL("https://speechworks.in"),
   openGraph: {
     title: "Speechworks",
     description: "Your voice can change how the world listens.",
