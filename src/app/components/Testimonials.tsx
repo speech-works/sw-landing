@@ -42,11 +42,13 @@ const testimonials = [
 ];
 
 export default function TestimonialStack() {
-  const [active, setActive] = useState<number | null>(null); // For desktop hover
-  const [activeMobile, setActiveMobile] = useState<number | null>(null); // For mobile click
+  const [active, setActive] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  const visibleTestimonials = testimonials.slice(0, 5); // show 5 only
+  // We now show all testimonials on the mobile grid view
+  const allTestimonials = testimonials;
+  // And a limited number on the desktop stack view
+  const visibleTestimonialsForStack = testimonials.slice(0, 5);
   const hasMore = testimonials.length > 5;
 
   return (
@@ -55,9 +57,9 @@ export default function TestimonialStack() {
         What People Say
       </h2>
 
-      {/* Desktop View */}
+      {/* Desktop Stack View (md and up) */}
       <div className="hidden md:flex items-center justify-center gap-[-40px] relative">
-        {visibleTestimonials.map((t, idx) => {
+        {visibleTestimonialsForStack.map((t, idx) => {
           const isActive = active === idx;
           return (
             <div
@@ -104,22 +106,17 @@ export default function TestimonialStack() {
         )}
       </div>
 
-      {/* Mobile View */}
-      <div className="md:hidden flex flex-col items-center space-y-8">
-        {visibleTestimonials.map((t, idx) => {
-          const isActive = activeMobile === idx;
+      {/* Mobile/Tablet Grid View (below md) */}
+      <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-8">
+        {allTestimonials.map((t, idx) => {
+          const isActive = active === idx;
           return (
             <div
               key={idx}
-              onClick={() => setActiveMobile(isActive ? null : idx)}
-              className="w-full flex flex-col items-center text-center cursor-pointer p-4 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-100"
+              onClick={() => setActive(isActive ? null : idx)}
+              className="bg-gray-800 p-6 rounded-2xl text-center cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105"
             >
-              {/* Avatar circle with rotation animation */}
-              <div
-                className={`w-32 h-32 relative rounded-full overflow-hidden shadow-lg border-4 border-white transition-transform duration-500 ease-in-out ${
-                  isActive ? "rotate-12" : "rotate-0"
-                }`}
-              >
+              <div className="relative w-24 h-24 mx-auto rounded-full overflow-hidden shadow-lg border-4 border-white">
                 <Image
                   src={t.avatar}
                   alt={t.name}
@@ -129,9 +126,7 @@ export default function TestimonialStack() {
                   unoptimized
                 />
               </div>
-
-              {/* Text block with slide-down animation */}
-              <div className="mt-4 w-full px-4">
+              <div className="mt-4">
                 <p className="font-semibold text-white">{t.name}</p>
                 <div
                   className={`text-gray-300 text-sm mt-2 transition-all duration-500 ease-in-out overflow-hidden ${
@@ -145,18 +140,18 @@ export default function TestimonialStack() {
           );
         })}
 
-        {/* See More button for mobile */}
+        {/* Ellipsis for extra avatars */}
         {hasMore && (
           <button
             onClick={() => setShowModal(true)}
-            className="mt-4 px-6 py-3 rounded-lg bg-gray-200 text-gray-700 font-bold hover:bg-gray-300 transition-all duration-300"
+            className="col-span-1 sm:col-span-2 mt-4 px-6 py-3 rounded-lg bg-gray-200 text-gray-700 font-bold hover:bg-gray-300 transition-all duration-300 mx-auto"
           >
             See More Reviews
           </button>
         )}
       </div>
 
-      {/* Modal */}
+      {/* Modal is a separate, universally available component */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
           <div className="bg-white rounded-2xl shadow-lg p-8 w-80 text-center relative">
