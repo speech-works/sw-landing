@@ -42,7 +42,8 @@ const testimonials = [
 ];
 
 export default function TestimonialStack() {
-  const [active, setActive] = useState<number | null>(null);
+  const [active, setActive] = useState<number | null>(null); // For desktop hover
+  const [activeMobile, setActiveMobile] = useState<number | null>(null); // For mobile click
   const [showModal, setShowModal] = useState(false);
 
   const visibleTestimonials = testimonials.slice(0, 5); // show 5 only
@@ -54,7 +55,8 @@ export default function TestimonialStack() {
         What People Say
       </h2>
 
-      <div className="flex items-center justify-center gap-[-40px] relative">
+      {/* Desktop View */}
+      <div className="hidden md:flex items-center justify-center gap-[-40px] relative">
         {visibleTestimonials.map((t, idx) => {
           const isActive = active === idx;
           return (
@@ -102,6 +104,58 @@ export default function TestimonialStack() {
         )}
       </div>
 
+      {/* Mobile View */}
+      <div className="md:hidden flex flex-col items-center space-y-8">
+        {visibleTestimonials.map((t, idx) => {
+          const isActive = activeMobile === idx;
+          return (
+            <div
+              key={idx}
+              onClick={() => setActiveMobile(isActive ? null : idx)}
+              className="w-full flex flex-col items-center text-center cursor-pointer p-4 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-100"
+            >
+              {/* Avatar circle with rotation animation */}
+              <div
+                className={`w-32 h-32 relative rounded-full overflow-hidden shadow-lg border-4 border-white transition-transform duration-500 ease-in-out ${
+                  isActive ? "rotate-12" : "rotate-0"
+                }`}
+              >
+                <Image
+                  src={t.avatar}
+                  alt={t.name}
+                  fill
+                  className="object-cover rounded-full"
+                  priority
+                  unoptimized
+                />
+              </div>
+
+              {/* Text block with slide-down animation */}
+              <div className="mt-4 w-full px-4">
+                <p className="font-semibold text-white">{t.name}</p>
+                <div
+                  className={`text-gray-300 text-sm mt-2 transition-all duration-500 ease-in-out overflow-hidden ${
+                    isActive ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <p>“{t.text}”</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* See More button for mobile */}
+        {hasMore && (
+          <button
+            onClick={() => setShowModal(true)}
+            className="mt-4 px-6 py-3 rounded-lg bg-gray-200 text-gray-700 font-bold hover:bg-gray-300 transition-all duration-300"
+          >
+            See More Reviews
+          </button>
+        )}
+      </div>
+
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
@@ -112,7 +166,7 @@ export default function TestimonialStack() {
             >
               ✕
             </button>
-            <h3 className="text-lg font-semibold text-(--brand-brown) mb-4">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
               See More Reviews
             </h3>
             <p className="text-sm text-gray-600 mb-6">

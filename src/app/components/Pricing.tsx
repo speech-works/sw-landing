@@ -55,7 +55,7 @@ export default function Pricing() {
         </h2>
 
         {/* Carousel wrapper */}
-        <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory p-8">
+        <div className="flex flex-col md:flex-row md:grid md:grid-cols-3 gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory p-8">
           {pricingPlans.map((plan, idx) => {
             const isHovered = hoverIndex === idx;
 
