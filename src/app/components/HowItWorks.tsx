@@ -58,7 +58,13 @@ export default function HowItWorks() {
                     src={f.icon}
                     alt={`${f.title} illustration`}
                     fill
-                    className="object-cover"
+                    className={
+                      f.title.includes("Community")
+                        ? "object-fill object-center"
+                        : f.title.includes("Resources")
+                        ? "object-cover object-right"
+                        : "object-cover object-left"
+                    }
                   />
                 </div>
 
