@@ -1,5 +1,5 @@
 import { SW_CALL_PHRASE, SW_SLOGAN, SW_TARGET_AUDIENCE } from "../constants";
-import heroImg from "../../../public/assets/hero_img.png";
+import heroImg from "../../../public/assets/hero_img4.png";
 import Image from "next/image";
 
 export default function Hero() {
