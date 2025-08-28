@@ -11,7 +11,7 @@ import alexanderImg from "../../../public/assets/alexander_avatar.jpg";
 const testimonials = [
   {
     name: "Mayank, Founder",
-    text: "I created SpeechWorks to empower people who stutter with tools, community, and therapy access that I wish I had growing up.",
+    text: "I didn't stutter, but I watched remarkable people dim their light because they did. That broke something in me. SpeechWorks is my promise that no brilliant mind will ever have to choose between speaking up and feeling safe.",
     avatar: mayankImg,
   },
   {
