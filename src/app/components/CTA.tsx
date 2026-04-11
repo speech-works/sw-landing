@@ -89,14 +89,15 @@ export default function CTA() {
                   .reveal.active .rebel-fist-animator {
                       transform: translateY(0px) scale(1);
                       opacity: 0.25;
+                      transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), color 1s ease;
                   }
                   
                   /* Interaction on button affects fist */
                   .group\\/cta.btn-hovered .rebel-fist-animator {
-                      transform: translateY(-30px) scale(1.1) rotate(4deg);
+                      transform: translateY(-20px) scale(1.05) rotate(2deg);
                       opacity: 0.6;
                       color: #D9692E; /* Deepens color slightly on hover */
-                      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, color 0.4s ease;
+                      transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), color 1s ease;
                   }
 
                   /* THE DUAL-REALITY LENS BUTTON */
@@ -105,7 +106,7 @@ export default function CTA() {
                       background: linear-gradient(135deg, #FF955E 0%, #D9692E 100%);
                       border: 1px solid rgba(255, 255, 255, 0.4);
                       box-shadow: 0 15px 35px -5px rgba(242, 128, 68, 0.4), inset 0 2px 4px rgba(255,255,255,0.4);
-                      cursor: crosshair;
+                      cursor: pointer;
                       will-change: transform;
                       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
                       overflow: visible; 
