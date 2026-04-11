@@ -177,7 +177,7 @@ export default function CTA() {
         />
 
         {/*  The Rising Fist Watermark (Z-index 10 to stay behind text Z-20)  */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[180%] sm:w-[140%] md:w-[100%] lg:w-[80%] h-[130%] z-10 pointer-events-none rebel-fist-wrapper flex items-end justify-center">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[150%] sm:w-[120%] md:w-[90%] lg:w-[70%] h-[120%] z-10 pointer-events-none rebel-fist-wrapper flex items-end justify-center">
           <div
             className="w-full h-full rebel-fist-animator flex justify-center items-end text-brand"
             style={{ filter: "drop-shadow(0 25px 50px rgba(0,0,0,0.15))" }}
