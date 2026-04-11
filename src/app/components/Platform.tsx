@@ -132,55 +132,73 @@ export default function Platform() {
             onMouseMove={handleMouseMove}
             style={{ '--mouse-x': '50%', '--mouse-y': '50%', '--mouse-x-raw': '500', '--mouse-y-raw': '500' } as React.CSSProperties}
         >
-            {/* --- Awwwards Experimental X-Ray Hover Core --- */}
+            {/* --- Awwwards Experimental X-Ray Hover Core (Titanium Wireframe Theme) --- */}
             <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-white">
                 
-                {/* Default Static Subtle Layer (visible when not hovering) */}
-                <div className="absolute inset-0 opacity-100 transition-opacity duration-1000 group-hover:opacity-30">
+                {/* Default Static Subtle Layer */}
+                <div className="absolute inset-0 opacity-100 transition-opacity duration-1000 group-hover:opacity-10">
                     <div className="absolute top-[20%] left-[10%] w-[40%] h-[60%] bg-gradient-to-tr from-brand/5 to-transparent blur-[120px]" />
                 </div>
 
                 {/* The Interactive Flashlight Mask Layer */}
                 <div 
-                    className="absolute inset-0 transition-opacity duration-[1500ms] opacity-0 group-hover:opacity-100"
+                    className="absolute inset-0 transition-opacity duration-[1000ms] opacity-0 group-hover:opacity-100"
                     style={{
-                        WebkitMaskImage: `radial-gradient(circle 450px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 100%)`,
-                        maskImage: `radial-gradient(circle 450px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 100%)`
+                        WebkitMaskImage: `radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 100%)`,
+                        maskImage: `radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 100%)`
                     }}
                 >
-                    {/* The burning holographic core directly beneath the cursor */}
+                    {/* The soft structural core beneath the cursor */}
                     <div 
-                        className="absolute w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-brand/40 mix-blend-multiply via-orange-400/20 to-transparent blur-[60px] rounded-full transition-transform duration-75 ease-out"
+                        className="absolute w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-zinc-100 via-transparent to-zinc-50 blur-[50px] rounded-full transition-transform duration-75 ease-out"
                         style={{ left: 'var(--mouse-x)', top: 'var(--mouse-y)' }}
                     />
+                    {/* Smoothly transitioning dynamic accent matching active tab */}
+                    {['#F28044', '#a855f7', '#10b981', '#D9692E'].map((color, idx) => (
+                        <div 
+                            key={`accent-${idx}`}
+                            className={`absolute w-[250px] h-[250px] -translate-x-1/2 -translate-y-1/2 blur-[40px] rounded-full transition-all duration-1000 ease-in-out mix-blend-multiply ${activeIndex === idx ? 'opacity-100' : 'opacity-0'}`}
+                            style={{ 
+                                left: 'var(--mouse-x)', top: 'var(--mouse-y)',
+                                backgroundColor: `${color}1A` // ~10% opacity
+                            }}
+                        />
+                    ))}
 
-                    {/* Dense Technical Blueprint Grids */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(242,128,68,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(242,128,68,0.1)_1px,transparent_1px)] bg-[size:16px_16px]" />
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(242,128,68,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(242,128,68,0.2)_1px,transparent_1px)] bg-[size:80px_80px]" />
+                    {/* Surgical Engineering blueprint grid */}
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(161,161,170,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(161,161,170,0.1)_1px,transparent_1px)] bg-[size:24px_24px]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(161,161,170,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(161,161,170,0.2)_1px,transparent_1px)] bg-[size:120px_120px]" />
                     
-                    {/* Optical Targeting Rings tracing cursor */}
+                    {/* Optical Targeting Rings tracking cursor */}
                     <div 
                         className="absolute w-[2px] h-[2px] -translate-x-1/2 -translate-y-1/2 transition-transform duration-100 ease-out"
                         style={{ left: 'var(--mouse-x)', top: 'var(--mouse-y)' }}
                     >
-                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[160px] h-[160px] border border-brand/50 rounded-full border-dashed animate-spin" style={{ animationDuration: '20s' }} />
-                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] border border-brand/30 rounded-full animate-spin border-dashed" style={{ animationDuration: '30s', animationDirection: 'reverse' }} />
-                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[1px] bg-brand/30" />
-                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[1px] h-[600px] bg-brand/30" />
-                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[6px] h-[6px] bg-brand rounded-full shadow-[0_0_10px_2px_rgba(242,128,68,0.8)]" />
+                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[180px] h-[180px] border border-zinc-300 rounded-full animate-spin" style={{ animationDuration: '30s' }} />
+                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] border border-zinc-200 rounded-full border-dashed animate-spin" style={{ animationDuration: '40s', animationDirection: 'reverse' }} />
+                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1px] bg-gradient-to-r from-transparent via-zinc-300/50 to-transparent" />
+                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[1px] h-[1000px] bg-gradient-to-b from-transparent via-zinc-300/50 to-transparent" />
+                        {/* Smoothly transitioning dynamic center dot */}
+                        {['#F28044', '#a855f7', '#10b981', '#D9692E'].map((color, idx) => (
+                            <div 
+                                key={`dot-${idx}`}
+                                className={`absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full transition-all duration-1000 ease-in-out ${activeIndex === idx ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}
+                                style={{ backgroundColor: color, boxShadow: `0 0 15px 3px ${color}33` }}
+                            />
+                        ))}
                     </div>
 
-                    {/* Highly Kinetic Abstract Typography locked to parallax math */}
-                    <div className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none mix-blend-multiply opacity-20 text-brand overflow-hidden">
+                    {/* Architectural Abstract Typography */}
+                    <div className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none opacity-[0.03] text-black overflow-hidden font-mono">
                          <div 
                               className="text-[8rem] md:text-[14rem] font-sans font-black tracking-[-0.05em] leading-none whitespace-nowrap transition-transform duration-75 ease-out" 
-                              style={{ transform: 'translateX(calc((var(--mouse-x-raw) - 500) * -0.15px))' }}
+                              style={{ transform: 'translateX(calc((var(--mouse-x-raw) - 500) * -0.05px))' }}
                           >
                               CLINICAL///ARC
                          </div>
                          <div 
                               className="text-[6rem] md:text-[10rem] font-sans font-black tracking-tighter leading-none whitespace-nowrap transition-transform duration-75 ease-out" 
-                              style={{ transform: 'translateX(calc((var(--mouse-x-raw) - 500) * 0.25px))' }}
+                              style={{ transform: 'translateX(calc((var(--mouse-x-raw) - 500) * 0.08px))' }}
                           >
                               001.ADVERSARIAL
                          </div>
