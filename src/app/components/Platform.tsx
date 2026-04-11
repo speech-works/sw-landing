@@ -20,7 +20,7 @@ const features = [
         tagBorder: 'border-orange-100',
         activeBar: 'bg-brand',
         mockUI: (
-            <div className="absolute -right-4 md:-right-8 -bottom-6 w-[180px] md:w-[220px] p-8 rounded-2xl bg-white/40 backdrop-blur-md border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.06)] opacity-0 translate-y-10 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-y-0 transition-all duration-1000 delay-300 antialiased overflow-visible">
+            <div className="absolute -right-2 md:-right-4 -bottom-4 w-[140px] md:w-[170px] p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/20 shadow-[0_15px_30px_rgba(0,0,0,0.06)] opacity-0 translate-y-10 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-y-0 transition-all duration-1000 delay-300 antialiased overflow-visible">
                 <div className="relative w-full aspect-square flex items-center justify-center">
                     <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible relative z-10">
                         {/* Subdued Minimalist Grid */}
@@ -35,54 +35,44 @@ const features = [
                             />
                         ))}
                         
-                        {/* Pizza Slices: Solid Minimalist Sectors */}
+                        {/* Pizza Slices with Integrated Labels */}
                         {[
-                            { r: 42, start: -90, end: -18, label: 'Mastery', val: '88.0', color: 'fill-brand' },
-                            { r: 34, start: -18, end: 54, label: 'Ease', val: '72.4', color: 'fill-brand/70' },
-                            { r: 40, start: 54, end: 126, label: 'Courage', val: '94.8', color: 'fill-brand' },
-                            { r: 30, start: 126, end: 198, label: 'Confidence', val: '65.2', color: 'fill-brand/50' },
-                            { r: 37, start: 198, end: 270, label: 'Social', val: '80.1', color: 'fill-brand/80' }
+                            { r: 44, start: -90, end: -18, label: 'MASTERY', color: 'fill-brand' },
+                            { r: 36, start: -18, end: 54, label: 'EASE', color: 'fill-brand/70' },
+                            { r: 42, start: 54, end: 126, label: 'COURAGE', color: 'fill-brand' },
+                            { r: 32, start: 126, end: 198, label: 'CONFIDENCE', color: 'fill-brand/55' },
+                            { r: 39, start: 198, end: 270, label: 'SOCIAL', color: 'fill-brand/80' }
                         ].map((slice, i) => {
                             const x1 = 50 + slice.r * Math.cos(slice.start * Math.PI / 180);
                             const y1 = 50 + slice.r * Math.sin(slice.start * Math.PI / 180);
                             const x2 = 50 + slice.r * Math.cos(slice.end * Math.PI / 180);
                             const y2 = 50 + slice.r * Math.sin(slice.end * Math.PI / 180);
+                            
+                            // Calculate label position (centroid-ish)
+                            const midAngle = (slice.start + slice.end) / 2;
+                            const tx = 50 + (slice.r * 0.65) * Math.cos(midAngle * Math.PI / 180);
+                            const ty = 50 + (slice.r * 0.65) * Math.sin(midAngle * Math.PI / 180);
+
                             return (
-                                <path 
-                                    key={i}
-                                    d={`M 50 50 L ${x1} ${y1} A ${slice.r} ${slice.r} 0 0 1 ${x2} ${y2} Z`}
-                                    className={`${slice.color} transition-all duration-[1200ms] opacity-0 group-[.active-stage]:opacity-100 scale-0 group-[.active-stage]:scale-100 ease-[cubic-bezier(0.23,1,0.32,1)]`}
-                                    style={{ transitionDelay: `${800 + i * 150}ms`, transformOrigin: '50% 50%' }}
-                                />
+                                <g key={i} className="group/slice">
+                                    <path 
+                                        d={`M 50 50 L ${x1} ${y1} A ${slice.r} ${slice.r} 0 0 1 ${x2} ${y2} Z`}
+                                        className={`${slice.color} transition-all duration-[1200ms] opacity-0 group-[.active-stage]:opacity-100 scale-0 group-[.active-stage]:scale-100 ease-[cubic-bezier(0.23,1,0.32,1)]`}
+                                        style={{ transitionDelay: `${800 + i * 150}ms`, transformOrigin: '50% 50%' }}
+                                    />
+                                    <text 
+                                        x={tx} y={ty} 
+                                        textAnchor="middle" 
+                                        dominantBaseline="middle"
+                                        className="fill-white font-black text-[3.5px] tracking-tighter opacity-0 group-[.active-stage]:opacity-100 transition-opacity duration-700 pointer-events-none"
+                                        style={{ transitionDelay: `${1500 + i * 150}ms` }}
+                                    >
+                                        {slice.label}
+                                    </text>
+                                </g>
                             );
                         })}
                     </svg>
-
-                    {/* ULTRA-MINIMALIST DATA LABELS */}
-                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
-                        <span className="text-[10px] font-bold text-slate-900 tracking-widest uppercase mb-0.5">MASTERY</span>
-                        <span className="text-brand text-lg font-black leading-none drop-shadow-sm">88.0</span>
-                    </div>
-                    
-                    <div className="absolute top-[35%] -right-14 flex flex-col items-start z-20">
-                        <span className="text-[10px] font-bold text-slate-900 tracking-widest uppercase mb-0.5">EASE</span>
-                        <span className="text-brand text-lg font-black leading-none drop-shadow-sm">72.4</span>
-                    </div>
-
-                    <div className="absolute -bottom-8 -right-8 flex flex-col items-end z-20">
-                        <span className="text-[10px] font-bold text-slate-900 tracking-widest uppercase mb-0.5">COURAGE</span>
-                        <span className="text-brand text-lg font-black leading-none drop-shadow-sm">94.8</span>
-                    </div>
-
-                    <div className="absolute -bottom-8 -left-10 flex flex-col items-start z-20">
-                        <span className="text-[10px] font-bold text-slate-900 tracking-widest uppercase mb-0.5">CONFIDENCE</span>
-                        <span className="text-brand text-lg font-black leading-none drop-shadow-sm">65.2</span>
-                    </div>
-
-                    <div className="absolute top-[35%] -left-14 flex flex-col items-end z-20">
-                        <span className="text-[10px] font-bold text-slate-900 tracking-widest uppercase mb-0.5">SOCIAL</span>
-                        <span className="text-brand text-lg font-black leading-none drop-shadow-sm">80.1</span>
-                    </div>
                 </div>
             </div>
         )
