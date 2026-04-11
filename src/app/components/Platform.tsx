@@ -20,16 +20,16 @@ const features = [
         tagBorder: 'border-orange-100',
         activeBar: 'bg-brand',
         mockUI: (
-            <div className="absolute -right-4 md:-right-8 -bottom-6 w-[170px] md:w-[210px] p-6 rounded-xl opacity-0 translate-y-10 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-y-0 transition-all duration-1000 delay-300 antialiased overflow-visible">
+            <div className="absolute -right-4 md:-right-8 -bottom-6 w-[170px] md:w-[210px] p-6 rounded-2xl bg-white/40 backdrop-blur-md border border-white/50 shadow-[0_20px_40px_rgba(0,0,0,0.08)] opacity-0 translate-y-10 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-y-0 transition-all duration-1000 delay-300 antialiased overflow-visible">
                 {/* HUD Elements */}
-                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-brand/40" />
-                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-brand/40" />
-                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-brand/40" />
-                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-brand/40" />
+                <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-brand/30" />
+                <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-brand/30" />
+                <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-brand/30" />
+                <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-brand/30" />
                 
                 <div className="relative w-full aspect-square flex items-center justify-center">
                     {/* Ghost Scanning Beam */}
-                    <div className="absolute inset-0 rounded-full opacity-10 pointer-events-none overflow-hidden border border-brand/10">
+                    <div className="absolute inset-0 rounded-full opacity-10 pointer-events-none overflow-hidden">
                         <div className="absolute inset-[15%] bg-gradient-to-tr from-brand/30 to-transparent animate-spin duration-[6000ms] ease-linear" />
                     </div>
 
@@ -69,7 +69,7 @@ const features = [
                                 <path 
                                     key={i}
                                     d={`M 50 50 L ${x1} ${y1} A ${slice.r} ${slice.r} 0 0 1 ${x2} ${y2} Z`}
-                                    className={`${slice.color} stroke-white/20 stroke-[0.5] transition-all duration-[1200ms] opacity-0 group-[.active-stage]:opacity-100 scale-0 group-[.active-stage]:scale-100 ease-[cubic-bezier(0.34,1.56,0.64,1)]`}
+                                    className={`${slice.color} stroke-white/40 stroke-[0.5] transition-all duration-[1200ms] opacity-0 group-[.active-stage]:opacity-100 scale-0 group-[.active-stage]:scale-100 ease-[cubic-bezier(0.34,1.56,0.64,1)]`}
                                     style={{ transitionDelay: `${800 + i * 150}ms`, transformOrigin: '50% 50%' }}
                                 />
                             );
@@ -92,27 +92,27 @@ const features = [
 
                     {/* ULTRA-CLEAR DATA PILLS (Half-In, Half-Out) */}
                     <div className="absolute -top-10 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
-                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">Mastery</span>
+                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-sm">Mastery</span>
                         <div className="bg-brand text-white px-3 py-1 rounded-md text-[13px] font-black shadow-lg shadow-brand/20">88</div>
                     </div>
                     
                     <div className="absolute top-[35%] -right-14 flex flex-col items-start z-20">
-                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">Ease</span>
+                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-sm">Ease</span>
                         <div className="bg-brand text-white px-3 py-1 rounded-md text-[13px] font-black shadow-lg shadow-brand/20">72</div>
                     </div>
 
                     <div className="absolute -bottom-10 -right-8 flex flex-col items-end z-20">
-                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">Courage</span>
+                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-sm">Courage</span>
                         <div className="bg-brand text-white px-3 py-1 rounded-md text-[13px] font-black shadow-lg shadow-brand/20">94</div>
                     </div>
 
                     <div className="absolute -bottom-10 -left-8 flex flex-col items-start z-20">
-                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">Confidence</span>
+                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-sm">Confidence</span>
                         <div className="bg-brand text-white px-3 py-1 rounded-md text-[13px] font-black shadow-lg shadow-brand/20">65</div>
                     </div>
 
                     <div className="absolute top-[35%] -left-14 flex flex-col items-end z-20">
-                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">Social</span>
+                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-sm">Social</span>
                         <div className="bg-brand text-white px-3 py-1 rounded-md text-[13px] font-black shadow-lg shadow-brand/20">80</div>
                     </div>
                 </div>
