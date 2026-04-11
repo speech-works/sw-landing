@@ -99,134 +99,77 @@ export default function CTA() {
                       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, color 0.4s ease;
                   }
 
-                  /* AWWWARDS EXPERIMENTAL REBEL BUTTON */
-                  .awwwards-btn {
+                  /* THE DUAL-REALITY LENS BUTTON */
+                  .dimension-btn-wrap {
+                      border-radius: 9999px;
                       background: linear-gradient(135deg, #FF955E 0%, #D9692E 100%);
-                      box-shadow: 
-                          0 15px 35px -5px rgba(242, 128, 68, 0.4),
-                          inset 0 2px 4px rgba(255, 255, 255, 0.5), /* 3D Top Inner Highlight */
-                          inset 0 -4px 8px rgba(0, 0, 0, 0.15), /* 3D Bottom Inner Shadow */
-                          0 0 0 1px rgba(255, 255, 255, 0.1) inset; /* Crisp edge */
-                      transition: box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-                      will-change: transform, box-shadow;
-                  }
-                  
-                  /* Glossy Top Overlay */
-                  .btn-gloss {
-                      position: absolute;
-                      top: 0; left: 5%; right: 5%; height: 40%;
-                      background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
-                      border-radius: 999px 999px 0 0;
-                      opacity: 1;
-                      pointer-events: none;
-                      transition: opacity 0.5s ease;
-                      z-index: 2;
-                  }
-                  .group\/btn:hover .btn-gloss {
-                      opacity: 0; /* Fade out when dark mode expands */
-                  }
-
-                  /* Sweeping Shimmer */
-                  .btn-shimmer-sweep {
-                      position: absolute;
-                      top: 0; left: -100%; width: 50%; height: 100%;
-                      background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-                      transform: skewX(-20deg);
-                      animation: btn-sweep 3s infinite;
-                      z-index: 2;
-                      pointer-events: none;
-                  }
-                  .group\/btn:hover .btn-shimmer-sweep {
-                      display: none; /* Hide during text marquee hover */
-                  }
-
-                  @keyframes btn-sweep {
-                      0% { left: -100%; }
-                      20% { left: 200%; }
-                      100% { left: 200%; }
-                  }
-
-                  .group\/btn:hover .awwwards-btn {
-                      box-shadow: 0 25px 50px -10px rgba(10, 7, 5, 0.5);
-                      transform: scale(1.05);
-                  }
-
-                  .btn-dark-fill {
-                      position: absolute;
-                      top: 50%;
-                      left: 50%;
-                      width: 150%;
-                      aspect-ratio: 1;
-                      background: #0A0705;
-                      border-radius: 50%;
-                      transform: translate(-50%, -50%) scale(0);
-                      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-                      z-index: 0;
+                      border: 1px solid rgba(255, 255, 255, 0.4);
+                      box-shadow: 0 15px 35px -5px rgba(242, 128, 68, 0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+                      cursor: crosshair;
                       will-change: transform;
+                      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                      overflow: visible; 
+                      isolation: isolate;
+                      display: inline-flex;
                   }
 
-                  .group\/btn:hover .btn-dark-fill {
-                      transform: translate(-50%, -50%) scale(1);
+                  .dimension-btn-wrap:hover {
+                      box-shadow: 0 20px 40px -5px rgba(242, 128, 68, 0.5), inset 0 2px 4px rgba(255,255,255,0.5);
                   }
 
-                  .btn-marquee-container {
+                  /* Standard Premium Base Layer */
+                  .base-layer {
+                      color: #ffffff;
+                      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
+                      white-space: nowrap;
+                      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                  }
+
+                  .dimension-btn-wrap:hover .base-layer {
+                      transform: scale(0.96);
+                      opacity: 0.8;
+                  }
+
+                  /* The Dark Mode Rebel Lens */
+                  .lens-layer {
+                      position: absolute;
+                      inset: -1px; 
+                      background: #0A0705; 
+                      border: 1px solid rgba(242, 128, 68, 0.5);
+                      border-radius: 9999px;
+                      z-index: 2;
+                      pointer-events: none;
+                      overflow: hidden; 
+                      
+                      /* Mask */
+                      clip-path: circle(0px at var(--btn-mouse-x, 50%) var(--btn-mouse-y, 50%));
+                      transition: clip-path 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                      box-shadow: inset 0 0 30px rgba(0,0,0,1);
+                  }
+
+                  .dimension-btn-wrap:hover .lens-layer {
+                      clip-path: circle(120px at var(--btn-mouse-x, 50%) var(--btn-mouse-y, 50%));
+                      transition: clip-path 0.05s linear; 
+                  }
+
+                  .dimension-btn-wrap:active .lens-layer {
+                      clip-path: circle(1000px at var(--btn-mouse-x, 50%) var(--btn-mouse-y, 50%));
+                      transition: clip-path 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+                  }
+
+                  /* Inside the Dark Lens */
+                  .lens-content {
                       position: absolute;
                       inset: 0;
-                      display: flex;
-                      align-items: center;
-                      opacity: 0;
-                      transition: opacity 0.6s ease 0.1s;
-                      z-index: 1;
-                      pointer-events: none;
-                  }
-
-                  .group\/btn:hover .btn-marquee-container {
-                      opacity: 1;
-                  }
-
-                  .btn-marquee {
-                      display: flex;
+                      color: #F28044;
+                      transform: scale(1.1); 
+                      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
                       white-space: nowrap;
-                      animation: btn-marquee-anim 4s linear infinite;
-                      will-change: transform;
+                      text-shadow: 0 0 15px rgba(242,128,68,0.4);
                   }
 
-                  @keyframes btn-marquee-anim {
-                      0% { transform: translateX(0); }
-                      100% { transform: translateX(-50%); }
-                  }
-
-                  .btn-marquee span {
-                      font-size: 2.5rem;
-                      font-weight: 900;
-                      text-transform: uppercase;
-                      color: transparent;
-                      -webkit-text-stroke: 1px rgba(242, 128, 68, 0.25);
-                      padding: 0 10px;
-                      letter-spacing: -0.02em;
-                  }
-
-                  .btn-text {
-                      transition: color 0.4s ease;
-                      text-shadow: 0 2px 4px rgba(0,0,0,0.15);
-                      position: relative;
-                      z-index: 3;
-                  }
-
-                  .group\/btn:hover .btn-text {
-                      color: #F28044;
-                      text-shadow: none;
-                  }
-
-                  .btn-arrow-icon {
-                      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-                      position: relative;
-                      z-index: 3;
-                  }
-
-                  .group\/btn:hover .btn-arrow-icon {
-                      transform: translateX(8px) rotate(-45deg);
-                      color: #F28044;
+                  .dimension-btn-wrap:hover .lens-content {
+                      transform: scale(1.15) translateX(4px);
                   }
               `,
           }}
@@ -298,33 +241,31 @@ export default function CTA() {
             <a
               href="#download"
               id="rebel-btn"
-              className="magnetic-btn group/btn relative z-30 inline-flex items-center justify-center p-2 cursor-pointer pointer-events-auto w-full sm:w-auto"
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                e.currentTarget.style.setProperty('--btn-mouse-x', `${e.clientX - rect.left}px`);
+                e.currentTarget.style.setProperty('--btn-mouse-y', `${e.clientY - rect.top}px`);
+              }}
+              onMouseLeave={(e) => {
+                // Reset to center on exit
+                e.currentTarget.style.setProperty('--btn-mouse-x', `50%`);
+                e.currentTarget.style.setProperty('--btn-mouse-y', `50%`);
+              }}
+              className="magnetic-btn group/btn dimension-btn-wrap relative z-30 cursor-pointer pointer-events-auto"
             >
-              <div className="awwwards-btn relative overflow-hidden rounded-full flex items-center justify-center px-10 sm:px-14 py-5 sm:py-6 w-full sm:w-auto text-white">
-                
-                {/* High-End Gloss Features */}
-                <div className="btn-gloss"></div>
-                <div className="btn-shimmer-sweep"></div>
-
-                {/* Expanding Dark Mode Fill */}
-                <div className="btn-dark-fill"></div>
-
-                {/* Marquee Background */}
-                <div className="btn-marquee-container select-none" aria-hidden="true">
-                  <div className="btn-marquee">
-                    <span>SPEECHWORKS • DOWNLOAD • SPEECHWORKS • DOWNLOAD • </span>
-                    <span>SPEECHWORKS • DOWNLOAD • SPEECHWORKS • DOWNLOAD • </span>
-                  </div>
+                {/* Standard Premium Base Layer */}
+                <div className="base-layer flex items-center justify-center gap-3 px-10 sm:px-14 py-5 sm:py-6">
+                  <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm">Download Speechworks</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-crosshair"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>
                 </div>
 
-                {/* Foreground Text & Icon */}
-                <div className="relative z-10 flex items-center gap-4">
-                  <span className="btn-text font-black uppercase tracking-[0.2em] text-xs sm:text-sm">Download Speechworks</span>
-                  <div className="btn-arrow-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                {/* Dark Mode Rebel X-Ray Lens Layer */}
+                <div className="lens-layer">
+                  <div className="lens-content flex items-center justify-center gap-3 px-10 sm:px-14 py-5 sm:py-6">
+                    <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm drop-shadow-md">Download Speechworks</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right drop-shadow-md"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
                   </div>
                 </div>
-              </div>
             </a>
           </div>
         </div>
