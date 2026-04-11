@@ -109,13 +109,21 @@ const features = [
         tagBorder: 'border-purple-200',
         activeBar: 'bg-purple-500',
         mockUI: (
-            <div className="absolute -left-4 md:-left-12 top-[40%] -translate-y-1/2 w-[85%] max-w-[320px] flex gap-3 items-end opacity-0 -translate-x-12 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-x-0 transition-all duration-[800ms] delay-[400ms] ease-[cubic-bezier(0.23,1,0.32,1)] antialiased">
-                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-red-500 shrink-0 flex items-center justify-center text-white font-black text-[9px] md:text-[11px] shadow-xl shadow-red-500/40 border-2 border-white">AI</div>
-                <div className="bg-red-500 text-white text-xs md:text-sm p-4 rounded-[1.5rem] rounded-bl-sm shadow-[0_20px_40px_rgba(239,68,68,0.3)] font-medium relative overflow-hidden flex-1 border border-red-400">
-                    <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.2)_50%,transparent_75%)] bg-[length:250%_250%] animate-[shimmer_2s_infinite]" />
-                    <span className="font-mono text-[9px] md:text-[10px] opacity-80 uppercase tracking-widest block mb-1 font-bold">[Sys.Interrupt]</span>
-                    Speak clearer. Why are you hesitating?
+            <div className="absolute -right-2 md:-right-6 top-[45%] -translate-y-1/2 w-[85%] max-w-[280px] flex flex-col gap-2 py-2 opacity-0 translate-x-12 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-x-0 transition-all duration-[800ms] delay-[400ms] ease-[cubic-bezier(0.23,1,0.32,1)] antialiased">
+                
+                {/* Message 1: NPC Interruption */}
+                <div className="bg-slate-800 text-white text-[10px] md:text-xs py-2.5 px-3.5 rounded-[1rem] rounded-bl-sm shadow-lg font-medium border border-slate-700 w-fit max-w-[85%] self-start transform transition-all duration-500 opacity-0 group-[.active-stage]:opacity-100 translate-y-3 group-[.active-stage]:translate-y-0" style={{ transitionDelay: '600ms' }}>
+                    <span className="font-mono text-[8px] md:text-[9px] text-slate-400 uppercase tracking-widest block mb-0.5 font-bold">[NPC_WAITER]</span>
+                    <p className="leading-snug opacity-95">Um, are you ready to order? We have a line forming...</p>
                 </div>
+
+                {/* Message 2: The System Challenge */}
+                <div className="bg-red-500 text-white text-[10px] md:text-xs py-2.5 px-3.5 rounded-[1rem] rounded-bl-sm shadow-[0_15px_30px_rgba(239,68,68,0.35)] font-medium w-fit max-w-[90%] self-start transform transition-all duration-500 opacity-0 group-[.active-stage]:opacity-100 translate-y-3 group-[.active-stage]:translate-y-0 relative overflow-hidden border border-red-400" style={{ transitionDelay: '1400ms' }}>
+                    <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.2)_50%,transparent_75%)] bg-[length:250%_250%] animate-[shimmer_2s_infinite]" />
+                    <span className="font-mono text-[8px] md:text-[9px] text-red-100 bg-red-900/40 px-1 py-0.5 rounded uppercase tracking-widest inline-block mb-1 font-bold">[SYS_OBJECTIVE]</span>
+                    <p className="leading-snug font-bold drop-shadow-sm">Friction Detected. Use <span className="underline decoration-white/60 underline-offset-2 decoration-2 cursor-help">Advertising</span> to set a boundary.</p>
+                </div>
+
             </div>
         )
     },
