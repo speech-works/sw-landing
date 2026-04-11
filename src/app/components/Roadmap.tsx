@@ -56,10 +56,10 @@ export default function Roadmap() {
                       </div>
       
                       {/*  Right: The Glassmorphic Stage  */}
-                      <div className="w-full lg:w-7/12 relative h-[350px] sm:h-[400px] lg:h-[550px] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] bg-white ring-1 ring-black/5 mt-6 lg:mt-0">
+                      <div className="w-full lg:w-7/12 relative h-[350px] sm:h-[400px] lg:h-[550px] rounded-[2rem] md:rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] mt-6 lg:mt-0">
                           
                           {/*  Canvas 1  */}
-                          <div id="rm-canvas-1" className="absolute inset-0 bg-gradient-to-br from-brand to-[#D9692E] p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto">
+                          <div id="rm-canvas-1" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-brand to-[#D9692E] p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto">
                               <div className="absolute -right-4 md:-right-10 -bottom-10 md:-bottom-16 text-[12rem] md:text-[18rem] font-black text-white/10 leading-none select-none pointer-events-none">1</div>
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-lucide="mic" aria-hidden="true" className="lucide lucide-mic absolute -right-4 md:right-10 top-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 text-white opacity-[0.05] -rotate-12 pointer-events-none"><path d="M12 19v3"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><rect x="9" y="2" width="6" height="13" rx="3"></rect></svg>
                               
@@ -74,7 +74,7 @@ export default function Roadmap() {
                           </div>
       
                           {/*  Canvas 2  */}
-                          <div id="rm-canvas-2" className="absolute inset-0 bg-gradient-to-br from-purple-500 to-purple-800 p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none">
+                          <div id="rm-canvas-2" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-purple-500 to-purple-800 p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none">
                               <div className="absolute -right-4 md:-right-10 -bottom-10 md:-bottom-16 text-[12rem] md:text-[18rem] font-black text-white/10 leading-none select-none pointer-events-none">2</div>
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-lucide="users" aria-hidden="true" className="lucide lucide-users absolute -right-4 md:right-10 top-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 text-white opacity-[0.05] -rotate-12 pointer-events-none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
                               
@@ -92,7 +92,7 @@ export default function Roadmap() {
                           </div>
       
                           {/*  Canvas 3  */}
-                          <div id="rm-canvas-3" className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-800 p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none">
+                          <div id="rm-canvas-3" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-emerald-500 to-emerald-800 p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none">
                               <div className="absolute -right-4 md:-right-10 -bottom-10 md:-bottom-16 text-[12rem] md:text-[18rem] font-black text-white/10 leading-none select-none pointer-events-none">3</div>
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-lucide="stethoscope" aria-hidden="true" className="lucide lucide-stethoscope absolute -right-4 md:right-10 top-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 text-white opacity-[0.05] -rotate-12 pointer-events-none"><path d="M11 2v2"></path><path d="M5 2v2"></path><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"></path><path d="M8 15a6 6 0 0 0 12 0v-3"></path><circle cx="20" cy="10" r="2"></circle></svg>
                               
