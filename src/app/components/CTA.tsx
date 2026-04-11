@@ -129,12 +129,12 @@ export default function CTA() {
                   
                   {/*  Staggered Rebellion Typography  */}
                   <h2 className="text-5xl sm:text-6xl md:text-[6rem] lg:text-[7rem] font-black text-app-text tracking-tightest mb-6 md:mb-8 leading-[0.95] rebel-hover-zone pointer-events-auto cursor-default">
-                      <div className="overflow-hidden">
+                      <div className="relative z-10">
                           <span className="premium-reveal" style={{ transitionDelay: '0.1s' }}>JOIN&nbsp;</span>
                           <span className="premium-reveal" style={{ transitionDelay: '0.2s' }}>THE</span>
                       </div>
-                      <div className="overflow-hidden mt-1 md:mt-2">
-                          <span className="premium-reveal text-brand drop-shadow-lg ghost-echo relative" data-text="REBELLION." style={{ transitionDelay: '0.3s' }}>
+                      <div className="mt-1 md:mt-2 relative z-20">
+                          <span className="premium-reveal text-brand drop-shadow-lg ghost-echo block pb-4" data-text="REBELLION." style={{ transitionDelay: '0.3s' }}>
                               REBELLION.
                           </span>
                       </div>

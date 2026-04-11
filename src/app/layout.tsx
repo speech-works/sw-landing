@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         
@@ -184,7 +184,7 @@ export default function RootLayout({
           `
         }}></style>
       </head>
-      <body className="relative bg-app-bg text-app-text overflow-x-hidden max-w-[100vw]">
+      <body className="relative bg-app-bg text-app-text overflow-x-hidden max-w-[100vw]" suppressHydrationWarning>
         {children}
       </body>
     </html>
