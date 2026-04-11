@@ -47,32 +47,46 @@ const features = [
                             const y1 = 50 + slice.r * Math.sin(slice.start * Math.PI / 180);
                             const x2 = 50 + slice.r * Math.cos(slice.end * Math.PI / 180);
                             const y2 = 50 + slice.r * Math.sin(slice.end * Math.PI / 180);
-                            
-                            // Calculate label position (centroid-ish)
-                            const midAngle = (slice.start + slice.end) / 2;
-                            const tx = 50 + (slice.r * 0.65) * Math.cos(midAngle * Math.PI / 180);
-                            const ty = 50 + (slice.r * 0.65) * Math.sin(midAngle * Math.PI / 180);
-
                             return (
-                                <g key={i} className="group/slice">
-                                    <path 
-                                        d={`M 50 50 L ${x1} ${y1} A ${slice.r} ${slice.r} 0 0 1 ${x2} ${y2} Z`}
-                                        className={`${slice.color} transition-all duration-[1200ms] opacity-0 group-[.active-stage]:opacity-100 scale-0 group-[.active-stage]:scale-100 ease-[cubic-bezier(0.23,1,0.32,1)]`}
-                                        style={{ transitionDelay: `${800 + i * 150}ms`, transformOrigin: '50% 50%' }}
-                                    />
-                                    <text 
-                                        x={tx} y={ty} 
-                                        textAnchor="middle" 
-                                        dominantBaseline="middle"
-                                        className="fill-white font-black text-[3.5px] tracking-tighter opacity-0 group-[.active-stage]:opacity-100 transition-opacity duration-700 pointer-events-none"
-                                        style={{ transitionDelay: `${1500 + i * 150}ms` }}
-                                    >
-                                        {slice.label}
-                                    </text>
-                                </g>
+                                <path 
+                                    key={i}
+                                    d={`M 50 50 L ${x1} ${y1} A ${slice.r} ${slice.r} 0 0 1 ${x2} ${y2} Z`}
+                                    className={`${slice.color} transition-all duration-[1200ms] opacity-0 group-[.active-stage]:opacity-100 scale-0 group-[.active-stage]:scale-100 ease-[cubic-bezier(0.23,1,0.32,1)]`}
+                                    style={{ transitionDelay: `${800 + i * 150}ms`, transformOrigin: '50% 50%' }}
+                                />
                             );
                         })}
                     </svg>
+
+                    {/* INTEGRATED DARK TAGS - Positioned at the Rim */}
+                    {[
+                        { r: 44, start: -90, end: -18, label: 'MASTERY' },
+                        { r: 36, start: -18, end: 54, label: 'EASE' },
+                        { r: 42, start: 54, end: 126, label: 'COURAGE' },
+                        { r: 32, start: 126, end: 198, label: 'CONFIDENCE' },
+                        { r: 39, start: 198, end: 270, label: 'SOCIAL' }
+                    ].map((slice, i) => {
+                        const midAngle = (slice.start + slice.end) / 2;
+                        const tx = 50 + (slice.r * 0.9) * Math.cos(midAngle * Math.PI / 180);
+                        const ty = 50 + (slice.r * 0.9) * Math.sin(midAngle * Math.PI / 180);
+                        
+                        return (
+                            <div 
+                                key={i}
+                                className="absolute z-20 transition-all duration-700 opacity-0 group-[.active-stage]:opacity-100 pointer-events-none"
+                                style={{ 
+                                    left: `${tx}%`, 
+                                    top: `${ty}%`, 
+                                    transform: 'translate(-50%, -50%)',
+                                    transitionDelay: `${1500 + i * 150}ms`
+                                }}
+                            >
+                                <div className="bg-[#3F332D] text-white px-1.5 py-0.5 rounded-[2px] text-[8px] font-black tracking-tight whitespace-nowrap shadow-md border border-white/10">
+                                    {slice.label}
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         )
