@@ -115,9 +115,84 @@ export default function Platform() {
         setProgress(0);
     };
 
+    const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+        e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+        e.currentTarget.style.setProperty('--mouse-x-raw', `${x}`);
+        e.currentTarget.style.setProperty('--mouse-y-raw', `${y}`);
+    };
+
     return (
-        <section id="platform" className="py-20 md:py-32 bg-white relative z-10 border-t border-orange-900/5">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <section 
+            id="platform" 
+            className="py-20 md:py-32 bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
+            onMouseMove={handleMouseMove}
+            style={{ '--mouse-x': '50%', '--mouse-y': '50%', '--mouse-x-raw': '500', '--mouse-y-raw': '500' } as React.CSSProperties}
+        >
+            {/* --- Awwwards Experimental X-Ray Hover Core --- */}
+            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-white">
+                
+                {/* Default Static Subtle Layer (visible when not hovering) */}
+                <div className="absolute inset-0 opacity-100 transition-opacity duration-1000 group-hover:opacity-30">
+                    <div className="absolute top-[20%] left-[10%] w-[40%] h-[60%] bg-gradient-to-tr from-brand/5 to-transparent blur-[120px]" />
+                </div>
+
+                {/* The Interactive Flashlight Mask Layer */}
+                <div 
+                    className="absolute inset-0 transition-opacity duration-[1500ms] opacity-0 group-hover:opacity-100"
+                    style={{
+                        WebkitMaskImage: `radial-gradient(circle 450px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 100%)`,
+                        maskImage: `radial-gradient(circle 450px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 100%)`
+                    }}
+                >
+                    {/* The burning holographic core directly beneath the cursor */}
+                    <div 
+                        className="absolute w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-brand/40 mix-blend-multiply via-orange-400/20 to-transparent blur-[60px] rounded-full transition-transform duration-75 ease-out"
+                        style={{ left: 'var(--mouse-x)', top: 'var(--mouse-y)' }}
+                    />
+
+                    {/* Dense Technical Blueprint Grids */}
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(242,128,68,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(242,128,68,0.1)_1px,transparent_1px)] bg-[size:16px_16px]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(242,128,68,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(242,128,68,0.2)_1px,transparent_1px)] bg-[size:80px_80px]" />
+                    
+                    {/* Optical Targeting Rings tracing cursor */}
+                    <div 
+                        className="absolute w-[2px] h-[2px] -translate-x-1/2 -translate-y-1/2 transition-transform duration-100 ease-out"
+                        style={{ left: 'var(--mouse-x)', top: 'var(--mouse-y)' }}
+                    >
+                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[160px] h-[160px] border border-brand/50 rounded-full border-dashed animate-spin" style={{ animationDuration: '20s' }} />
+                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] border border-brand/30 rounded-full animate-spin border-dashed" style={{ animationDuration: '30s', animationDirection: 'reverse' }} />
+                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[1px] bg-brand/30" />
+                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[1px] h-[600px] bg-brand/30" />
+                        <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 w-[6px] h-[6px] bg-brand rounded-full shadow-[0_0_10px_2px_rgba(242,128,68,0.8)]" />
+                    </div>
+
+                    {/* Highly Kinetic Abstract Typography locked to parallax math */}
+                    <div className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none mix-blend-multiply opacity-20 text-brand overflow-hidden">
+                         <div 
+                              className="text-[8rem] md:text-[14rem] font-sans font-black tracking-[-0.05em] leading-none whitespace-nowrap transition-transform duration-75 ease-out" 
+                              style={{ transform: 'translateX(calc((var(--mouse-x-raw) - 500) * -0.15px))' }}
+                          >
+                              CLINICAL///ARC
+                         </div>
+                         <div 
+                              className="text-[6rem] md:text-[10rem] font-sans font-black tracking-tighter leading-none whitespace-nowrap transition-transform duration-75 ease-out" 
+                              style={{ transform: 'translateX(calc((var(--mouse-x-raw) - 500) * 0.25px))' }}
+                          >
+                              001.ADVERSARIAL
+                         </div>
+                    </div>
+                </div>
+
+                {/* Fade out masks to merge with top/bottom content */}
+                <div className="absolute inset-x-0 top-0 h-32 md:h-48 bg-gradient-to-b from-white via-white/80 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-32 md:h-48 bg-gradient-to-t from-white via-white/80 to-transparent" />
+            </div>
+            
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
                   
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 reveal text-center md:text-left active">
                     <div className="max-w-2xl mx-auto md:mx-0">
