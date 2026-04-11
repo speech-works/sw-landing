@@ -217,6 +217,14 @@ const features = [
     activeBar: "bg-purple-500",
     mockUI: (
       <div className="absolute -right-6 md:-right-14 top-[50%] -translate-y-1/2 w-[270px] md:w-[310px] flex flex-col gap-4 py-1 opacity-0 translate-x-12 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-x-0 transition-all duration-[800ms] delay-[400ms] ease-[cubic-bezier(0.23,1,0.32,1)] antialiased cursor-default">
+        {/* Custom Sequence Keyframes */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes aiVanish {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-4px); visibility: hidden; }
+          }
+        `}} />
+        
         {/* Bubble 1: Waiter NPC */}
         <div
           className="flex items-end gap-2.5 self-start max-w-[100%] transform transition-all duration-500 opacity-0 group-[.active-stage]:opacity-100 translate-y-4 group-[.active-stage]:translate-y-0"
@@ -239,10 +247,28 @@ const features = [
           </div>
         </div>
 
-        {/* Bubble 2: System AI */}
+        {/* Bubble 2: AI Loading/Thinking State */}
+        <div 
+          className="flex items-end gap-2.5 self-start pointer-events-none absolute top-[110px] left-0 transform transition-all duration-300 opacity-0 group-[.active-stage]:opacity-100 group-[.active-stage]:[transition-delay:1400ms] group-[.active-stage]:[animation:aiVanish_0.4s_forwards_3400ms]"
+        >
+          {/* AI Avatar (Duplicate for position) */}
+          <div className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-violet-600 to-purple-700 border-2 border-white shadow-md flex items-center justify-center relative opacity-40">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="text-[9px] font-semibold text-violet-400/50 uppercase tracking-widest ml-1">Speechworks.AI</span>
+            <div className="bg-indigo-950/40 backdrop-blur-sm px-4 py-3 rounded-2xl rounded-bl-none border border-white/5 flex gap-1.5 items-center">
+              <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+              <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+              <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bubble 3: Actual System AI Suggestion */}
         <div
-          className="flex items-end gap-2.5 self-start max-w-[100%] transform transition-all duration-500 opacity-0 group-[.active-stage]:opacity-100 translate-y-4 group-[.active-stage]:translate-y-0"
-          style={{ transitionDelay: "1400ms" }}
+          className="flex items-end gap-2.5 self-start max-w-[100%] transform transition-all duration-700 opacity-0 group-[.active-stage]:opacity-100 translate-y-4 group-[.active-stage]:translate-y-0"
+          style={{ transitionDelay: "3400ms" }}
         >
           {/* AI Avatar */}
           <div
