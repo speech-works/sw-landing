@@ -1,6 +1,98 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
+// Self-contained component: controls the 3-phase AI chat sequence imperatively
+function AdversarialChatUI() {
+  const [phase, setPhase] = useState<"waiter" | "thinking" | "suggestion">("waiter");
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setPhase("thinking"), 900);
+    const t2 = setTimeout(() => setPhase("suggestion"), 2800);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
+
+  // Avatar shared between thinking + suggestion rows
+  const aiAvatar = (full?: boolean) => (
+    <div
+      className={`w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-violet-600 to-purple-700 border-2 border-white shadow-md flex items-center justify-center relative ${full ? "" : "opacity-50"}`}
+      style={{ boxShadow: "0 4px 16px rgba(124,58,237,0.4)" }}
+    >
+      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+      {full && <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 border-2 border-white rounded-full" />}
+    </div>
+  );
+
+  return (
+    <div className="absolute -right-6 md:-right-14 top-[50%] -translate-y-1/2 w-[270px] md:w-[310px] flex flex-col gap-4 py-1 antialiased cursor-default">
+      {/* Waiter Bubble — always visible */}
+      <div className="flex items-end gap-2.5 self-start max-w-[100%]">
+        <div
+          className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-amber-100 to-orange-200 border-2 border-white shadow-md flex items-center justify-center text-base select-none"
+          style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
+        >
+          🧑‍🍳
+        </div>
+        <div className="flex flex-col gap-1 min-w-0">
+          <span className="text-[9px] font-semibold text-slate-400 ml-1 uppercase tracking-widest">Wait Staff</span>
+          <div className="bg-white text-slate-700 text-xs md:text-[13px] font-medium leading-relaxed px-4 py-3 rounded-2xl rounded-bl-none shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-slate-100/80">
+            Um, are you ready to order? We have a line forming.
+          </div>
+        </div>
+      </div>
+
+      {/* AI Slot — thinking and suggestion occupy the same space */}
+      {phase !== "waiter" && (
+        <div className="flex items-end gap-2.5 self-start max-w-[100%]">
+          {/* Avatar always shown once in AI phase */}
+          {phase === "thinking" ? aiAvatar(false) : aiAvatar(true)}
+
+          <div className="flex flex-col gap-1 min-w-0 flex-1">
+            <span className={`text-[9px] font-semibold ml-1 uppercase tracking-widest transition-colors duration-300 ${phase === "suggestion" ? "text-violet-400/90" : "text-violet-400/50"}`}>
+              Speechworks.AI
+            </span>
+
+            {/* Thinking dots */}
+            <div
+              className={`transition-all duration-400 ${phase === "thinking" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1 absolute pointer-events-none"}`}
+            >
+              <div className="bg-indigo-950/40 backdrop-blur-sm px-4 py-3 rounded-2xl rounded-bl-none border border-white/5 flex gap-1.5 items-center">
+                <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: "-0.3s" }} />
+                <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: "-0.15s" }} />
+                <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce" />
+              </div>
+            </div>
+
+            {/* AI suggestion */}
+            <div
+              className={`transition-all duration-500 ${phase === "suggestion" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 absolute pointer-events-none"}`}
+            >
+              <div
+                className="text-white text-xs md:text-[13px] font-medium leading-relaxed px-4 py-3 rounded-2xl rounded-bl-none relative overflow-hidden"
+                style={{
+                  background: "linear-gradient(135deg,#1e1b4b 0%,#312e81 60%,#4c1d95 100%)",
+                  boxShadow: "0 8px 32px rgba(76,29,149,0.35), 0 0 0 1px rgba(139,92,246,0.2)",
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
+                <p>
+                  Friction Detected. Use{" "}
+                  <span className="inline-flex items-center mx-0.5 px-2 py-0.5 rounded-md bg-white/15 border border-violet-300/30 text-violet-200 font-bold text-[11px] backdrop-blur-sm shadow-[0_0_10px_rgba(167,139,250,0.25)] tracking-wide">
+                    Advertising
+                  </span>{" "}
+                  to set a boundary.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 const features = [
   {
     id: "progress",
@@ -47,7 +139,7 @@ const features = [
     tagBg: "bg-white",
     tagBorder: "border-orange-100",
     activeBar: "bg-brand",
-    mockUI: (
+    renderUI: () => (
       <div className="absolute -right-2 md:-right-4 -bottom-4 w-[140px] md:w-[170px] p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/20 shadow-[0_15px_30px_rgba(0,0,0,0.06)] opacity-0 translate-y-10 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-y-0 transition-all duration-1000 delay-300 antialiased overflow-visible">
         <div className="relative w-full aspect-square flex items-center justify-center">
           <svg
@@ -215,107 +307,7 @@ const features = [
     tagBg: "bg-white",
     tagBorder: "border-purple-200",
     activeBar: "bg-purple-500",
-    mockUI: (
-      <div className="absolute -right-6 md:-right-14 top-[50%] -translate-y-1/2 w-[270px] md:w-[310px] flex flex-col gap-4 py-1 opacity-0 translate-x-12 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-x-0 transition-all duration-[800ms] delay-[400ms] ease-[cubic-bezier(0.23,1,0.32,1)] antialiased cursor-default">
-        {/* Custom Sequence Keyframes */}
-        <style dangerouslySetInnerHTML={{ __html: `
-          @keyframes aiVanish {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-4px); visibility: hidden; }
-          }
-        `}} />
-        
-        {/* Bubble 1: Waiter NPC */}
-        <div
-          className="flex items-end gap-2.5 self-start max-w-[100%] transform transition-all duration-500 opacity-0 group-[.active-stage]:opacity-100 translate-y-4 group-[.active-stage]:translate-y-0"
-          style={{ transitionDelay: "600ms" }}
-        >
-          {/* Waiter Avatar */}
-          <div
-            className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-amber-100 to-orange-200 border-2 border-white shadow-md flex items-center justify-center text-base select-none"
-            style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
-          >
-            🧑‍🍳
-          </div>
-          <div className="flex flex-col gap-1 min-w-0">
-            <span className="text-[9px] font-semibold text-slate-400 ml-1 uppercase tracking-widest">
-              Wait Staff
-            </span>
-            <div className="bg-white text-slate-700 text-xs md:text-[13px] font-medium leading-relaxed px-4 py-3 rounded-2xl rounded-bl-none shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-slate-100/80">
-              Um, are you ready to order? We have a line forming.
-            </div>
-          </div>
-        </div>
-
-        {/* Bubble 2: AI Loading/Thinking State */}
-        <div 
-          className="flex items-end gap-2.5 self-start pointer-events-none absolute top-[110px] left-0 transform transition-all duration-300 opacity-0 group-[.active-stage]:opacity-100 group-[.active-stage]:[transition-delay:1400ms] group-[.active-stage]:[animation:aiVanish_0.4s_forwards_3400ms]"
-        >
-          {/* AI Avatar (Duplicate for position) */}
-          <div className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-violet-600 to-purple-700 border-2 border-white shadow-md flex items-center justify-center relative opacity-40">
-            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
-          <div className="flex flex-col gap-1">
-            <span className="text-[9px] font-semibold text-violet-400/50 uppercase tracking-widest ml-1">Speechworks.AI</span>
-            <div className="bg-indigo-950/40 backdrop-blur-sm px-4 py-3 rounded-2xl rounded-bl-none border border-white/5 flex gap-1.5 items-center">
-              <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-              <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-              <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce"></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bubble 3: Actual System AI Suggestion */}
-        <div
-          className="flex items-end gap-2.5 self-start max-w-[100%] transform transition-all duration-700 opacity-0 group-[.active-stage]:opacity-100 translate-y-4 group-[.active-stage]:translate-y-0"
-          style={{ transitionDelay: "3400ms" }}
-        >
-          {/* AI Avatar */}
-          <div
-            className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-violet-600 to-purple-700 border-2 border-white shadow-md flex items-center justify-center relative"
-            style={{ boxShadow: "0 4px 16px rgba(124,58,237,0.4)" }}
-          >
-            <svg
-              className="w-4 h-4 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
-            </svg>
-            <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 border-2 border-white rounded-full" />
-          </div>
-          <div className="flex flex-col gap-1 min-w-0">
-            <span className="text-[9px] font-semibold text-violet-400/90 ml-1 uppercase tracking-widest">
-              Speechworks.AI
-            </span>
-            <div
-              className="text-white text-xs md:text-[13px] font-medium leading-relaxed px-4 py-3 rounded-2xl rounded-bl-none relative overflow-hidden"
-              style={{
-                background:
-                  "linear-gradient(135deg,#1e1b4b 0%,#312e81 60%,#4c1d95 100%)",
-                boxShadow:
-                  "0 8px_32px_rgba(76,29,149,0.35), 0 0 0 1px rgba(139,92,246,0.2)",
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
-              <p>
-                Friction Detected. Use{" "}
-                <span className="inline-flex items-center mx-0.5 px-2 py-0.5 rounded-md bg-white/15 border border-violet-300/30 text-violet-200 font-bold text-[11px] backdrop-blur-sm shadow-[0_0_10px_rgba(167,139,250,0.25)] tracking-wide">
-                  Advertising
-                </span>{" "}
-                to set a boundary.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
+    renderUI: () => <AdversarialChatUI />,
   },
   {
     id: "stamina",
@@ -364,7 +356,7 @@ const features = [
     tagBg: "bg-white",
     tagBorder: "border-emerald-200",
     activeBar: "bg-emerald-500",
-    mockUI: (
+    renderUI: () => (
       <div className="absolute -right-2 md:-right-8 top-12 w-[220px] md:w-[260px] bg-white p-4 md:p-5 rounded-[2rem] shadow-[0_20px_40px_rgba(16,185,129,0.15)] border border-emerald-100 flex items-center gap-4 opacity-0 translate-x-12 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-y-0 transition-all duration-700 delay-400 antialiased">
         <div className="relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center shrink-0">
           <svg className="absolute inset-0 w-full h-full transform -rotate-90">
@@ -455,7 +447,7 @@ const features = [
     tagBorder: "border-white/30",
     activeBar: "bg-brand",
     isDark: true,
-    mockUI: (
+    renderUI: () => (
       <div className="absolute -left-6 md:-left-10 -bottom-8 w-[240px] md:w-[280px] bg-white rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.25)] flex flex-col px-6 py-5 gap-4 border border-orange-100/30 opacity-0 translate-y-12 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-y-0 transition-all duration-[1000ms] delay-300 origin-bottom overflow-hidden">
         <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-brand/20 to-transparent rounded-full blur-[20px] -translate-y-1/2 translate-x-1/2" />
         <div className="flex items-center gap-4 relative z-10">
@@ -786,7 +778,7 @@ export default function Platform() {
 
                     {/* Dynamic Mock UI injection OUTSIDE the boundary */}
                     <div className="absolute inset-0 pointer-events-none">
-                      {feature.mockUI}
+                      {isActive && feature.renderUI()}
                     </div>
 
                     <div
