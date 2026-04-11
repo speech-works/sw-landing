@@ -20,46 +20,28 @@ const features = [
         tagBorder: 'border-orange-100',
         activeBar: 'bg-brand',
         mockUI: (
-            <div className="absolute -right-4 md:-right-8 -bottom-6 w-[170px] md:w-[210px] p-6 rounded-2xl bg-white/40 backdrop-blur-md border border-white/50 shadow-[0_20px_40px_rgba(0,0,0,0.08)] opacity-0 translate-y-10 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-y-0 transition-all duration-1000 delay-300 antialiased overflow-visible">
-                {/* HUD Elements */}
-                <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-brand/30" />
-                <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-brand/30" />
-                <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-brand/30" />
-                <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-brand/30" />
-                
+            <div className="absolute -right-4 md:-right-8 -bottom-6 w-[180px] md:w-[220px] p-8 rounded-2xl bg-white/40 backdrop-blur-md border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.06)] opacity-0 translate-y-10 group-[.active-stage]:opacity-100 group-[.active-stage]:translate-y-0 transition-all duration-1000 delay-300 antialiased overflow-visible">
                 <div className="relative w-full aspect-square flex items-center justify-center">
-                    {/* Ghost Scanning Beam */}
-                    <div className="absolute inset-0 rounded-full opacity-10 pointer-events-none overflow-hidden">
-                        <div className="absolute inset-[15%] bg-gradient-to-tr from-brand/30 to-transparent animate-spin duration-[6000ms] ease-linear" />
-                    </div>
-
                     <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible relative z-10">
-                        <defs>
-                            <linearGradient id="pizzaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stopColor="#F28044" />
-                                <stop offset="100%" stopColor="#FB923C" />
-                            </linearGradient>
-                        </defs>
-                        
-                        {/* High-Contrast Professional Grid */}
+                        {/* Subdued Minimalist Grid */}
                         {[40, 30, 20, 10].map((r, i) => (
                             <circle 
                                 key={i}
                                 cx="50" cy="50" r={r}
                                 fill="none" 
                                 stroke="currentColor" 
-                                className="text-brand/10" 
+                                className="text-black/5" 
                                 strokeWidth="0.5"
                             />
                         ))}
                         
-                        {/* Pizza Slices (Polar Area Sectors) */}
+                        {/* Pizza Slices: Solid Minimalist Sectors */}
                         {[
-                            { r: 40, start: -90, end: -18, label: 'Mastery', val: 88, color: 'fill-brand' },
-                            { r: 32, start: -18, end: 54, label: 'Ease', val: 72, color: 'fill-brand/80' },
-                            { r: 38, start: 54, end: 126, label: 'Courage', val: 94, color: 'fill-brand' },
-                            { r: 28, start: 126, end: 198, label: 'Confidence', val: 65, color: 'fill-brand/60' },
-                            { r: 35, start: 198, end: 270, label: 'Social', val: 80, color: 'fill-brand/90' }
+                            { r: 42, start: -90, end: -18, label: 'Mastery', val: '88.0', color: 'fill-brand' },
+                            { r: 34, start: -18, end: 54, label: 'Ease', val: '72.4', color: 'fill-brand/70' },
+                            { r: 40, start: 54, end: 126, label: 'Courage', val: '94.8', color: 'fill-brand' },
+                            { r: 30, start: 126, end: 198, label: 'Confidence', val: '65.2', color: 'fill-brand/50' },
+                            { r: 37, start: 198, end: 270, label: 'Social', val: '80.1', color: 'fill-brand/80' }
                         ].map((slice, i) => {
                             const x1 = 50 + slice.r * Math.cos(slice.start * Math.PI / 180);
                             const y1 = 50 + slice.r * Math.sin(slice.start * Math.PI / 180);
@@ -69,51 +51,37 @@ const features = [
                                 <path 
                                     key={i}
                                     d={`M 50 50 L ${x1} ${y1} A ${slice.r} ${slice.r} 0 0 1 ${x2} ${y2} Z`}
-                                    className={`${slice.color} stroke-white/40 stroke-[0.5] transition-all duration-[1200ms] opacity-0 group-[.active-stage]:opacity-100 scale-0 group-[.active-stage]:scale-100 ease-[cubic-bezier(0.34,1.56,0.64,1)]`}
+                                    className={`${slice.color} transition-all duration-[1200ms] opacity-0 group-[.active-stage]:opacity-100 scale-0 group-[.active-stage]:scale-100 ease-[cubic-bezier(0.23,1,0.32,1)]`}
                                     style={{ transitionDelay: `${800 + i * 150}ms`, transformOrigin: '50% 50%' }}
                                 />
                             );
                         })}
-
-                        {/* Dashed Axis Dividers */}
-                        {[0, 72, 144, 216, 288].map((angle, i) => (
-                            <line 
-                                key={i}
-                                x1="50" y1="50"
-                                x2={50 + 44 * Math.cos((angle - 90) * Math.PI / 180)}
-                                y2={50 + 44 * Math.sin((angle - 90) * Math.PI / 180)}
-                                stroke="currentColor"
-                                strokeWidth="0.75"
-                                strokeDasharray="2,2"
-                                className="text-brand/20"
-                            />
-                        ))}
                     </svg>
 
-                    {/* ULTRA-CLEAR DATA PILLS (Half-In, Half-Out) */}
+                    {/* ULTRA-MINIMALIST DATA LABELS */}
                     <div className="absolute -top-10 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
-                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-sm">Mastery</span>
-                        <div className="bg-brand text-white px-3 py-1 rounded-md text-[13px] font-black shadow-lg shadow-brand/20">88</div>
+                        <span className="text-[10px] font-bold text-slate-900 tracking-widest uppercase mb-0.5">MASTERY</span>
+                        <span className="text-brand text-lg font-black leading-none drop-shadow-sm">88.0</span>
                     </div>
                     
                     <div className="absolute top-[35%] -right-14 flex flex-col items-start z-20">
-                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-sm">Ease</span>
-                        <div className="bg-brand text-white px-3 py-1 rounded-md text-[13px] font-black shadow-lg shadow-brand/20">72</div>
+                        <span className="text-[10px] font-bold text-slate-900 tracking-widest uppercase mb-0.5">EASE</span>
+                        <span className="text-brand text-lg font-black leading-none drop-shadow-sm">72.4</span>
                     </div>
 
-                    <div className="absolute -bottom-10 -right-8 flex flex-col items-end z-20">
-                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-sm">Courage</span>
-                        <div className="bg-brand text-white px-3 py-1 rounded-md text-[13px] font-black shadow-lg shadow-brand/20">94</div>
+                    <div className="absolute -bottom-8 -right-8 flex flex-col items-end z-20">
+                        <span className="text-[10px] font-bold text-slate-900 tracking-widest uppercase mb-0.5">COURAGE</span>
+                        <span className="text-brand text-lg font-black leading-none drop-shadow-sm">94.8</span>
                     </div>
 
-                    <div className="absolute -bottom-10 -left-8 flex flex-col items-start z-20">
-                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-sm">Confidence</span>
-                        <div className="bg-brand text-white px-3 py-1 rounded-md text-[13px] font-black shadow-lg shadow-brand/20">65</div>
+                    <div className="absolute -bottom-8 -left-10 flex flex-col items-start z-20">
+                        <span className="text-[10px] font-bold text-slate-900 tracking-widest uppercase mb-0.5">CONFIDENCE</span>
+                        <span className="text-brand text-lg font-black leading-none drop-shadow-sm">65.2</span>
                     </div>
 
                     <div className="absolute top-[35%] -left-14 flex flex-col items-end z-20">
-                        <span className="text-[10px] font-black text-brand font-mono tracking-tighter uppercase mb-1 drop-shadow-sm">Social</span>
-                        <div className="bg-brand text-white px-3 py-1 rounded-md text-[13px] font-black shadow-lg shadow-brand/20">80</div>
+                        <span className="text-[10px] font-bold text-slate-900 tracking-widest uppercase mb-0.5">SOCIAL</span>
+                        <span className="text-brand text-lg font-black leading-none drop-shadow-sm">80.1</span>
                     </div>
                 </div>
             </div>
