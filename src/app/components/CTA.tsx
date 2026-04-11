@@ -78,23 +78,24 @@ export default function CTA() {
 
                   /* The Rising Rebel Fist */
                   .rebel-fist-wrapper {
-                      margin-bottom: -20px; /* Sits cleanly behind the button position */
+                      margin-bottom: -90px; /* Deep downward pull to bury transparent borders encoded into the PNG itself */
                   }
                   .rebel-fist-animator {
                       opacity: 0;
-                      transform: translateY(120%) scale(0.6);
+                      transform-origin: bottom center;
+                      transform: translateY(100px) scale(0.6);
                       transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1s ease 0.3s, color 0.4s ease;
                       will-change: transform, opacity;
                   }
                   .reveal.active .rebel-fist-animator {
-                      transform: translateY(-25px) scale(1);
+                      transform: translateY(0px) scale(1.1);
                       opacity: 0.25;
                       transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), color 1s ease;
                   }
                   
                   /* Interaction on button affects fist */
                   .group\\/cta.btn-hovered .rebel-fist-animator {
-                      transform: translateY(-45px) scale(1.05) rotate(2deg);
+                      transform: translateY(0px) scale(1.15) rotate(2deg);
                       opacity: 0.6;
                       color: #D9692E; /* Deepens color slightly on hover */
                       transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), color 1s ease;
@@ -176,7 +177,7 @@ export default function CTA() {
         />
 
         {/*  The Rising Fist Watermark (Z-index 10 to stay behind text Z-20)  */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] sm:w-[750px] h-[600px] sm:h-[680px] z-10 pointer-events-none rebel-fist-wrapper flex items-end justify-center">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[180%] sm:w-[140%] md:w-[100%] lg:w-[80%] h-[130%] z-10 pointer-events-none rebel-fist-wrapper flex items-end justify-center">
           <div
             className="w-full h-full rebel-fist-animator flex justify-center items-end text-brand"
             style={{ filter: "drop-shadow(0 25px 50px rgba(0,0,0,0.15))" }}
@@ -197,7 +198,7 @@ export default function CTA() {
                        */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/assets/rebel1.png"
+              src="/assets/rebel2.png"
               alt="Rebel fist"
               className="w-full h-auto max-h-full object-contain origin-bottom select-none"
               draggable={false}
@@ -233,7 +234,6 @@ export default function CTA() {
             </div>
           </h2>
 
-
           <div
             className="premium-reveal w-full sm:w-auto"
             style={{ transitionDelay: "0.5s" }}
@@ -243,33 +243,72 @@ export default function CTA() {
               id="rebel-btn"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty('--btn-mouse-x', `${e.clientX - rect.left}px`);
-                e.currentTarget.style.setProperty('--btn-mouse-y', `${e.clientY - rect.top}px`);
+                e.currentTarget.style.setProperty(
+                  "--btn-mouse-x",
+                  `${e.clientX - rect.left}px`,
+                );
+                e.currentTarget.style.setProperty(
+                  "--btn-mouse-y",
+                  `${e.clientY - rect.top}px`,
+                );
               }}
               onMouseLeave={(e) => {
                 // Reset to center on exit
-                e.currentTarget.style.setProperty('--btn-mouse-x', `50%`);
-                e.currentTarget.style.setProperty('--btn-mouse-y', `50%`);
+                e.currentTarget.style.setProperty("--btn-mouse-x", `50%`);
+                e.currentTarget.style.setProperty("--btn-mouse-y", `50%`);
               }}
               className="magnetic-btn group/btn dimension-btn-wrap relative z-30 cursor-pointer pointer-events-auto"
             >
-                {/* Standard Premium Base Layer */}
-                <div className="base-layer w-full h-full flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-12 py-5 sm:py-6">
-                  {/* Phantom icon on left to flawlessly counter-balance the right icon and force text to dead-center */}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" className="invisible shrink-0" />
-                  <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm whitespace-nowrap text-center">Download Speechworks</span>
-                  {/* Placeholder for right icon */}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" className="invisible shrink-0" />
-                </div>
+              {/* Standard Premium Base Layer */}
+              <div className="base-layer w-full h-full flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-12 py-5 sm:py-6">
+                {/* Phantom icon on left to flawlessly counter-balance the right icon and force text to dead-center */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  className="invisible shrink-0"
+                />
+                <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm whitespace-nowrap text-center">
+                  Download Speechworks
+                </span>
+                {/* Placeholder for right icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  className="invisible shrink-0"
+                />
+              </div>
 
-                {/* Dark Mode Rebel X-Ray Lens Layer */}
-                <div className="lens-layer bg-app-text">
-                  <div className="lens-content w-full h-full flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-12 py-5 sm:py-6 relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" className="invisible shrink-0" />
-                    <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm drop-shadow-md whitespace-nowrap text-center">Download Speechworks</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right drop-shadow-md shrink-0"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-                  </div>
+              {/* Dark Mode Rebel X-Ray Lens Layer */}
+              <div className="lens-layer bg-app-text">
+                <div className="lens-content w-full h-full flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-12 py-5 sm:py-6 relative">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    className="invisible shrink-0"
+                  />
+                  <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm drop-shadow-md whitespace-nowrap text-center">
+                    Download Speechworks
+                  </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-arrow-up-right drop-shadow-md shrink-0"
+                  >
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
                 </div>
+              </div>
             </a>
           </div>
         </div>
