@@ -87,14 +87,14 @@ export default function CTA() {
                       will-change: transform, opacity;
                   }
                   .reveal.active .rebel-fist-animator {
-                      transform: translateY(0px) scale(1);
+                      transform: translateY(-25px) scale(1);
                       opacity: 0.25;
                       transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), color 1s ease;
                   }
                   
                   /* Interaction on button affects fist */
                   .group\\/cta.btn-hovered .rebel-fist-animator {
-                      transform: translateY(-20px) scale(1.05) rotate(2deg);
+                      transform: translateY(-45px) scale(1.05) rotate(2deg);
                       opacity: 0.6;
                       color: #D9692E; /* Deepens color slightly on hover */
                       transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), color 1s ease;
@@ -135,7 +135,6 @@ export default function CTA() {
                   .lens-layer {
                       position: absolute;
                       inset: -1px; 
-                      background: #0A0705; 
                       border: 1px solid rgba(242, 128, 68, 0.5);
                       border-radius: 9999px;
                       z-index: 2;
@@ -255,16 +254,20 @@ export default function CTA() {
               className="magnetic-btn group/btn dimension-btn-wrap relative z-30 cursor-pointer pointer-events-auto"
             >
                 {/* Standard Premium Base Layer */}
-                <div className="base-layer flex items-center justify-center gap-3 px-10 sm:px-14 py-5 sm:py-6">
-                  <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm">Download Speechworks</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-crosshair"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>
+                <div className="base-layer w-full h-full flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-12 py-5 sm:py-6">
+                  {/* Phantom icon on left to flawlessly counter-balance the right icon and force text to dead-center */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" className="invisible shrink-0" />
+                  <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm whitespace-nowrap text-center">Download Speechworks</span>
+                  {/* Placeholder for right icon */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" className="invisible shrink-0" />
                 </div>
 
                 {/* Dark Mode Rebel X-Ray Lens Layer */}
-                <div className="lens-layer">
-                  <div className="lens-content flex items-center justify-center gap-3 px-10 sm:px-14 py-5 sm:py-6">
-                    <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm drop-shadow-md">Download Speechworks</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right drop-shadow-md"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                <div className="lens-layer bg-app-text">
+                  <div className="lens-content w-full h-full flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-12 py-5 sm:py-6 relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" className="invisible shrink-0" />
+                    <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm drop-shadow-md whitespace-nowrap text-center">Download Speechworks</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right drop-shadow-md shrink-0"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
                   </div>
                 </div>
             </a>
