@@ -273,25 +273,55 @@ const AnimatedTherapistFace = () => (
 
 export default function LiveAppMockup() {
   const [mounted, setMounted] = useState(false);
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     setMounted(true);
+    const timer = setInterval(() => setTime(new Date()), 10000);
+    return () => clearInterval(timer);
   }, []);
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: false,
+    });
+  };
+
+  const getGreeting = () => {
+    const hour = time.getHours();
+    if (hour < 12) return "Good Morning,";
+    if (hour < 17) return "Good Afternoon,";
+    if (hour < 21) return "Good Evening,";
+    return "Good Evening,"; // Keep it warm at night
+  };
 
   return (
     <div className="w-full h-full bg-[#f9fafb] text-slate-800 flex flex-col font-sans overflow-hidden rounded-[inherit] relative select-none">
-      {/* Top Status Bar Mock - Increased height for realistic spacing */}
-      <div className="w-full pt-6 pb-3 px-6 flex justify-between items-center text-[11px] font-bold text-slate-900 bg-[#f9fafb] z-40 shrink-0 absolute top-0 left-0 right-0">
-        <span className="font-semibold tracking-tight">9:41</span>
+      {/* Top Status Bar Mock - Dynamic & Apple-fied */}
+      <div className="w-full pt-6 pb-3 px-6 flex justify-between items-center text-[12px] font-bold text-slate-900 bg-[#f9fafb] z-40 shrink-0 absolute top-0 left-0 right-0">
+        <span className="font-bold tracking-tight">{formatTime(time)}</span>
         <div className="flex gap-1.5 items-center">
-          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z" />
+          {/* Signal Icon (4 bars) */}
+          <svg className="w-[17px] h-[10px]" viewBox="0 0 17 10" fill="currentColor">
+            <rect x="0" y="7" width="2.5" height="3" rx="0.5" />
+            <rect x="4" y="5" width="2.5" height="5" rx="0.5" />
+            <rect x="8" y="2.5" width="2.5" height="7.5" rx="0.5" />
+            <rect x="12" y="0" width="2.5" height="10" rx="0.5" />
           </svg>
-          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+          {/* Wi-Fi Icon */}
+          <svg className="w-[15px] h-[11px]" viewBox="0 0 15 11" fill="currentColor">
+            <path d="M7.5 11C8.32843 11 9 10.3284 9 9.5C9 8.67157 8.32843 8 7.5 8C6.67157 8 6 8.67157 6 9.5C6 10.3284 6.67157 11 7.5 11Z" />
+            <path d="M12.11 6.39C10.884 5.16398 9.23199 4.4754 7.5 4.4754C5.76801 4.4754 4.11602 5.16398 2.89 6.39" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+            <path d="M14.61 3.89C12.7239 2.00392 10.166 0.945312 7.5 0.945312C4.83401 0.945312 2.27602 2.00392 0.39 3.89" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
           </svg>
-          <div className="w-[18px] h-[9px] rounded-[3px] border border-slate-900 p-[1px] flex justify-start">
-            <div className="w-[85%] h-full bg-slate-900 rounded-[1.5px]"></div>
+          {/* Battery Icon */}
+          <div className="flex items-center gap-0.5 ml-0.5">
+            <div className="w-[20px] h-[10px] rounded-[2.5px] border-[1px] border-black/80 relative p-[1px]">
+              <div className="h-full bg-black/90 rounded-[1px] w-[85%]"></div>
+            </div>
+            <div className="w-[1.5px] h-[4px] bg-black/40 rounded-r-full"></div>
           </div>
         </div>
       </div>
@@ -306,7 +336,7 @@ export default function LiveAppMockup() {
           <div className="flex justify-between items-start pt-1 px-1">
             <div>
               <p className="text-[12px] font-semibold text-slate-500 leading-tight">
-                Good Afternoon,
+                {getGreeting()}
               </p>
               <h1 className="text-[20px] font-extrabold text-[#3E2723] leading-tight mt-0.5">
                 User
