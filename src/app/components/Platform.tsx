@@ -334,7 +334,11 @@ const features = [
     tagBg: "bg-white",
     tagBorder: "border-orange-100",
     activeBar: "bg-brand",
-    renderUI: (animKey: number) => <ProgressAppMockup radarChart={<RadarUI animKey={animKey} isFloating={true} />} />,
+    renderUI: (animKey: number) => (
+      <div className="md:translate-x-12 lg:translate-x-16 transition-transform duration-700">
+        <ProgressAppMockup radarChart={<RadarUI animKey={animKey} isFloating={true} />} />
+      </div>
+    ),
   },
   {
     id: "adversarial",
