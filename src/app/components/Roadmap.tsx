@@ -261,6 +261,7 @@ export default function Roadmap() {
                     <RoadmapMockup
                       phase={2}
                       status="building"
+                      comingSoon={true}
                     />
                   </div>
                 </div>
