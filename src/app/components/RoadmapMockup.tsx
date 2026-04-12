@@ -22,7 +22,7 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
           PIXEL-PERFECT DEVICE FRAME 
           Everything is clipped at this level. Nothing can leak out.
       */}
-      <div className="relative w-[280px] h-[560px] md:w-[340px] md:h-[680px] shadow-2xl transition-transform duration-700 hover:scale-[1.02] group/phone rounded-[40px] md:rounded-[48px] overflow-hidden ring-1 ring-black/5">
+      <div className="relative w-[220px] h-[380px] md:w-[260px] md:h-[440px] shadow-2xl transition-transform duration-700 hover:scale-[1.02] group/phone rounded-[32px] md:rounded-[40px] overflow-hidden ring-1 ring-black/5">
         
         {/* Exterior Chassis Ring */}
         <div className="absolute inset-0 bg-gradient-to-tr from-[#050505] via-[#2a2a2a] to-[#1a1a1a]" />
@@ -31,7 +31,7 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
             SCREEN BEZEL
             This is the black border around the screen. 
         */}
-        <div className="absolute inset-[6px] md:inset-[8px] bg-black rounded-[34px] md:rounded-[40px] overflow-hidden isolate">
+        <div className="absolute inset-[6px] md:inset-[8px] bg-black rounded-[28px] md:rounded-[34px] overflow-hidden isolate">
           
           {/* Dynamic Island notification pill */}
           <div className="absolute top-3 md:top-4 inset-x-0 flex justify-center z-[60] pointer-events-none">
