@@ -111,7 +111,7 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
 // ──────────────────────────────────────────────────────────────────────────
 // INTERNAL CARD STACK COMPONENT
 // ──────────────────────────────────────────────────────────────────────────
-function CardStack({ isSectionHovered, externalMousePos }: { isSectionHovered: boolean, externalMousePos: { x: number, y: number } }) {
+function CardStack({ isSectionHovered }: { isSectionHovered: boolean }) {
     const [activeIndex, setActiveIndex] = useState(0);
 
     useEffect(() => {
@@ -123,31 +123,31 @@ function CardStack({ isSectionHovered, externalMousePos }: { isSectionHovered: b
 
     const cards = [
         {
-            id: "friction",
-            title: "Friction Alert",
-            content: "AI detected aggressive pacing. Recommend tactical pause.",
-            bg: "bg-indigo-950/95",
+            id: "easy",
+            title: "LEVEL 01: EMOTIONAL SAFETY",
+            content: "Talking to Your Pet. Low-stakes practice to build fundamental composure.",
+            bg: "bg-emerald-500",
+            textColor: "text-white",
+            tagColor: "text-emerald-100",
+            dotColor: "bg-white"
+        },
+        {
+            id: "medium",
+            title: "LEVEL 02: CASUAL SOCIAL",
+            content: "Planning a trip with a friend. Practice semi-structured dialogue in a safe environment.",
+            bg: "bg-indigo-600",
+            textColor: "text-white",
+            tagColor: "text-indigo-100",
+            dotColor: "bg-white"
+        },
+        {
+            id: "difficult",
+            title: "LEVEL 03: ADVERSARIAL TEST",
+            content: "Impatient Interviewer. High-pressure scenario with aggressive interruptions. Stay resilient.",
+            bg: "bg-slate-900 border-red-500/30",
             textColor: "text-white",
             tagColor: "text-red-400",
-            dotColor: "bg-red-400"
-        },
-        {
-            id: "strategic",
-            title: "Strategic Play",
-            content: "Switching to 'Empathic Listener' mode to lower tension.",
-            bg: "bg-white",
-            textColor: "text-slate-700",
-            tagColor: "text-violet-600",
-            dotColor: "bg-violet-600"
-        },
-        {
-            id: "bio",
-            title: "Bio-Feedback",
-            content: "Heart rate variability rising. Micro-stutters detected.",
-            bg: "bg-gradient-to-br from-violet-600 to-purple-800",
-            textColor: "text-white",
-            tagColor: "text-white/70",
-            dotColor: "bg-white"
+            dotColor: "bg-red-500"
         }
     ];
 
@@ -172,19 +172,19 @@ function CardStack({ isSectionHovered, externalMousePos }: { isSectionHovered: b
                 return (
                     <div 
                         key={card.id}
-                        className={`absolute inset-0 p-7 ${card.bg} ${card.textColor} rounded-[2.2rem] shadow-2xl transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) border border-white/10 backdrop-blur-3xl flex flex-col justify-center`}
+                        className={`absolute inset-0 p-6 ${card.bg} ${card.textColor} rounded-[2rem] shadow-2xl transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) border border-white/10 backdrop-blur-3xl flex flex-col justify-center`}
                         style={{ 
-                            transform: `translateZ(${zPos}px) translateY(${yPos + (externalMousePos.y * 6)}px) scale(${scale})`,
+                            transform: `translateZ(${zPos}px) translateY(${yPos}px) scale(${scale})`,
                             opacity,
                             zIndex: 100 - offset,
                             boxShadow: isFocused ? "0 30px 60px -12px rgba(0,0,0,0.4)" : "none"
                         }}
                     >
-                        <div className="flex items-center gap-2.5 mb-3">
+                        <div className="flex items-center gap-2.5 mb-2.5">
                             <div className={`w-2 h-2 rounded-full ${card.dotColor} ${isFocused ? 'animate-pulse' : ''}`} />
-                            <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${card.tagColor}`}>{card.title}</span>
+                            <span className={`text-[10px] font-black uppercase tracking-[0.1em] ${card.tagColor}`}>{card.title}</span>
                         </div>
-                        <p className="text-base md:text-[20px] font-bold leading-[1.2] tracking-tight opacity-95">{card.content}</p>
+                        <p className="text-sm md:text-base font-bold leading-[1.3] tracking-tight opacity-95 line-clamp-3">{card.content}</p>
                     </div>
                 );
             })}
@@ -257,7 +257,7 @@ export default function AdversarialAppMockup({
                     <AdversarialChatUI animKey={animKey} />
 
                     {/* ── INTERNAL CARD STACK ── */}
-                    <CardStack isSectionHovered={isSectionHovered} externalMousePos={externalMousePos} />
+                    <CardStack isSectionHovered={isSectionHovered} />
 
                     {/* Laser Sweep */}
                     <div 
