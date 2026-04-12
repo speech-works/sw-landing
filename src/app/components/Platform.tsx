@@ -265,7 +265,7 @@ const features = [
     tagBorder: "border-purple-200",
     activeBar: "bg-purple-500",
     renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
-      <div className="md:-translate-x-12 lg:-translate-x-16 transition-transform duration-700">
+      <div className="md:translate-x-12 lg:translate-x-16 transition-transform duration-700">
         <AdversarialAppMockup animKey={animKey} isSectionHovered={isHovered} externalMousePos={mousePos} />
       </div>
     ),

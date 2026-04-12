@@ -1,6 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
+// -------------------------------------------------------
+// ICONS
+// -------------------------------------------------------
+const SignalIcon = ({ color = "#1E293B" }) => (
+    <svg viewBox="0 0 17 12" fill={color} className="w-[14px] h-[10px]">
+        <rect x="0" y="7" width="2.5" height="4" rx="0.5" />
+        <rect x="4" y="5" width="2.5" height="6" rx="0.5" />
+        <rect x="8" y="2" width="2.5" height="9" rx="0.5" />
+        <rect x="12" y="0" width="2.5" height="11" rx="0.5" opacity="0.3" />
+    </svg>
+);
+
 // ──────────────────────────────────────────────────────────────────────────
 // ADVERSARIAL CHAT INTERNAL UI
 // ──────────────────────────────────────────────────────────────────────────
@@ -27,7 +39,7 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
   );
 
   return (
-    <div className="flex flex-col gap-4 p-5 pb-52 antialiased">
+    <div className="flex flex-col gap-4 p-5 pt-16 pb-52 antialiased">
       {/* Waiter bubble */}
       <div
         className="flex items-end gap-2.5 self-start max-w-[100%]"
@@ -173,7 +185,6 @@ function CardStack({ isSectionHovered, externalMousePos }: { isSectionHovered: b
                             <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${card.tagColor}`}>{card.title}</span>
                         </div>
                         <p className="text-base md:text-[20px] font-bold leading-[1.2] tracking-tight opacity-95">{card.content}</p>
-                        
                     </div>
                 );
             })}
@@ -220,12 +231,26 @@ export default function AdversarialAppMockup({
                     className="absolute inset-[6px] rounded-[3rem] bg-[#F8F9FF] overflow-hidden flex flex-col" 
                     style={{ transform: `translateZ(15px)`, transformStyle: "preserve-3d" }}
                 >
-                    {/* Status Bar */}
-                    <div className="h-12 flex items-end justify-between px-8 pb-1">
-                        <span className="text-[10px] font-bold text-slate-800">9:41</span>
-                        <div className="flex gap-1">
-                            <div className="w-3 h-3 rounded-full border border-slate-800" />
-                            <div className="w-5 h-2.5 rounded-sm border border-slate-800" />
+                    {/* Status Bar & Dynamic Island (Pinned) */}
+                    <div className="absolute top-0 inset-x-0 h-14 pointer-events-none z-[160] flex flex-col">
+                        <div className="h-[32px] pt-1.5 px-8 flex items-center justify-between">
+                            <span className="text-[10px] font-bold text-slate-900 tracking-tight">9:41</span>
+                            <div className="flex items-center gap-1.5">
+                                <SignalIcon color="#0f172a" />
+                                <div className="w-[18px] h-[9px] border-[1px] border-slate-900 rounded-[2px] p-[1.2px] flex">
+                                    <div className="w-[85%] h-full bg-slate-900 rounded-px" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Dynamic Island */}
+                        <div className="absolute top-[10px] left-1/2 -translate-x-1/2 w-[84px] h-[25px] bg-black rounded-[14px] flex items-center justify-center overflow-hidden">
+                             <div className="absolute inset-0 bg-red-500/10 animate-pulse-island" />
+                             <div className="flex items-center gap-[2px] opacity-40">
+                                 {[1,0.6,1.2,0.8].map((h, i) => (
+                                     <div key={i} className="w-[2px] bg-red-400 rounded-full animate-island-wave" style={{ height: `${h * 4}px`, animationDelay: `${i * 0.1}s` }} />
+                                 ))}
+                             </div>
                         </div>
                     </div>
 
@@ -245,6 +270,19 @@ export default function AdversarialAppMockup({
                 </div>
 
             </div>
+
+            <style>{`
+                @keyframes pulse-island {
+                    0%, 100% { opacity: 0.2; scale: 1; }
+                    50% { opacity: 0.4; scale: 1.1; }
+                }
+                @keyframes island-wave {
+                    0%, 100% { transform: scaleY(1); }
+                    50% { transform: scaleY(1.5); }
+                }
+                .animate-pulse-island { animation: pulse-island 2s ease-in-out infinite; }
+                .animate-island-wave { animation: island-wave 1s ease-in-out infinite; }
+            `}</style>
         </div>
     );
 }
