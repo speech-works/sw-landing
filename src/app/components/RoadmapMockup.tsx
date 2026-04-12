@@ -70,20 +70,40 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
 
             {/* Frosty Coming Soon Overlay */}
             {comingSoon && (
-              <div className="absolute inset-0 z-50 flex items-center justify-center p-6 bg-black/5 backdrop-blur-[6px] rounded-[inherit] overflow-hidden">
-                <div className="bg-white/80 backdrop-blur-xl border border-white/60 p-6 rounded-3xl shadow-2xl flex flex-col items-center text-center animate-platform-springUp">
-                  <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${theme.from} ${theme.to} flex items-center justify-center text-white mb-4 shadow-lg`}>
-                    <span className="font-black text-xl">{phase}</span>
+              <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] rounded-[inherit] overflow-hidden group/lock p-8">
+                {/* Subtle Thematic Glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[80px] opacity-20" 
+                     style={{ backgroundColor: theme.accent }} />
+                
+                {/* Minimalist Lock */}
+                <div className="relative mb-10 animate-platform-float">
+                  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 11V7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 11" stroke="white" strokeWidth="1.5" strokeLinecap="round" className="opacity-30" />
+                    <rect x="5" y="10" width="14" height="11" rx="4" stroke="white" strokeWidth="1.5" />
+                    <path d="M12 14V17" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                </div>
+
+                <div className="relative text-center space-y-6">
+                  <div className="space-y-2">
+                    <h3 className="text-white text-3xl font-black tracking-tighter transition-all duration-700">
+                      COMING<br />SOON
+                    </h3>
+                    <div className="w-10 h-1 bg-white/20 mx-auto rounded-full" />
                   </div>
-                  <h3 className="text-[#3F332D] text-lg font-black tracking-tight mb-1 uppercase">Coming Soon</h3>
-                  <p className="text-[#3F332D]/60 text-xs font-bold uppercase tracking-widest leading-tight">
-                    Phase {phase === 2 ? "Two" : "Three"} <br />
-                    In Development
+                  
+                  <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">
+                    Phase {phase === 2 ? "02" : "03"}
                   </p>
-                  <div className="mt-4 flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 border border-black/5">
-                    <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: theme.accent }} />
-                    <span className="text-[8px] font-black text-[#3F332D] uppercase tracking-wider">Active Sprints</span>
-                  </div>
+                </div>
+
+                {/* Pulsing Readiness Dot */}
+                <div className="absolute bottom-12 flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: theme.accent }}></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: theme.accent }}></span>
+                  </span>
+                  <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em]">System Ready</span>
                 </div>
               </div>
             )}
