@@ -87,7 +87,7 @@ const KEYFRAMES = `
 }
 @keyframes platform-circleStroke {
   from { stroke-dashoffset: 264; }
-  to   { stroke-dashoffset: 96; }
+  to   { stroke-dashoffset: 153; }
 }
 `;
 
@@ -317,11 +317,11 @@ function StaminaUI({ animKey }: { animKey: number }) {
       }}
     >
       <div className="relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center shrink-0">
-        <svg className="absolute inset-0 w-full h-full transform -rotate-90">
-          <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6"
+        <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full transform -rotate-90">
+          <circle cx="50" cy="50" r="42" stroke="currentColor" strokeWidth="6"
             fill="transparent" className="text-slate-100" />
           <circle
-            cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6"
+            cx="50" cy="50" r="42" stroke="currentColor" strokeWidth="6"
             fill="transparent" strokeDasharray="264" strokeDashoffset="264"
             className="text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]"
             strokeLinecap="round"
