@@ -6,9 +6,10 @@ interface RoadmapMockupProps {
   phase: number;
   status: "live" | "building" | "future";
   comingSoon?: boolean;
+  isBlank?: boolean;
 }
 
-export default function RoadmapMockup({ phase, status, comingSoon = false }: RoadmapMockupProps) {
+export default function RoadmapMockup({ phase, status, comingSoon = false, isBlank }: RoadmapMockupProps) {
   const themes = {
     1: { from: "from-[#F97316]", to: "to-[#EA580C]", accent: "#F97316" },
     2: { from: "from-purple-500", to: "to-purple-800", accent: "#8B5CF6" },
@@ -45,7 +46,16 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
               Final layer of clipping for content.
           */}
           <div className="absolute inset-0 bg-white rounded-[inherit] overflow-hidden isolate">
-            {phase === 1 ? (
+            {isBlank ? (
+              <div className="absolute inset-0 bg-[#f9fafb] flex items-center justify-center p-12 text-center">
+                {/* Subtle Brand Watermark for Blank Screens */}
+                <div className="opacity-[0.05] grayscale brightness-50">
+                  <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                  </svg>
+                </div>
+              </div>
+            ) : phase === 1 ? (
               <LiveAppMockup />
             ) : (
               /* Placeholder for Phase 2/3 */
