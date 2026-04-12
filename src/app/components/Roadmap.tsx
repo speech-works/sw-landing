@@ -111,81 +111,41 @@ export default function Roadmap() {
               >
                 {/* Layer 1: Technical Grid Watermark (Deepest) */}
                 <div
-                  className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none transition-transform duration-700 ease-out"
+                  className="absolute inset-0 opacity-[0.1] mix-blend-overlay pointer-events-none"
                   style={{
                     transform: `translate(${(mousePos.x - 0.5) * 20}px, ${(mousePos.y - 0.5) * 20}px)`,
                   }}
                 >
-                  <div className="absolute inset-0 bg-grid" />
-                  <div className="absolute inset-x-0 h-px bg-white/20 top-1/4 animate-scanline" />
+                  <div className="absolute inset-0 bg-grid opacity-20" />
                 </div>
 
-                {/* Layer 2: Gigantic Vertical Watermark */}
+                {/* Layer 2: Massive Background Numeral */}
                 <div
-                  className="absolute -right-20 top-1/2 -translate-y-1/2 rotate-90 text-[12rem] md:text-[20rem] font-black text-white/5 tracking-tightest pointer-events-none leading-none transition-transform duration-1000 ease-out"
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[35rem] font-black text-white/[0.03] tracking-tightest pointer-events-none leading-none select-none transition-transform duration-1000 ease-out"
                   style={{
-                    transform: `translateY(-50%) rotate(90deg) translateX(${(mousePos.x - 0.5) * 40}px)`,
+                    transform: `translate(-50%, -50%) translate(${(mousePos.x - 0.5) * 40}px, ${(mousePos.y - 0.5) * 40}px)`,
                   }}
                 >
-                  PHASE_01
+                  01
                 </div>
 
-                {/* Layer 3: Tech Metadata HUD */}
-                <div
-                  className="absolute top-8 left-8 md:top-10 md:left-12 flex flex-col gap-1 z-30 transition-transform duration-500 ease-out"
-                  style={{
-                    transform: `translate(${(mousePos.x - 0.5) * -15}px, ${(mousePos.y - 0.5) * -15}px)`,
-                  }}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono text-white/40 tracking-[0.3em] uppercase">
-                      SYS_LOG :: READY
-                    </span>
-                    <span className="w-1.5 h-px bg-white/20" />
-                    <span className="text-[10px] font-mono text-white/40 tracking-[0.3em] uppercase">
-                      04.12.2026
-                    </span>
-                  </div>
-                  <div className="text-[10px] font-mono text-brand-100/60 uppercase tracking-widest leading-none">
-                    // STATUS :: DEPLOYED
-                  </div>
-                </div>
-
-                <div className="relative z-30 flex flex-col items-start justify-between h-full w-full pointer-events-none">
-                  {/* Left: Floating Typography Panel */}
-                  <div
-                    className="w-full md:w-[55%] flex flex-col justify-center h-full transition-transform duration-300 ease-out"
-                    style={{
-                      transform: `translate(${(mousePos.x - 0.5) * -25}px, ${(mousePos.y - 0.5) * -25}px)`,
-                    }}
-                  >
-                    <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl space-y-4 pointer-events-auto">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[9px] font-black uppercase tracking-[0.2em]">
-                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-                        Live Sandbox
-                      </div>
-
-                      <div className="space-y-1">
-                        <h3 className="text-3xl md:text-[2.8rem] text-white font-black tracking-tightest uppercase leading-[0.9]">
-                          A Clinical
-                          <br />
-                          <span
-                            className="text-transparent"
-                            style={{ WebkitTextStroke: "1.5px white" }}
-                          >
-                            Grade
-                          </span>
-                          <br />
-                          <span className="italic font-serif font-light text-brand-100">
-                            sandbox.
-                          </span>
+                <div className="relative z-30 flex items-center justify-center h-full w-full pointer-events-none">
+                  {/* Floating Typography Poster */}
+                  <div className="w-full flex flex-col items-center justify-center text-center transition-transform duration-300 ease-out"
+                       style={{ transform: `translate(${(mousePos.x - 0.5) * -40}px, ${(mousePos.y - 0.5) * -40}px)` }}>
+                    
+                    <div className="space-y-0 pointer-events-auto relative group/poster">
+                      <div className="space-y-0 relative">
+                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-white font-black tracking-tightest uppercase leading-[0.8] drop-shadow-2xl">
+                          CLINICAL
+                        </h3>
+                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-transparent font-black tracking-tightest uppercase leading-[0.8]" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.7)' }}>
+                          GRADE
+                        </h3>
+                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-brand-100 font-serif italic font-light tracking-tighter leading-[0.8]">
+                          sandbox.
                         </h3>
                       </div>
-
-                      <p className="text-white/70 text-xs md:text-sm leading-relaxed font-medium">
-                        Forging a safe environment to practice scenarios at your
-                        own pace.
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -209,49 +169,39 @@ export default function Roadmap() {
                 className={`absolute inset-0 overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-purple-500 to-purple-800 p-6 sm:p-8 md:p-12 transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] border border-white/10 shadow-2xl group/canvas flex flex-col justify-between ${activePhase === 2 ? "opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto" : "opacity-0 translate-y-8 scale-95 z-0 pointer-events-none"}`}
               >
                 <div
-                  className="absolute inset-0 opacity-[0.1] mix-blend-overlay"
+                  className="absolute inset-x-0 top-0 h-1/2 opacity-[0.05] mix-blend-overlay pointer-events-none"
                   style={{
                     backgroundSize: "20px 20px",
-                    backgroundImage:
-                      "radial-gradient(circle, white 1px, transparent 1px)",
+                    backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
                   }}
                 />
 
+                {/* Layer 2: Massive Background Numeral */}
                 <div
-                  className="absolute -left-20 top-1/2 -translate-y-1/2 -rotate-90 text-[12rem] md:text-[20rem] font-black text-white/5 tracking-tightest pointer-events-none leading-none transition-transform duration-1000 ease-out"
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[35rem] font-black text-white/[0.03] tracking-tightest pointer-events-none leading-none select-none transition-transform duration-1000 ease-out"
                   style={{
-                    transform: `translateY(-50%) rotate(-90deg) translateX(${(mousePos.x - 0.5) * -40}px)`,
+                    transform: `translate(-50%, -50%) translate(${(mousePos.x - 0.5) * -40}px, ${(mousePos.y - 0.5) * -40}px)`,
                   }}
                 >
-                  PHASE_02
+                  02
                 </div>
 
-                <div className="relative z-30 flex flex-col items-start justify-between h-full w-full pointer-events-none">
-                  <div
-                    className="w-full md:w-[55%] flex flex-col justify-center h-full transition-transform duration-300 ease-out"
-                    style={{
-                      transform: `translate(${(mousePos.x - 0.5) * -25}px, ${(mousePos.y - 0.5) * -25}px)`,
-                    }}
-                  >
-                    <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl space-y-4 pointer-events-auto">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[9px] font-black uppercase tracking-[0.2em]">
-                        <span className="relative flex h-1.5 w-1.5">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
-                        </span>
-                        Building Community
+                <div className="relative z-30 flex items-center justify-center h-full w-full pointer-events-none">
+                  <div className="w-full flex flex-col items-center justify-center text-center transition-transform duration-300 ease-out"
+                       style={{ transform: `translate(${(mousePos.x - 0.5) * -40}px, ${(mousePos.y - 0.5) * -40}px)` }}>
+                    
+                    <div className="space-y-0 pointer-events-auto relative group/poster">
+                      <div className="space-y-0 relative">
+                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-white font-black tracking-tightest uppercase leading-[0.8] drop-shadow-2xl">
+                          STRONGER
+                        </h3>
+                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-transparent font-black tracking-tightest uppercase leading-[0.8]" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.7)' }}>
+                          UNIFIED
+                        </h3>
+                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-purple-200 font-serif italic font-light tracking-tighter leading-[0.8]">
+                          community.
+                        </h3>
                       </div>
-                      <h3 className="text-3xl md:text-[2.8rem] text-white font-black tracking-tightest uppercase leading-[0.9]">
-                        Stronger
-                        <br />
-                        <span className="italic font-serif font-light text-purple-200">
-                          together.
-                        </span>
-                      </h3>
-                      <p className="text-white/70 text-xs md:text-sm leading-relaxed font-medium">
-                        Uniting voices across a dedicated ecosystem of growth
-                        and support.
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -278,45 +228,39 @@ export default function Roadmap() {
                 className={`absolute inset-0 overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-emerald-500 to-emerald-800 p-6 sm:p-8 md:p-12 transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] border border-white/10 shadow-2xl group/canvas flex flex-col justify-between ${activePhase === 3 ? "opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto" : "opacity-0 translate-y-8 scale-95 z-0 pointer-events-none"}`}
               >
                 <div
-                  className="absolute inset-0 opacity-[0.15] mix-blend-overlay"
+                  className="absolute inset-0 h-1/2 opacity-[0.05] mix-blend-overlay pointer-events-none"
                   style={{
-                    backgroundImage:
-                      "radial-gradient(rgba(255,255,255,0.2) 2px, transparent 2px)",
+                    backgroundImage: "radial-gradient(rgba(255,255,255,0.2) 2px, transparent 2px)",
                     backgroundSize: "30px 30px",
                   }}
                 />
 
+                {/* Layer 2: Massive Background Numeral */}
                 <div
-                  className="absolute -right-20 top-1/2 -translate-y-1/2 rotate-90 text-[12rem] md:text-[20rem] font-black text-white/5 tracking-tightest pointer-events-none leading-none transition-transform duration-1000 ease-out"
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[35rem] font-black text-white/[0.03] tracking-tightest pointer-events-none leading-none select-none transition-transform duration-1000 ease-out"
                   style={{
-                    transform: `translateY(-50%) rotate(90deg) translateX(${(mousePos.x - 0.5) * -40}px)`,
+                    transform: `translate(-50%, -50%) translate(${(mousePos.x - 0.5) * -40}px, ${(mousePos.y - 0.5) * -40}px)`,
                   }}
                 >
-                  PHASE_03
+                  03
                 </div>
 
-                <div className="relative z-30 flex flex-col items-start justify-between h-full w-full pointer-events-none">
-                  <div
-                    className="w-full md:w-[55%] flex flex-col justify-center h-full transition-transform duration-300 ease-out"
-                    style={{
-                      transform: `translate(${(mousePos.x - 0.5) * -25}px, ${(mousePos.y - 0.5) * -25}px)`,
-                    }}
-                  >
-                    <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl space-y-4 pointer-events-auto">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[9px] font-black uppercase tracking-[0.2em]">
-                        Master Support
-                      </div>
-                      <h3 className="text-3xl md:text-[2.8rem] text-white font-black tracking-tightest uppercase leading-[0.9]">
-                        Expert
-                        <br />
-                        <span className="italic font-serif font-light text-emerald-100">
+                <div className="relative z-30 flex items-center justify-center h-full w-full pointer-events-none">
+                  <div className="w-full flex flex-col items-center justify-center text-center transition-transform duration-300 ease-out"
+                       style={{ transform: `translate(${(mousePos.x - 0.5) * -40}px, ${(mousePos.y - 0.5) * -40}px)` }}>
+                    
+                    <div className="space-y-0 pointer-events-auto relative group/poster">
+                      <div className="space-y-0 relative">
+                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-white font-black tracking-tightest uppercase leading-[0.8] drop-shadow-2xl">
+                          EXPERT
+                        </h3>
+                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-transparent font-black tracking-tightest uppercase leading-[0.8]" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.7)' }}>
+                          CLINICAL
+                        </h3>
+                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-emerald-100 font-serif italic font-light tracking-tighter leading-[0.8]">
                           guidance.
-                        </span>
-                      </h3>
-                      <p className="text-white/70 text-xs md:text-sm leading-relaxed font-medium">
-                        Direct access to world-class therapists and clinical
-                        mentorship.
-                      </p>
+                        </h3>
+                      </div>
                     </div>
                   </div>
                 </div>
