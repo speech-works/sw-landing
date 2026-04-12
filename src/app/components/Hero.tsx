@@ -75,7 +75,7 @@ export default function Hero() {
       
                       {/*  Right Visual  */}
                       <div className="lg:col-span-4 hidden lg:flex justify-end reveal reveal-delay-3 relative active">
-                          <div className="w-[300px] xl:w-[320px] h-[600px] xl:h-[640px] rounded-[3rem] xl:rounded-[3.5rem] border-[6px] border-[#2A2A2A] bg-black p-1 relative overflow-hidden flex flex-col shadow-[0_20px_60px_-15px_rgba(242,128,68,0.3)] animate-float transform rotate-[-2deg] hover:rotate-0 transition-transform duration-700 hover:scale-105">
+                          <div className="w-[300px] xl:w-[320px] h-[600px] xl:h-[640px] rounded-[3rem] xl:rounded-[3.5rem] border-[6px] border-[#2A2A2A] bg-black relative overflow-hidden flex flex-col shadow-[0_20px_60px_-15px_rgba(242,128,68,0.3)] animate-float transform rotate-[-2deg] hover:rotate-0 transition-transform duration-700 hover:scale-105">
                               {/* iPhone Hardware Elements */}
                               <div className="absolute top-0 inset-x-0 h-7 flex justify-center z-50 pointer-events-none">
                                   <div className="w-1/3 h-6 bg-[#2A2A2A] rounded-b-3xl"></div>
@@ -85,8 +85,8 @@ export default function Hero() {
                               <div className="absolute top-[190px] -left-[7px] w-1 h-12 bg-[#1A1A1A] rounded-l-md"></div>
                               <div className="absolute top-[140px] -right-[7px] w-1 h-16 bg-[#1A1A1A] rounded-r-md"></div>
                               
-                              {/* Live Screen Content */}
-                              <div className="w-full h-full rounded-[2.5rem] xl:rounded-[3rem] overflow-hidden relative">
+                              {/* Live Screen Content - SEAMLESS FIT */}
+                              <div className="w-full h-full rounded-[2.625rem] xl:rounded-[3.125rem] overflow-hidden relative">
                                   <LiveAppMockup />
                               </div>
                           </div>
