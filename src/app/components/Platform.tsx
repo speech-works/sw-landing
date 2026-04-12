@@ -334,9 +334,9 @@ const features = [
     tagBg: "bg-white",
     tagBorder: "border-orange-100",
     activeBar: "bg-brand",
-    renderUI: (animKey: number, externalTilt?: { x: number, y: number }) => (
+    renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
       <div className="md:translate-x-12 lg:translate-x-16 transition-transform duration-700">
-        <ProgressAppMockup radarChart={<RadarUI animKey={animKey} isFloating={true} />} externalTilt={externalTilt} />
+        <ProgressAppMockup radarChart={<RadarUI animKey={animKey} isFloating={true} />} isSectionHovered={isHovered} externalMousePos={mousePos} />
       </div>
     ),
   },
@@ -368,7 +368,7 @@ const features = [
     tagBg: "bg-white",
     tagBorder: "border-purple-200",
     activeBar: "bg-purple-500",
-    renderUI: (animKey: number, externalTilt?: { x: number, y: number }) => <AdversarialChatUI animKey={animKey} />,
+    renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => <AdversarialChatUI animKey={animKey} />,
   },
   {
     id: "stamina",
@@ -397,7 +397,7 @@ const features = [
     tagBg: "bg-white",
     tagBorder: "border-emerald-200",
     activeBar: "bg-emerald-500",
-    renderUI: (animKey: number, externalTilt?: { x: number, y: number }) => <StaminaUI animKey={animKey} />,
+    renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => <StaminaUI animKey={animKey} />,
   },
   {
     id: "roadmap",
@@ -426,7 +426,7 @@ const features = [
     tagBorder: "border-white/30",
     activeBar: "bg-brand",
     isDark: true,
-    renderUI: (animKey: number, externalTilt?: { x: number, y: number }) => <RoadmapUI animKey={animKey} />,
+    renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => <RoadmapUI animKey={animKey} />,
   },
 ];
 
@@ -465,18 +465,19 @@ export default function Platform() {
     setProgress(0);
   }, []);
 
-  const [mouseTilt, setMouseTilt] = useState({ x: 0, y: 0 });
+  const [isHoveredStage, setIsHoveredStage] = useState(false);
+  const [stageMousePos, setStageMousePos]     = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Normalize tilt (-1 to 1)
-    const tiltX = (y / rect.height - 0.5) * 2;
-    const tiltY = (x / rect.width - 0.5) * -2;
+    // Normalize coordinates for the whole section (-1 to 1)
+    const normX = (x / rect.width - 0.5) * 2;
+    const normY = (y / rect.height - 0.5) * 2;
     
-    setMouseTilt({ x: tiltX, y: tiltY });
+    setStageMousePos({ x: normX, y: normY });
     
     e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
     e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
@@ -627,15 +628,17 @@ export default function Platform() {
           {/* ── Right Visual Stage ── */}
           <div 
             className="lg:col-span-7 relative h-[350px] sm:h-[450px] lg:h-auto"
+            onMouseEnter={() => setIsHoveredStage(true)}
+            onMouseLeave={() => setIsHoveredStage(false)}
             style={{
               perspective: "1200px",
               transformStyle: "preserve-3d",
             }}
           >
             <div 
-                className="w-full h-full lg:aspect-square xl:aspect-[4/3] relative transition-transform duration-500 ease-out group/stage"
+                className="w-full h-full lg:aspect-square xl:aspect-[4/3] relative transition-transform duration-700 ease-out group/stage"
                 style={{
-                    transform: `rotateX(${mouseTilt.x * 5}deg) rotateY(${mouseTilt.y * 5}deg)`,
+                    transform: `rotateX(${stageMousePos.y * 5}deg) rotateY(${stageMousePos.x * -5}deg)`,
                     transformStyle: "preserve-3d",
                 }}
             >
@@ -701,7 +704,7 @@ export default function Platform() {
 
                     {/* Dynamic mock UI */}
                     <div className="absolute inset-0 pointer-events-none">
-                      {isActive && feature.renderUI(animKey, mouseTilt)}
+                      {isActive && feature.renderUI(animKey, isHoveredStage, stageMousePos)}
                     </div>
 
                     {/* Bottom CTA (roadmap only) */}

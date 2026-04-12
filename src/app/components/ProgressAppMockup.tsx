@@ -44,48 +44,31 @@ const AmbientParticles = () => (
 
 export default function ProgressAppMockup({ 
     radarChart, 
-    externalTilt = { x: 0, y: 0 } 
+    isSectionHovered = false,
+    externalMousePos = { x: 0, y: 0 } 
 }: { 
     radarChart?: React.ReactNode,
-    externalTilt?: { x: number, y: number }
+    isSectionHovered?: boolean,
+    externalMousePos?: { x: number, y: number }
 }) {
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const [isHovered, setIsHovered] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (!containerRef.current) return;
-        const rect = containerRef.current.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        
-        const x = (e.clientX - centerX) / (rect.width / 2);
-        const y = (e.clientY - centerY) / (rect.height / 2);
-        
-        setMousePos({ x, y });
-    };
-
     // COMBINE LOCAL TILT WITH GLOBAL STAGE TILT
-    const rotateX = (18 - (mousePos.y * 8)) + (externalTilt.x * 2); 
-    const rotateY = (-28 + (mousePos.x * 12)) + (externalTilt.y * 3);
-    const rotateZ = (6 + (mousePos.x * 3));
+    // We use externalMousePos which is stable (-1 to 1)
+    const rotateX = (18 - (externalMousePos.y * 10)); 
+    const rotateY = (-28 + (externalMousePos.x * 12));
+    const rotateZ = (6 + (externalMousePos.x * 3));
 
     return (
         <div 
             ref={containerRef}
             className="w-full h-full flex items-center justify-center p-4 md:p-8 select-none relative group"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => {
-                setIsHovered(false);
-                setMousePos({ x: 0, y: 0 });
-            }}
-            onMouseMove={handleMouseMove}
             style={{ perspective: "2000px" }}
         >
             {/* ── AMBIENT ENERGY ORBS (MAGNETIC) ── */}
             <div 
-                className="absolute inset-0 pointer-events-none transition-transform duration-700 ease-out"
-                style={{ transform: `translateX(${mousePos.x * 20}px) translateY(${mousePos.y * 20}px) translateZ(-100px)` }}
+                className="absolute inset-0 pointer-events-none transition-transform duration-1000 ease-out"
+                style={{ transform: `translateX(${externalMousePos.x * 30}px) translateY(${externalMousePos.y * 30}px) translateZ(-100px)` }}
             >
                 <div className="absolute top-1/4 left-1/4 w-[250px] h-[250px] rounded-full bg-brand/5 blur-[100px] animate-pulse" />
                 <div className="absolute bottom-1/4 right-1/4 w-[200px] h-[200px] rounded-full bg-purple-500/5 blur-[80px] animate-pulse" style={{ animationDelay: '1s' }} />
@@ -93,10 +76,10 @@ export default function ProgressAppMockup({
 
             {/* 3D Wrapper */}
             <div 
-                className="relative w-[240px] md:w-[260px] h-[500px] md:h-[540px] transition-transform duration-[600ms] cubic-bezier(0.23, 1, 0.32, 1)"
+                className="relative w-[240px] md:w-[260px] h-[500px] md:h-[540px] transition-transform duration-1000 cubic-bezier(0.23, 1, 0.32, 1)"
                 style={{ 
                     transformStyle: "preserve-3d",
-                    transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${isHovered ? 1.05 : 0.95})`
+                    transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${isSectionHovered ? 1.05 : 0.95})`
                 }}
             >
                 <AmbientParticles />
@@ -108,9 +91,9 @@ export default function ProgressAppMockup({
                 >
                     {/* Magnetic Glint */}
                     <div 
-                        className="absolute inset-0 rounded-[3.3rem] opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                        className="absolute inset-0 rounded-[3.3rem] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
                         style={{
-                            background: `radial-gradient(circle at ${50 + mousePos.x * 50}% ${50 + mousePos.y * 50}%, rgba(255,255,255,0.15) 0%, transparent 60%)`,
+                            background: `radial-gradient(circle at ${50 + externalMousePos.x * 50}% ${50 + externalMousePos.y * 50}%, rgba(255,255,255,0.15) 0%, transparent 60%)`,
                         }}
                     />
                 </div>
@@ -125,10 +108,10 @@ export default function ProgressAppMockup({
                 >
                     {/* Laser Light Beam (Pointer Reactive) */}
                     <div 
-                        className="absolute inset-0 z-[150] pointer-events-none mix-blend-overlay transition-opacity duration-300 opacity-0 group-hover/screen:opacity-40"
+                        className="absolute inset-0 z-[150] pointer-events-none mix-blend-overlay transition-all duration-700 opacity-0 group-hover/screen:opacity-40"
                         style={{
-                            background: `linear-gradient(${105 + mousePos.x * 30}deg, transparent, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.4) 55%, transparent)`,
-                            transform: `translateX(${mousePos.x * 100}%)`,
+                            background: `linear-gradient(${105 + externalMousePos.x * 30}deg, transparent, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.4) 55%, transparent)`,
+                            transform: `translateX(${externalMousePos.x * 100}%)`,
                         }}
                     />
 
@@ -162,9 +145,9 @@ export default function ProgressAppMockup({
                 
                 {/* Layer 1: Mood Carousel (Top Forward) */}
                 <div 
-                    className="absolute top-16 -left-12 right-12 h-32 transition-transform duration-[700ms] ease-out group/mood" 
+                    className="absolute top-16 -left-12 right-12 h-32 transition-transform duration-1000 ease-out group/mood" 
                     style={{ 
-                        transform: `translateZ(${isHovered ? 280 : 120}px) translateX(${mousePos.x * -25}px) translateY(${mousePos.y * -15}px)`,
+                        transform: `translateZ(${isSectionHovered ? 280 : 120}px) translateX(${externalMousePos.x * -25}px) translateY(${externalMousePos.y * -15}px)`,
                         zIndex: 200,
                         pointerEvents: "auto"
                     }}
@@ -176,23 +159,26 @@ export default function ProgressAppMockup({
 
                 {/* Layer 2: Radar Chart (Bottom Mid) */}
                 <div 
-                    className="absolute bottom-12 -right-24 md:-right-32 w-[220px] md:w-[240px] aspect-square transition-transform duration-[900ms] pointer-events-none ease-out"
+                    className="absolute bottom-12 -right-24 md:-right-32 w-[220px] md:w-[240px] aspect-square transition-transform duration-1000 ease-out group/radar"
                     style={{ 
-                        transform: `translateZ(${isHovered ? 200 : 80}px) translateX(${mousePos.x * 40}px) translateY(${mousePos.y * 10}px) rotateY(-8deg)`,
-                        zIndex: 180
+                        transform: `translateZ(${isSectionHovered ? 200 : 80}px) translateX(${externalMousePos.x * 40}px) translateY(${externalMousePos.y * 10}px) rotateY(-8deg)`,
+                        zIndex: 180,
+                        pointerEvents: "auto"
                     }}
                 >
-                    {radarChart ? (
-                        <div className="w-full h-full transform scale-[0.85] md:scale-105 drop-shadow-[0_35px_60px_rgba(0,0,0,0.2)]">
-                             {radarChart}
-                        </div>
-                    ) : (
-                        <div className="w-full h-full bg-white/60 backdrop-blur-xl rounded-[2.5rem] border border-white/40 shadow-2xl p-6 flex flex-col items-center justify-center">
-                            <div className="w-full h-full rounded-[2rem] border-2 border-dashed border-slate-300 flex items-center justify-center opacity-40">
-                                <div className="text-[12px] font-black text-slate-800 uppercase tracking-widest">Growth Profile</div>
+                    <div className="w-full h-full transition-transform duration-500 group-hover/radar:scale-105">
+                        {radarChart ? (
+                            <div className="w-full h-full transform scale-[0.85] md:scale-105 drop-shadow-[0_35px_60px_rgba(0,0,0,0.2)]">
+                                {radarChart}
                             </div>
-                        </div>
-                    )}
+                        ) : (
+                            <div className="w-full h-full bg-white/60 backdrop-blur-xl rounded-[2.5rem] border border-white/40 shadow-2xl p-6 flex flex-col items-center justify-center">
+                                <div className="w-full h-full rounded-[2rem] border-2 border-dashed border-slate-300 flex items-center justify-center opacity-40">
+                                    <div className="text-[12px] font-black text-slate-800 uppercase tracking-widest">Growth Profile</div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
             </div>
