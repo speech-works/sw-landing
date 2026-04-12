@@ -148,7 +148,7 @@ export default function Roadmap() {
                 <div
                   className="absolute right-[5%] md:right-[15%] bottom-[-30%] w-full h-full flex justify-end items-end z-50 transition-transform duration-1000 ease-out perspective-[2000px] origin-bottom-right"
                   style={{
-                    transform: `translate(${(mousePos.x - 0.5) * 50}px, ${(mousePos.y - 0.5) * 50}px) rotateY(${(mousePos.x - 0.5) * -10}deg) rotateX(${(mousePos.y - 0.5) * 10}deg) scale(0.7)`,
+                    transform: `translate(${(mousePos.x - 0.5) * 50}px, ${(mousePos.y - 0.5) * 50}px) rotateY(${(mousePos.x - 0.5) * -10}deg) rotateX(${(mousePos.y - 0.5) * 10}deg) scale(0.8)`,
                   }}
                 >
                   <div className="relative w-full h-full flex justify-end items-end [transform-style:preserve-3d]">
