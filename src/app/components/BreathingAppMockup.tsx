@@ -66,7 +66,7 @@ const XIcon = () => (
 // MAIN COMPONENT
 // -------------------------------------------------------
 
-export default function BreathingAppMockup() {
+export default function BreathingAppMockup({ showSheet = true }: { showSheet?: boolean }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -118,47 +118,49 @@ export default function BreathingAppMockup() {
       </div>
 
       {/* ── BOTTOM SHEET (The core of this task) ── */}
-      <div className="absolute inset-0 z-[60] flex flex-col justify-end overflow-hidden">
-        {/* Backdrop (Darkens the main screen slightly, no blur to keep face sharp) */}
-        <div className="absolute inset-0 bg-black/50" />
+      {showSheet && (
+        <div className="absolute inset-0 z-[60] flex flex-col justify-end overflow-hidden">
+          {/* Backdrop (Darkens the main screen slightly, no blur to keep face sharp) */}
+          <div className="absolute inset-0 bg-black/50" />
 
-        {/* The Sheet */}
-        <div className="relative bg-gradient-to-b from-[#EFF6FF] to-[#DBEAFE] rounded-t-[2.5rem] p-8 pb-12 shadow-2xl animate-sheet-slide-up">
-          {/* Handle */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 w-10 h-1 bg-blue-900/10 rounded-full" />
+          {/* The Sheet */}
+          <div className="relative bg-gradient-to-b from-[#EFF6FF] to-[#DBEAFE] rounded-t-[2.5rem] p-8 pb-12 shadow-2xl animate-sheet-slide-up">
+            {/* Handle */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 w-10 h-1 bg-blue-900/10 rounded-full" />
 
-          {/* Close Button */}
-          <div className="absolute top-6 right-6 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm border border-blue-900/5 cursor-pointer">
-            <XIcon />
-          </div>
-
-          {/* Watermark Clock Decoration */}
-          <div className="absolute -left-12 -top-12 rotate-[15deg] opacity-[0.08] pointer-events-none">
-            <ClockIcon />
-          </div>
-
-          {/* Content */}
-          <div className="relative text-center space-y-4">
-            <h3 className="text-[#1E3A8A] text-2xl font-bold tracking-tight mt-2">Finish early?</h3>
-            <p className="text-[#1E3A8A] opacity-70 text-[14px] leading-[1.6] px-2 font-medium">
-              We recommend at least 5 minutes of practice for the best results. Are you sure you want to end your session early?
-            </p>
-          </div>
-
-          {/* Actions */}
-          <div className="mt-10 flex flex-col gap-3.5">
-            {/* End Session Button (Blue Gradient) */}
-            <div className="w-full rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 py-4.5 flex items-center justify-center shadow-lg shadow-blue-500/20 active:scale-98 transition-transform cursor-pointer overflow-hidden border border-blue-400/20">
-               <span className="text-white font-bold text-[16px]">End Session</span>
+            {/* Close Button */}
+            <div className="absolute top-6 right-6 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm border border-blue-900/5 cursor-pointer">
+              <XIcon />
             </div>
 
-            {/* Continue Practice Button (White Translucent) */}
-            <div className="w-full rounded-2xl bg-white/50 py-4.5 flex items-center justify-center border border-blue-900/10 active:scale-98 transition-transform cursor-pointer">
-               <span className="text-[#1E3A8A] font-semibold text-[16px]">Continue Practice</span>
+            {/* Watermark Clock Decoration */}
+            <div className="absolute -left-12 -top-12 rotate-[15deg] opacity-[0.08] pointer-events-none">
+              <ClockIcon />
+            </div>
+
+            {/* Content */}
+            <div className="relative text-center space-y-4">
+              <h3 className="text-[#1E3A8A] text-2xl font-bold tracking-tight mt-2">Finish early?</h3>
+              <p className="text-[#1E3A8A] opacity-70 text-[14px] leading-[1.6] px-2 font-medium">
+                We recommend at least 5 minutes of practice for the best results. Are you sure you want to end your session early?
+              </p>
+            </div>
+
+            {/* Actions */}
+            <div className="mt-10 flex flex-col gap-3.5">
+              {/* End Session Button (Blue Gradient) */}
+              <div className="w-full rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 py-4.5 flex items-center justify-center shadow-lg shadow-blue-500/20 active:scale-98 transition-transform cursor-pointer overflow-hidden border border-blue-400/20">
+                 <span className="text-white font-bold text-[16px]">End Session</span>
+              </div>
+
+              {/* Continue Practice Button (White Translucent) */}
+              <div className="w-full rounded-2xl bg-white/50 py-4.5 flex items-center justify-center border border-blue-900/10 active:scale-98 transition-transform cursor-pointer">
+                 <span className="text-[#1E3A8A] font-semibold text-[16px]">Continue Practice</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       <style>{`
         @keyframes gb-eyes {

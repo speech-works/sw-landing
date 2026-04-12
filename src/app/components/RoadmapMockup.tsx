@@ -63,7 +63,7 @@ export default function RoadmapMockup({ phase, status, comingSoon = false, isBla
             ) : phase === 2 ? (
               <CognitiveAppMockup />
             ) : phase === 3 ? (
-              <BreathingAppMockup />
+              <BreathingAppMockup showSheet={!comingSoon} />
             ) : (
               /* Placeholder for Phase 2/3 */
               <div className="absolute inset-0 flex flex-col pt-16 px-4 bg-[#f9fafb]">
