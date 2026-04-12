@@ -280,8 +280,8 @@ export default function LiveAppMockup() {
 
   return (
     <div className="w-full h-full bg-[#f9fafb] text-slate-800 flex flex-col font-sans overflow-hidden rounded-[inherit] relative select-none">
-      {/* Top Status Bar Mock */}
-      <div className="w-full pt-3 pb-2 px-5 flex justify-between items-center text-[10px] font-medium text-slate-900 bg-[#f9fafb] z-40 shrink-0 shadow-sm border-b border-transparent backdrop-blur-md absolute top-0 left-0 right-0">
+      {/* Top Status Bar Mock - Increased height for realistic spacing */}
+      <div className="w-full pt-6 pb-3 px-6 flex justify-between items-center text-[11px] font-bold text-slate-900 bg-[#f9fafb] z-40 shrink-0 absolute top-0 left-0 right-0">
         <span className="font-semibold tracking-tight">9:41</span>
         <div className="flex gap-1.5 items-center">
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
@@ -296,11 +296,11 @@ export default function LiveAppMockup() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-hidden relative pt-10 mask-fade-edges rounded-b-[inherit]">
-        {/* Animated Scroll Wrapper */}
+      <div className="flex-1 overflow-hidden relative pt-20 mask-fade-edges rounded-b-[inherit]">
+        {/* Animated Scroll Wrapper - Increased offset for spacious top UI */}
         <div
           className={`w-full flex flex-col gap-3 px-3 absolute inset-0 ${mounted ? "animate-app-pan" : ""}`}
-          style={{ top: 35 }}
+          style={{ top: 52 }}
         >
           {/* Header */}
           <div className="flex justify-between items-start pt-1 px-1">
