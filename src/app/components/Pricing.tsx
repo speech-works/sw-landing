@@ -1,22 +1,26 @@
-'use client';
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+"use client";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 
 /* ─────────────────────────────────────────────
    REFINED DESIGN SYSTEM UTILS
    Focused on 'Physical' Minimalist Aesthetics
 ───────────────────────────────────────────── */
 
-
-
-const CheckIcon = ({ className = "w-5 h-5", active = false }: { className?: string, active?: boolean }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth={active ? "3" : "2"} 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+const CheckIcon = ({
+  className = "w-5 h-5",
+  active = false,
+}: {
+  className?: string;
+  active?: boolean;
+}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={active ? "3" : "2"}
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={`${className} transition-all duration-300 ${active ? "scale-110" : "scale-100 opacity-60"}`}
   >
     <path d="M20 6 9 17l-5-5" />
@@ -33,10 +37,10 @@ const pricingTiers = [
     billingStr: "/mo",
     buttonLabel: "LAY THE FOUNDATION",
     features: [
-      "One free core exercise per day",
+      "Five free activities per day",
       "Foundational resilience training",
       "Supportive community access",
-      "Progress tracking dashboard"
+      "Progress tracking dashboard",
     ],
     accentColor: "#F28044",
   },
@@ -55,7 +59,7 @@ const pricingTiers = [
       "Unlimited community posts",
       "Access to the therapist directory",
       "Unlock advanced speech techniques",
-      "Personalized feedback & exercises"
+      "Personalized feedback & exercises",
     ],
     accentColor: "#F28044",
   },
@@ -74,10 +78,10 @@ const pricingTiers = [
       "Save with discounted annual rate",
       "Access to exclusive webinars",
       "Early access to beta features",
-      "Lead and inspire the community"
+      "Lead and inspire the community",
     ],
     accentColor: "#F28044",
-  }
+  },
 ];
 
 export default function Pricing() {
@@ -89,7 +93,8 @@ export default function Pricing() {
   // Track mouse coordinates for the 3D 'Magnetic' Tilt effect
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!containerRef.current) return;
-    const { left, top, width, height } = containerRef.current.getBoundingClientRect();
+    const { left, top, width, height } =
+      containerRef.current.getBoundingClientRect();
     const x = (e.clientX - left) / width;
     const y = (e.clientY - top) / height;
     setMousePos({ x, y });
@@ -103,7 +108,7 @@ export default function Pricing() {
     setActiveCard(i);
     setTimeout(() => {
       isHoverLocked.current = false;
-    }, 700); 
+    }, 700);
   };
 
   const getDesktopStyles = (pos: number) => {
@@ -116,21 +121,23 @@ export default function Pricing() {
         transform: `translate(-50%, 0) scale(1.05) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(0)`,
         zIndex: 30,
         opacity: 1,
-        filter: 'none',
+        filter: "none",
       };
     } else if (pos === -1) {
       return {
-        transform: 'translate(calc(-50% - 110%), 40px) scale(0.85) rotateY(15deg) translateZ(0)', 
+        transform:
+          "translate(calc(-50% - 110%), 40px) scale(0.85) rotateY(15deg) translateZ(0)",
         zIndex: 10,
         opacity: 0.5,
-        filter: 'none',
+        filter: "none",
       };
     } else {
       return {
-        transform: 'translate(calc(-50% + 110%), 40px) scale(0.85) rotateY(-15deg) translateZ(0)',
+        transform:
+          "translate(calc(-50% + 110%), 40px) scale(0.85) rotateY(-15deg) translateZ(0)",
         zIndex: 10,
         opacity: 0.5,
-        filter: 'none',
+        filter: "none",
       };
     }
   };
@@ -138,82 +145,115 @@ export default function Pricing() {
   const renderCard = (tier: any, pos: number = 0) => {
     const isActive = pos === 0;
     const isDark = tier.theme === "dark";
-    
+
     return (
-      <div 
-        key={`${tier.id}-${activeCard}`} 
+      <div
+        key={`${tier.id}-${activeCard}`}
         className={`relative rounded-[2.8rem] transition-all duration-500 flex flex-col pointer-events-auto antialiased
-          ${isDark 
-            ? 'bg-[#1C1A19] border border-white/[0.06] text-white' 
-            : 'bg-white border border-black/[0.04] text-app-text'
+          ${
+            isDark
+              ? "bg-[#1C1A19] border border-white/[0.06] text-white"
+              : "bg-white border border-black/[0.04] text-app-text"
           }`}
         style={{
-          backfaceVisibility: 'hidden',
-          WebkitFontSmoothing: 'antialiased',
-          boxShadow: isActive 
-            ? isDark 
-              ? '0 30px 60px -15px rgba(0,0,0,0.8)' 
-              : '0 30px 60px -15px rgba(63, 51, 45, 0.12)'
-            : '0 10px 20px -5px rgba(0,0,0,0.05)',
-          minHeight: '100%',
+          backfaceVisibility: "hidden",
+          WebkitFontSmoothing: "antialiased",
+          boxShadow: isActive
+            ? isDark
+              ? "0 30px 60px -15px rgba(0,0,0,0.8)"
+              : "0 30px 60px -15px rgba(63, 51, 45, 0.12)"
+            : "0 10px 20px -5px rgba(0,0,0,0.05)",
+          minHeight: "100%",
         }}
       >
-        
         {/* Overflowing Right Badge */}
         {(tier.isPopular || tier.isAnnual) && (
-          <div className={`absolute -top-3 -right-3 lg:-top-4 lg:-right-4 px-5 py-2 rounded-full text-[9px] lg:text-[10px] font-black tracking-[0.2em] z-50 uppercase shadow-xl whitespace-nowrap
-            ${isDark 
-              ? 'bg-brand text-white' 
-              : 'bg-[#3F332D] text-white'}`}>
-            {tier.isPopular ? 'Most Popular' : 'Annual'}
+          <div
+            className={`absolute -top-3 -right-3 lg:-top-4 lg:-right-4 px-5 py-2 rounded-full text-[9px] lg:text-[10px] font-black tracking-[0.2em] z-50 uppercase shadow-xl whitespace-nowrap
+            ${isDark ? "bg-brand text-white" : "bg-[#3F332D] text-white"}`}
+          >
+            {tier.isPopular ? "Most Popular" : "Annual"}
           </div>
         )}
 
         <div className="pt-14 pb-10 px-8 md:px-12 flex flex-col flex-1 relative z-20">
-          <h3 className={`text-2xl md:text-3xl font-black mb-1.5 tracking-tight`}>
+          <h3
+            className={`text-2xl md:text-3xl font-black mb-1.5 tracking-tight`}
+          >
             {tier.title}
           </h3>
-          <p className={`text-sm opacity-60 font-medium mb-10 leading-relaxed max-w-[90%]`}>{tier.subtitle}</p>
+          <p
+            className={`text-sm opacity-60 font-medium mb-10 leading-relaxed max-w-[90%]`}
+          >
+            {tier.subtitle}
+          </p>
 
           <div className="flex flex-col mb-10 mt-auto shrink-0">
             <div className="flex items-baseline gap-1.5">
               <span className="text-6xl md:text-7xl font-black tracking-tightest">
                 {tier.price}
               </span>
-              <span className="text-base font-bold opacity-40">{tier.billingStr}</span>
+              <span className="text-base font-bold opacity-40">
+                {tier.billingStr}
+              </span>
             </div>
             {tier.billingSub && (
-              <span className="text-[10px] font-black text-brand mt-2 uppercase tracking-[0.25em]">{tier.billingSub}</span>
+              <span className="text-[10px] font-black text-brand mt-2 uppercase tracking-[0.25em]">
+                {tier.billingSub}
+              </span>
             )}
             {!tier.billingSub && <div className="h-4 mt-2" />}
           </div>
 
-          <button className={`w-full py-4 md:py-5 px-8 rounded-[1.25rem] font-black tracking-[0.15em] mb-12 transition-all duration-300 text-[10px] md:text-xs uppercase shrink-0 flex items-center justify-center gap-3 group/btn active:scale-[0.97] border-2
-            ${isDark 
-              ? 'bg-brand border-brand text-white hover:bg-transparent hover:text-brand' 
-              : 'bg-[#3F332D] border-[#3F332D] text-white hover:bg-transparent hover:text-[#3F332D]'
-            }`}>
+          <button
+            className={`w-full py-4 md:py-5 px-8 rounded-[1.25rem] font-black tracking-[0.15em] mb-12 transition-all duration-300 text-[10px] md:text-xs uppercase shrink-0 flex items-center justify-center gap-3 group/btn active:scale-[0.97] border-2
+            ${
+              isDark
+                ? "bg-brand border-brand text-white hover:bg-transparent hover:text-brand"
+                : "bg-[#3F332D] border-[#3F332D] text-white hover:bg-transparent hover:text-[#3F332D]"
+            }`}
+          >
             <span>{tier.buttonLabel}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1">
-               <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1"
+            >
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
             </svg>
           </button>
 
           <div className="flex flex-col gap-5 text-[13px] font-bold tracking-tight">
             {tier.features.map((feat: string, idx: number) => {
-              const isHighlight = feat.includes("Everything in") || feat.includes("Save with");
+              const isHighlight =
+                feat.includes("Everything in") || feat.includes("Save with");
               return (
-                <div 
-                  key={idx} 
+                <div
+                  key={idx}
                   className={`flex items-start gap-4 transition-all duration-700 ease-out 
-                    ${isActive ? 'opacity-100 translate-x-0' : 'opacity-20 -translate-x-4'}`}
+                    ${isActive ? "opacity-100 translate-x-0" : "opacity-20 -translate-x-4"}`}
                   style={{ transitionDelay: `${idx * 100}ms` }}
                 >
-                  <div className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5
-                    ${isHighlight ? 'bg-brand text-white' : 'bg-brand/10 text-brand'}`}>
-                    <CheckIcon className="w-3.5 h-3.5" active={isHighlight && isActive} />
+                  <div
+                    className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5
+                    ${isHighlight ? "bg-brand text-white" : "bg-brand/10 text-brand"}`}
+                  >
+                    <CheckIcon
+                      className="w-3.5 h-3.5"
+                      active={isHighlight && isActive}
+                    />
                   </div>
-                  <span className={`leading-snug transition-opacity duration-500 ${isHighlight ? 'opacity-100 font-black' : 'opacity-80'}`}>
+                  <span
+                    className={`leading-snug transition-opacity duration-500 ${isHighlight ? "opacity-100 font-black" : "opacity-80"}`}
+                  >
                     {feat}
                   </span>
                 </div>
@@ -233,7 +273,10 @@ export default function Pricing() {
   };
 
   return (
-    <section id="pricing" className="py-24 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden">
+    <section
+      id="pricing"
+      className="py-24 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden"
+    >
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -254,9 +297,8 @@ export default function Pricing() {
       `,
         }}
       />
-      
+
       <div className="max-w-7xl mx-auto px-6 relative w-full flex flex-col items-center">
-        
         {/* Designer Header */}
         <div className="text-center mb-24 reveal active flex flex-col items-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-black uppercase tracking-[0.25em] mb-8">
@@ -268,21 +310,22 @@ export default function Pricing() {
             <span className="holo-text px-2">LEGACY.</span>
           </h2>
           <p className="text-app-muted text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed opacity-80">
-            Your voice is the most powerful instrument you own. Join a collective of pioneers elevating how you are heard.
+            Your voice is the most powerful instrument you own. Join a
+            collective of pioneers elevating how you are heard.
           </p>
         </div>
 
         {/* Mobile View */}
         <div className="flex lg:hidden flex-col gap-10 w-full max-w-md mx-auto">
           {pricingTiers.map((tier, i) => (
-             <div key={`m-${i}`} className="w-full h-auto min-h-[600px]">
-               {renderCard(tier)}
-             </div>
+            <div key={`m-${i}`} className="w-full h-auto min-h-[600px]">
+              {renderCard(tier)}
+            </div>
           ))}
         </div>
 
         {/* Desktop Interactive Stages */}
-        <div 
+        <div
           ref={containerRef}
           onMouseMove={handleMouseMove}
           className="hidden lg:block relative w-full h-[850px] max-w-6xl mx-auto pricing-grid"
@@ -290,9 +333,9 @@ export default function Pricing() {
           {pricingTiers.map((tier, i) => {
             const pos = getPos(i, activeCard);
             const style = getDesktopStyles(pos);
-            
+
             return (
-              <div 
+              <div
                 key={`pivot-${i}`}
                 onMouseEnter={() => handleCardHover(i)}
                 onClick={() => handleCardHover(i)}
@@ -300,7 +343,10 @@ export default function Pricing() {
                 style={style}
               >
                 {/* Visual Depth Lock Shield (prevents interactions while blurred) */}
-                <div className="absolute inset-0 z-50 rounded-[2.8rem]" style={{ pointerEvents: pos === 0 ? 'none' : 'auto' }} />
+                <div
+                  className="absolute inset-0 z-50 rounded-[2.8rem]"
+                  style={{ pointerEvents: pos === 0 ? "none" : "auto" }}
+                />
                 {renderCard(tier, pos)}
               </div>
             );
