@@ -22,21 +22,21 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
           PIXEL-PERFECT DEVICE FRAME 
           Everything is clipped at this level. Nothing can leak out.
       */}
-      <div className="relative w-[270px] h-[560px] md:w-[310px] md:h-[630px] shadow-2xl transition-transform duration-700 hover:scale-[1.02] group/phone rounded-[3.5rem] overflow-hidden ring-1 ring-black/5">
+      <div className="relative w-[280px] h-[560px] md:w-[340px] md:h-[680px] shadow-2xl transition-transform duration-700 hover:scale-[1.02] group/phone rounded-[40px] md:rounded-[48px] overflow-hidden ring-1 ring-black/5">
         
         {/* Exterior Chassis Ring */}
         <div className="absolute inset-0 bg-gradient-to-tr from-[#050505] via-[#2a2a2a] to-[#1a1a1a]" />
         
         {/* 
-            SCREEN BEZEL - Nested 4px
+            SCREEN BEZEL
             This is the black border around the screen. 
         */}
-        <div className="absolute inset-[4px] bg-black rounded-[3.25rem] overflow-hidden isolate">
+        <div className="absolute inset-[6px] md:inset-[8px] bg-black rounded-[34px] md:rounded-[40px] overflow-hidden isolate">
           
           {/* Dynamic Island notification pill */}
-          <div className="absolute top-3 inset-x-0 flex justify-center z-[60] pointer-events-none">
-            <div className="w-[70px] h-[22px] bg-[#050505] rounded-[20px] flex items-center justify-end pr-3">
-              <div className="w-1 h-1 rounded-full bg-[#1a1c2e]" />
+          <div className="absolute top-3 md:top-4 inset-x-0 flex justify-center z-[60] pointer-events-none">
+            <div className="w-[80px] md:w-[96px] h-[24px] md:h-[28px] bg-[#050505] rounded-[24px] flex items-center justify-end pr-3">
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#1a1c2e]" />
             </div>
           </div>
 
@@ -109,8 +109,8 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
             )}
 
             {/* iOS Home Indicator */}
-            <div className="absolute bottom-2 inset-x-0 flex justify-center z-[80]">
-              <div className={`w-20 h-1.5 rounded-full ${comingSoon ? "bg-white/30" : "bg-black/10"}`} />
+            <div className="absolute bottom-2 md:bottom-3 inset-x-0 flex justify-center z-[80]">
+              <div className={`w-24 md:w-32 h-1.5 rounded-full ${comingSoon ? "bg-white/30" : "bg-black/10"}`} />
             </div>
             
             {/* Screen Reflection Sheen */}
