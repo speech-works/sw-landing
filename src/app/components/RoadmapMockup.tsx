@@ -3,6 +3,7 @@ import React from "react";
 import LiveAppMockup from "./LiveAppMockup";
 import ExploreAppMockup from "./ExploreAppMockup";
 import CognitiveAppMockup from "./CognitiveAppMockup";
+import BreathingAppMockup from "./BreathingAppMockup";
 
 interface RoadmapMockupProps {
   phase: number;
@@ -61,6 +62,8 @@ export default function RoadmapMockup({ phase, status, comingSoon = false, isBla
               <ExploreAppMockup />
             ) : phase === 2 ? (
               <CognitiveAppMockup />
+            ) : phase === 3 ? (
+              <BreathingAppMockup />
             ) : (
               /* Placeholder for Phase 2/3 */
               <div className="absolute inset-0 flex flex-col pt-16 px-4 bg-[#f9fafb]">
