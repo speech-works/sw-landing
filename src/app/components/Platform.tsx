@@ -637,11 +637,14 @@ export default function Platform() {
                       className={`absolute inset-0 bg-gradient-to-br ${feature.bgGradient} transition-opacity duration-700 ease-in-out flex items-center justify-center`}
                       style={{ opacity: isActive ? 1 : 0, pointerEvents: isActive ? "auto" : "none", zIndex: isActive ? 10 : 0 }}
                     >
-                      {/* Drifting background icon */}
                       <div
-                        className={`absolute w-[80%] h-[80%] opacity-[0.07] ${feature.iconColor}`}
+                        className={`absolute ${feature.id === "progress" ? "text-brand/10" : feature.iconColor} transition-all duration-700`}
                         style={{
-                          animation: isActive ? "platform-bgIconDrift 8s ease-in-out infinite" : "none",
+                          width: feature.id === "progress" ? "115%" : "80%",
+                          height: feature.id === "progress" ? "115%" : "80%",
+                          transform: feature.id === "progress" ? "rotate(-12deg) translateZ(-10px)" : "rotate(-6deg)",
+                          opacity: isActive ? (feature.id === "progress" ? 0.01 : 0.07) : 0,
+                          animation: isActive ? (feature.id === "progress" ? "platform-fadeSlideUp 1s cubic-bezier(0.23,1,0.32,1) both" : "platform-bgIconDrift 8s ease-in-out infinite") : "none",
                         }}
                       >
                         {feature.bgIcon}
