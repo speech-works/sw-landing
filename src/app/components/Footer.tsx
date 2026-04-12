@@ -1,6 +1,11 @@
-import React from "react";
+'use client';
+
+import React, { useState } from "react";
+import ContactModal from "./ContactModal";
 
 export default function Footer() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
   return (
     <>
       <footer className="bg-brand pt-16 md:pt-20 pb-8 md:pb-10 relative z-10 text-white overflow-hidden">
@@ -62,14 +67,12 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    For Therapists
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <button 
+                    onClick={() => setIsContactOpen(true)}
+                    className="hover:text-white transition-colors cursor-pointer"
+                  >
                     Contact
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -119,6 +122,11 @@ export default function Footer() {
           </div>
         </div>
       </footer>
+
+      <ContactModal 
+        isOpen={isContactOpen} 
+        onClose={() => setIsContactOpen(false)} 
+      />
     </>
   );
 }
