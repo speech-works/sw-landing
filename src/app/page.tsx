@@ -10,6 +10,7 @@ import Platform from './components/Platform';
 import Simulator from './components/Simulator';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
+import Pricing from './components/Pricing';
 
 export default function Home() {
   useEffect(() => {
@@ -257,6 +258,7 @@ export default function Home() {
       <Roadmap />
       <Platform />
       <Simulator />
+      <Pricing />
       <CTA />
       <Footer />
     </main>

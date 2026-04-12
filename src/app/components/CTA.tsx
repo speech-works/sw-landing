@@ -241,6 +241,9 @@ export default function CTA() {
             <a
               href="#download"
               id="rebel-btn"
+              onMouseEnter={() => {
+                document.getElementById('download')?.classList.add('btn-hovered');
+              }}
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 e.currentTarget.style.setProperty(
@@ -253,6 +256,7 @@ export default function CTA() {
                 );
               }}
               onMouseLeave={(e) => {
+                document.getElementById('download')?.classList.remove('btn-hovered');
                 // Reset to center on exit
                 e.currentTarget.style.setProperty("--btn-mouse-x", `50%`);
                 e.currentTarget.style.setProperty("--btn-mouse-y", `50%`);
