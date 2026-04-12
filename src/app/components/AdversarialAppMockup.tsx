@@ -14,9 +14,9 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 );
 
 // ──────────────────────────────────────────────────────────────────────────
-// FEATURE BUBBLES (HUD CLUSTER - GHOST LAYER)
+// FEATURE BUBBLES (CLIPPED WATERMARKS & HARDWARE ACCELERATED)
 // ──────────────────────────────────────────────────────────────────────────
-function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
+function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tiltTransform: string }) {
     const bubbles = [
         { 
             id: 1, 
@@ -24,10 +24,10 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             icon: "🎭", 
             color: "bg-amber-400", 
             angle: -140, 
-            radius: 85, 
-            z: 220, 
-            yOffset: -160,
-            delay: 0.1 
+            radius: 80, 
+            z: 140, 
+            yOffset: -180,
+            delay: 0 
         },
         { 
             id: 2, 
@@ -35,10 +35,10 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             icon: "📱", 
             color: "bg-violet-500", 
             angle: -40, 
-            radius: 90, 
-            z: 240, 
-            yOffset: -150,
-            delay: 0.25 
+            radius: 85, 
+            z: 150, 
+            yOffset: -160,
+            delay: 0.1 
         },
         { 
             id: 3, 
@@ -46,10 +46,10 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             icon: "🤝", 
             color: "bg-emerald-500", 
             angle: 140, 
-            radius: 95, 
-            z: 200, 
-            yOffset: -60,
-            delay: 0.15 
+            radius: 90, 
+            z: 120, 
+            yOffset: -80,
+            delay: 0.05 
         },
         { 
             id: 4, 
@@ -57,91 +57,53 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             icon: "💼", 
             color: "bg-slate-700", 
             angle: 40, 
-            radius: 80, 
-            z: 250, 
-            yOffset: -70,
-            delay: 0.3 
+            radius: 75, 
+            z: 130, 
+            yOffset: -100,
+            delay: 0.15 
         }
     ];
 
-    const smoothEase = "cubic-bezier(0.16, 1, 0.3, 1)";
+    const snappyEase = "cubic-bezier(0.19, 1, 0.22, 1)";
 
     return (
-        <div className="absolute inset-0 pointer-events-none" style={{ transformStyle: "preserve-3d" }}>
+        <React.Fragment>
             {bubbles.map((b) => (
                 <div 
                     key={b.id}
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-[1500ms]"
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-2.5 rounded-full flex items-center gap-3 backdrop-blur-xl border border-white/40 shadow-[0_30px_100px_rgba(0,0,0,0.3)] transition-all duration-[750ms] overflow-hidden"
                     style={{ 
-                        transformStyle: "preserve-3d",
-                        transitionTimingFunction: smoothEase,
+                        backgroundColor: "rgba(255,255,255,0.95)",
+                        transitionTimingFunction: snappyEase,
                         transitionDelay: `${isHovered ? b.delay : 0}s`,
-                        transform: `
+                        transform: tiltTransform + `
                             rotateZ(${isHovered ? b.angle : b.angle - 120}deg)
-                            scale(${isHovered ? 1 : 0.1})
+                            translateX(${isHovered ? b.radius : 0}px)
+                            translateY(${isHovered ? b.yOffset : 0}px)
+                            translateZ(${isHovered ? b.z : -250}px)
+                            rotateZ(${isHovered ? -b.angle : -(b.angle - 120)}deg)
+                            scale(${isHovered ? 1 : 0.4})
                         `,
                         opacity: isHovered ? 1 : 0,
-                        willChange: "transform, opacity"
+                        willChange: "transform, opacity",
+                        pointerEvents: isHovered ? "auto" : "none",
+                        zIndex: 1000
                     }}
                 >
-                    {/* The Inner Bubble - GHOST LAYER Rendering (No Clipping) */}
-                    <div 
-                        className={`px-5 py-2.5 rounded-full flex items-center gap-3 shadow-[0_30px_60px_rgba(0,0,0,0.3)] border border-white/40 backdrop-blur-xl overflow-hidden transition-all duration-[1500ms]`}
-                        style={{ 
-                            backgroundColor: "rgba(255,255,255,0.95)",
-                            transitionTimingFunction: smoothEase,
-                            transitionDelay: `${isHovered ? b.delay : 0}s`,
-                            transform: `
-                                translateX(${isHovered ? b.radius : 0}px)
-                                translateY(${isHovered ? b.yOffset : 0}px)
-                                translateZ(${isHovered ? b.z : 0}px)
-                                rotateZ(${isHovered ? -b.angle : -(b.angle - 120)}deg)
-                            `,
-                            // High z-index is not enough in 3D, translateZ is king
-                            boxShadow: isHovered ? "0 40px 100px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.8)" : "none",
-                            willChange: "transform"
-                        }}
-                    >
-                        <div className={`w-7 h-7 rounded-full ${b.color} flex items-center justify-center text-xs shadow-inner shrink-0 leading-none`}>
-                            {b.icon}
-                        </div>
-                        <span className="text-[11px] font-black uppercase tracking-wider text-slate-900 whitespace-nowrap leading-none">
-                            {b.label}
-                        </span>
-                        
-                        {/* Watermark/Ghost Icon */}
-                        <div className="absolute -right-1 -bottom-1 text-3xl opacity-[0.08] pointer-events-none select-none">
-                            {b.icon}
-                        </div>
+                    <div className={`w-7 h-7 rounded-full ${b.color} flex items-center justify-center text-xs shadow-inner shrink-0 leading-none`}>
+                        {b.icon}
+                    </div>
+                    <span className="text-[11px] font-black uppercase tracking-wider text-slate-900 whitespace-nowrap leading-none">
+                        {b.label}
+                    </span>
+                    
+                    {/* Watermark/Ghost Icon - Clipped by overflow-hidden */}
+                    <div className="absolute -right-1 -bottom-1 text-3xl opacity-[0.05] pointer-events-none select-none">
+                        {b.icon}
                     </div>
                 </div>
             ))}
-
-            {/* Decor dots orbiting the cluster HUD */}
-            {[...Array(6)].map((_, i) => (
-                <div 
-                    key={`dot-${i}`}
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-[2000ms]"
-                    style={{
-                        transitionTimingFunction: smoothEase,
-                        transitionDelay: `${Math.random() * 0.4}s`,
-                        transform: `
-                            rotateZ(${(i * 60) + (isHovered ? 30 : 150)}deg)
-                            scale(${isHovered ? 1 : 0})
-                        `,
-                    }}
-                >
-                    <div 
-                        className="w-1.5 h-1.5 rounded-full bg-white/50 blur-[1px] transition-all duration-[2000ms]"
-                        style={{
-                            transitionTimingFunction: smoothEase,
-                            transform: `translateX(${isHovered ? 110 + (i * 10) : 0}px) translateY(${isHovered ? -100 : 0}px) translateZ(${isHovered ? 280 : -50}px)`,
-                            opacity: isHovered ? 0.7 : 0,
-                        }}
-                    />
-                </div>
-            ))}
-        </div>
+        </React.Fragment>
     );
 }
 
@@ -153,8 +115,8 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
 
   useEffect(() => {
     setPhase("waiter");
-    const t1 = setTimeout(() => setPhase("thinking"),    900);
-    const t2 = setTimeout(() => setPhase("suggestion"), 2800);
+    const t1 = setTimeout(() => setPhase("thinking"),    700);
+    const t2 = setTimeout(() => setPhase("suggestion"), 2400);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [animKey]);
 
@@ -175,7 +137,7 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
       {/* Waiter bubble */}
       <div
         className="flex items-end gap-2.5 self-start max-w-[100%]"
-        style={{ animation: "platform-chatReveal 0.5s cubic-bezier(0.23,1,0.32,1) 0.1s both" }}
+        style={{ animation: "platform-chatReveal 0.4s cubic-bezier(0.19,1,0.22,1) 0.1s both" }}
       >
         <div className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-amber-100 to-orange-200 border-2 border-white shadow-md flex items-center justify-center text-base select-none">
           🧑‍🍳
@@ -192,7 +154,7 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
       {phase !== "waiter" && (
         <div
           className="flex items-end gap-2.5 self-start max-w-[100%]"
-          style={{ animation: "platform-chatReveal 0.4s cubic-bezier(0.23,1,0.32,1) both" }}
+          style={{ animation: "platform-chatReveal 0.35s cubic-bezier(0.19,1,0.22,1) both" }}
         >
           {phase === "thinking" ? aiAvatar(false) : aiAvatar(true)}
 
@@ -208,7 +170,7 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
                   <div
                     key={i}
                     className="w-1.5 h-1.5 bg-violet-400 rounded-full"
-                    style={{ animation: `platform-thinkDot 1.1s ease-in-out ${i * 0.18}s infinite` }}
+                    style={{ animation: `platform-thinkDot 0.8s ease-in-out ${i * 0.12}s infinite` }}
                   />
                 ))}
               </div>
@@ -221,7 +183,7 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
                 style={{
                   background: "linear-gradient(135deg,#1e1b4b 0%,#312e81 60%,#4c1d95 100%)",
                   boxShadow: "0 8px 32px rgba(76,29,149,0.35), 0 0 0 1px rgba(139,92,246,0.2)",
-                  animation: "platform-chatReveal 0.45s cubic-bezier(0.23,1,0.32,1) both",
+                  animation: "platform-chatReveal 0.4s cubic-bezier(0.19,1,0.22,1) both",
                 }}
               >
                 <p>
@@ -298,13 +260,13 @@ function CardStack({ isSectionHovered }: { isSectionHovered: boolean }) {
                 // Pop-up stacked layout
                 const zPos = isFocused ? (isSectionHovered ? 120 : 60) : (0 - offset * 25);
                 const yPos = isFocused ? 0 : (offset * 16);
-                const opacity = isFocused ? 1 : 0.2;
+                const opacity = isFocused ? 1 : (isSectionHovered ? 0.3 : 0.1);
                 const scale = isFocused ? 1 : (1 - offset * 0.04);
 
                 return (
                     <div 
                         key={card.id}
-                        className={`absolute inset-0 p-5 ${card.bg} ${card.textColor} rounded-[2rem] shadow-2xl transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) border border-white/10 backdrop-blur-3xl flex flex-col justify-center`}
+                        className={`absolute inset-0 p-5 ${card.bg} ${card.textColor} rounded-[2rem] shadow-2xl transition-all duration-700 cubic-bezier(0.19, 1, 0.22, 1) border border-white/10 backdrop-blur-3xl flex flex-col justify-center`}
                         style={{ 
                             transform: `translateZ(${zPos}px) translateY(${yPos}px) scale(${scale})`,
                             opacity,
@@ -337,45 +299,37 @@ export default function AdversarialAppMockup({
     externalMousePos?: { x: number, y: number }
 }) {
     // OPPOSITE TILT
-    const rotateX = (18 - (externalMousePos.y * 10)); 
-    const rotateY = (28 - (externalMousePos.x * 12));
-    const rotateZ = (-6 - (externalMousePos.x * 3));
+    const rotateX = (18 - (externalMousePos.y * 11)); 
+    const rotateY = (28 - (externalMousePos.x * 13));
+    const rotateZ = (-6 - (externalMousePos.x * 4));
 
     const tiltTransform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${isSectionHovered ? 1.05 : 0.95})`;
 
     return (
-        <div className="w-full h-full flex items-center justify-center p-4 md:p-8 select-none relative group" style={{ perspective: "2000px" }}>
-            
-            {/* ── GHOST LAYER (FOR FEATURE BUBBLES) ── */}
-            {/* Moved outside the phone's container to prevent clipping, but synced to the same tilt */}
-            <div 
-                className="absolute inset-0 z-[500] pointer-events-none"
-                style={{ 
-                    transformStyle: "preserve-3d",
-                    transform: tiltTransform,
-                    transition: "transform 1000ms cubic-bezier(0.23, 1, 0.32, 1)"
-                }}
-            >
-                <FeatureBubbles isHovered={isSectionHovered} />
-            </div>
-
+        <div 
+            className="w-full h-full flex items-center justify-center p-4 md:p-8 select-none relative group" 
+            style={{ 
+                perspective: "3000px", 
+                transformStyle: "preserve-3d" 
+            }}
+        >
             {/* ── PHONE 3D CONTAINER ── */}
             <div 
-                className="relative w-[240px] md:w-[260px] h-[500px] md:h-[540px] transition-transform duration-1000 cubic-bezier(0.23, 1, 0.32, 1)"
+                className="relative w-[240px] md:w-[260px] h-[500px] md:h-[540px] transition-transform duration-700 cubic-bezier(0.19, 1, 0.22, 1)"
                 style={{ 
                     transformStyle: "preserve-3d",
                     transform: tiltTransform
                 }}
             >
-                {/* ── PHONE BASE ── */}
+                {/* ── PHONE BASE (Slate Housing) ── */}
                 <div 
                     className="absolute inset-0 rounded-[3.5rem] bg-slate-900 shadow-[40px_80px_100px_rgba(0,0,0,0.5)] border-[6px] border-slate-800" 
-                    style={{ transform: "translateZ(0)" }}
+                    style={{ transform: "translateZ(-10px)" }}
                 />
 
-                {/* ── SCREEN ── */}
+                {/* ── SCREEN (White UI Layer) ── */}
                 <div 
-                    className="absolute inset-[6px] rounded-[3rem] bg-[#F8F9FF] overflow-hidden flex flex-col" 
+                    className="absolute inset-[6px] rounded-[3rem] bg-[#F8F9FF] overflow-hidden flex flex-col shadow-inner" 
                     style={{ transform: `translateZ(15px)`, transformStyle: "preserve-3d" }}
                 >
                     {/* Status Bar & Dynamic Island (Pinned) */}
@@ -408,15 +362,17 @@ export default function AdversarialAppMockup({
 
                     {/* Laser Sweep */}
                     <div 
-                        className="absolute inset-0 z-[50] pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-1000"
+                        className="absolute inset-0 z-[50] pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-700"
                         style={{
                             background: `linear-gradient(${75 + externalMousePos.x * 20}deg, transparent, rgba(255,255,255,0.8) 45%, rgba(255,255,255,0.8) 55%, transparent)`,
                             transform: `translateX(${externalMousePos.x * 100}%)`,
                         }}
                     />
                 </div>
-
             </div>
+
+            {/* ── FEATURE BUBBLES (FAST REACTION & CLIPPED) ── */}
+            <FeatureBubbles isHovered={isSectionHovered} tiltTransform={tiltTransform} />
 
             <style>{`
                 @keyframes pulse-island {
