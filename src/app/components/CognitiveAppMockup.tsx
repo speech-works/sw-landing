@@ -60,27 +60,40 @@ const GuidedBreathingFace = () => (
 
 /**
  * MeditationFace — sw-faces/MeditationFace.tsx
- * Blue circle bg, peach face, flat line eyes/mouth. Pulsing halo rings animated
+ * Blue circle bg, peach face, flat line eyes/mouth. Pulsing halo rings expand outward.
+ * The rings scale from 0→3x and drift upward toward the forehead (translateY -30%)
+ * matching the original Reanimated: scale=progress*3, translateY=-size*0.3, opacity=0.6*(1-progress)
  */
 const MeditationFace = () => (
-  <div className="w-full h-full rounded-full overflow-hidden relative">
-    {/* Pulsing rings behind face */}
-    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-      <div className="absolute rounded-full border-2 border-white/50 bg-white/10 animate-med-ring animate-med-ring-d0" style={{ width: "100%", height: "100%" }} />
-      <div className="absolute rounded-full border-2 border-white/50 bg-white/10 animate-med-ring animate-med-ring-d1" style={{ width: "100%", height: "100%" }} />
-      <div className="absolute rounded-full border-2 border-white/50 bg-white/10 animate-med-ring animate-med-ring-d2" style={{ width: "100%", height: "100%" }} />
+  // overflow-visible so expanding rings are NOT clipped by the face boundary
+  <div className="w-full h-full relative" style={{ overflow: "visible" }}>
+    {/* 4 staggered pulsing rings — rendered BEHIND the face circle, allowed to overflow */}
+    {[0, 1, 2, 3].map((i) => (
+      <div
+        key={i}
+        className="absolute rounded-full pointer-events-none animate-med-ring"
+        style={{
+          inset: 0,
+          border: "2px solid rgba(255,255,255,0.55)",
+          background: "rgba(255,255,255,0.08)",
+          animationDelay: `${i * 0.875}s`,
+        }}
+      />
+    ))}
+    {/* Face SVG — has its own overflow-hidden to clip the circle shape */}
+    <div className="absolute inset-0 rounded-full overflow-hidden">
+      <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
+        {/* Blue circle background */}
+        <path fill="#3F51B5" d="M48 24C48 10.745 37.255 0 24 0S0 10.745 0 24s10.745 24 24 24 24-10.745 24-24" />
+        {/* Peach/sand skin face */}
+        <path fill="#FFDAB9" d="M8.075 10.075c0-2.767 33.199-2.767 33.199 0 2.767 0 2.767 38.736 0 38.736 0 2.766-33.2 2.766-33.2 0-2.766 0-2.766-38.736 0-38.736" />
+        {/* Flat line eyes */}
+        <line stroke="#607D8B" strokeWidth="2.5" strokeLinecap="round" x1="15" y1="24" x2="21" y2="24" />
+        <line stroke="#607D8B" strokeWidth="2.5" strokeLinecap="round" x1="27" y1="24" x2="33" y2="24" />
+        {/* Flat line mouth */}
+        <line stroke="#607D8B" strokeWidth="2.5" strokeLinecap="round" x1="20" y1="34" x2="28" y2="34" />
+      </svg>
     </div>
-    <svg viewBox="0 0 48 48" fill="none" className="w-full h-full relative z-10">
-      {/* Blue circle background */}
-      <path fill="#3F51B5" d="M48 24C48 10.745 37.255 0 24 0S0 10.745 0 24s10.745 24 24 24 24-10.745 24-24" />
-      {/* Peach/sand skin face */}
-      <path fill="#FFDAB9" d="M8.075 10.075c0-2.767 33.199-2.767 33.199 0 2.767 0 2.767 38.736 0 38.736 0 2.766-33.2 2.766-33.2 0-2.766 0-2.766-38.736 0-38.736" />
-      {/* Flat line eyes */}
-      <line stroke="#607D8B" strokeWidth="2.5" strokeLinecap="round" x1="15" y1="24" x2="21" y2="24" />
-      <line stroke="#607D8B" strokeWidth="2.5" strokeLinecap="round" x1="27" y1="24" x2="33" y2="24" />
-      {/* Flat line mouth */}
-      <line stroke="#607D8B" strokeWidth="2.5" strokeLinecap="round" x1="20" y1="34" x2="28" y2="34" />
-    </svg>
   </div>
 );
 
@@ -425,15 +438,17 @@ export default function CognitiveAppMockup() {
         }
         .animate-gb-breath { animation: gb-breath 3.5s ease-in-out infinite; }
 
-        /* MeditationFace: pulsing halo rings */
+        /* MeditationFace: pulsing halo rings — scale 0→3, drift upward toward forehead, fade 0.6→0 */
+        /* Matches original: scale=progress*3, translateY=-size*0.3, opacity=0.6*(1-progress), duration=3500ms */
         @keyframes med-ring {
-          0%   { transform: scale(0.2) translateY(-32%); opacity: 0.6; }
-          100% { transform: scale(3) translateY(-10%);  opacity: 0; }
+          0%   { transform: scale(0) translateY(0%);    opacity: 0.6; }
+          100% { transform: scale(3) translateY(-30%);  opacity: 0; }
         }
-        .animate-med-ring    { animation: med-ring 3.5s ease-out infinite; }
-        .animate-med-ring-d0 { animation-delay: 0s; }
-        .animate-med-ring-d1 { animation-delay: 1s; }
-        .animate-med-ring-d2 { animation-delay: 2s; }
+        /* 4 rings staggered at 875ms = 3500ms / 4, matching original 0/1000/2000/3000ms delays */
+        .animate-med-ring { 
+          animation: med-ring 3.5s cubic-bezier(0.19,1,0.22,1) infinite;
+          transform-origin: center center;
+        }
 
         /* RewiringFace: eye blink */
         @keyframes rew-blink {
