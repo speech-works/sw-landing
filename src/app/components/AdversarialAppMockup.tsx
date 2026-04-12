@@ -23,7 +23,7 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             label: "Roleplay", 
             icon: "🎭", 
             color: "bg-amber-400", 
-            x: -160, y: -220, z: 120, 
+            x: -180, y: -240, z: 120, 
             initRotate: -45,
             endRotate: -8, 
             delay: 0.1 
@@ -33,7 +33,7 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             label: "AI Calls", 
             icon: "📱", 
             color: "bg-violet-500", 
-            x: 180, y: -160, z: 150, 
+            x: 200, y: -180, z: 150, 
             initRotate: 45,
             endRotate: 12, 
             delay: 0.2 
@@ -43,7 +43,7 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             label: "Social Challenge", 
             icon: "🤝", 
             color: "bg-emerald-500", 
-            x: -180, y: 160, z: 180, 
+            x: -200, y: 180, z: 180, 
             initRotate: -30,
             endRotate: 5, 
             delay: 0.15 
@@ -53,7 +53,7 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             label: "Interview", 
             icon: "💼", 
             color: "bg-slate-700", 
-            x: 160, y: 220, z: 130, 
+            x: 180, y: 240, z: 130, 
             initRotate: 30,
             endRotate: -10, 
             delay: 0.25 
@@ -65,7 +65,7 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             {bubbles.map((b) => (
                 <div 
                     key={b.id}
-                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-2.5 rounded-full flex items-center gap-2 shadow-2xl transition-all duration-1000 cubic-bezier(0.34, 1.56, 0.64, 1) border border-white/20 backdrop-blur-md overflow-hidden`}
+                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-3 rounded-full flex items-center gap-2.5 shadow-2xl transition-all duration-1000 cubic-bezier(0.34, 1.56, 0.64, 1) border border-white/20 backdrop-blur-md overflow-hidden`}
                     style={{ 
                         backgroundColor: "rgba(255,255,255,0.88)",
                         transform: `
@@ -79,18 +79,18 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
                         `,
                         opacity: isHovered ? 1 : 0,
                         transitionDelay: `${isHovered ? b.delay : 0}s`,
-                        boxShadow: isHovered ? "0 20px 50px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.5)" : "none"
+                        boxShadow: isHovered ? "0 25px 60px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.5)" : "none"
                     }}
                 >
-                    <div className={`w-6 h-6 rounded-full ${b.color} flex items-center justify-center text-[10px] shadow-inner`}>
+                    <div className={`w-7 h-7 rounded-full ${b.color} flex items-center justify-center text-xs shadow-inner shrink-0`}>
                         {b.icon}
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-800 whitespace-nowrap">
+                    <span className="text-[11px] font-black uppercase tracking-wider text-slate-800 whitespace-nowrap">
                         {b.label}
                     </span>
                     
                     {/* Watermark/Ghost Icon */}
-                    <div className="absolute -right-1 -bottom-1 text-2xl opacity-[0.08] pointer-events-none select-none">
+                    <div className="absolute -right-1 -bottom-1 text-3xl opacity-[0.08] pointer-events-none select-none">
                         {b.icon}
                     </div>
                 </div>
