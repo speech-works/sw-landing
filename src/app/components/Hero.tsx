@@ -73,22 +73,53 @@ export default function Hero() {
                           </div>
                       </div>
       
-                      {/*  Right Visual  */}
+                      {/*  Realistic Mobile Frame (Ultra-Refined)  */}
                       <div className="lg:col-span-4 hidden lg:flex justify-end reveal reveal-delay-3 relative active">
-                          <div className="w-[300px] xl:w-[320px] h-[600px] xl:h-[640px] rounded-[3rem] xl:rounded-[3.5rem] border-[6px] border-[#2A2A2A] bg-black relative overflow-hidden flex flex-col shadow-[0_20px_60px_-15px_rgba(242,128,68,0.3)] animate-float transform rotate-[-2deg] hover:rotate-0 transition-transform duration-700 hover:scale-105">
-                              {/* iPhone Hardware Elements */}
-                              <div className="absolute top-0 inset-x-0 h-7 flex justify-center z-50 pointer-events-none">
-                                  <div className="w-1/3 h-6 bg-[#2A2A2A] rounded-b-3xl"></div>
-                              </div>
-                              <div className="absolute top-[80px] -left-[7px] w-1 h-8 bg-[#1A1A1A] rounded-l-md"></div>
-                              <div className="absolute top-[130px] -left-[7px] w-1 h-12 bg-[#1A1A1A] rounded-l-md"></div>
-                              <div className="absolute top-[190px] -left-[7px] w-1 h-12 bg-[#1A1A1A] rounded-l-md"></div>
-                              <div className="absolute top-[140px] -right-[7px] w-1 h-16 bg-[#1A1A1A] rounded-r-md"></div>
+                          <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px] animate-float transform rotate-[-2deg] hover:rotate-0 transition-transform duration-700 hover:scale-105 group">
                               
-                              {/* Live Screen Content - SEAMLESS FIT */}
-                              <div className="w-full h-full rounded-[2.625rem] xl:rounded-[3.125rem] overflow-hidden relative">
-                                  <LiveAppMockup />
+                              {/* External Chassis (Titanium/Metal Edge) */}
+                              <div className="absolute inset-0 rounded-[3.5rem] bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),inset_0_0_2px_rgba(255,255,255,0.2)]"></div>
+                              
+                              {/* Physical Buttons */}
+                              {/* Silent Switch / Action Button */}
+                              <div className="absolute top-[80px] -left-[2px] w-[3px] h-8 bg-black rounded-l-md border-r border-white/5 shadow-sm"></div>
+                              {/* Volume Up */}
+                              <div className="absolute top-[130px] -left-[2px] w-[3px] h-12 bg-black rounded-l-md border-r border-white/5 shadow-sm"></div>
+                              {/* Volume Down */}
+                              <div className="absolute top-[190px] -left-[2px] w-[3px] h-12 bg-black rounded-l-md border-r border-white/5 shadow-sm"></div>
+                              {/* Power Button */}
+                              <div className="absolute top-[150px] -right-[2px] w-[3px] h-16 bg-black rounded-r-md border-l border-white/5 shadow-sm"></div>
+                              
+                              {/* Inner Bezel (Black Glass Edge) */}
+                              <div className="absolute inset-[4px] rounded-[3.25rem] bg-black shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] overflow-hidden">
+                                  
+                                  {/* Dynamic Island */}
+                                  <div className="absolute top-4 inset-x-0 flex justify-center z-[60] pointer-events-none">
+                                      <div className="w-[85px] h-[26px] bg-[#050505] rounded-[20px] shadow-[inset_0_0_1px_rgba(255,255,255,0.1)] flex items-center justify-end pr-4">
+                                          {/* Subtle Lens Reflection */}
+                                          <div className="w-1.5 h-1.5 rounded-full bg-[#1a1c2e] shadow-[0_0_2px_#3b3b4d]"></div>
+                                      </div>
+                                  </div>
+
+                                  {/* Live Screen Content - SEAMLESS FIT */}
+                                  <div className="w-full h-full rounded-[inherit] overflow-hidden relative bg-[#f9fafb]">
+                                      {/* Screen Glass Reflection Overlay */}
+                                      <div className="absolute inset-0 z-50 pointer-events-none bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.08] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                      
+                                      <LiveAppMockup />
+                                      
+                                      {/* Home Indicator */}
+                                      <div className="absolute bottom-2 inset-x-0 flex justify-center z-50">
+                                          <div className="w-24 h-1 bg-black/10 rounded-full"></div>
+                                      </div>
+                                  </div>
                               </div>
+
+                              {/* Antenna Bands (Subtle detail) */}
+                              <div className="absolute top-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                              <div className="absolute top-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                              <div className="absolute bottom-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                              <div className="absolute bottom-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
                           </div>
                       </div>
                   </div>
