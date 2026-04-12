@@ -14,7 +14,7 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 );
 
 // ──────────────────────────────────────────────────────────────────────────
-// FEATURE BUBBLES (EXPLODE TO TOP-FRONT)
+// FEATURE BUBBLES (HUD CLUSTER - GHOST LAYER)
 // ──────────────────────────────────────────────────────────────────────────
 function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
     const bubbles = [
@@ -24,9 +24,9 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             icon: "🎭", 
             color: "bg-amber-400", 
             angle: -140, 
-            radius: 280, 
+            radius: 85, 
             z: 220, 
-            yOffset: -180,
+            yOffset: -160,
             delay: 0.1 
         },
         { 
@@ -35,9 +35,9 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             icon: "📱", 
             color: "bg-violet-500", 
             angle: -40, 
-            radius: 260, 
-            z: 260, 
-            yOffset: -160,
+            radius: 90, 
+            z: 240, 
+            yOffset: -150,
             delay: 0.25 
         },
         { 
@@ -46,9 +46,9 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             icon: "🤝", 
             color: "bg-emerald-500", 
             angle: 140, 
-            radius: 270, 
+            radius: 95, 
             z: 200, 
-            yOffset: -140,
+            yOffset: -60,
             delay: 0.15 
         },
         { 
@@ -57,9 +57,9 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             icon: "💼", 
             color: "bg-slate-700", 
             angle: 40, 
-            radius: 250, 
-            z: 240, 
-            yOffset: -170,
+            radius: 80, 
+            z: 250, 
+            yOffset: -70,
             delay: 0.3 
         }
     ];
@@ -71,71 +71,72 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             {bubbles.map((b) => (
                 <div 
                     key={b.id}
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-[1800ms]"
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-[1500ms]"
                     style={{ 
                         transformStyle: "preserve-3d",
                         transitionTimingFunction: smoothEase,
                         transitionDelay: `${isHovered ? b.delay : 0}s`,
                         transform: `
-                            rotateZ(${isHovered ? b.angle : b.angle - 140}deg)
+                            rotateZ(${isHovered ? b.angle : b.angle - 120}deg)
                             scale(${isHovered ? 1 : 0.1})
                         `,
                         opacity: isHovered ? 1 : 0,
                         willChange: "transform, opacity"
                     }}
                 >
-                    {/* The Inner Bubble - flies dramatically to the TOP FRONT */}
+                    {/* The Inner Bubble - GHOST LAYER Rendering (No Clipping) */}
                     <div 
-                        className={`px-7 py-4 rounded-full flex items-center gap-3.5 shadow-2xl border border-white/30 backdrop-blur-xl overflow-hidden transition-all duration-[1800ms]`}
+                        className={`px-5 py-2.5 rounded-full flex items-center gap-3 shadow-[0_30px_60px_rgba(0,0,0,0.3)] border border-white/40 backdrop-blur-xl overflow-hidden transition-all duration-[1500ms]`}
                         style={{ 
-                            backgroundColor: "rgba(255,255,255,0.94)",
+                            backgroundColor: "rgba(255,255,255,0.95)",
                             transitionTimingFunction: smoothEase,
                             transitionDelay: `${isHovered ? b.delay : 0}s`,
                             transform: `
                                 translateX(${isHovered ? b.radius : 0}px)
                                 translateY(${isHovered ? b.yOffset : 0}px)
-                                translateZ(${isHovered ? b.z + 200 : 0}px)
-                                rotateZ(${isHovered ? -b.angle : -(b.angle - 140)}deg)
+                                translateZ(${isHovered ? b.z : 0}px)
+                                rotateZ(${isHovered ? -b.angle : -(b.angle - 120)}deg)
                             `,
-                            boxShadow: isHovered ? "0 60px 140px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.8)" : "none",
+                            // High z-index is not enough in 3D, translateZ is king
+                            boxShadow: isHovered ? "0 40px 100px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.8)" : "none",
                             willChange: "transform"
                         }}
                     >
-                        <div className={`w-8 h-8 rounded-full ${b.color} flex items-center justify-center text-sm shadow-inner shrink-0 leading-none`}>
+                        <div className={`w-7 h-7 rounded-full ${b.color} flex items-center justify-center text-xs shadow-inner shrink-0 leading-none`}>
                             {b.icon}
                         </div>
-                        <span className="text-[12px] font-black uppercase tracking-widest text-slate-900 whitespace-nowrap leading-none">
+                        <span className="text-[11px] font-black uppercase tracking-wider text-slate-900 whitespace-nowrap leading-none">
                             {b.label}
                         </span>
                         
                         {/* Watermark/Ghost Icon */}
-                        <div className="absolute -right-1.5 -bottom-1.5 text-4xl opacity-[0.1] pointer-events-none select-none">
+                        <div className="absolute -right-1 -bottom-1 text-3xl opacity-[0.08] pointer-events-none select-none">
                             {b.icon}
                         </div>
                     </div>
                 </div>
             ))}
 
-            {/* Decor dots orbiting the explosion */}
-            {[...Array(8)].map((_, i) => (
+            {/* Decor dots orbiting the cluster HUD */}
+            {[...Array(6)].map((_, i) => (
                 <div 
                     key={`dot-${i}`}
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-[2000ms]"
                     style={{
                         transitionTimingFunction: smoothEase,
-                        transitionDelay: `${Math.random() * 0.5}s`,
+                        transitionDelay: `${Math.random() * 0.4}s`,
                         transform: `
-                            rotateZ(${(i * 45) + (isHovered ? 60 : 180)}deg)
+                            rotateZ(${(i * 60) + (isHovered ? 30 : 150)}deg)
                             scale(${isHovered ? 1 : 0})
                         `,
                     }}
                 >
                     <div 
-                        className="w-2 h-2 rounded-full bg-white/60 blur-[1px] transition-all duration-[2000ms]"
+                        className="w-1.5 h-1.5 rounded-full bg-white/50 blur-[1px] transition-all duration-[2000ms]"
                         style={{
                             transitionTimingFunction: smoothEase,
-                            transform: `translateX(${isHovered ? 320 + (i * 15) : 0}px) translateY(${isHovered ? -100 : 0}px) translateZ(${isHovered ? 400 : -200}px)`,
-                            opacity: isHovered ? 0.8 : 0,
+                            transform: `translateX(${isHovered ? 110 + (i * 10) : 0}px) translateY(${isHovered ? -100 : 0}px) translateZ(${isHovered ? 280 : -50}px)`,
+                            opacity: isHovered ? 0.7 : 0,
                         }}
                     />
                 </div>
@@ -340,15 +341,30 @@ export default function AdversarialAppMockup({
     const rotateY = (28 - (externalMousePos.x * 12));
     const rotateZ = (-6 - (externalMousePos.x * 3));
 
+    const tiltTransform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${isSectionHovered ? 1.05 : 0.95})`;
+
     return (
         <div className="w-full h-full flex items-center justify-center p-4 md:p-8 select-none relative group" style={{ perspective: "2000px" }}>
             
-            {/* 3D Wrapper */}
+            {/* ── GHOST LAYER (FOR FEATURE BUBBLES) ── */}
+            {/* Moved outside the phone's container to prevent clipping, but synced to the same tilt */}
+            <div 
+                className="absolute inset-0 z-[500] pointer-events-none"
+                style={{ 
+                    transformStyle: "preserve-3d",
+                    transform: tiltTransform,
+                    transition: "transform 1000ms cubic-bezier(0.23, 1, 0.32, 1)"
+                }}
+            >
+                <FeatureBubbles isHovered={isSectionHovered} />
+            </div>
+
+            {/* ── PHONE 3D CONTAINER ── */}
             <div 
                 className="relative w-[240px] md:w-[260px] h-[500px] md:h-[540px] transition-transform duration-1000 cubic-bezier(0.23, 1, 0.32, 1)"
                 style={{ 
                     transformStyle: "preserve-3d",
-                    transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${isSectionHovered ? 1.05 : 0.95})`
+                    transform: tiltTransform
                 }}
             >
                 {/* ── PHONE BASE ── */}
@@ -399,10 +415,6 @@ export default function AdversarialAppMockup({
                         }}
                     />
                 </div>
-
-                {/* ── FEATURE BUBBLES (EXPLODE TO TOP-FRONT) ── */}
-                {/* Positoned LAST to ensure it renders in front of everything else */}
-                <FeatureBubbles isHovered={isSectionHovered} />
 
             </div>
 
