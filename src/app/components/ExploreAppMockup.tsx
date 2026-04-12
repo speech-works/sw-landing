@@ -217,27 +217,73 @@ export default function ExploreAppMockup() {
     { subtitle: "Courage",    title: "Exposure",   badge: "0 Done", from: "#FFC8C8", to: "#FF9E9E", shadow: "rgba(255,158,158,0.35)", face: <WarriorFace /> },
   ];
 
+  // Fixed header height constants
+  const STATUS_H = 44;
+  const HEADER_H = 64;
+  const FIXED_TOP = STATUS_H + HEADER_H;
+
   return (
     <div className="w-full h-full bg-[#FCF8F5] flex flex-col font-sans relative select-none overflow-hidden">
-      {/* Status Bar */}
-      <div className="w-full absolute top-0 z-40 flex justify-between items-center" style={{ padding: "20px 20px 8px" }}>
-        <span style={{ fontSize: "11px", fontWeight: 700, color: "#4A3831" }}>{fmt(time)}</span>
-        <div style={{ width: 16, height: 8, borderRadius: 2, border: "1.5px solid #4A3831", padding: 1.5 }}>
-          <div style={{ width: "80%", height: "100%", background: "#4A3831", borderRadius: 1 }} />
+
+      {/* ── Fixed Status Bar ─────────────────────────────── */}
+      <div
+        className="absolute left-0 right-0 z-50 flex items-center justify-between"
+        style={{ top: 0, height: STATUS_H, padding: "0 18px", background: "#FCF8F5" }}
+      >
+        <span style={{ fontSize: "11px", fontWeight: 700, color: "#4A3831", letterSpacing: "-0.2px" }}>
+          {fmt(time)}
+        </span>
+        {/* Status icons */}
+        <div className="flex items-center gap-1.5">
+          {/* Signal bars */}
+          <svg viewBox="0 0 17 12" fill="#4A3831" style={{ width: 15, height: 11 }}>
+            <rect x="0" y="8" width="3" height="4" rx="0.5" />
+            <rect x="4.5" y="5.5" width="3" height="6.5" rx="0.5" />
+            <rect x="9" y="3" width="3" height="9" rx="0.5" />
+            <rect x="13.5" y="0" width="3" height="12" rx="0.5" opacity="0.3" />
+          </svg>
+          {/* WiFi */}
+          <svg viewBox="0 0 16 12" fill="none" stroke="#4A3831" strokeWidth="1.4" strokeLinecap="round" style={{ width: 15, height: 11 }}>
+            <path d="M8 10.5 L8 10.51" strokeWidth="2" />
+            <path d="M5 7.8 Q8 5.5 11 7.8" fill="none" />
+            <path d="M2.5 5.3 Q8 1.5 13.5 5.3" fill="none" />
+          </svg>
+          {/* Battery */}
+          <div className="flex items-center gap-[1px]">
+            <div style={{ width: 19, height: 10, borderRadius: 2.5, border: "1.5px solid #4A3831", padding: "1.5px" }}>
+              <div style={{ width: "82%", height: "100%", background: "#4A3831", borderRadius: 1 }} />
+            </div>
+            <div style={{ width: 1.5, height: 5, background: "#4A3831", borderRadius: 1 }} />
+          </div>
         </div>
       </div>
 
-      {/* Scrollable content */}
-      <div className="flex-1 overflow-hidden relative" style={{ paddingTop: 54 }}>
+      {/* ── Fixed Frosted Glass Header (Explore title) ─── */}
+      <div
+        className="absolute left-0 right-0 z-40"
+        style={{
+          top: STATUS_H,
+          height: HEADER_H,
+          background: "rgba(252,248,245,0.85)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          borderBottom: "1px solid rgba(0,0,0,0.04)",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          padding: "0 16px 10px",
+        }}
+      >
+        <h1 style={{ fontSize: "22px", fontWeight: 700, color: "#4A3831", letterSpacing: "-0.4px", lineHeight: 1.1 }}>Explore</h1>
+        <p style={{ fontSize: "11px", color: "#9CA3AF", fontWeight: 500, marginTop: 2 }}>Discover new ways to improve your speech.</p>
+      </div>
+
+      {/* ── Scrollable Content (pans under the fixed header) */}
+      <div className="flex-1 overflow-hidden relative">
         <div
-          className={`absolute inset-0 flex flex-col ${mounted ? "animate-app-pan" : "opacity-0"}`}
-          style={{ top: 12, gap: 16, padding: "0 16px" }}
+          className={`absolute left-0 right-0 flex flex-col ${mounted ? "animate-app-pan" : "opacity-0"}`}
+          style={{ top: FIXED_TOP + 16, gap: 16, padding: "0 16px" }}
         >
-          {/* Header */}
-          <div>
-            <h1 style={{ fontSize: "22px", fontWeight: 700, color: "#4A3831", letterSpacing: "-0.4px", lineHeight: 1.1 }}>Explore</h1>
-            <p style={{ fontSize: "11px", color: "#9CA3AF", fontWeight: 500, marginTop: 2 }}>Discover new ways to improve your speech.</p>
-          </div>
 
           {/* Weekly Update Card */}
           <div
