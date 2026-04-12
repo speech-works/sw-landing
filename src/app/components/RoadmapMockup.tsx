@@ -22,10 +22,10 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
           PIXEL-PERFECT DEVICE FRAME 
           Everything is clipped at this level. Nothing can leak out.
       */}
-      <div className="relative w-[325px] h-[660px] shadow-2xl transition-transform duration-700 hover:scale-[1.02] group/phone rounded-[3.5rem] overflow-hidden ring-1 ring-white/10 origin-center">
+      <div className="relative w-[325px] h-[660px] shadow-2xl transition-transform duration-700 hover:scale-[1.02] group/phone rounded-[3.5rem] ring-1 ring-white/10 origin-center">
         
         {/* External Titanium Chassis Ring (Synced with Hero) */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[inset_0_0_2px_rgba(255,255,255,0.2)]" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] rounded-[3.5rem] shadow-[inset_0_0_2px_rgba(255,255,255,0.2)]" />
         
         {/* 
             INNER BEZEL (Black Glass Edge)
@@ -118,15 +118,14 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
           </div>
         </div>
 
-        {/* Physical Buttons - Synced with Hero Layout */}
-        
+        {/* Physical Buttons - High-Fidelity Realistic Details */}
         {/* Left Side: Action Button + Volume */}
-        <div className="absolute top-[80px] -left-[2px] w-[3px] h-8 bg-black z-20 rounded-l-md border-r border-white/5 shadow-sm" /> {/* Action Button */}
-        <div className="absolute top-[130px] -left-[2px] w-[3px] h-12 bg-black z-20 rounded-l-md border-r border-white/5 shadow-sm" /> {/* Volume Up */}
-        <div className="absolute top-[190px] -left-[2px] w-[3px] h-12 bg-black z-20 rounded-l-md border-r border-white/5 shadow-sm" /> {/* Volume Down */}
+        <div className="absolute top-[85px] -left-[4px] w-[7px] h-9 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]" /> {/* Action Button */}
+        <div className="absolute top-[140px] -left-[4px] w-[7px] h-14 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]" /> {/* Volume Up */}
+        <div className="absolute top-[210px] -left-[4px] w-[7px] h-14 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]" /> {/* Volume Down */}
         
         {/* Right Side: Side/Power Button */}
-        <div className="absolute top-[150px] -right-[2px] w-[3px] h-16 bg-black z-20 rounded-r-md border-l border-white/5 shadow-sm" />
+        <div className="absolute top-[160px] -right-[4px] w-[7px] h-24 bg-gradient-to-l from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-r-[3px] border-y border-l border-white/10 shadow-[-1px_0_3px_rgba(0,0,0,0.5)]" />
       </div>
     </div>
 );

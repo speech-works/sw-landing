@@ -80,15 +80,15 @@ export default function Hero() {
                               {/* External Chassis (Titanium/Metal Edge) */}
                               <div className="absolute inset-0 rounded-[3.5rem] bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),inset_0_0_2px_rgba(255,255,255,0.2)]"></div>
                               
-                              {/* Physical Buttons */}
+                              {/* Physical Buttons - High-Fidelity Realistic Details */}
                               {/* Silent Switch / Action Button */}
-                              <div className="absolute top-[80px] -left-[2px] w-[3px] h-8 bg-black rounded-l-md border-r border-white/5 shadow-sm"></div>
+                              <div className="absolute top-[85px] -left-[4px] w-[7px] h-9 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
                               {/* Volume Up */}
-                              <div className="absolute top-[130px] -left-[2px] w-[3px] h-12 bg-black rounded-l-md border-r border-white/5 shadow-sm"></div>
+                              <div className="absolute top-[140px] -left-[4px] w-[7px] h-14 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
                               {/* Volume Down */}
-                              <div className="absolute top-[190px] -left-[2px] w-[3px] h-12 bg-black rounded-l-md border-r border-white/5 shadow-sm"></div>
+                              <div className="absolute top-[210px] -left-[4px] w-[7px] h-14 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
                               {/* Power Button */}
-                              <div className="absolute top-[150px] -right-[2px] w-[3px] h-16 bg-black rounded-r-md border-l border-white/5 shadow-sm"></div>
+                              <div className="absolute top-[160px] -right-[4px] w-[7px] h-24 bg-gradient-to-l from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-r-[3px] border-y border-l border-white/10 shadow-[-1px_0_3px_rgba(0,0,0,0.5)]"></div>
                               
                               {/* Inner Bezel (Black Glass Edge) */}
                               <div className="absolute inset-[4px] rounded-[3.25rem] bg-black shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] overflow-hidden">
