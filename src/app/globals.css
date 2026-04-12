@@ -127,6 +127,9 @@ body {
 .marquee-content.slow {
   animation-duration: 40s;
 }
+.marquee-content.very-slow {
+  animation-duration: 120s;
+}
 
 .mask-edges {
   -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);

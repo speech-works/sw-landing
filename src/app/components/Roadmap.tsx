@@ -119,40 +119,33 @@ export default function Roadmap() {
                   <div className="absolute inset-0 bg-grid opacity-20" />
                 </div>
 
-                {/* Layer 2: Massive Background Numeral */}
-                <div
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[35rem] font-black text-white/[0.03] tracking-tightest pointer-events-none leading-none select-none transition-transform duration-1000 ease-out"
-                  style={{
-                    transform: `translate(-50%, -50%) translate(${(mousePos.x - 0.5) * 40}px, ${(mousePos.y - 0.5) * 40}px)`,
-                  }}
-                >
-                  01
+                {/* Bottom Icon Watermark */}
+                <div className="absolute bottom-12 inset-x-0 overflow-hidden opacity-[0.03] pointer-events-none">
+                  <div className="marquee-content slow flex gap-12 whitespace-nowrap">
+                    {[...Array(12)].map((_, i) => (
+                      <svg key={i} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" className="flex-shrink-0">
+                        <path d="M3 12H5M8 8V16M11 4V20M14 7V17M17 10V14M20 12H21" />
+                      </svg>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="relative z-30 flex items-center justify-center h-full w-full pointer-events-none">
-                  {/* Floating Typography Poster */}
-                  <div className="w-full flex flex-col items-center justify-center text-center transition-transform duration-300 ease-out"
-                       style={{ transform: `translate(${(mousePos.x - 0.5) * -40}px, ${(mousePos.y - 0.5) * -40}px)` }}>
-                    
-                    <div className="space-y-0 pointer-events-auto relative group/poster">
-                      <div className="space-y-0 relative">
-                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-white font-black tracking-tightest uppercase leading-[0.8] drop-shadow-2xl">
-                          CLINICAL
-                        </h3>
-                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-transparent font-black tracking-tightest uppercase leading-[0.8]" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.7)' }}>
-                          GRADE
-                        </h3>
-                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-brand-100 font-serif italic font-light tracking-tighter leading-[0.8]">
-                          sandbox.
-                        </h3>
-                      </div>
+                <div className="absolute inset-0 z-10 flex items-center pointer-events-none">
+                  {/* Watermark Marquee Layer */}
+                  <div className="w-full marquee-container rotate-[-3deg] opacity-[0.03]">
+                    <div className="marquee-content very-slow flex gap-20 whitespace-nowrap">
+                      {[...Array(4)].map((_, i) => (
+                        <span key={i} className="text-[8rem] md:text-[14rem] text-white font-black tracking-tighter uppercase leading-none select-none">
+                          CLINICAL GRADE SANDBOX •
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
 
                 {/* Right: Stage Mockup Anchor - Half Visible & Ultra Scale */}
                 <div
-                  className="absolute right-[-10%] md:right-[-5%] bottom-[-35%] w-[80%] md:w-[65%] h-full flex justify-end items-end pointer-events-none z-20 transition-transform duration-1000 ease-out"
+                  className="absolute right-[-10%] md:right-[-5%] bottom-[-35%] w-[80%] md:w-[65%] h-full flex justify-end items-end pointer-events-none z-50 transition-transform duration-1000 ease-out"
                   style={{
                     transform: `translate(${(mousePos.x - 0.5) * 35}px, ${(mousePos.y - 0.5) * 35}px)`,
                   }}
@@ -176,38 +169,32 @@ export default function Roadmap() {
                   }}
                 />
 
-                {/* Layer 2: Massive Background Numeral */}
-                <div
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[35rem] font-black text-white/[0.03] tracking-tightest pointer-events-none leading-none select-none transition-transform duration-1000 ease-out"
-                  style={{
-                    transform: `translate(-50%, -50%) translate(${(mousePos.x - 0.5) * -40}px, ${(mousePos.y - 0.5) * -40}px)`,
-                  }}
-                >
-                  02
+                {/* Bottom Icon Watermark */}
+                <div className="absolute bottom-12 inset-x-0 overflow-hidden opacity-[0.03] pointer-events-none">
+                  <div className="marquee-content slow flex gap-12 whitespace-nowrap" style={{ animationDirection: 'reverse' }}>
+                    {[...Array(12)].map((_, i) => (
+                      <svg key={i} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" className="flex-shrink-0">
+                        <path d="M12 2v20M17 5v14M22 9v6M7 5v14M2 9v6" />
+                      </svg>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="relative z-30 flex items-center justify-center h-full w-full pointer-events-none">
-                  <div className="w-full flex flex-col items-center justify-center text-center transition-transform duration-300 ease-out"
-                       style={{ transform: `translate(${(mousePos.x - 0.5) * -40}px, ${(mousePos.y - 0.5) * -40}px)` }}>
-                    
-                    <div className="space-y-0 pointer-events-auto relative group/poster">
-                      <div className="space-y-0 relative">
-                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-white font-black tracking-tightest uppercase leading-[0.8] drop-shadow-2xl">
-                          STRONGER
-                        </h3>
-                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-transparent font-black tracking-tightest uppercase leading-[0.8]" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.7)' }}>
-                          UNIFIED
-                        </h3>
-                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-purple-200 font-serif italic font-light tracking-tighter leading-[0.8]">
-                          community.
-                        </h3>
-                      </div>
+                <div className="absolute inset-0 z-10 flex items-center pointer-events-none">
+                  {/* Watermark Marquee Layer */}
+                  <div className="w-full marquee-container rotate-[2deg] opacity-[0.03]">
+                    <div className="marquee-content very-slow flex gap-20 whitespace-nowrap" style={{ animationDirection: 'reverse' }}>
+                      {[...Array(4)].map((_, i) => (
+                        <span key={i} className="text-[8rem] md:text-[14rem] text-white font-black tracking-tighter uppercase leading-none select-none">
+                          STRONGER UNIFIED COMMUNITY •
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
 
                 <div
-                  className="absolute right-[-10%] md:right-[-5%] bottom-[-35%] w-[80%] md:w-[65%] h-full flex justify-end items-end pointer-events-none z-20 transition-transform duration-1000 ease-out"
+                  className="absolute right-[-10%] md:right-[-5%] bottom-[-35%] w-[80%] md:w-[65%] h-full flex justify-end items-end pointer-events-none z-50 transition-transform duration-1000 ease-out"
                   style={{
                     transform: `translate(${(mousePos.x - 0.5) * 35}px, ${(mousePos.y - 0.5) * 35}px)`,
                   }}
@@ -235,38 +222,33 @@ export default function Roadmap() {
                   }}
                 />
 
-                {/* Layer 2: Massive Background Numeral */}
-                <div
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[35rem] font-black text-white/[0.03] tracking-tightest pointer-events-none leading-none select-none transition-transform duration-1000 ease-out"
-                  style={{
-                    transform: `translate(-50%, -50%) translate(${(mousePos.x - 0.5) * -40}px, ${(mousePos.y - 0.5) * -40}px)`,
-                  }}
-                >
-                  03
+                {/* Bottom Icon Watermark */}
+                <div className="absolute bottom-12 inset-x-0 overflow-hidden opacity-[0.03] pointer-events-none">
+                  <div className="marquee-content slow flex gap-12 whitespace-nowrap">
+                    {[...Array(12)].map((_, i) => (
+                      <svg key={i} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" className="flex-shrink-0">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                      </svg>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="relative z-30 flex items-center justify-center h-full w-full pointer-events-none">
-                  <div className="w-full flex flex-col items-center justify-center text-center transition-transform duration-300 ease-out"
-                       style={{ transform: `translate(${(mousePos.x - 0.5) * -40}px, ${(mousePos.y - 0.5) * -40}px)` }}>
-                    
-                    <div className="space-y-0 pointer-events-auto relative group/poster">
-                      <div className="space-y-0 relative">
-                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-white font-black tracking-tightest uppercase leading-[0.8] drop-shadow-2xl">
-                          EXPERT
-                        </h3>
-                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-transparent font-black tracking-tightest uppercase leading-[0.8]" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.7)' }}>
-                          CLINICAL
-                        </h3>
-                        <h3 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] text-emerald-100 font-serif italic font-light tracking-tighter leading-[0.8]">
-                          guidance.
-                        </h3>
-                      </div>
+                <div className="absolute inset-0 z-10 flex items-center pointer-events-none">
+                  {/* Watermark Marquee Layer */}
+                  <div className="w-full marquee-container rotate-[-1.5deg] opacity-[0.03]">
+                    <div className="marquee-content very-slow flex gap-20 whitespace-nowrap">
+                      {[...Array(4)].map((_, i) => (
+                        <span key={i} className="text-[8rem] md:text-[14rem] text-white font-black tracking-tighter uppercase leading-none select-none">
+                          EXPERT CLINICAL GUIDANCE •
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
 
                 <div
-                  className="absolute right-[-10%] md:right-[-5%] bottom-[-35%] w-[80%] md:w-[65%] h-full flex justify-end items-end pointer-events-none z-20 transition-transform duration-1000 ease-out"
+                  className="absolute right-[-10%] md:right-[-5%] bottom-[-35%] w-[80%] md:w-[65%] h-full flex justify-end items-end pointer-events-none z-50 transition-transform duration-1000 ease-out"
                   style={{
                     transform: `translate(${(mousePos.x - 0.5) * 35}px, ${(mousePos.y - 0.5) * 35}px)`,
                   }}
