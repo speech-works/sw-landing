@@ -211,10 +211,10 @@ export default function ExploreAppMockup() {
   const fmt = (d: Date) => d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: false });
 
   const cards = [
-    { subtitle: "Fluency",    title: "Reading",   badge: "8 Done", from: "#FFD8B5", to: "#FFAB76", shadow: "rgba(255,171,118,0.35)", face: <ReaderFace /> },
-    { subtitle: "Expression", title: "Fun",        badge: "7 Done", from: "#CBF0F0", to: "#98E6E6", shadow: "rgba(152,230,230,0.35)", face: <MovieFace /> },
-    { subtitle: "Focus",      title: "Cognitive",  badge: "0 Done", from: "#EBCBF5", to: "#D8A7F0", shadow: "rgba(216,167,240,0.35)", face: <BreathingFace /> },
-    { subtitle: "Courage",    title: "Exposure",   badge: "0 Done", from: "#FFC8C8", to: "#FF9E9E", shadow: "rgba(255,158,158,0.35)", face: <WarriorFace /> },
+    { subtitle: "Fluency",    title: "Reading",   badge: "8 Done",  from: "#FFD8B5", to: "#FFAB76", shadow: "rgba(255,171,118,0.35)", face: <ReaderFace /> },
+    { subtitle: "Expression", title: "Fun",        badge: "7 Done",  from: "#CBF0F0", to: "#98E6E6", shadow: "rgba(152,230,230,0.35)", face: <MovieFace /> },
+    { subtitle: "Focus",      title: "Cognitive",  badge: "5 Done",  from: "#EBCBF5", to: "#D8A7F0", shadow: "rgba(216,167,240,0.35)", face: <BreathingFace /> },
+    { subtitle: "Courage",    title: "Exposure",   badge: "3 Done",  from: "#FFC8C8", to: "#FF9E9E", shadow: "rgba(255,158,158,0.35)", face: <WarriorFace /> },
   ];
 
   // Fixed header height constants
@@ -293,17 +293,25 @@ export default function ExploreAppMockup() {
             <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-white/5 -translate-x-6 -translate-y-12" />
             <p style={{ fontSize: "8px", fontWeight: 800, letterSpacing: "0.2em", color: "rgba(255,255,255,0.9)", textTransform: "uppercase", marginBottom: 12 }}>Weekly Update</p>
             <div className="flex justify-between items-end mb-4" style={{ height: 68 }}>
-              {["M","T","W","T","F","S","S"].map((day, i) => (
+              {[
+                { day: "M", h: 55 },
+                { day: "T", h: 80 },
+                { day: "W", h: 65 },
+                { day: "T", h: 70 },
+                { day: "F", h: 45 },
+                { day: "S", h: 0  },
+                { day: "S", h: 0  },
+              ].map(({ day, h }, i) => (
                 <div key={i} className="flex flex-col items-center gap-1.5">
                   <div className="rounded-full bg-white/20 overflow-hidden ring-1 ring-white/10 relative" style={{ width: 11, height: 48 }}>
-                    {i === 1 && <div className="absolute bottom-0 w-full bg-white" style={{ height: "60%", boxShadow: "0 0 6px white" }} />}
+                    {h > 0 && <div className="absolute bottom-0 w-full bg-white" style={{ height: `${h}%`, boxShadow: i === 1 ? "0 0 6px white" : "none" }} />}
                   </div>
-                  <span style={{ fontSize: "8px", fontWeight: 700, color: i === 1 ? "white" : "rgba(255,255,255,0.5)" }}>{day}</span>
+                  <span style={{ fontSize: "8px", fontWeight: 700, color: h > 0 ? "white" : "rgba(255,255,255,0.4)" }}>{day}</span>
                 </div>
               ))}
             </div>
             <div className="flex gap-2.5">
-              {[{ icon: <Flame />, val: "1", label: "Days Active" }, { val: "3m", label: "Total" }].map((w, i) => (
+              {[{ icon: <Flame />, val: "5", label: "Days Active" }, { val: "47m", label: "Total" }].map((w, i) => (
                 <div key={i} className="flex-1 rounded-2xl p-2.5 flex flex-col gap-0.5" style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.15)" }}>
                   <div className="flex items-center gap-1">{w.icon}<span style={{ fontSize: "15px", fontWeight: 800, color: "white" }}>{w.val}</span></div>
                   <span style={{ fontSize: "7.5px", fontWeight: 700, color: "rgba(255,255,255,0.65)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{w.label}</span>
