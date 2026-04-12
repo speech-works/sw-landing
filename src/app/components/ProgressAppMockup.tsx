@@ -89,6 +89,15 @@ export default function ProgressAppMockup({
                     className="absolute inset-0 rounded-[3.5rem] bg-black shadow-[40px_80px_100px_rgba(0,0,0,0.5)] border-[6px] border-slate-800" 
                     style={{ transform: "translateZ(0)" }}
                 >
+                    {/* Realistic iPhone Buttons */}
+                    {/* Left Side: Action & Volume */}
+                    <div className="absolute left-[-2px] top-[90px] w-[3px] h-4 bg-slate-800 rounded-l-sm border-y border-l border-white/10 shadow-sm" />
+                    <div className="absolute left-[-2px] top-[125px] w-[3px] h-10 bg-slate-800 rounded-l-sm border-y border-l border-white/10 shadow-sm" />
+                    <div className="absolute left-[-2px] top-[175px] w-[3px] h-10 bg-slate-800 rounded-l-sm border-y border-l border-white/10 shadow-sm" />
+                    
+                    {/* Right Side: Power */}
+                    <div className="absolute right-[-2px] top-[160px] w-[3px] h-14 bg-slate-800 rounded-r-sm border-y border-r border-white/10 shadow-sm" />
+
                     {/* Magnetic Glint */}
                     <div 
                         className="absolute inset-0 rounded-[3.3rem] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
