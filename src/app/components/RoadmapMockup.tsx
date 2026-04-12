@@ -17,12 +17,12 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
   const theme = themes[phase as keyof typeof themes] || themes[1];
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center p-4">
+    <div className="relative w-full h-full flex items-center justify-center">
       {/* 
           PIXEL-PERFECT DEVICE FRAME 
           Everything is clipped at this level. Nothing can leak out.
       */}
-      <div className="relative w-[280px] h-[580px] md:w-[320px] md:h-[640px] shadow-2xl transition-transform duration-700 hover:scale-[1.02] group/phone rounded-[3.5rem] overflow-hidden ring-1 ring-black/5">
+      <div className="relative w-[270px] h-[560px] md:w-[310px] md:h-[630px] shadow-2xl transition-transform duration-700 hover:scale-[1.02] group/phone rounded-[3.5rem] overflow-hidden ring-1 ring-black/5">
         
         {/* Exterior Chassis Ring */}
         <div className="absolute inset-0 bg-gradient-to-tr from-[#050505] via-[#2a2a2a] to-[#1a1a1a]" />
@@ -70,9 +70,9 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
 
             {/* Frosty Coming Soon Overlay */}
             {comingSoon && (
-              <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] rounded-[inherit] overflow-hidden group/lock p-8">
-                {/* Subtle Thematic Glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[80px] opacity-20" 
+              <div className="absolute inset-0 z-50 flex flex-col items-center justify-start pt-20 bg-[#050505] rounded-[inherit] overflow-hidden group/lock p-8">
+                {/* Subtle Thematic Glow - Positoned higher */}
+                <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[80px] opacity-20" 
                      style={{ backgroundColor: theme.accent }} />
                 
                 {/* Minimalist Lock */}
@@ -97,8 +97,8 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
                   </p>
                 </div>
 
-                {/* Pulsing Readiness Dot */}
-                <div className="absolute bottom-12 flex items-center gap-2">
+                {/* Status indicator moved up */}
+                <div className="mt-12 flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: theme.accent }}></span>
                     <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: theme.accent }}></span>
