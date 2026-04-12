@@ -22,21 +22,21 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
           PIXEL-PERFECT DEVICE FRAME 
           Everything is clipped at this level. Nothing can leak out.
       */}
-      <div className="relative w-[220px] h-[380px] md:w-[260px] md:h-[440px] shadow-2xl transition-transform duration-700 hover:scale-[1.02] group/phone rounded-[32px] md:rounded-[40px] overflow-hidden ring-1 ring-black/5">
+      <div className="relative w-[325px] h-[660px] shadow-2xl transition-transform duration-700 hover:scale-[1.02] group/phone rounded-[3.5rem] overflow-hidden ring-1 ring-white/10 origin-center">
         
-        {/* Exterior Chassis Ring */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#050505] via-[#2a2a2a] to-[#1a1a1a]" />
+        {/* External Titanium Chassis Ring (Synced with Hero) */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[inset_0_0_2px_rgba(255,255,255,0.2)]" />
         
         {/* 
-            SCREEN BEZEL
-            This is the black border around the screen. 
+            INNER BEZEL (Black Glass Edge)
+            Synced with Hero section's 4px inset
         */}
-        <div className="absolute inset-[6px] md:inset-[8px] bg-black rounded-[28px] md:rounded-[34px] overflow-hidden isolate">
+        <div className="absolute inset-[4px] bg-black rounded-[3.25rem] shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] overflow-hidden isolate">
           
-          {/* Dynamic Island notification pill */}
-          <div className="absolute top-3 md:top-4 inset-x-0 flex justify-center z-[60] pointer-events-none">
-            <div className="w-[80px] md:w-[96px] h-[24px] md:h-[28px] bg-[#050505] rounded-[24px] flex items-center justify-end pr-3">
-              <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#1a1c2e]" />
+          {/* Dynamic Island (Synced with Hero) */}
+          <div className="absolute top-4 inset-x-0 flex justify-center z-[60] pointer-events-none">
+            <div className="w-[85px] h-[26px] bg-[#050505] rounded-[20px] shadow-[inset_0_0_1px_rgba(255,255,255,0.1)] flex items-center justify-end pr-4">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#1a1c2e] shadow-[0_0_2px_#3b3b4d]" />
             </div>
           </div>
 
@@ -118,11 +118,15 @@ export default function RoadmapMockup({ phase, status, comingSoon = false }: Roa
           </div>
         </div>
 
-        {/* Physical Side Buttons (Internal to the clip, but visual enough) */}
-        <div className="absolute top-[80px] -left-1 w-2 h-8 bg-black z-20 rounded-r-md" />
-        <div className="absolute top-[130px] -left-1 w-2 h-12 bg-black z-20 rounded-r-md" />
-        <div className="absolute top-[190px] -left-1 w-2 h-12 bg-black z-20 rounded-r-md" />
-        <div className="absolute top-[150px] -right-1 w-2 h-16 bg-black z-20 rounded-l-md" />
+        {/* Physical Buttons - Synced with Hero Layout */}
+        
+        {/* Left Side: Action Button + Volume */}
+        <div className="absolute top-[80px] -left-[2px] w-[3px] h-8 bg-black z-20 rounded-l-md border-r border-white/5 shadow-sm" /> {/* Action Button */}
+        <div className="absolute top-[130px] -left-[2px] w-[3px] h-12 bg-black z-20 rounded-l-md border-r border-white/5 shadow-sm" /> {/* Volume Up */}
+        <div className="absolute top-[190px] -left-[2px] w-[3px] h-12 bg-black z-20 rounded-l-md border-r border-white/5 shadow-sm" /> {/* Volume Down */}
+        
+        {/* Right Side: Side/Power Button */}
+        <div className="absolute top-[150px] -right-[2px] w-[3px] h-16 bg-black z-20 rounded-r-md border-l border-white/5 shadow-sm" />
       </div>
     </div>
 );

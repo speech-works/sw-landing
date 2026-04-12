@@ -92,10 +92,13 @@ export default function Roadmap() {
                                   </div>
 
                                   {/* Right: Flat Realistic Phone Anchor */}
-                                  <div className="absolute right-[-5%] md:right-[5%] bottom-0 w-[60%] md:w-[45%] h-full flex justify-end items-center pointer-events-none translate-y-0 z-20">
-                                      {/* Drop shadow on the flat phone */}
-                                      <div className="absolute inset-0 bg-black/20 blur-[25px] rounded-[32px] scale-90 translate-y-4" />
-                                      <RoadmapMockup phase={1} status="live" />
+                                  <div className="absolute right-[0%] md:right-[2%] bottom-0 w-[80%] md:w-[60%] h-full flex justify-end items-center pointer-events-none z-20">
+                                      {/* Scale Wrapper to fit Hero Phone (325x660) in Card (550px) */}
+                                      <div className="relative transform scale-[0.75] xl:scale-[0.8] origin-right transition-transform duration-700">
+                                          {/* Drop shadow on the flat phone */}
+                                          <div className="absolute inset-0 bg-black/40 blur-[40px] rounded-[3.5rem] scale-95 translate-y-8 translate-x-4" />
+                                          <RoadmapMockup phase={1} status="live" />
+                                      </div>
                                   </div>
                               </div>
                           </div>
@@ -135,9 +138,11 @@ export default function Roadmap() {
                                   </div>
 
                                   {/* Right: Flat Realistic Phone Anchor */}
-                                  <div className="absolute right-[-5%] md:right-[5%] bottom-0 w-[60%] md:w-[45%] h-full flex justify-end items-center pointer-events-none translate-y-0 z-20">
-                                      <div className="absolute inset-0 bg-black/20 blur-[25px] rounded-[32px] scale-90 translate-y-4" />
-                                      <RoadmapMockup phase={2} status="building" comingSoon={true} />
+                                  <div className="absolute right-[0%] md:right-[2%] bottom-0 w-[80%] md:w-[60%] h-full flex justify-end items-center pointer-events-none z-20">
+                                      <div className="relative transform scale-[0.75] xl:scale-[0.8] origin-right transition-transform duration-700">
+                                          <div className="absolute inset-0 bg-black/40 blur-[40px] rounded-[3.5rem] scale-95 translate-y-8 translate-x-4" />
+                                          <RoadmapMockup phase={2} status="building" comingSoon={true} />
+                                      </div>
                                   </div>
                               </div>
                           </div>
@@ -174,9 +179,11 @@ export default function Roadmap() {
                                   </div>
 
                                   {/* Right: Flat Realistic Phone Anchor */}
-                                  <div className="absolute right-[-5%] md:right-[5%] bottom-0 w-[60%] md:w-[45%] h-full flex justify-end items-center pointer-events-none translate-y-0 z-20">
-                                      <div className="absolute inset-0 bg-black/20 blur-[25px] rounded-[32px] scale-90 translate-y-4" />
-                                      <RoadmapMockup phase={3} status="future" comingSoon={true} />
+                                  <div className="absolute right-[0%] md:right-[2%] bottom-0 w-[80%] md:w-[60%] h-full flex justify-end items-center pointer-events-none z-20">
+                                      <div className="relative transform scale-[0.75] xl:scale-[0.8] origin-right transition-transform duration-700">
+                                          <div className="absolute inset-0 bg-black/40 blur-[40px] rounded-[3.5rem] scale-95 translate-y-8 translate-x-4" />
+                                          <RoadmapMockup phase={3} status="future" comingSoon={true} />
+                                      </div>
                                   </div>
                               </div>
                           </div>
