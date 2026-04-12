@@ -8,34 +8,26 @@ interface ContactModalProps {
 }
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
-  const [isInitializing, setIsInitializing] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let raf: number;
     if (isOpen) {
-      setIsInitializing(true);
       document.body.style.overflow = 'hidden';
-      
-      // Slight delay for rendering animations to allow display:block to take effect
-      const raf = requestAnimationFrame(() => {
-        setIsRendered(true);
-        if ((window as any).lucide) {
-          setTimeout(() => { (window as any).lucide.createIcons(); }, 50);
-        }
-      });
-      return () => cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setIsRendered(true));
     } else {
       setIsRendered(false);
-      const timer = setTimeout(() => {
-        setIsInitializing(false);
+      setTimeout(() => {
         document.body.style.overflow = 'unset';
-      }, 700); // Wait for exit animations
-      return () => clearTimeout(timer);
+      }, 500); 
     }
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, [isOpen]);
 
-  // 3D Parallax Tilt Logic
+  // Smooth 3D Parallax Tilt Logic
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!modalRef.current) return;
     const rect = modalRef.current.getBoundingClientRect();
@@ -43,108 +35,134 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
+    
+    // Very subtle, premium physics
     const maxTilt = 5; 
     const rotateX = ((y - centerY) / centerY) * -maxTilt; 
     const rotateY = ((x - centerX) / centerX) * maxTilt;
-    modalRef.current.style.transform = `perspective(2000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    
+    modalRef.current.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
     modalRef.current.style.transition = 'transform 0.1s ease-out';
   };
 
   const handleMouseLeave = () => {
     if (!modalRef.current) return;
-    modalRef.current.style.transform = `perspective(2000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    modalRef.current.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
     modalRef.current.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
   };
 
-  if (!isOpen && !isInitializing) return null;
+  if (!isOpen && !isRendered) return null;
 
   return (
     <div 
-      className={`fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isRendered ? 'opacity-100' : 'opacity-0'}`}
+      className={`fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isRendered ? 'opacity-100' : 'opacity-0'}`}
       role="dialog"
       aria-modal="true"
     >
-      {/* Cinematic Backdrop */}
+      {/* Premium Dark Backdrop */}
       <div 
-        className="absolute inset-0 bg-[#3F332D]/70 backdrop-blur-xl transition-opacity duration-700"
+        className="absolute inset-0 bg-[#000000]/60 backdrop-blur-xl transition-opacity duration-500"
         onClick={onClose}
       />
 
-      {/* Modal Container */}
+      {/* Tilt Container */}
       <div 
         ref={modalRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`relative w-full max-w-[540px] bg-[#0c0a09] border border-white/5 rounded-[2.5rem] p-8 md:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.8)] transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isRendered ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-24 opacity-0 scale-95'}`}
-        style={{ willChange: 'transform' }}
+        className={`relative w-full max-w-[500px] bg-[#0c0a09] border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-[0_40px_100px_rgba(0,0,0,0.8)] transition-all duration-[600ms] ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden ${isRendered ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-12 opacity-0 scale-[0.95]'}`}
+        style={{ willChange: 'transform, opacity' }}
       >
+        
+        {/* Soft Ambient Corner Glows */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-brand/10 blur-[80px] pointer-events-none rounded-full translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#10b981]/5 blur-[80px] pointer-events-none rounded-full -translate-x-1/2 translate-y-1/2"></div>
+        
         <button 
           onClick={onClose}
-          className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/5 hover:bg-white/10 transition-colors duration-300 z-20 group"
+          className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 border border-white/5 transition-all duration-300 z-50 group hover:rotate-90"
           aria-label="Close"
         >
-          <i data-lucide="x" className="w-4 h-4 text-white/50 group-hover:text-white transition-all duration-300 group-hover:rotate-90"></i>
+          {/* Close SVG */}
+          <svg className="w-4 h-4 text-white/50 group-hover:text-white transition-colors duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
-        
-        {/* Subtle dynamic background glow */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 50% 0%, rgba(217, 105, 46, 0.15) 0%, transparent 70%)' }}></div>
-        
-        <div className="relative z-10 w-full h-full flex flex-col">
+
+        <div className="relative z-10 w-full flex flex-col">
           
-          <div className="mb-10 max-w-sm">
-            <div className={`w-14 h-14 bg-white/[0.03] border border-white/10 rounded-[1.25rem] flex items-center justify-center mb-6 shadow-sm filter drop-shadow hover:bg-white/[0.06] transition-all duration-500 transform ${isRendered ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'} delay-100`}>
-              <i data-lucide="waves" className="w-6 h-6 text-brand"></i>
+          <div className="mb-10 max-w-[400px]">
+            {/* Online Badge */}
+            <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10 shadow-sm">
+               <span className="relative flex h-2 w-2">
+                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
+                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10b981]"></span>
+               </span>
+               <span className="text-[11px] font-mono tracking-widest uppercase text-white/70">Online & Ready</span>
             </div>
-            <h2 className={`text-4xl font-black tracking-tight text-white mb-4 transform transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isRendered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} delay-200`}>
-              Start a dialog.
+            
+            <h2 className="text-[40px] md:text-[44px] font-semibold tracking-tight text-white mb-4">
+              Let's talk.
             </h2>
-            <p className={`text-[#8C7C73] text-[15px] font-medium leading-relaxed transform transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isRendered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} delay-300`}>
-              Whether you're ready to reclaim your voice or simply have questions about the platform, our secure lines are always open.
+            <p className="text-[#A39B95] text-[16px] font-normal leading-[1.7]">
+              We are incredibly friendly people and we genuinely love chatting about speech, answering questions, or just saying hi. Don't be a stranger!
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-            {/* WhatsApp Interactive Grid Tile */}
+          <div className="space-y-4">
+            {/* WhatsApp Sleek Tile */}
             <a 
               href="https://wa.me/917020097491"
               target="_blank"
               rel="noopener noreferrer"
-              className={`group relative flex flex-col justify-between h-[180px] rounded-3xl bg-white/[0.02] border border-white/5 hover:border-[#10b981]/40 p-6 md:p-7 overflow-hidden transition-all duration-500 transform ease-[cubic-bezier(0.16,1,0.3,1)] ${isRendered ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'} delay-[400ms] hover:-translate-y-1 hover:shadow-[0_20px_40px_-20px_rgba(16,185,129,0.3)]`}
+              className="group flex items-center justify-between w-full h-[88px] rounded-2xl bg-white/[0.02] border border-white/5 hover:border-[#10b981]/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.04]"
             >
-               {/* Accent Glow */}
-               <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#10b981] blur-[50px] opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"></div>
-
-               <div className="flex justify-between items-start z-10 w-full relative">
-                 <div className="w-11 h-11 rounded-full bg-black/40 border border-white/10 flex items-center justify-center text-white/50 group-hover:text-[#10b981] group-hover:border-[#10b981]/30 transition-all duration-500">
-                   <i data-lucide="message-square-text" className="w-5 h-5"></i>
+               <div className="flex items-center gap-5">
+                 <div className="relative">
+                   <div className="absolute inset-0 bg-[#10b981] blur-[15px] opacity-0 group-hover:opacity-30 transition-opacity duration-500 rounded-full"></div>
+                   <div className="relative w-12 h-12 rounded-full border border-white/5 bg-[#141210] flex items-center justify-center shadow-lg group-hover:border-[#10b981]/30 transition-colors duration-300">
+                     {/* Message SVG */}
+                     <svg className="w-5 h-5 text-[#10b981] opacity-70 group-hover:opacity-100 transition-opacity duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                   </div>
                  </div>
-                 <i data-lucide="arrow-up-right" className="w-5 h-5 text-white/20 group-hover:text-[#10b981] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500"></i>
+                 
+                 <div>
+                   <div className="text-white font-medium text-[16px] mb-0.5 group-hover:text-[#10b981] transition-colors duration-300">Message on WhatsApp</div>
+                   <div className="text-[#A39B95] text-[13px] font-medium tracking-wide opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                     We usually reply in minutes
+                   </div>
+                 </div>
                </div>
-               
-               <div className="z-10 relative">
-                 <div className="font-bold text-xl text-white/90 group-hover:text-white transition-colors tracking-tight mb-1">WhatsApp</div>
-                 <div className="text-xs text-[#10b981] font-medium tracking-wide">Encrypted line</div>
+
+               <div className="w-8 h-8 shrink-0 flex items-center justify-center transform group-hover:translate-x-1 transition-all duration-300">
+                 {/* Arrow SVG */}
+                 <svg className="w-4 h-4 text-white/30 group-hover:text-[#10b981] transition-colors duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                </div>
             </a>
 
-            {/* Email Interactive Grid Tile */}
+            {/* Email Sleek Tile */}
             <a 
               href="mailto:contact@speechworks.in"
-              className={`group relative flex flex-col justify-between h-[180px] rounded-3xl bg-white/[0.02] border border-white/5 hover:border-[#D9692E]/40 p-6 md:p-7 overflow-hidden transition-all duration-500 transform ease-[cubic-bezier(0.16,1,0.3,1)] ${isRendered ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'} delay-[500ms] hover:-translate-y-1 hover:shadow-[0_20px_40px_-20px_rgba(217,105,46,0.3)]`}
+              className="group flex items-center justify-between w-full h-[88px] rounded-2xl bg-white/[0.02] border border-white/5 hover:border-brand/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.04]"
             >
-               {/* Accent Glow */}
-               <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#D9692E] blur-[50px] opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"></div>
-
-               <div className="flex justify-between items-start z-10 w-full relative">
-                 <div className="w-11 h-11 rounded-full bg-black/40 border border-white/10 flex items-center justify-center text-white/50 group-hover:text-brand group-hover:border-brand/30 transition-all duration-500">
-                   <i data-lucide="mail-plus" className="w-5 h-5"></i>
+               <div className="flex items-center gap-5">
+                 <div className="relative">
+                   <div className="absolute inset-0 bg-brand blur-[15px] opacity-0 group-hover:opacity-30 transition-opacity duration-500 rounded-full"></div>
+                   <div className="relative w-12 h-12 rounded-full border border-white/5 bg-[#141210] flex items-center justify-center shadow-lg group-hover:border-brand/30 transition-colors duration-300">
+                     {/* Mail SVG */}
+                     <svg className="w-5 h-5 text-brand opacity-70 group-hover:opacity-100 transition-opacity duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                   </div>
                  </div>
-                 <i data-lucide="arrow-up-right" className="w-5 h-5 text-white/20 group-hover:text-brand group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500"></i>
+                 
+                 <div>
+                   <div className="text-white font-medium text-[16px] mb-0.5 group-hover:text-brand transition-colors duration-300">Send an Email</div>
+                   <div className="text-[#A39B95] text-[13px] font-medium tracking-wide opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                     For longer thoughts and questions
+                   </div>
+                 </div>
                </div>
-               
-               <div className="z-10 relative">
-                 <div className="font-bold text-xl text-white/90 group-hover:text-white transition-colors tracking-tight mb-1">Email</div>
-                 <div className="text-xs text-brand font-medium tracking-wide">Direct correspondence</div>
+
+               <div className="w-8 h-8 shrink-0 flex items-center justify-center transform group-hover:translate-x-1 transition-all duration-300">
+                 {/* Arrow SVG */}
+                 <svg className="w-4 h-4 text-white/30 group-hover:text-brand transition-colors duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                </div>
             </a>
           </div>
