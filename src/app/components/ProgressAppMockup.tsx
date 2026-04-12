@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import MoodCarousel from "./MoodCarousel";
 
 // -------------------------------------------------------
 // ICONS
@@ -77,24 +78,15 @@ export default function ProgressAppMockup({ radarChart }: { radarChart?: React.R
 
                 {/* ── FLOATING UI ELEMENTS (The "Explosion") ── */}
                 
-                {/* Card 1: Main Header Floating Card */}
+                {/* Card 1: Main Header Floating Card (Compact Mood Carousel) */}
                 <div 
-                    className="absolute top-16 -left-8 right-12 h-32 bg-white/70 backdrop-blur-md rounded-2xl border border-white/40 shadow-xl p-4 flex flex-col justify-between transition-transform duration-700" 
+                    className="absolute top-16 -left-8 right-12 h-32 transition-transform duration-700 pointer-events-none" 
                     style={{ 
-                        transform: isHovered ? "translateZ(120px) scale(1.05)" : "translateZ(80px)",
-                        boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                        transform: isHovered ? "translateZ(130px) scale(1.02)" : "translateZ(80px)",
+                        zIndex: 110
                     }}
                 >
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center">
-                            <ClockIcon />
-                        </div>
-                        <div className="h-2 w-20 bg-emerald-900/10 rounded-full" />
-                    </div>
-                    <div className="space-y-1.5">
-                        <div className="h-3 w-full bg-slate-900/5 rounded-full" />
-                        <div className="h-3 w-[80%] bg-slate-900/5 rounded-full" />
-                    </div>
+                    <MoodCarousel />
                 </div>
 
                 {/* Card 2: Bottom Feature Card (Embedded Radar Chart) */}
