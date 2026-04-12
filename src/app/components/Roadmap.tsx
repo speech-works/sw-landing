@@ -1,9 +1,10 @@
 import React from 'react';
+import RoadmapMockup from './RoadmapMockup';
 
 export default function Roadmap() {
   return (
     <>
-      <section id="roadmap" className="py-20 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden">
+      <section id="roadmap" className="py-20 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden font-sans">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
                   
                   <div className="mb-12 md:mb-16 reveal text-center lg:text-left active">
@@ -56,53 +57,38 @@ export default function Roadmap() {
                       </div>
       
                       {/*  Right: The Glassmorphic Stage  */}
-                      <div className="w-full lg:w-7/12 relative h-[350px] sm:h-[400px] lg:h-[550px] rounded-[2rem] md:rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] mt-6 lg:mt-0">
+                      <div className="w-full lg:w-7/12 relative h-[500px] sm:h-[600px] lg:h-[700px] mt-6 lg:mt-0">
                           
                           {/*  Canvas 1  */}
-                          <div id="rm-canvas-1" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-brand to-[#D9692E] p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto">
-                              <div className="absolute -right-4 md:-right-10 -bottom-10 md:-bottom-16 text-[12rem] md:text-[18rem] font-black text-white/10 leading-none select-none pointer-events-none">1</div>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-lucide="mic" aria-hidden="true" className="lucide lucide-mic absolute -right-4 md:right-10 top-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 text-white opacity-[0.05] -rotate-12 pointer-events-none"><path d="M12 19v3"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><rect x="9" y="2" width="6" height="13" rx="3"></rect></svg>
+                          <div id="rm-canvas-1" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-brand/5 to-[#D9692E]/10 flex flex-col items-center justify-center transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto border border-orange-100/50 shadow-2xl">
+                              <RoadmapMockup phase={1} status="live" />
                               
-                              <div className="relative z-10 flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] w-fit shadow-lg">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                              <div className="absolute top-6 left-6 z-10 flex items-center gap-2 px-4 py-2 rounded-full bg-white/40 backdrop-blur-md border border-white/50 text-brand text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
                                   Live &amp; Available
-                              </div>
-                              
-                              <div className="relative z-10">
-                                  <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter leading-[1.05]">A clinical-grade<br />sandbox.</h3>
                               </div>
                           </div>
       
                           {/*  Canvas 2  */}
-                          <div id="rm-canvas-2" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-purple-500 to-purple-800 p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none">
-                              <div className="absolute -right-4 md:-right-10 -bottom-10 md:-bottom-16 text-[12rem] md:text-[18rem] font-black text-white/10 leading-none select-none pointer-events-none">2</div>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-lucide="users" aria-hidden="true" className="lucide lucide-users absolute -right-4 md:right-10 top-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 text-white opacity-[0.05] -rotate-12 pointer-events-none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                          <div id="rm-canvas-2" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-purple-500/5 to-purple-800/10 flex flex-col items-center justify-center transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none border border-purple-100/50 shadow-2xl">
+                              <RoadmapMockup phase={2} status="building" comingSoon={true} />
                               
-                              <div className="relative z-10 flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] w-fit shadow-lg">
+                              <div className="absolute top-6 left-6 z-10 flex items-center gap-2 px-4 py-2 rounded-full bg-white/40 backdrop-blur-md border border-white/50 text-purple-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">
                                   <span className="relative flex h-1.5 w-1.5">
-                                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+                                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
+                                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-purple-500"></span>
                                   </span>
                                   Active Development
-                              </div>
-                              
-                              <div className="relative z-10">
-                                  <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter leading-[1.05]">You never<br />walk alone.</h3>
                               </div>
                           </div>
       
                           {/*  Canvas 3  */}
-                          <div id="rm-canvas-3" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-emerald-500 to-emerald-800 p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none">
-                              <div className="absolute -right-4 md:-right-10 -bottom-10 md:-bottom-16 text-[12rem] md:text-[18rem] font-black text-white/10 leading-none select-none pointer-events-none">3</div>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-lucide="stethoscope" aria-hidden="true" className="lucide lucide-stethoscope absolute -right-4 md:right-10 top-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 text-white opacity-[0.05] -rotate-12 pointer-events-none"><path d="M11 2v2"></path><path d="M5 2v2"></path><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"></path><path d="M8 15a6 6 0 0 0 12 0v-3"></path><circle cx="20" cy="10" r="2"></circle></svg>
+                          <div id="rm-canvas-3" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-emerald-500/5 to-emerald-800/10 flex flex-col items-center justify-center transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none border border-emerald-100/50 shadow-2xl">
+                              <RoadmapMockup phase={3} status="future" comingSoon={true} />
                               
-                              <div className="relative z-10 flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] w-fit shadow-lg">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
+                              <div className="absolute top-6 left-6 z-10 flex items-center gap-2 px-4 py-2 rounded-full bg-white/40 backdrop-blur-md border border-white/50 text-emerald-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                   On the Horizon
-                              </div>
-                              
-                              <div className="relative z-10">
-                                  <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter leading-[1.05]">Professional<br />care.</h3>
                               </div>
                           </div>
       
