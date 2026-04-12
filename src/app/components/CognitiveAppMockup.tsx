@@ -219,7 +219,11 @@ export default function CognitiveAppMockup() {
     return () => clearInterval(t);
   }, []);
 
-  const fmt = (d: Date) => d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: false });
+  const fmt = (d: Date) => {
+    const hours = d.getHours().toString().padStart(2, '0');
+    const minutes = d.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
 
   return (
     <div className="w-full h-full flex flex-col font-sans select-none overflow-hidden relative" style={{ background: "linear-gradient(180deg, #FAF5FF 0%, #FFF 40%, #FFF 100%)" }}>
@@ -229,7 +233,7 @@ export default function CognitiveAppMockup() {
         className="absolute left-0 right-0 z-50 flex items-center justify-between"
         style={{ top: 0, height: 54, padding: "4px 24px 0", background: "rgba(250,245,255,0.95)" }}
       >
-        <span style={{ fontSize: "11px", fontWeight: 700, color: "#4A3831", letterSpacing: "-0.2px" }}>{fmt(time)}</span>
+        <span style={{ fontSize: "11px", fontWeight: 700, color: "#4A3831", letterSpacing: "-0.2px" }}>{mounted ? fmt(time) : "09:41"}</span>
         <div className="flex items-center gap-1.5">
           <svg viewBox="0 0 17 12" fill="#4A3831" style={{ width: 15, height: 11 }}>
             <rect x="0" y="8" width="3" height="4" rx="0.5" />

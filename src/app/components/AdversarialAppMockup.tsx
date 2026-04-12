@@ -14,7 +14,7 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 );
 
 // ──────────────────────────────────────────────────────────────────────────
-// FEATURE BUBBLES (EXPLODING BEHIND PHONE)
+// FEATURE BUBBLES (EXPLODE TO TOP-FRONT)
 // ──────────────────────────────────────────────────────────────────────────
 function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
     const bubbles = [
@@ -23,9 +23,10 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             label: "Roleplay", 
             icon: "🎭", 
             color: "bg-amber-400", 
-            x: -180, y: -240, z: 120, 
-            initRotate: -45,
-            endRotate: -8, 
+            angle: -140, 
+            radius: 280, 
+            z: 220, 
+            yOffset: -180,
             delay: 0.1 
         },
         { 
@@ -33,19 +34,21 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             label: "AI Calls", 
             icon: "📱", 
             color: "bg-violet-500", 
-            x: 200, y: -180, z: 150, 
-            initRotate: 45,
-            endRotate: 12, 
-            delay: 0.2 
+            angle: -40, 
+            radius: 260, 
+            z: 260, 
+            yOffset: -160,
+            delay: 0.25 
         },
         { 
             id: 3, 
             label: "Social Challenge", 
             icon: "🤝", 
             color: "bg-emerald-500", 
-            x: -200, y: 180, z: 180, 
-            initRotate: -30,
-            endRotate: 5, 
+            angle: 140, 
+            radius: 270, 
+            z: 200, 
+            yOffset: -140,
             delay: 0.15 
         },
         { 
@@ -53,67 +56,89 @@ function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
             label: "Interview", 
             icon: "💼", 
             color: "bg-slate-700", 
-            x: 180, y: 240, z: 130, 
-            initRotate: 30,
-            endRotate: -10, 
-            delay: 0.25 
+            angle: 40, 
+            radius: 250, 
+            z: 240, 
+            yOffset: -170,
+            delay: 0.3 
         }
     ];
+
+    const smoothEase = "cubic-bezier(0.16, 1, 0.3, 1)";
 
     return (
         <div className="absolute inset-0 pointer-events-none" style={{ transformStyle: "preserve-3d" }}>
             {bubbles.map((b) => (
                 <div 
                     key={b.id}
-                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-3 rounded-full flex items-center gap-2.5 shadow-2xl transition-all duration-1000 cubic-bezier(0.34, 1.56, 0.64, 1) border border-white/20 backdrop-blur-md overflow-hidden`}
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-[1800ms]"
                     style={{ 
-                        backgroundColor: "rgba(255,255,255,0.88)",
+                        transformStyle: "preserve-3d",
+                        transitionTimingFunction: smoothEase,
+                        transitionDelay: `${isHovered ? b.delay : 0}s`,
                         transform: `
-                            translate3d(
-                                ${isHovered ? b.x : 0}px, 
-                                ${isHovered ? b.y : 0}px, 
-                                ${isHovered ? b.z : -80}px
-                            ) 
-                            rotateZ(${isHovered ? b.endRotate : b.initRotate}deg)
-                            scale(${isHovered ? 1 : 0})
+                            rotateZ(${isHovered ? b.angle : b.angle - 140}deg)
+                            scale(${isHovered ? 1 : 0.1})
                         `,
                         opacity: isHovered ? 1 : 0,
-                        transitionDelay: `${isHovered ? b.delay : 0}s`,
-                        boxShadow: isHovered ? "0 25px 60px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.5)" : "none"
+                        willChange: "transform, opacity"
                     }}
                 >
-                    <div className={`w-7 h-7 rounded-full ${b.color} flex items-center justify-center text-xs shadow-inner shrink-0`}>
-                        {b.icon}
-                    </div>
-                    <span className="text-[11px] font-black uppercase tracking-wider text-slate-800 whitespace-nowrap">
-                        {b.label}
-                    </span>
-                    
-                    {/* Watermark/Ghost Icon */}
-                    <div className="absolute -right-1 -bottom-1 text-3xl opacity-[0.08] pointer-events-none select-none">
-                        {b.icon}
+                    {/* The Inner Bubble - flies dramatically to the TOP FRONT */}
+                    <div 
+                        className={`px-7 py-4 rounded-full flex items-center gap-3.5 shadow-2xl border border-white/30 backdrop-blur-xl overflow-hidden transition-all duration-[1800ms]`}
+                        style={{ 
+                            backgroundColor: "rgba(255,255,255,0.94)",
+                            transitionTimingFunction: smoothEase,
+                            transitionDelay: `${isHovered ? b.delay : 0}s`,
+                            transform: `
+                                translateX(${isHovered ? b.radius : 0}px)
+                                translateY(${isHovered ? b.yOffset : 0}px)
+                                translateZ(${isHovered ? b.z + 200 : 0}px)
+                                rotateZ(${isHovered ? -b.angle : -(b.angle - 140)}deg)
+                            `,
+                            boxShadow: isHovered ? "0 60px 140px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.8)" : "none",
+                            willChange: "transform"
+                        }}
+                    >
+                        <div className={`w-8 h-8 rounded-full ${b.color} flex items-center justify-center text-sm shadow-inner shrink-0 leading-none`}>
+                            {b.icon}
+                        </div>
+                        <span className="text-[12px] font-black uppercase tracking-widest text-slate-900 whitespace-nowrap leading-none">
+                            {b.label}
+                        </span>
+                        
+                        {/* Watermark/Ghost Icon */}
+                        <div className="absolute -right-1.5 -bottom-1.5 text-4xl opacity-[0.1] pointer-events-none select-none">
+                            {b.icon}
+                        </div>
                     </div>
                 </div>
             ))}
 
-            {/* Decor dots */}
-            {[...Array(5)].map((_, i) => (
+            {/* Decor dots orbiting the explosion */}
+            {[...Array(8)].map((_, i) => (
                 <div 
                     key={`dot-${i}`}
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white/40 blur-[1px] transition-all duration-1000 cubic-bezier(0.23,1,0.32,1)"
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-[2000ms]"
                     style={{
+                        transitionTimingFunction: smoothEase,
+                        transitionDelay: `${Math.random() * 0.5}s`,
                         transform: `
-                            translate3d(
-                                ${isHovered ? (Math.random() - 0.5) * 400 : 0}px, 
-                                ${isHovered ? (Math.random() - 0.5) * 500 : 0}px, 
-                                -80px
-                            ) 
+                            rotateZ(${(i * 45) + (isHovered ? 60 : 180)}deg)
                             scale(${isHovered ? 1 : 0})
                         `,
-                        opacity: isHovered ? 0.6 : 0,
-                        transitionDelay: `${Math.random() * 0.4}s`
                     }}
-                />
+                >
+                    <div 
+                        className="w-2 h-2 rounded-full bg-white/60 blur-[1px] transition-all duration-[2000ms]"
+                        style={{
+                            transitionTimingFunction: smoothEase,
+                            transform: `translateX(${isHovered ? 320 + (i * 15) : 0}px) translateY(${isHovered ? -100 : 0}px) translateZ(${isHovered ? 400 : -200}px)`,
+                            opacity: isHovered ? 0.8 : 0,
+                        }}
+                    />
+                </div>
             ))}
         </div>
     );
@@ -326,9 +351,6 @@ export default function AdversarialAppMockup({
                     transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${isSectionHovered ? 1.05 : 0.95})`
                 }}
             >
-                {/* ── FEATURE BUBBLES (EXPLODE FROM BACK) ── */}
-                <FeatureBubbles isHovered={isSectionHovered} />
-
                 {/* ── PHONE BASE ── */}
                 <div 
                     className="absolute inset-0 rounded-[3.5rem] bg-slate-900 shadow-[40px_80px_100px_rgba(0,0,0,0.5)] border-[6px] border-slate-800" 
@@ -377,6 +399,10 @@ export default function AdversarialAppMockup({
                         }}
                     />
                 </div>
+
+                {/* ── FEATURE BUBBLES (EXPLODE TO TOP-FRONT) ── */}
+                {/* Positoned LAST to ensure it renders in front of everything else */}
+                <FeatureBubbles isHovered={isSectionHovered} />
 
             </div>
 
