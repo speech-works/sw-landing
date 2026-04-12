@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import ProgressAppMockup from "./ProgressAppMockup";
+import AdversarialAppMockup from "./AdversarialAppMockup";
 import RadarUI from "./RadarUI";
 
 /* ─────────────────────────────────────────────
@@ -122,111 +123,6 @@ function useAnimKey(activeIndex: number) {
 }
 
 
-/* ─────────────────────────────────────────────
-   ADVERSARIAL CHAT UI
-───────────────────────────────────────────── */
-function AdversarialChatUI({ animKey }: { animKey: number }) {
-  const [phase, setPhase] = useState<"waiter" | "thinking" | "suggestion">("waiter");
-
-  useEffect(() => {
-    setPhase("waiter");
-    const t1 = setTimeout(() => setPhase("thinking"),    900);
-    const t2 = setTimeout(() => setPhase("suggestion"), 2800);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [animKey]);
-
-  const aiAvatar = (full?: boolean) => (
-    <div
-      className={`w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-violet-600 to-purple-700 border-2 border-white shadow-md flex items-center justify-center relative ${full ? "" : "opacity-50"}`}
-      style={{ boxShadow: "0 4px 16px rgba(124,58,237,0.4)" }}
-    >
-      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-      {full && <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 border-2 border-white rounded-full" />}
-    </div>
-  );
-
-  return (
-    <div
-      key={animKey}
-      className="absolute -right-6 md:-right-14 top-[50%] -translate-y-1/2 w-[270px] md:w-[310px] flex flex-col gap-4 py-1 antialiased cursor-default"
-    >
-      {/* Waiter bubble */}
-      <div
-        className="flex items-end gap-2.5 self-start max-w-[100%]"
-        style={{ animation: "platform-chatReveal 0.5s cubic-bezier(0.23,1,0.32,1) 0.1s both" }}
-      >
-        <div
-          className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-amber-100 to-orange-200 border-2 border-white shadow-md flex items-center justify-center text-base select-none"
-          style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
-        >
-          🧑‍🍳
-        </div>
-        <div className="flex flex-col gap-1 min-w-0">
-          <span className="text-[9px] font-semibold text-slate-400 ml-1 uppercase tracking-widest">Wait Staff</span>
-          <div className="bg-white text-slate-700 text-xs md:text-[13px] font-medium leading-relaxed px-4 py-3 rounded-2xl rounded-bl-none shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-slate-100/80">
-            Um, are you ready to order? We have a line forming.
-          </div>
-        </div>
-      </div>
-
-      {/* AI Slot */}
-      {phase !== "waiter" && (
-        <div
-          className="flex items-end gap-2.5 self-start max-w-[100%]"
-          style={{ animation: "platform-chatReveal 0.4s cubic-bezier(0.23,1,0.32,1) both" }}
-        >
-          {phase === "thinking" ? aiAvatar(false) : aiAvatar(true)}
-
-          <div className="flex flex-col gap-1 min-w-0 flex-1">
-            <span className={`text-[9px] font-semibold ml-1 uppercase tracking-widest transition-colors duration-300 ${phase === "suggestion" ? "text-violet-400/90" : "text-violet-400/50"}`}>
-              Speechworks.AI
-            </span>
-
-            {/* Thinking dots */}
-            {phase === "thinking" && (
-              <div className="bg-indigo-950/40 backdrop-blur-sm px-4 py-3 rounded-2xl rounded-bl-none border border-white/5 flex gap-1.5 items-center"
-                style={{ animation: "platform-chatReveal 0.35s ease both" }}>
-                {[0, 1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="w-1.5 h-1.5 bg-violet-400 rounded-full"
-                    style={{
-                      animation: `platform-thinkDot 1.1s ease-in-out ${i * 0.18}s infinite`,
-                    }}
-                  />
-                ))}
-              </div>
-            )}
-
-            {/* AI suggestion */}
-            {phase === "suggestion" && (
-              <div
-                className="text-white text-xs md:text-[13px] font-medium leading-relaxed px-4 py-3 rounded-2xl rounded-bl-none relative overflow-hidden"
-                style={{
-                  background: "linear-gradient(135deg,#1e1b4b 0%,#312e81 60%,#4c1d95 100%)",
-                  boxShadow: "0 8px 32px rgba(76,29,149,0.35), 0 0 0 1px rgba(139,92,246,0.2)",
-                  animation: "platform-chatReveal 0.45s cubic-bezier(0.23,1,0.32,1) both",
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
-                <p>
-                  Friction Detected. Use{" "}
-                  <span className="inline-flex items-center mx-0.5 px-2 py-0.5 rounded-md bg-white/15 border border-violet-300/30 text-violet-200 font-bold text-[11px] backdrop-blur-sm shadow-[0_0_10px_rgba(167,139,250,0.25)] tracking-wide">
-                    Advertising
-                  </span>{" "}
-                  to set a boundary.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
 /* ─────────────────────────────────────────────
    STAMINA UI
@@ -368,7 +264,11 @@ const features = [
     tagBg: "bg-white",
     tagBorder: "border-purple-200",
     activeBar: "bg-purple-500",
-    renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => <AdversarialChatUI animKey={animKey} />,
+    renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
+      <div className="md:-translate-x-12 lg:-translate-x-16 transition-transform duration-700">
+        <AdversarialAppMockup animKey={animKey} isSectionHovered={isHovered} externalMousePos={mousePos} />
+      </div>
+    ),
   },
   {
     id: "stamina",
