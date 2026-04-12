@@ -204,7 +204,7 @@ export default function Roadmap() {
                         >
                           <div className={`relative transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${!isTop ? 'opacity-70 blur-[1px]' : 'opacity-100 blur-0'}`}>
                             <div className={`absolute inset-0 bg-black/60 blur-[60px] rounded-[3.5rem] scale-90 translate-y-12 translate-x-6 transition-opacity duration-700 pointer-events-none ${isFocused ? 'opacity-50' : 'opacity-0'}`} />
-                            <RoadmapMockup phase={1} status="live" isBlank={i < 2} />
+                            <RoadmapMockup phase={i === 0 ? 2 : 1} status="live" isBlank={i === 1} />
                           </div>
                         </div>
                       );
@@ -261,7 +261,6 @@ export default function Roadmap() {
                     <RoadmapMockup
                       phase={2}
                       status="building"
-                      comingSoon={true}
                     />
                   </div>
                 </div>

@@ -2,6 +2,7 @@
 import React from "react";
 import LiveAppMockup from "./LiveAppMockup";
 import ExploreAppMockup from "./ExploreAppMockup";
+import CognitiveAppMockup from "./CognitiveAppMockup";
 
 interface RoadmapMockupProps {
   phase: number;
@@ -58,6 +59,8 @@ export default function RoadmapMockup({ phase, status, comingSoon = false, isBla
               </div>
             ) : phase === 1 ? (
               <ExploreAppMockup />
+            ) : phase === 2 ? (
+              <CognitiveAppMockup />
             ) : (
               /* Placeholder for Phase 2/3 */
               <div className="absolute inset-0 flex flex-col pt-16 px-4 bg-[#f9fafb]">
