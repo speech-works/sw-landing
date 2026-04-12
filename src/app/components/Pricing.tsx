@@ -142,10 +142,10 @@ export default function Pricing() {
     return (
       <div 
         key={`${tier.id}-${activeCard}`} 
-        className={`relative rounded-[2.8rem] transition-all duration-500 overflow-hidden flex flex-col pointer-events-auto
+        className={`relative rounded-[2.8rem] transition-all duration-500 flex flex-col pointer-events-auto
           ${isDark 
-            ? 'bg-[#1A1816]/95 backdrop-blur-xl border border-white/5 text-white' 
-            : 'bg-white/90 backdrop-blur-md border border-[#3F332D]/5 text-app-text'
+            ? 'bg-[#1C1A19] border border-white/[0.06] text-white' 
+            : 'bg-white border border-black/[0.04] text-app-text'
           }`}
         style={{
           boxShadow: isActive 
@@ -156,22 +156,20 @@ export default function Pricing() {
           minHeight: '100%',
         }}
       >
-
-        {tier.isPopular && (
-          <div className={`absolute top-6 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full text-[9px] font-black tracking-[0.2em] z-40 uppercase border shadow-sm whitespace-nowrap
-            ${isDark ? 'bg-white text-[#1A1816] border-white' : 'bg-[#3F332D] text-white border-[#3F332D]'}`}>
-            Most Popular
+        
+        {/* Overflowing Right Badge */}
+        {(tier.isPopular || tier.isAnnual) && (
+          <div className={`absolute -top-3 -right-3 lg:-top-4 lg:-right-4 px-5 py-2 rounded-full text-[9px] lg:text-[10px] font-black tracking-[0.2em] z-50 uppercase shadow-xl whitespace-nowrap
+            ${isDark 
+              ? 'bg-brand text-white' 
+              : 'bg-[#3F332D] text-white'}`}>
+            {tier.isPopular ? 'Most Popular' : 'Annual'}
           </div>
         )}
 
-        <div className="pt-16 pb-10 px-8 md:px-12 flex flex-col flex-1 relative z-20">
-          <h3 className={`text-2xl md:text-3xl font-black mb-1.5 tracking-tight flex items-center justify-between`}>
+        <div className="pt-14 pb-10 px-8 md:px-12 flex flex-col flex-1 relative z-20">
+          <h3 className={`text-2xl md:text-3xl font-black mb-1.5 tracking-tight`}>
             {tier.title}
-            {tier.isAnnual && (
-              <span className="bg-orange-500/10 text-brand text-[9px] px-2.5 py-1.5 rounded-lg uppercase tracking-widest font-black border border-brand/20">
-                Annual
-              </span>
-            )}
           </h3>
           <p className={`text-sm opacity-60 font-medium mb-10 leading-relaxed max-w-[90%]`}>{tier.subtitle}</p>
 
@@ -295,7 +293,8 @@ export default function Pricing() {
               <div 
                 key={`pivot-${i}`}
                 onMouseEnter={() => handleCardHover(i)}
-                className="absolute top-0 left-1/2 w-full max-w-[360px] xl:max-w-[400px] h-auto min-h-[780px] transition-all duration-700 ease-[cubic-bezier(0.2,1,0.3,1)] cursor-pointer group"
+                onClick={() => handleCardHover(i)}
+                className="absolute top-0 left-1/2 w-full max-w-[360px] xl:max-w-[400px] h-auto min-h-[780px] transition-all duration-700 ease-[cubic-bezier(0.2,1,0.3,1)] cursor-pointer group active:scale-[0.98]"
                 style={style}
               >
                 {/* Visual Depth Lock Shield (prevents interactions while blurred) */}
