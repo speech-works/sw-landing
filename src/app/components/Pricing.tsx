@@ -6,15 +6,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
    Focused on 'Physical' Minimalist Aesthetics
 ───────────────────────────────────────────── */
 
-// Grain Texture Component
-const GrainEffect = () => (
-  <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.03] mix-blend-overlay z-0">
-    <filter id="noiseFilter">
-      <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" />
-    </filter>
-    <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-  </svg>
-);
+
 
 const CheckIcon = ({ className = "w-5 h-5", active = false }: { className?: string, active?: boolean }) => (
   <svg 
@@ -158,20 +150,16 @@ export default function Pricing() {
         style={{
           boxShadow: isActive 
             ? isDark 
-              ? '0 40px 100px -20px rgba(242, 128, 68, 0.2), 0 20px 40px -10px rgba(0,0,0,0.5)' 
-              : '0 40px 100px -20px rgba(63, 51, 45, 0.15), 0 10px 30px -5px rgba(0,0,0,0.05)'
-            : '0 10px 40px -10px rgba(0,0,0,0.05)',
+              ? '0 30px 60px -15px rgba(0,0,0,0.8)' 
+              : '0 30px 60px -15px rgba(63, 51, 45, 0.12)'
+            : '0 10px 20px -5px rgba(0,0,0,0.05)',
           minHeight: '100%',
         }}
       >
-        <GrainEffect />
-
-        {/* Glossy Reflection overlay */}
-        <div className="absolute inset-0 pointer-events-none z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
-             style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.02) 100%)' }} />
 
         {tier.isPopular && (
-          <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-brand text-white px-5 py-1.5 rounded-full text-[9px] font-black tracking-[0.2em] z-40 uppercase shadow-lg border border-white/10 whitespace-nowrap">
+          <div className={`absolute top-6 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full text-[9px] font-black tracking-[0.2em] z-40 uppercase border shadow-sm whitespace-nowrap
+            ${isDark ? 'bg-white text-[#1A1816] border-white' : 'bg-[#3F332D] text-white border-[#3F332D]'}`}>
             Most Popular
           </div>
         )}
@@ -200,13 +188,15 @@ export default function Pricing() {
             {!tier.billingSub && <div className="h-4 mt-2" />}
           </div>
 
-          <button className={`w-full py-5 px-8 rounded-full font-black tracking-widest mb-12 transition-all duration-500 text-[10px] md:text-xs uppercase shrink-0 group/btn relative overflow-hidden
+          <button className={`w-full py-4 md:py-5 px-8 rounded-[1.25rem] font-black tracking-[0.15em] mb-12 transition-all duration-300 text-[10px] md:text-xs uppercase shrink-0 flex items-center justify-center gap-3 group/btn active:scale-[0.97] border-2
             ${isDark 
-              ? 'bg-brand text-white shadow-xl shadow-brand/20 hover:shadow-brand/40' 
-              : 'bg-[#3F332D] text-white hover:bg-brand shadow-lg hover:shadow-brand/20'
+              ? 'bg-brand border-brand text-white hover:bg-transparent hover:text-brand' 
+              : 'bg-[#3F332D] border-[#3F332D] text-white hover:bg-transparent hover:text-[#3F332D]'
             }`}>
-            <span className="relative z-10">{tier.buttonLabel}</span>
-            <div className={`absolute inset-0 opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300 bg-white`} />
+            <span>{tier.buttonLabel}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1">
+               <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            </svg>
           </button>
 
           <div className="flex flex-col gap-5 text-[13px] font-bold tracking-tight">
