@@ -14,6 +14,112 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 );
 
 // ──────────────────────────────────────────────────────────────────────────
+// FEATURE BUBBLES (EXPLODING BEHIND PHONE)
+// ──────────────────────────────────────────────────────────────────────────
+function FeatureBubbles({ isHovered }: { isHovered: boolean }) {
+    const bubbles = [
+        { 
+            id: 1, 
+            label: "Roleplay", 
+            icon: "🎭", 
+            color: "bg-amber-400", 
+            x: -160, y: -220, z: 120, 
+            initRotate: -45,
+            endRotate: -8, 
+            delay: 0.1 
+        },
+        { 
+            id: 2, 
+            label: "AI Calls", 
+            icon: "📱", 
+            color: "bg-violet-500", 
+            x: 180, y: -160, z: 150, 
+            initRotate: 45,
+            endRotate: 12, 
+            delay: 0.2 
+        },
+        { 
+            id: 3, 
+            label: "Social Challenge", 
+            icon: "🤝", 
+            color: "bg-emerald-500", 
+            x: -180, y: 160, z: 180, 
+            initRotate: -30,
+            endRotate: 5, 
+            delay: 0.15 
+        },
+        { 
+            id: 4, 
+            label: "Interview", 
+            icon: "💼", 
+            color: "bg-slate-700", 
+            x: 160, y: 220, z: 130, 
+            initRotate: 30,
+            endRotate: -10, 
+            delay: 0.25 
+        }
+    ];
+
+    return (
+        <div className="absolute inset-0 pointer-events-none" style={{ transformStyle: "preserve-3d" }}>
+            {bubbles.map((b) => (
+                <div 
+                    key={b.id}
+                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-2.5 rounded-full flex items-center gap-2 shadow-2xl transition-all duration-1000 cubic-bezier(0.34, 1.56, 0.64, 1) border border-white/20 backdrop-blur-md overflow-hidden`}
+                    style={{ 
+                        backgroundColor: "rgba(255,255,255,0.88)",
+                        transform: `
+                            translate3d(
+                                ${isHovered ? b.x : 0}px, 
+                                ${isHovered ? b.y : 0}px, 
+                                ${isHovered ? b.z : -80}px
+                            ) 
+                            rotateZ(${isHovered ? b.endRotate : b.initRotate}deg)
+                            scale(${isHovered ? 1 : 0})
+                        `,
+                        opacity: isHovered ? 1 : 0,
+                        transitionDelay: `${isHovered ? b.delay : 0}s`,
+                        boxShadow: isHovered ? "0 20px 50px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.5)" : "none"
+                    }}
+                >
+                    <div className={`w-6 h-6 rounded-full ${b.color} flex items-center justify-center text-[10px] shadow-inner`}>
+                        {b.icon}
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-800 whitespace-nowrap">
+                        {b.label}
+                    </span>
+                    
+                    {/* Watermark/Ghost Icon */}
+                    <div className="absolute -right-1 -bottom-1 text-2xl opacity-[0.08] pointer-events-none select-none">
+                        {b.icon}
+                    </div>
+                </div>
+            ))}
+
+            {/* Decor dots */}
+            {[...Array(5)].map((_, i) => (
+                <div 
+                    key={`dot-${i}`}
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white/40 blur-[1px] transition-all duration-1000 cubic-bezier(0.23,1,0.32,1)"
+                    style={{
+                        transform: `
+                            translate3d(
+                                ${isHovered ? (Math.random() - 0.5) * 400 : 0}px, 
+                                ${isHovered ? (Math.random() - 0.5) * 500 : 0}px, 
+                                -80px
+                            ) 
+                            scale(${isHovered ? 1 : 0})
+                        `,
+                        opacity: isHovered ? 0.6 : 0,
+                        transitionDelay: `${Math.random() * 0.4}s`
+                    }}
+                />
+            ))}
+        </div>
+    );
+}
+
+// ──────────────────────────────────────────────────────────────────────────
 // ADVERSARIAL CHAT INTERNAL UI
 // ──────────────────────────────────────────────────────────────────────────
 function AdversarialChatUI({ animKey }: { animKey: number }) {
@@ -125,7 +231,7 @@ function CardStack({ isSectionHovered }: { isSectionHovered: boolean }) {
         {
             id: "easy",
             title: "LEVEL 01: EMOTIONAL SAFETY",
-            content: "Talking to Your Pet. Low-stakes practice to build fundamental composure.",
+            content: "Talking to Your Pet. Build composure in low-stakes practice.",
             bg: "bg-emerald-500",
             textColor: "text-white",
             tagColor: "text-emerald-100",
@@ -134,7 +240,7 @@ function CardStack({ isSectionHovered }: { isSectionHovered: boolean }) {
         {
             id: "medium",
             title: "LEVEL 02: CASUAL SOCIAL",
-            content: "Planning a trip with a friend. Practice semi-structured dialogue in a safe environment.",
+            content: "Social Trip. Practice casual, semi-structured conversation.",
             bg: "bg-indigo-600",
             textColor: "text-white",
             tagColor: "text-indigo-100",
@@ -143,7 +249,7 @@ function CardStack({ isSectionHovered }: { isSectionHovered: boolean }) {
         {
             id: "difficult",
             title: "LEVEL 03: ADVERSARIAL TEST",
-            content: "Impatient Interviewer. High-pressure scenario with aggressive interruptions. Stay resilient.",
+            content: "Impatient Interviewer. Stay regulated under intense pressure.",
             bg: "bg-slate-900 border-red-500/30",
             textColor: "text-white",
             tagColor: "text-red-400",
@@ -172,7 +278,7 @@ function CardStack({ isSectionHovered }: { isSectionHovered: boolean }) {
                 return (
                     <div 
                         key={card.id}
-                        className={`absolute inset-0 p-6 ${card.bg} ${card.textColor} rounded-[2rem] shadow-2xl transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) border border-white/10 backdrop-blur-3xl flex flex-col justify-center`}
+                        className={`absolute inset-0 p-5 ${card.bg} ${card.textColor} rounded-[2rem] shadow-2xl transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) border border-white/10 backdrop-blur-3xl flex flex-col justify-center`}
                         style={{ 
                             transform: `translateZ(${zPos}px) translateY(${yPos}px) scale(${scale})`,
                             opacity,
@@ -180,11 +286,11 @@ function CardStack({ isSectionHovered }: { isSectionHovered: boolean }) {
                             boxShadow: isFocused ? "0 30px 60px -12px rgba(0,0,0,0.4)" : "none"
                         }}
                     >
-                        <div className="flex items-center gap-2.5 mb-2.5">
-                            <div className={`w-2 h-2 rounded-full ${card.dotColor} ${isFocused ? 'animate-pulse' : ''}`} />
-                            <span className={`text-[10px] font-black uppercase tracking-[0.1em] ${card.tagColor}`}>{card.title}</span>
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className={`w-1.5 h-1.5 rounded-full ${card.dotColor} ${isFocused ? 'animate-pulse' : ''}`} />
+                            <span className={`text-[9px] font-black uppercase tracking-[0.1em] ${card.tagColor}`}>{card.title}</span>
                         </div>
-                        <p className="text-sm md:text-base font-bold leading-[1.3] tracking-tight opacity-95 line-clamp-3">{card.content}</p>
+                        <p className="text-[13px] md:text-[14px] font-bold leading-snug tracking-tight opacity-95">{card.content}</p>
                     </div>
                 );
             })}
@@ -220,6 +326,9 @@ export default function AdversarialAppMockup({
                     transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${isSectionHovered ? 1.05 : 0.95})`
                 }}
             >
+                {/* ── FEATURE BUBBLES (EXPLODE FROM BACK) ── */}
+                <FeatureBubbles isHovered={isSectionHovered} />
+
                 {/* ── PHONE BASE ── */}
                 <div 
                     className="absolute inset-0 rounded-[3.5rem] bg-slate-900 shadow-[40px_80px_100px_rgba(0,0,0,0.5)] border-[6px] border-slate-800" 
