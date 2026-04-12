@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import ProgressAppMockup from "./ProgressAppMockup";
 import AdversarialAppMockup from "./AdversarialAppMockup";
+import StaminaAppMockup from "./StaminaAppMockup";
+import RoadmapAppMockup from "./RoadmapAppMockup";
 import RadarUI from "./RadarUI";
 
 /* ─────────────────────────────────────────────
@@ -297,7 +299,11 @@ const features = [
     tagBg: "bg-white",
     tagBorder: "border-emerald-200",
     activeBar: "bg-emerald-500",
-    renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => <StaminaUI animKey={animKey} />,
+    renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
+      <div className="md:translate-x-12 lg:translate-x-16 transition-transform duration-700">
+        <StaminaAppMockup animKey={animKey} isSectionHovered={isHovered} externalMousePos={mousePos} />
+      </div>
+    ),
   },
   {
     id: "roadmap",
@@ -326,7 +332,11 @@ const features = [
     tagBorder: "border-white/30",
     activeBar: "bg-brand",
     isDark: true,
-    renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => <RoadmapUI animKey={animKey} />,
+    renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
+      <div className="md:translate-x-12 lg:translate-x-16 transition-transform duration-700">
+        <RoadmapAppMockup animKey={animKey} isSectionHovered={isHovered} externalMousePos={mousePos} />
+      </div>
+    ),
   },
 ];
 
