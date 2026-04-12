@@ -226,7 +226,7 @@ export default function ProgressReportUI() {
         <div className="flex-1 w-full bg-[#FCF9F7] flex flex-col overflow-hidden relative">
 
             {/* Translucent Header - Pinned to absolute top edge */}
-            <div className="absolute top-0 left-0 right-0 h-[56px] z-[120] bg-[#FCF9F7]/85 backdrop-blur-xl border-b border-black/5 flex items-end pb-[4px] px-6">
+            <div className="absolute top-0 left-0 right-0 h-[80px] z-[120] bg-[#FCF9F7]/85 backdrop-blur-xl border-b border-black/5 flex items-end pb-[18px] px-6">
                 <div className="flex items-center gap-4 w-full">
                     <div className="w-[30px] h-[30px] rounded-full bg-white shadow-md border border-black/5 flex items-center justify-center shrink-0">
                         <ChevronLeft />
@@ -237,7 +237,7 @@ export default function ProgressReportUI() {
 
             <div className="flex-1 overflow-y-auto px-[6px] scrollbar-hide scale-[0.92] origin-top">
                 {/* Scroll Margin (Sticks cards close to header) */}
-                <div className="h-[58px] shrink-0" />
+                <div className="h-[86px] shrink-0" />
 
                 <div className="flex flex-col gap-[16px] pb-40 animate-yoyo-scroll pt-2">
                     <DetailedWeeklySummary />
