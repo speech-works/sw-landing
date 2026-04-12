@@ -1,4 +1,5 @@
 import React from 'react';
+import LiveAppMockup from './LiveAppMockup';
 
 export default function Hero() {
   return (
@@ -74,24 +75,19 @@ export default function Hero() {
       
                       {/*  Right Visual  */}
                       <div className="lg:col-span-4 hidden lg:flex justify-end reveal reveal-delay-3 relative active">
-                          <div className="w-72 xl:w-80 h-[450px] xl:h-[500px] rounded-[2.5rem] xl:rounded-[3rem] border border-white/20 bg-black/40 backdrop-blur-3xl p-6 relative overflow-hidden flex flex-col justify-between shadow-[0_20px_60px_-15px_rgba(242,128,68,0.3)] animate-float">
-                              <div className="absolute inset-0 bg-gradient-to-b from-brand/20 to-purple-500/10 mix-blend-overlay"></div>
-                              <div className="flex justify-between items-center z-10">
-                                  <div className="w-10 xl:w-12 h-3 xl:h-4 rounded-full bg-white/20"></div>
-                                  <div className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-md shadow-sm flex items-center justify-center border border-white/20"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-lucide="mic" aria-hidden="true" className="lucide lucide-mic w-4 h-4 text-brand-100"><path d="M12 19v3"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><rect x="9" y="2" width="6" height="13" rx="3"></rect></svg></div>
+                          <div className="w-[300px] xl:w-[320px] h-[600px] xl:h-[640px] rounded-[3rem] xl:rounded-[3.5rem] border-[6px] border-[#2A2A2A] bg-black p-1 relative overflow-hidden flex flex-col shadow-[0_20px_60px_-15px_rgba(242,128,68,0.3)] animate-float transform rotate-[-2deg] hover:rotate-0 transition-transform duration-700 hover:scale-105">
+                              {/* iPhone Hardware Elements */}
+                              <div className="absolute top-0 inset-x-0 h-7 flex justify-center z-50 pointer-events-none">
+                                  <div className="w-1/3 h-6 bg-[#2A2A2A] rounded-b-3xl"></div>
                               </div>
-                              <div className="z-10 space-y-4">
-                                  <div className="w-full h-28 xl:h-32 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex items-end p-4">
-                                      <div className="w-full flex items-end gap-1.5 h-12 xl:h-16">
-                                          <div className="w-full bg-white/20 rounded-t-md h-[40%] transition-all duration-1000"></div>
-                                          <div className="w-full bg-white/20 rounded-t-md h-[60%] transition-all duration-1000"></div>
-                                          <div className="w-full bg-white/20 rounded-t-md h-[50%] transition-all duration-1000"></div>
-                                          <div className="w-full bg-white/20 rounded-t-md h-[80%] transition-all duration-1000"></div>
-                                          <div className="w-full bg-brand rounded-t-md h-[95%] shadow-[0_0_15px_rgba(242,128,68,0.6)] animate-pulse"></div>
-                                      </div>
-                                  </div>
-                                  <div className="w-3/4 h-3 xl:h-4 rounded bg-white/20 backdrop-blur-md"></div>
-                                  <div className="w-1/2 h-3 xl:h-4 rounded bg-white/10 backdrop-blur-md"></div>
+                              <div className="absolute top-[80px] -left-[7px] w-1 h-8 bg-[#1A1A1A] rounded-l-md"></div>
+                              <div className="absolute top-[130px] -left-[7px] w-1 h-12 bg-[#1A1A1A] rounded-l-md"></div>
+                              <div className="absolute top-[190px] -left-[7px] w-1 h-12 bg-[#1A1A1A] rounded-l-md"></div>
+                              <div className="absolute top-[140px] -right-[7px] w-1 h-16 bg-[#1A1A1A] rounded-r-md"></div>
+                              
+                              {/* Live Screen Content */}
+                              <div className="w-full h-full rounded-[2.5rem] xl:rounded-[3rem] overflow-hidden relative">
+                                  <LiveAppMockup />
                               </div>
                           </div>
                       </div>
