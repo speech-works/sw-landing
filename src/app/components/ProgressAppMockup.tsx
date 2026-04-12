@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import MoodCarousel from "./MoodCarousel";
+import ProgressReportUI from "./ProgressReportUI";
 
 // -------------------------------------------------------
 // ICONS
@@ -64,16 +65,8 @@ export default function ProgressAppMockup({ radarChart }: { radarChart?: React.R
                     {/* Dynamic Island */}
                     <div className="absolute top-[11px] left-1/2 -translate-x-1/2 w-[84px] h-[25px] bg-black rounded-[14px]" />
 
-                    {/* Empty Content Placeholder */}
-                    <div className="flex-1 flex flex-col items-center justify-center space-y-4 opacity-10">
-                        <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
-                            <ClockIcon />
-                        </div>
-                        <div className="space-y-2 text-center">
-                            <div className="h-4 w-32 bg-slate-900 rounded-full" />
-                            <div className="h-3 w-48 bg-slate-900 rounded-full mx-auto" />
-                        </div>
-                    </div>
+                    {/* App Content Layer */}
+                    <ProgressReportUI />
                 </div>
 
                 {/* ── FLOATING UI ELEMENTS (The "Explosion") ── */}
