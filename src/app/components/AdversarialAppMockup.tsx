@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 // ──────────────────────────────────────────────────────────────────────────
-// ADVERSARIAL CHAT INTERNAL UI (Extracted and refined from Platform.tsx)
+// ADVERSARIAL CHAT INTERNAL UI
 // ──────────────────────────────────────────────────────────────────────────
 function AdversarialChatUI({ animKey }: { animKey: number }) {
   const [phase, setPhase] = useState<"waiter" | "thinking" | "suggestion">("waiter");
@@ -27,7 +27,7 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
   );
 
   return (
-    <div className="flex flex-col gap-4 p-5 antialiased">
+    <div className="flex flex-col gap-4 p-5 pb-52 antialiased">
       {/* Waiter bubble */}
       <div
         className="flex items-end gap-2.5 self-start max-w-[100%]"
@@ -97,6 +97,91 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
 }
 
 // ──────────────────────────────────────────────────────────────────────────
+// INTERNAL CARD STACK COMPONENT
+// ──────────────────────────────────────────────────────────────────────────
+function CardStack({ isSectionHovered, externalMousePos }: { isSectionHovered: boolean, externalMousePos: { x: number, y: number } }) {
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveIndex((current) => (current + 1) % 3);
+        }, 3200);
+        return () => clearInterval(interval);
+    }, []);
+
+    const cards = [
+        {
+            id: "friction",
+            title: "Friction Alert",
+            content: "AI detected aggressive pacing. Recommend tactical pause.",
+            bg: "bg-indigo-950/95",
+            textColor: "text-white",
+            tagColor: "text-red-400",
+            dotColor: "bg-red-400"
+        },
+        {
+            id: "strategic",
+            title: "Strategic Play",
+            content: "Switching to 'Empathic Listener' mode to lower tension.",
+            bg: "bg-white",
+            textColor: "text-slate-700",
+            tagColor: "text-violet-600",
+            dotColor: "bg-violet-600"
+        },
+        {
+            id: "bio",
+            title: "Bio-Feedback",
+            content: "Heart rate variability rising. Micro-stutters detected.",
+            bg: "bg-gradient-to-br from-violet-600 to-purple-800",
+            textColor: "text-white",
+            tagColor: "text-white/70",
+            dotColor: "bg-white"
+        }
+    ];
+
+    return (
+        <div 
+            className="absolute bottom-8 left-4 right-4 h-[180px]"
+            style={{ 
+                transformStyle: "preserve-3d",
+                zIndex: 300 
+            }}
+        >
+            {cards.map((card, idx) => {
+                const isFocused = idx === activeIndex;
+                const offset = (idx - activeIndex + 3) % 3; // 0 is focused, 1 is next, 2 is last
+                
+                // Pop-up stacked layout
+                const zPos = isFocused ? (isSectionHovered ? 120 : 60) : (0 - offset * 25);
+                const yPos = isFocused ? 0 : (offset * 16);
+                const opacity = isFocused ? 1 : 0.2;
+                const scale = isFocused ? 1 : (1 - offset * 0.04);
+
+                return (
+                    <div 
+                        key={card.id}
+                        className={`absolute inset-0 p-7 ${card.bg} ${card.textColor} rounded-[2.2rem] shadow-2xl transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) border border-white/10 backdrop-blur-3xl flex flex-col justify-center`}
+                        style={{ 
+                            transform: `translateZ(${zPos}px) translateY(${yPos + (externalMousePos.y * 6)}px) scale(${scale})`,
+                            opacity,
+                            zIndex: 100 - offset,
+                            boxShadow: isFocused ? "0 30px 60px -12px rgba(0,0,0,0.4)" : "none"
+                        }}
+                    >
+                        <div className="flex items-center gap-2.5 mb-3">
+                            <div className={`w-2 h-2 rounded-full ${card.dotColor} ${isFocused ? 'animate-pulse' : ''}`} />
+                            <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${card.tagColor}`}>{card.title}</span>
+                        </div>
+                        <p className="text-base md:text-[20px] font-bold leading-[1.2] tracking-tight opacity-95">{card.content}</p>
+                        
+                    </div>
+                );
+            })}
+        </div>
+    );
+}
+
+// ──────────────────────────────────────────────────────────────────────────
 // MAIN MOCKUP COMPONENT
 // ──────────────────────────────────────────────────────────────────────────
 export default function AdversarialAppMockup({ 
@@ -108,7 +193,7 @@ export default function AdversarialAppMockup({
     isSectionHovered?: boolean,
     externalMousePos?: { x: number, y: number }
 }) {
-    // OPPOSITE TILT: Progress was rotateY(-28), we use rotateY(28)
+    // OPPOSITE TILT
     const rotateX = (18 - (externalMousePos.y * 10)); 
     const rotateY = (28 - (externalMousePos.x * 12));
     const rotateZ = (-6 - (externalMousePos.x * 3));
@@ -146,6 +231,9 @@ export default function AdversarialAppMockup({
 
                     <AdversarialChatUI animKey={animKey} />
 
+                    {/* ── INTERNAL CARD STACK ── */}
+                    <CardStack isSectionHovered={isSectionHovered} externalMousePos={externalMousePos} />
+
                     {/* Laser Sweep */}
                     <div 
                         className="absolute inset-0 z-[50] pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-1000"
@@ -154,54 +242,6 @@ export default function AdversarialAppMockup({
                             transform: `translateX(${externalMousePos.x * 100}%)`,
                         }}
                     />
-                </div>
-
-                {/* ── FLOATING CARDS (EXPLODE) ── */}
-
-                {/* Card 1: Friction Alert (Top Left) */}
-                <div 
-                    className="absolute -top-4 -left-20 w-[160px] p-4 bg-indigo-950/90 text-white rounded-2xl shadow-2xl transition-transform duration-1000 ease-out border border-white/10 backdrop-blur-xl"
-                    style={{ 
-                        transform: `translateZ(${isSectionHovered ? 320 : 120}px) translateX(${externalMousePos.x * -20}px) translateY(${externalMousePos.y * -10}px)`,
-                        zIndex: 200
-                    }}
-                >
-                    <div className="flex items-center gap-2 mb-2">
-                        <div className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
-                        <span className="text-[9px] font-black uppercase tracking-widest text-red-400">Friction Alert</span>
-                    </div>
-                    <p className="text-[11px] font-medium leading-tight text-white/90">AI detected aggressive pacing. Recommend tactical pause.</p>
-                </div>
-
-                {/* Card 2: Strategic Play (Bottom Left) */}
-                <div 
-                    className="absolute bottom-16 -left-16 w-[180px] p-4 bg-white rounded-2xl shadow-2xl transition-transform duration-1000 ease-out border border-slate-100"
-                    style={{ 
-                        transform: `translateZ(${isSectionHovered ? 240 : 80}px) translateX(${externalMousePos.x * -30}px) translateY(${externalMousePos.y * 20}px)`,
-                        zIndex: 180
-                    }}
-                >
-                    <h5 className="text-[10px] font-black uppercase tracking-widest text-[#4c1d95] mb-2">Strategic Play</h5>
-                    <div className="flex flex-col gap-2">
-                        <div className="h-2 bg-violet-100 rounded-full w-full" />
-                        <div className="h-2 bg-violet-50 rounded-full w-2/3" />
-                    </div>
-                </div>
-
-                {/* Card 3: Bio-Feedback (Bottom Right) */}
-                <div 
-                    className="absolute top-1/2 -right-24 w-[140px] p-4 bg-gradient-to-br from-violet-600 to-purple-800 text-white rounded-2xl shadow-2xl transition-transform duration-1000 ease-out border border-white/20 overflow-hidden"
-                    style={{ 
-                        transform: `translateZ(${isSectionHovered ? 280 : 100}px) translateX(${externalMousePos.x * 30}px) translateY(${externalMousePos.y * 5}px) rotateY(-10deg)`,
-                        zIndex: 190
-                    }}
-                >
-                    <div className="absolute top-0 right-0 w-12 h-12 bg-white/10 rounded-full blur-xl translate-x-1/3 -translate-y-1/3" />
-                    <span className="text-[9px] font-black uppercase tracking-widest opacity-70 mb-2 block">Pacing</span>
-                    <div className="text-xl font-black">1.4x</div>
-                    <div className="mt-1 h-1 bg-white/20 rounded-full overflow-hidden">
-                        <div className="h-full bg-white w-3/4 shadow-[0_0_8px_white]" />
-                    </div>
                 </div>
 
             </div>
