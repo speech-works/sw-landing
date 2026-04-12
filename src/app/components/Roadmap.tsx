@@ -144,17 +144,17 @@ export default function Roadmap() {
                   </div>
                 </div>
 
-                {/* Right: Stage Mockup Anchor - Triple Phone Stack (Exclusively for Phase 1) */}
+                {/* Right: Stage Mockup Anchor - Triple Phone Stack (Symmetric & Centered) */}
                 <div
-                  className="absolute right-[-10%] md:right-[-5%] bottom-[-35%] w-full h-full flex justify-end items-end z-50 transition-transform duration-1000 ease-out perspective-[2000px]"
+                  className="absolute right-[5%] md:right-[15%] bottom-[-30%] w-full h-full flex justify-end items-end z-50 transition-transform duration-1000 ease-out perspective-[2000px] origin-bottom-right"
                   style={{
-                    transform: `translate(${(mousePos.x - 0.5) * 50}px, ${(mousePos.y - 0.5) * 50}px) rotateY(${(mousePos.x - 0.5) * -10}deg) rotateX(${(mousePos.y - 0.5) * 10}deg)`,
+                    transform: `translate(${(mousePos.x - 0.5) * 50}px, ${(mousePos.y - 0.5) * 50}px) rotateY(${(mousePos.x - 0.5) * -10}deg) rotateX(${(mousePos.y - 0.5) * 10}deg) scale(0.7)`,
                   }}
                 >
-                  <div className="relative w-full h-full flex justify-end items-end pr-[10%] [transform-style:preserve-3d]">
-                    {/* GUARD ZONES for stable physics triggers */}
-                    <div className="absolute inset-0 z-[300] flex justify-end items-end pointer-events-none">
-                      <div className="relative w-[550px] h-[750px] pointer-events-auto flex">
+                  <div className="relative w-full h-full flex justify-end items-end [transform-style:preserve-3d]">
+                    {/* GUARD ZONES (Widened for symmetric stack) */}
+                    <div className="absolute inset-x-0 bottom-0 z-[300] flex justify-center items-end pointer-events-none">
+                      <div className="relative w-[700px] h-[600px] pointer-events-auto flex translate-y-20">
                         <div className="flex-1 h-full" onMouseEnter={() => setHoveredStackIndex(0)} onMouseLeave={() => setHoveredStackIndex(null)} />
                         <div className="flex-1 h-full" onMouseEnter={() => setHoveredStackIndex(2)} onMouseLeave={() => setHoveredStackIndex(null)} />
                         <div className="flex-1 h-full" onMouseEnter={() => setHoveredStackIndex(1)} onMouseLeave={() => setHoveredStackIndex(null)} />
@@ -166,18 +166,18 @@ export default function Roadmap() {
                       const isDefaultFront = hoveredStackIndex === null && i === 2;
                       const isTop = isHovered || isDefaultFront;
                       
-                      // Aggressive fan-out for maximum visibility
+                      // Perfectly symmetric fanning for guaranteed visibility
                       const baseConfigs = [
-                        { x: -140, y: 80, r: -18, s: 0.85, z: 0 },
-                        { x: 110, y: 40, r: 12, s: 0.92, z: 50 },
-                        { x: 0, y: 0, r: 0, s: 1, z: 100 },
+                        { x: -180, y: 50, r: -18, s: 0.9, z: 10 },    // Left
+                        { x: 180, y: 50, r: 18, s: 0.9, z: 20 },     // Right
+                        { x: 0, y: 0, r: 0, s: 1, z: 100 },          // Center (Front)
                       ];
 
                       const activeZ = 250;
                       const config = baseConfigs[i];
                       
                       const transform = isTop 
-                        ? `translate3d(0px, -60px, ${activeZ}px) scale(1.1) rotate(0deg)`
+                        ? `translate3d(0px, -60px, ${activeZ}px) scale(1.15) rotate(0deg)`
                         : `translate3d(${config.x}px, ${config.y}px, ${config.z}px) scale(${config.s}) rotate(${config.r}deg)`;
 
                       return (
@@ -190,7 +190,6 @@ export default function Roadmap() {
                           }}
                         >
                           <div className="relative group/phone-stack">
-                            {/* Dynamic Shadow Depth */}
                             <div className={`absolute inset-0 bg-black/60 blur-[60px] rounded-[3.5rem] scale-90 translate-y-12 translate-x-6 transition-opacity duration-700 ${isTop ? 'opacity-60' : 'opacity-20'}`} />
                             <RoadmapMockup phase={1} status="live" isBlank={i < 2} />
                           </div>
