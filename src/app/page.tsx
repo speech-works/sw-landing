@@ -203,11 +203,8 @@ export default function Home() {
 
                     line.className = `absolute left-[-27px] md:left-[-43px] -top-[2px] -bottom-[2px] w-[4px] bg-${themes[i]} transition-all duration-500 opacity-100 scale-y-100 origin-top`;
                     
-                    // Activate Canvas Stage
-                    canvas.className = `absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto`;
-                    if(i===1) canvas.classList.add('from-brand', 'to-[#D9692E]');
-                    if(i===2) canvas.classList.add('from-purple-500', 'to-purple-800');
-                    if(i===3) canvas.classList.add('from-emerald-500', 'to-emerald-800');
+                    // Note: Roadmap Canvas activation is now handled internally via React state in Roadmap.tsx
+                    // to prevent clobbering high-fidelity interactive styles.
 
                 } else {
                     // Deactivate Menu Item
@@ -218,16 +215,12 @@ export default function Home() {
                     title.className = `text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-transparent [-webkit-text-stroke:1px_rgba(63,51,45,0.3)] group-hover:[-webkit-text-stroke:1px_rgba(63,51,45,0.7)] transition-all duration-500`;
                     
                     desc.style.maxHeight = "0px";
-                    desc.classList.remove('opacity-100', 'mt-2', 'md:mt-4');
+                    desc.classList.remove('opacity-100', 'mt-2', 'md:md:mt-4');
                     desc.classList.add('opacity-0', 'mt-0');
 
                     line.className = `absolute left-[-27px] md:left-[-43px] -top-[2px] -bottom-[2px] w-[4px] bg-transparent transition-all duration-500 opacity-0 scale-y-0 origin-top`;
                     
-                    // Deactivate Canvas Stage
-                    canvas.className = `absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none`;
-                    if(i===1) canvas.classList.add('from-brand', 'to-[#D9692E]');
-                    if(i===2) canvas.classList.add('from-purple-500', 'to-purple-800');
-                    if(i===3) canvas.classList.add('from-emerald-500', 'to-emerald-800');
+                    // Note: Roadmap Canvas deactivation is now handled internally via React state in Roadmap.tsx
                 }
             }
         }
