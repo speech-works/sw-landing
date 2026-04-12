@@ -429,7 +429,7 @@ export default function MoodCarousel() {
             0%, 100% { transform: translateY(0); }
             50%      { transform: translateY(-1.5px); }
         }
-        .animate-mood-flame     { animation: mood-flame 1.2s cubic-bezier(0.45,0,0.55,1) infinite; }
+        .animate-mood-flame     { animation: mood-flame 1.2s cubic-bezier(0.45,0,0.55,1) infinite; transform-origin: bottom; transform-box: fill-box; }
         .animate-mood-ang-upper { animation: mood-ang-upper 0.5s cubic-bezier(0.23,1,0.32,1) infinite; }
         .animate-mood-ang-lower { animation: mood-ang-lower 0.5s cubic-bezier(0.23,1,0.32,1) infinite; }
 
@@ -442,7 +442,7 @@ export default function MoodCarousel() {
             from { stroke-dashoffset: 0; }
             to   { stroke-dashoffset: -48; }
         }
-        .animate-mood-halo { animation: mood-halo 3s cubic-bezier(0.45,0,0.55,1) infinite; }
+        .animate-mood-halo { animation: mood-halo 3s cubic-bezier(0.45,0,0.55,1) infinite; transform-origin: center; transform-box: fill-box; }
         .animate-mood-wind { animation: mood-wind 2s linear infinite; }
 
         /* Happy: bounce, blink, stars */
@@ -458,9 +458,9 @@ export default function MoodCarousel() {
             0%, 100% { opacity: 0.5; transform: scale(0.8); }
             50%      { opacity: 1;   transform: scale(1.2); }
         }
-        .animate-mood-happy-face  { animation: mood-happy-face 0.8s cubic-bezier(0.45,0,0.55,1) infinite; }
-        .animate-mood-happy-blink { animation: mood-happy-blink 4s infinite; }
-        .animate-mood-stars       { animation: mood-stars 1s ease-in-out infinite; }
+        .animate-mood-happy-face  { animation: mood-happy-face 0.8s cubic-bezier(0.45,0,0.55,1) infinite; transform-origin: center; transform-box: fill-box; }
+        .animate-mood-happy-blink { animation: mood-happy-blink 4s infinite; transform-origin: center; transform-box: fill-box; }
+        .animate-mood-stars       { animation: mood-stars 1s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
 
         /* Sad: rain, tear, quiver */
         @keyframes mood-rain {
@@ -479,7 +479,7 @@ export default function MoodCarousel() {
         }
         .animate-mood-rain   { animation: mood-rain 0.5s linear infinite; }
         .animate-mood-tear   { animation: mood-tear 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
-        .animate-mood-quiver { animation: mood-quiver 0.1s linear infinite; }
+        .animate-mood-quiver { animation: mood-quiver 0.1s linear infinite; transform-origin: center; transform-box: fill-box; }
       `}</style>
     </div>
   );
