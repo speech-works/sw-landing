@@ -14,7 +14,7 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 );
 
 // ──────────────────────────────────────────────────────────────────────────
-// FEATURE BUBBLES (CLIPPED WATERMARKS & HARDWARE ACCELERATED)
+// FEATURE BUBBLES (JITTER STABILIZED & POINTER PASS-THRU)
 // ──────────────────────────────────────────────────────────────────────────
 function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tiltTransform: string }) {
     const bubbles = [
@@ -26,8 +26,7 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
             angle: -140, 
             radius: 80, 
             z: 140, 
-            yOffset: -180,
-            delay: 0 
+            yOffset: -180
         },
         { 
             id: 2, 
@@ -37,8 +36,7 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
             angle: -40, 
             radius: 85, 
             z: 150, 
-            yOffset: -160,
-            delay: 0.1 
+            yOffset: -160
         },
         { 
             id: 3, 
@@ -48,8 +46,7 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
             angle: 140, 
             radius: 90, 
             z: 120, 
-            yOffset: -80,
-            delay: 0.05 
+            yOffset: -80
         },
         { 
             id: 4, 
@@ -59,8 +56,7 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
             angle: 40, 
             radius: 75, 
             z: 130, 
-            yOffset: -100,
-            delay: 0.15 
+            yOffset: -100
         }
     ];
 
@@ -69,37 +65,56 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
     return (
         <React.Fragment>
             {bubbles.map((b) => (
+                /* 
+                   LEVEL 1: TILT TRACKER (60FPS)
+                   No CSS Transition on 'transform' to prevent mouse-lag.
+                */
                 <div 
                     key={b.id}
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-2.5 rounded-full flex items-center gap-3 backdrop-blur-xl border border-white/40 shadow-[0_30px_100px_rgba(0,0,0,0.3)] transition-all duration-[750ms] overflow-hidden"
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
                     style={{ 
-                        backgroundColor: "rgba(255,255,255,0.95)",
-                        transitionTimingFunction: snappyEase,
-                        transitionDelay: `${isHovered ? b.delay : 0}s`,
-                        transform: tiltTransform + `
-                            rotateZ(${isHovered ? b.angle : b.angle - 120}deg)
-                            translateX(${isHovered ? b.radius : 0}px)
-                            translateY(${isHovered ? b.yOffset : 0}px)
-                            translateZ(${isHovered ? b.z : -250}px)
-                            rotateZ(${isHovered ? -b.angle : -(b.angle - 120)}deg)
-                            scale(${isHovered ? 1 : 0.4})
-                        `,
-                        opacity: isHovered ? 1 : 0,
-                        willChange: "transform, opacity",
-                        pointerEvents: isHovered ? "auto" : "none",
+                        transformStyle: "preserve-3d",
+                        transform: tiltTransform,
+                        willChange: "transform",
                         zIndex: 1000
                     }}
                 >
-                    <div className={`w-7 h-7 rounded-full ${b.color} flex items-center justify-center text-xs shadow-inner shrink-0 leading-none`}>
-                        {b.icon}
-                    </div>
-                    <span className="text-[11px] font-black uppercase tracking-wider text-slate-900 whitespace-nowrap leading-none">
-                        {b.label}
-                    </span>
-                    
-                    {/* Watermark/Ghost Icon - Clipped by overflow-hidden */}
-                    <div className="absolute -right-1 -bottom-1 text-3xl opacity-[0.05] pointer-events-none select-none">
-                        {b.icon}
+                    {/* 
+                       LEVEL 2: BLOOM ELEMENT (750ms Transition)
+                       Handles the fly-in/out independently of the mouse tracking.
+                    */}
+                    <div 
+                        className="px-5 py-2.5 rounded-full flex items-center gap-3 backdrop-blur-xl border border-white/40 shadow-[0_30px_100px_rgba(0,0,0,0.3)] transition-all duration-[750ms] overflow-hidden"
+                        style={{ 
+                            backgroundColor: "rgba(255,255,255,0.95)",
+                            transformStyle: "preserve-3d",
+                            backfaceVisibility: "hidden",
+                            transitionTimingFunction: snappyEase,
+                            // Quick & Smooth entrance (No delays for instant reactivity)
+                            transform: `
+                                rotateZ(${isHovered ? b.angle : b.angle - 120}deg)
+                                translateX(${isHovered ? b.radius : 0}px)
+                                translateY(${isHovered ? b.yOffset : 0}px)
+                                translateZ(${isHovered ? b.z : -250}px)
+                                rotateZ(${isHovered ? -b.angle : -(b.angle - 120)}deg)
+                                scale(${isHovered ? 1 : 0.4})
+                            `,
+                            opacity: isHovered ? 1 : 0,
+                            willChange: "transform, opacity",
+                            pointerEvents: "none" // Resolve pointer interruption issue
+                        }}
+                    >
+                        <div className={`w-7 h-7 rounded-full ${b.color} flex items-center justify-center text-xs shadow-inner shrink-0 leading-none`}>
+                            {b.icon}
+                        </div>
+                        <span className="text-[11px] font-black uppercase tracking-wider text-slate-900 whitespace-nowrap leading-none">
+                            {b.label}
+                        </span>
+                        
+                        {/* Watermark/Ghost Icon */}
+                        <div className="absolute -right-1 -bottom-1 text-3xl opacity-[0.05] pointer-events-none select-none">
+                            {b.icon}
+                        </div>
                     </div>
                 </div>
             ))}
@@ -349,7 +364,7 @@ export default function AdversarialAppMockup({
                              <div className="absolute inset-0 bg-red-500/10 animate-pulse-island" />
                              <div className="flex items-center gap-[2px] opacity-40">
                                  {[1,0.6,1.2,0.8].map((h, i) => (
-                                     <div key={i} className="w-[2px] bg-red-400 rounded-full animate-island-wave" style={{ height: `${h * 4}px`, animationDelay: `${i * 0.1}s` }} />
+                                     <div key={i} className={`w-[2px] bg-red-400 rounded-full animate-island-wave`} style={{ height: `${h * 4}px`, animationDelay: `${i * 0.1}s` }} />
                                  ))}
                              </div>
                         </div>
@@ -371,7 +386,7 @@ export default function AdversarialAppMockup({
                 </div>
             </div>
 
-            {/* ── FEATURE BUBBLES (FAST REACTION & CLIPPED) ── */}
+            {/* ── FEATURE BUBBLES (STABILIZED) ── */}
             <FeatureBubbles isHovered={isSectionHovered} tiltTransform={tiltTransform} />
 
             <style>{`
