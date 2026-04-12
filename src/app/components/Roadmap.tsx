@@ -61,16 +61,29 @@ export default function Roadmap() {
                           
                           {/*  Canvas 1  */}
                           <div id="rm-canvas-1" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-brand to-[#D9692E] p-6 sm:p-8 md:p-12 transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto border border-orange-100/20 shadow-2xl">
+                              
+                              {/* Experimental Ghost Blueprint Number */}
+                              <div className="absolute left-0 bottom-0 translate-y-[15%] -translate-x-[5%] text-[20rem] md:text-[45rem] font-black text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.15)] md:[-webkit-text-stroke:2px_rgba(255,255,255,0.15)] leading-[0.75] select-none pointer-events-none z-0">01</div>
+                               
+                              {/* Technical Metadata */}
+                              <div className="absolute top-6 left-6 md:top-8 md:left-10 text-[8px] md:text-[9px] font-mono text-white/50 tracking-widest uppercase z-10 select-none hidden md:block">
+                                  // SYS.PHASE_01 <br/>
+                                  // STATUS :: DEPLOYED
+                              </div>
+
                               <div className="relative z-20 flex flex-col md:flex-row md:items-center justify-between h-full w-full">
-                                  {/* Left: Content Lane */}
-                                  <div className="w-full md:w-1/2 flex flex-col justify-start md:justify-center h-full">
-                                      <div className="relative z-10 flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg w-fit mb-4 md:mb-8">
-                                          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                  {/* Left: Editorial Content Lane */}
+                                  <div className="w-full md:w-1/2 flex flex-col justify-start md:justify-center h-full relative">
+                                      <div className="relative z-10 flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] w-fit mb-6 md:mb-10">
+                                          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
                                           Live &amp; Available
                                       </div>
 
                                       <div className="relative z-10">
-                                          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-black text-white tracking-tighter leading-[1] md:leading-[1.05]">A clinical-grade<br />sandbox.</h3>
+                                          <h3 className="text-4xl md:text-[4rem] lg:text-[5.5rem] text-white tracking-tighter leading-[0.9] flex flex-col items-start gap-1">
+                                              <span className="font-black drop-shadow-lg">A clinical-grade</span>
+                                              <span className="font-serif italic font-light text-white/90 md:ml-12 drop-shadow-md">sandbox.</span>
+                                          </h3>
                                       </div>
                                   </div>
 
@@ -83,19 +96,32 @@ export default function Roadmap() {
       
                           {/*  Canvas 2  */}
                           <div id="rm-canvas-2" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-purple-500 to-purple-800 p-6 sm:p-8 md:p-12 transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none border border-purple-100/20 shadow-2xl">
+                              
+                              {/* Experimental Ghost Blueprint Number */}
+                              <div className="absolute left-0 bottom-0 translate-y-[15%] -translate-x-[5%] text-[20rem] md:text-[45rem] font-black text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.15)] md:[-webkit-text-stroke:2px_rgba(255,255,255,0.15)] leading-[0.75] select-none pointer-events-none z-0">02</div>
+                               
+                              {/* Technical Metadata */}
+                              <div className="absolute top-6 left-6 md:top-8 md:left-10 text-[8px] md:text-[9px] font-mono text-white/50 tracking-widest uppercase z-10 select-none hidden md:block">
+                                  // SYS.PHASE_02 <br/>
+                                  // STATUS :: BUILDING
+                              </div>
+
                               <div className="relative z-20 flex flex-col md:flex-row md:items-center justify-between h-full w-full">
-                                  {/* Left: Content Lane */}
-                                  <div className="w-full md:w-1/2 flex flex-col justify-start md:justify-center h-full">
-                                      <div className="relative z-10 flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg w-fit mb-4 md:mb-8">
+                                  {/* Left: Editorial Content Lane */}
+                                  <div className="w-full md:w-1/2 flex flex-col justify-start md:justify-center h-full relative">
+                                      <div className="relative z-10 flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] w-fit mb-6 md:mb-10">
                                           <span className="relative flex h-1.5 w-1.5">
                                               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                                              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+                                              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
                                           </span>
                                           Active Development
                                       </div>
 
                                       <div className="relative z-10">
-                                          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-black text-white tracking-tighter leading-[1] md:leading-[1.05]">Stronger<br />together.</h3>
+                                          <h3 className="text-4xl md:text-[4rem] lg:text-[5.5rem] text-white tracking-tighter leading-[0.9] flex flex-col items-start gap-1">
+                                              <span className="font-black drop-shadow-lg">Stronger</span>
+                                              <span className="font-serif italic font-light text-white/90 md:ml-12 drop-shadow-md">together.</span>
+                                          </h3>
                                       </div>
                                   </div>
 
@@ -108,16 +134,29 @@ export default function Roadmap() {
       
                           {/*  Canvas 3  */}
                           <div id="rm-canvas-3" className="absolute inset-0 overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-emerald-500 to-emerald-800 p-6 sm:p-8 md:p-12 transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none border border-emerald-100/20 shadow-2xl">
+                              
+                              {/* Experimental Ghost Blueprint Number */}
+                              <div className="absolute left-0 bottom-0 translate-y-[15%] -translate-x-[5%] text-[20rem] md:text-[45rem] font-black text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.15)] md:[-webkit-text-stroke:2px_rgba(255,255,255,0.15)] leading-[0.75] select-none pointer-events-none z-0">03</div>
+                               
+                              {/* Technical Metadata */}
+                              <div className="absolute top-6 left-6 md:top-8 md:left-10 text-[8px] md:text-[9px] font-mono text-white/50 tracking-widest uppercase z-10 select-none hidden md:block">
+                                  // SYS.PHASE_03 <br/>
+                                  // STATUS :: HORIZON
+                              </div>
+
                               <div className="relative z-20 flex flex-col md:flex-row md:items-center justify-between h-full w-full">
-                                  {/* Left: Content Lane */}
-                                  <div className="w-full md:w-1/2 flex flex-col justify-start md:justify-center h-full">
-                                      <div className="relative z-10 flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg w-fit mb-4 md:mb-8">
-                                          <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                  {/* Left: Editorial Content Lane */}
+                                  <div className="w-full md:w-1/2 flex flex-col justify-start md:justify-center h-full relative">
+                                      <div className="relative z-10 flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] w-fit mb-6 md:mb-10">
+                                          <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
                                           On the Horizon
                                       </div>
 
                                       <div className="relative z-10">
-                                          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-black text-white tracking-tighter leading-[1] md:leading-[1.05]">Expert<br />guidance.</h3>
+                                          <h3 className="text-4xl md:text-[4rem] lg:text-[5.5rem] text-white tracking-tighter leading-[0.9] flex flex-col items-start gap-1">
+                                              <span className="font-black drop-shadow-lg">Expert</span>
+                                              <span className="font-serif italic font-light text-white/90 md:ml-12 drop-shadow-md">guidance.</span>
+                                          </h3>
                                       </div>
                                   </div>
 
