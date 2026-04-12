@@ -220,8 +220,8 @@ export default function CognitiveAppMockup() {
   }, []);
 
   const fmt = (d: Date) => {
-    const hours = d.getHours().toString().padStart(2, '0');
-    const minutes = d.getMinutes().toString().padStart(2, '0');
+    const hours = d.getHours().toString().padStart(2, "0");
+    const minutes = d.getMinutes().toString().padStart(2, "0");
     return `${hours}:${minutes}`;
   };
 

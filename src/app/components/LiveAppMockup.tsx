@@ -331,12 +331,10 @@ export default function LiveAppMockup() {
     return () => clearInterval(timer);
   }, []);
 
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: false,
-    });
+  const formatTime = (d: Date) => {
+    const hours = d.getHours().toString().padStart(2, "0");
+    const minutes = d.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
   };
 
   const getGreeting = () => {
@@ -351,7 +349,7 @@ export default function LiveAppMockup() {
     <div className="w-full h-full bg-[#f9fafb] text-slate-800 flex flex-col font-sans relative select-none">
       {/* Top Status Bar Mock - Dynamic & Apple-fied */}
       <div className="w-full pt-6 pb-3 px-6 flex justify-between items-center text-[12px] font-bold text-slate-900 bg-[#f9fafb] z-40 shrink-0 absolute top-0 left-0 right-0">
-        <span className="font-bold tracking-tight">{mounted ? formatTime(time) : " --:-- "}</span>
+        <span className="font-bold tracking-tight">{mounted ? formatTime(time) : "09:41"}</span>
         <div className="flex gap-1.5 items-center">
           {/* Signal Icon (4 bars) */}
           <svg

@@ -208,7 +208,11 @@ export default function ExploreAppMockup() {
     return () => clearInterval(timer);
   }, []);
 
-  const fmt = (d: Date) => d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: false });
+  const fmt = (d: Date) => {
+    const hours = d.getHours().toString().padStart(2, '0');
+    const minutes = d.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
 
   const cards = [
     { subtitle: "Fluency",    title: "Reading",   badge: "8 Done",  from: "#FFD8B5", to: "#FFAB76", shadow: "rgba(255,171,118,0.35)", face: <ReaderFace /> },
@@ -231,7 +235,7 @@ export default function ExploreAppMockup() {
         style={{ top: 0, height: STATUS_H, padding: "4px 24px 0", background: "#FCF8F5" }}
       >
         <span style={{ fontSize: "11px", fontWeight: 700, color: "#4A3831", letterSpacing: "-0.2px" }}>
-          {fmt(time)}
+          {mounted ? fmt(time) : "09:41"}
         </span>
         {/* Status icons */}
         <div className="flex items-center gap-1.5">
