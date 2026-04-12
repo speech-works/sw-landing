@@ -113,24 +113,24 @@ export default function Pricing() {
 
     if (pos === 0) {
       return {
-        transform: `translate(-50%, 0) scale(1.05) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`,
+        transform: `translate(-50%, 0) scale(1.05) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(0)`,
         zIndex: 30,
         opacity: 1,
-        filter: 'blur(0px)',
+        filter: 'none',
       };
     } else if (pos === -1) {
       return {
-        transform: 'translate(calc(-50% - 110%), 40px) scale(0.85) rotateY(15deg)', 
+        transform: 'translate(calc(-50% - 110%), 40px) scale(0.85) rotateY(15deg) translateZ(0)', 
         zIndex: 10,
         opacity: 0.5,
-        filter: 'blur(2px)',
+        filter: 'none',
       };
     } else {
       return {
-        transform: 'translate(calc(-50% + 110%), 40px) scale(0.85) rotateY(-15deg)',
+        transform: 'translate(calc(-50% + 110%), 40px) scale(0.85) rotateY(-15deg) translateZ(0)',
         zIndex: 10,
         opacity: 0.5,
-        filter: 'blur(2px)',
+        filter: 'none',
       };
     }
   };
@@ -142,12 +142,14 @@ export default function Pricing() {
     return (
       <div 
         key={`${tier.id}-${activeCard}`} 
-        className={`relative rounded-[2.8rem] transition-all duration-500 flex flex-col pointer-events-auto
+        className={`relative rounded-[2.8rem] transition-all duration-500 flex flex-col pointer-events-auto antialiased
           ${isDark 
             ? 'bg-[#1C1A19] border border-white/[0.06] text-white' 
             : 'bg-white border border-black/[0.04] text-app-text'
           }`}
         style={{
+          backfaceVisibility: 'hidden',
+          WebkitFontSmoothing: 'antialiased',
           boxShadow: isActive 
             ? isDark 
               ? '0 30px 60px -15px rgba(0,0,0,0.8)' 
