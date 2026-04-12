@@ -154,43 +154,56 @@ export default function Roadmap() {
                   <div className="relative w-full h-full flex justify-end items-end [transform-style:preserve-3d]">
                     {/* GUARD ZONES (Widened for symmetric stack) */}
                     <div className="absolute inset-x-0 bottom-0 z-[300] flex justify-center items-end pointer-events-none">
-                      <div className="relative w-[700px] h-[600px] pointer-events-auto flex translate-y-20">
-                        <div className="flex-1 h-full" onMouseEnter={() => setHoveredStackIndex(0)} onMouseLeave={() => setHoveredStackIndex(null)} />
-                        <div className="flex-1 h-full" onMouseEnter={() => setHoveredStackIndex(2)} onMouseLeave={() => setHoveredStackIndex(null)} />
-                        <div className="flex-1 h-full" onMouseEnter={() => setHoveredStackIndex(1)} onMouseLeave={() => setHoveredStackIndex(null)} />
+                      <div 
+                        className="relative w-[700px] h-[600px] pointer-events-auto flex translate-y-20 cursor-pointer"
+                        onMouseLeave={() => setHoveredStackIndex(null)}
+                      >
+                        <div className="flex-1 h-full" onMouseEnter={() => setHoveredStackIndex(0)} />
+                        <div className="flex-1 h-full" onMouseEnter={() => setHoveredStackIndex(2)} />
+                        <div className="flex-1 h-full" onMouseEnter={() => setHoveredStackIndex(1)} />
                       </div>
                     </div>
 
                     {[0, 1, 2].map((i) => {
-                      const isHovered = hoveredStackIndex === i;
-                      const isDefaultFront = hoveredStackIndex === null && i === 2;
-                      const isTop = isHovered || isDefaultFront;
-                      
-                      // Perfectly symmetric fanning for guaranteed visibility
-                      const baseConfigs = [
-                        { x: -180, y: 50, r: -18, s: 0.9, z: 10 },    // Left
-                        { x: 180, y: 50, r: 18, s: 0.9, z: 20 },     // Right
-                        { x: 0, y: 0, r: 0, s: 1, z: 100 },          // Center (Front)
-                      ];
+                      // Physics-based positions for perfect, intuitive shuffling
+                      const PosLeft = { x: -180, y: 50, r: -18, s: 0.9, z: 10 };
+                      const PosRight = { x: 180, y: 50, r: 18, s: 0.9, z: 20 };
+                      const PosCenterIdle = { x: 0, y: 0, r: 0, s: 1, z: 100 };
+                      const PosCenterActive = { x: 0, y: -60, r: 0, s: 1.15, z: 300 };
 
-                      const activeZ = 250;
-                      const config = baseConfigs[i];
+                      let config = PosCenterIdle;
                       
-                      const transform = isTop 
-                        ? `translate3d(0px, -60px, ${activeZ}px) scale(1.15) rotate(0deg)`
-                        : `translate3d(${config.x}px, ${config.y}px, ${config.z}px) scale(${config.s}) rotate(${config.r}deg)`;
+                      // Positional swapping logic to ensure ALL 3 remain visible without clipping. 
+                      // Whichever is hovered moves to center, dynamically displacing the center card to the side void.
+                      if (hoveredStackIndex === null || hoveredStackIndex === 2) {
+                        if (i === 0) config = PosLeft;
+                        if (i === 1) config = PosRight;
+                        if (i === 2) config = hoveredStackIndex === 2 ? PosCenterActive : PosCenterIdle;
+                      } else if (hoveredStackIndex === 0) {
+                        if (i === 0) config = PosCenterActive;
+                        if (i === 1) config = PosRight;
+                        if (i === 2) config = PosLeft; // Move original center card to the left void
+                      } else if (hoveredStackIndex === 1) {
+                        if (i === 0) config = PosLeft;
+                        if (i === 1) config = PosCenterActive;
+                        if (i === 2) config = PosRight; // Move original center card to the right void
+                      }
+
+                      const transform = `translate3d(${config.x}px, ${config.y}px, ${config.z}px) scale(${config.s}) rotate(${config.r}deg)`;
+                      const isTop = config === PosCenterActive || (hoveredStackIndex === null && i === 2);
+                      const isFocused = config === PosCenterActive;
 
                       return (
                         <div
                           key={i}
-                          className="absolute bottom-0 right-0 pointer-events-none transition-all duration-[900ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform"
+                          className="absolute bottom-0 right-0 pointer-events-none transition-all duration-[800ms] ease-[cubic-bezier(0.23,1,0.32,1)] will-change-transform"
                           style={{ 
                             transform,
-                            zIndex: isTop ? 100 : config.z 
+                            zIndex: config.z 
                           }}
                         >
-                          <div className="relative group/phone-stack">
-                            <div className={`absolute inset-0 bg-black/60 blur-[60px] rounded-[3.5rem] scale-90 translate-y-12 translate-x-6 transition-opacity duration-700 ${isTop ? 'opacity-60' : 'opacity-20'}`} />
+                          <div className={`relative transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${!isTop ? 'opacity-70 blur-[1px]' : 'opacity-100 blur-0'}`}>
+                            <div className={`absolute inset-0 bg-black/60 blur-[60px] rounded-[3.5rem] scale-90 translate-y-12 translate-x-6 transition-opacity duration-700 pointer-events-none ${isFocused ? 'opacity-50' : 'opacity-0'}`} />
                             <RoadmapMockup phase={1} status="live" isBlank={i < 2} />
                           </div>
                         </div>
