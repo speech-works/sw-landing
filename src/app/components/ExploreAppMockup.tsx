@@ -218,7 +218,7 @@ export default function ExploreAppMockup() {
   ];
 
   // Fixed header height constants
-  const STATUS_H = 44;
+  const STATUS_H = 54;
   const HEADER_H = 64;
   const FIXED_TOP = STATUS_H + HEADER_H;
 
@@ -228,7 +228,7 @@ export default function ExploreAppMockup() {
       {/* ── Fixed Status Bar ─────────────────────────────── */}
       <div
         className="absolute left-0 right-0 z-50 flex items-center justify-between"
-        style={{ top: 0, height: STATUS_H, padding: "0 18px", background: "#FCF8F5" }}
+        style={{ top: 0, height: STATUS_H, padding: "4px 24px 0", background: "#FCF8F5" }}
       >
         <span style={{ fontSize: "11px", fontWeight: 700, color: "#4A3831", letterSpacing: "-0.2px" }}>
           {fmt(time)}

@@ -77,7 +77,7 @@ export default function BreathingAppMockup() {
     <div className="w-full h-full flex flex-col font-sans select-none overflow-hidden relative" style={{ background: "linear-gradient(135deg, #000000 0%, #020617 50%, #0F172A 100%)" }}>
       
       {/* ── Status Bar ── */}
-      <div className="absolute top-0 left-0 right-0 h-11 px-5 flex items-center justify-between z-50">
+      <div className="absolute top-0 left-0 right-0 h-[54px] pt-1 px-8 flex items-center justify-between z-50">
         <span className="text-[11px] font-bold text-white/90 letter-spacing-tight">22:35</span>
         <div className="flex items-center gap-1.5 opacity-90">
           <svg viewBox="0 0 17 12" fill="white" className="w-[15px] h-[11px]">

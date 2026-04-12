@@ -227,7 +227,7 @@ export default function CognitiveAppMockup() {
       {/* ── Status Bar ── */}
       <div
         className="absolute left-0 right-0 z-50 flex items-center justify-between"
-        style={{ top: 0, height: 44, padding: "0 18px", background: "rgba(250,245,255,0.95)" }}
+        style={{ top: 0, height: 54, padding: "4px 24px 0", background: "rgba(250,245,255,0.95)" }}
       >
         <span style={{ fontSize: "11px", fontWeight: 700, color: "#4A3831", letterSpacing: "-0.2px" }}>{fmt(time)}</span>
         <div className="flex items-center gap-1.5">
@@ -255,7 +255,7 @@ export default function CognitiveAppMockup() {
       <div
         className="absolute left-0 right-0 z-40 flex flex-row items-center justify-between"
         style={{
-          top: 44,
+          top: 54,
           height: 52,
           padding: "0 16px",
           background: "rgba(250,245,255,0.85)",
@@ -276,7 +276,7 @@ export default function CognitiveAppMockup() {
       <div className="flex-1 overflow-hidden relative">
         <div
           className={`absolute left-0 right-0 flex flex-col ${mounted ? "animate-cognitive-pan" : "opacity-0"}`}
-          style={{ top: 44 + 52 + 12, padding: "0 14px", gap: 10 }}
+          style={{ top: 54 + 52 + 12, padding: "0 14px", gap: 10 }}
         >
           {/* Subtitle */}
           <p style={{ fontSize: "12px", color: "#6B7280", textAlign: "center", lineHeight: 1.4 }}>
