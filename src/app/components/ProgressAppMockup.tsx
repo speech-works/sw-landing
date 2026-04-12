@@ -59,9 +59,9 @@ export default function ProgressAppMockup({
           className="absolute inset-[6px] rounded-[3rem] bg-[#FCF9F7] overflow-hidden flex flex-col"
           style={{ transform: "translateZ(10px)" }}
         >
-          {/* Status Bar (Thin, sticking to top) */}
-          <div className="h-[44px] pt-1 px-8 flex items-center justify-between z-50">
-            <span className="text-[11px] font-bold text-slate-900 letter-spacing-tight">
+          {/* Status Bar (Pinned to top) */}
+          <div className="h-[22px] pt-1 px-8 flex items-center justify-between z-50">
+            <span className="text-[8px] font-bold text-slate-900 letter-spacing-tight">
               23:05
             </span>
             <div className="flex items-center gap-1.5">
