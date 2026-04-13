@@ -233,7 +233,7 @@ const features = [
     tagBorder: "border-orange-100",
     activeBar: "bg-brand",
     renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
-      <div className="md:translate-x-12 lg:translate-x-16 transition-transform duration-700">
+      <div className="md:translate-x-20 lg:translate-x-28 transition-transform duration-700">
         <ProgressAppMockup radarChart={<RadarUI animKey={animKey} isFloating={true} />} isSectionHovered={isHovered} externalMousePos={mousePos} />
       </div>
     ),
@@ -267,7 +267,7 @@ const features = [
     tagBorder: "border-purple-200",
     activeBar: "bg-purple-500",
     renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
-      <div className="md:translate-x-12 lg:translate-x-16 transition-transform duration-700">
+      <div className="md:translate-x-20 lg:translate-x-28 transition-transform duration-700">
         <AdversarialAppMockup animKey={animKey} isSectionHovered={isHovered} externalMousePos={mousePos} />
       </div>
     ),
@@ -300,7 +300,7 @@ const features = [
     tagBorder: "border-emerald-200",
     activeBar: "bg-emerald-500",
     renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
-      <div className="md:translate-x-12 lg:translate-x-16 transition-transform duration-700">
+      <div className="md:translate-x-20 lg:translate-x-28 transition-transform duration-700">
         <StaminaAppMockup animKey={animKey} isSectionHovered={isHovered} externalMousePos={mousePos} />
       </div>
     ),
@@ -333,7 +333,7 @@ const features = [
     activeBar: "bg-brand",
     isDark: true,
     renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
-      <div className="md:translate-x-12 lg:translate-x-16 transition-transform duration-700">
+      <div className="md:translate-x-20 lg:translate-x-28 transition-transform duration-700">
         <RoadmapAppMockup animKey={animKey} isSectionHovered={isHovered} externalMousePos={mousePos} />
       </div>
     ),
@@ -537,7 +537,7 @@ export default function Platform() {
 
           {/* ── Right Visual Stage ── */}
           <div 
-            className="lg:col-span-7 relative h-[350px] sm:h-[450px] lg:h-auto"
+            className="lg:col-span-7 relative h-[350px] sm:h-[450px] lg:h-auto overflow-visible"
             onMouseEnter={() => setIsHoveredStage(true)}
             onMouseLeave={() => setIsHoveredStage(false)}
             style={{
@@ -546,14 +546,14 @@ export default function Platform() {
             }}
           >
             <div 
-                className="w-full h-full lg:aspect-square xl:aspect-[4/3] relative transition-transform duration-700 ease-out group/stage"
+                className="w-full h-full lg:aspect-square xl:aspect-[4/3] relative transition-transform duration-700 ease-out group/stage overflow-visible"
                 style={{
                     transform: `rotateX(${stageMousePos.y * 5}deg) rotateY(${stageMousePos.x * -5}deg)`,
                     transformStyle: "preserve-3d",
                 }}
             >
 
-              {/* Card frame */}
+              {/* Card frame: Contains Glimmer and Backgrounds (Masked) */}
               <div className="absolute inset-0 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-card-hover border border-orange-100/50">
                 {/* Glass glare */}
                 <div
@@ -588,55 +588,55 @@ export default function Platform() {
                     </div>
                   );
                 })}
-
-                {/* Interactive app mockups & content cards (Moved inside for masking) */}
-                {features.map((feature, index) => {
-                  const isActive = index === activeIndex;
-                  const isDark   = feature.isDark;
-                  return (
-                    <div
-                      key={`content-${feature.id}`}
-                      className={`absolute inset-0 flex flex-col justify-between p-8 md:p-12 transition-opacity duration-500 ease-in-out ${isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-                      style={{ zIndex: 20 }}
-                    >
-                      {/* Tag chip */}
-                      {isActive && (
-                        <div
-                          key={`tag-${feature.id}-${animKey}`}
-                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
-                            ${feature.tagBg} ${feature.tagBorder} ${isDark ? "text-white" : feature.iconColor}`}
-                          style={{ animation: "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both" }}
-                        >
-                          {feature.tagIcon} {feature.shortTitle}
-                        </div>
-                      )}
-
-                      {/* Dynamic mock UI */}
-                      <div className="absolute inset-0 pointer-events-none">
-                        {isActive && feature.renderUI(animKey, isHoveredStage, stageMousePos)}
-                      </div>
-
-                      {/* Bottom CTA (roadmap only) */}
-                      <div className="self-end mt-auto">
-                        {isDark && isActive && (
-                          <a
-                            key={`cta-${animKey}`}
-                            href="#roadmap"
-                            className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-brand flex items-center justify-center hover:bg-brand-50 transition-all transform hover:scale-110 shadow-2xl group/btn pointer-events-auto"
-                            style={{ animation: "platform-popIn 0.55s cubic-bezier(0.23,1,0.32,1) 0.5s both" }}
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                              className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform">
-                              <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                            </svg>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
               </div>
+
+              {/* Interactive app mockups & content cards (OUTSIDE MASKING for Overflow) */}
+              {features.map((feature, index) => {
+                const isActive = index === activeIndex;
+                const isDark   = feature.isDark;
+                return (
+                  <div
+                    key={`content-${feature.id}`}
+                    className={`absolute inset-0 flex flex-col justify-between p-8 md:p-12 transition-opacity duration-500 ease-in-out ${isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+                    style={{ zIndex: 40 }}
+                  >
+                    {/* Tag chip */}
+                    {isActive && (
+                      <div
+                        key={`tag-${feature.id}-${animKey}`}
+                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
+                          ${feature.tagBg} ${feature.tagBorder} ${isDark ? "text-white" : feature.iconColor}`}
+                        style={{ animation: "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both" }}
+                      >
+                        {feature.tagIcon} {feature.shortTitle}
+                      </div>
+                    )}
+
+                    {/* Dynamic mock UI (Overflowing) */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      {isActive && feature.renderUI(animKey, isHoveredStage, stageMousePos)}
+                    </div>
+
+                    {/* Bottom CTA (roadmap only) */}
+                    <div className="self-end mt-auto">
+                      {isDark && isActive && (
+                        <a
+                          key={`cta-${animKey}`}
+                          href="#roadmap"
+                          className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-brand flex items-center justify-center hover:bg-brand-50 transition-all transform hover:scale-110 shadow-2xl group/btn pointer-events-auto"
+                          style={{ animation: "platform-popIn 0.55s cubic-bezier(0.23,1,0.32,1) 0.5s both" }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                            className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform">
+                            <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
 
             </div>
           </div>
