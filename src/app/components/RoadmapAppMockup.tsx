@@ -133,47 +133,40 @@ export default function RoadmapAppMockup({
                 className="relative w-[230px] md:w-[240px] h-[440px] md:h-[480px] transition-transform duration-700 ease-out"
                 style={{ transformStyle: "preserve-3d", transform: tiltTransform }}
             >
-                {/* ── 3D HARDWARE CHASSIS (Titanium Frame) ── */}
-                {/* 1. Side Rim / Depth Layer */}
+                {/* ── UNIFIED HI-FI CHASSIS (Space Black Titanium) ── */}
+                {/* 1. Main Hardware Body (Unified Material) */}
                 <div 
-                    className="absolute inset-0 rounded-[3.5rem] bg-gradient-to-b from-slate-400 via-slate-700 to-slate-900" 
+                    className="absolute inset-0 rounded-[3.5rem] bg-[#0F1115] shadow-[40px_80px_100px_rgba(0,0,0,0.6)]" 
                     style={{ 
                         transform: "translateZ(-12px)",
-                        boxShadow: "0 40px 100px rgba(0,0,0,0.6)"
                     }}
                 />
 
-                {/* 2. Main Body Backing */}
+                {/* 2. Front Face / Metallic Bezel */}
                 <div 
-                    className="absolute inset-x-[1px] inset-y-[1px] rounded-[3.4rem] bg-slate-950 border border-white/5" 
-                    style={{ transform: "translateZ(-6px)" }}
-                />
-
-                {/* 3. Beveled Edge / Light Catch (Front Rim) */}
-                <div 
-                    className="absolute inset-0 rounded-[3.5rem] border-[1px] border-white/20 pointer-events-none" 
-                    style={{ 
-                        transform: "translateZ(0px)",
-                        background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 40%, rgba(255,255,255,0.05) 100%)"
-                    }}
+                    className="absolute inset-x-[1px] inset-y-[1px] rounded-[3.4rem] bg-[#0F1115] border-[0.5px] border-white/10" 
+                    style={{ transform: "translateZ(0px)" }}
                 >
-                    {/* Realistic iPhone Hardware Buttons */}
+                    {/* Corner Specular Highlights (Ultra-thin metallic glints) */}
+                    <div className="absolute inset-0 rounded-[3.4rem] opacity-40 shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),inset_1px_0_2px_rgba(255,255,255,0.2)]" />
+                    
+                    {/* Hardware Buttons - Unified Material */}
                     {/* Left Side: Action (top), Vol Up, Vol Down */}
-                    <div className="absolute left-[-3.5px] top-[90px] w-[5px] h-6 bg-slate-700 rounded-l-[2px] border-y border-l border-white/10 shadow-[inset_-1px_0_1px_rgba(255,255,255,0.2)]" style={{ transform: "translateZ(-4px)" }} />
-                    <div className="absolute left-[-3.5px] top-[130px] w-[5px] h-11 bg-slate-700 rounded-l-[2px] border-y border-l border-white/10 shadow-[inset_-1px_0_1px_rgba(255,255,255,0.2)]" style={{ transform: "translateZ(-4px)" }} />
-                    <div className="absolute left-[-3.5px] top-[185px] w-[5px] h-11 bg-slate-700 rounded-l-[2px] border-y border-l border-white/10 shadow-[inset_-1px_0_1px_rgba(255,255,255,0.2)]" style={{ transform: "translateZ(-4px)" }} />
+                    <div className="absolute left-[-3px] top-[90px] w-[4px] h-6 bg-[#1A1D23] rounded-l-[1px] border-y border-l border-white/10 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
+                    <div className="absolute left-[-3px] top-[130px] w-[4px] h-11 bg-[#1A1D23] rounded-l-[1px] border-y border-l border-white/10 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
+                    <div className="absolute left-[-3px] top-[185px] w-[4px] h-11 bg-[#1A1D23] rounded-l-[1px] border-y border-l border-white/10 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
                     
                     {/* Right Side: Side Button (Power) */}
-                    <div className="absolute right-[-3.5px] top-[160px] w-[5px] h-16 bg-slate-700 rounded-r-[2px] border-y border-r border-white/10 shadow-[inset_1px_0_1px_rgba(255,255,255,0.2)]" style={{ transform: "translateZ(-4px)" }} />
+                    <div className="absolute right-[-3px] top-[160px] w-[4px] h-16 bg-[#1A1D23] rounded-r-[1px] border-y border-r border-white/10 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
 
-                    {/* Camera Control (iPhone 16 Series) - Slightly recessed look */}
-                    <div className="absolute right-[-2px] bottom-[140px] w-[4px] h-14 bg-slate-900 rounded-r-md border border-white/5 shadow-inner" style={{ transform: "translateZ(-4px)" }} />
+                    {/* Camera Control - Minimalist Flush Recess */}
+                    <div className="absolute right-[-1.5px] bottom-[140px] w-[3px] h-14 bg-[#090A0C] rounded-r-md border border-white/5 opacity-80" style={{ transform: "translateZ(-2px)" }} />
 
-                    {/* Hardware Bezel Glimmer */}
+                    {/* Hardware Bezel Interactive Glimmer */}
                     <div 
                         className="absolute inset-0 rounded-[3.4rem] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
                         style={{
-                            background: `radial-gradient(circle at ${50 + externalMousePos.x * 50}% ${50 + externalMousePos.y * 50}%, rgba(255,255,255,0.12) 0%, transparent 60%)`,
+                            background: `radial-gradient(circle at ${50 + externalMousePos.x * 50}% ${50 + externalMousePos.y * 50}%, rgba(255,255,255,0.08) 0%, transparent 60%)`,
                         }}
                     />
                 </div>
