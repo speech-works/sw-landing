@@ -83,124 +83,180 @@ const CloseIcon = ({ color = "#111827", className = "" }) => (
 
 function CenterPackRecommendationScreen() {
     return (
-        <div className="absolute inset-0 overflow-hidden bg-[#F8F2E8]">
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,#fbf7f1_0%,#f5ead9_100%)]" />
+        <>
+            <div className="absolute inset-0 overflow-hidden bg-[#F8F2E8]">
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,#fbf7f1_0%,#f5ead9_100%)]" />
 
-            <div className="absolute left-1/2 top-0 h-[680px] w-[320px] origin-top -translate-x-1/2 scale-[0.7125] md:scale-[0.775]">
-                <div className="absolute inset-x-0 top-0 overflow-hidden rounded-b-[24px] bg-[linear-gradient(135deg,#FF8080_0%,#FF9040_100%)] shadow-[0_8px_24px_rgba(0,0,0,0.14)]">
-                    <div className="absolute -right-[60px] -top-[60px] h-[200px] w-[200px] rounded-full bg-white/10" />
-                    <div className="absolute -bottom-[50px] -left-[50px] h-[160px] w-[160px] rounded-full bg-white/10" />
-                    <div className="absolute right-[-8px] top-[-8px] opacity-25">
-                        <BoltIcon className="h-[146px] w-[110px] -rotate-[14deg]" />
-                    </div>
-
-                    <div className="relative z-10 px-6 pb-0 pt-[54px]">
-                        <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white/20 px-[10px] py-[6px]">
-                            <FlameIcon className="h-[14px] w-[14px]" />
-                            <span className="text-[12px] font-bold text-white">
-                                In Progress
-                            </span>
+                <div className="absolute left-1/2 top-0 h-[680px] w-[320px] origin-top -translate-x-1/2 scale-[0.7125] md:scale-[0.775]">
+                    <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(135deg,#FF8080_0%,#FF9040_100%)] shadow-[0_8px_24px_rgba(0,0,0,0.14)]">
+                        <div className="absolute -right-[60px] -top-[60px] h-[200px] w-[200px] rounded-full bg-white/10" />
+                        <div className="absolute -bottom-[50px] -left-[50px] h-[160px] w-[160px] rounded-full bg-white/10" />
+                        <div className="absolute right-[-8px] top-[-8px] opacity-25">
+                            <BoltIcon className="h-[146px] w-[110px] -rotate-[14deg]" />
                         </div>
 
-                        <h3 className="mb-1.5 max-w-[248px] text-[24px] font-semibold leading-[32px] tracking-[-0.4px] text-white">
-                            The Art of Disclosure
-                        </h3>
-                        <p className="max-w-[252px] text-[14px] leading-[20px] text-white/90">
-                            Reclaim control by casually introducing your
-                            stutter, reducing anxiety and listener confusion.
-                        </p>
-
-                        <div className="mb-8 mt-6">
-                            <div className="mb-2 flex items-center justify-between">
-                                <span className="text-[12px] font-semibold text-white/90">
-                                    Module 1 of 6
-                                </span>
-                                <span className="text-[12px] font-semibold text-white/90">
-                                    17%
+                        <div className="relative z-10 px-6 pb-0 pt-[54px]">
+                            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white/20 px-[10px] py-[6px]">
+                                <FlameIcon className="h-[14px] w-[14px]" />
+                                <span className="text-[12px] font-bold text-white">
+                                    In Progress
                                 </span>
                             </div>
-                            <div className="h-[6px] overflow-hidden rounded-full bg-white/30">
-                                <div
-                                    className="h-full rounded-full bg-white"
-                                    style={{ width: "17%" }}
-                                />
-                            </div>
-                        </div>
 
-                        <div className="mb-3 overflow-hidden rounded-[24px] bg-[#FFF7ED] text-center shadow-[0_-2px_12px_rgba(0,0,0,0.05)]">
-                            <div className="flex flex-col items-center px-6 pb-8 pt-6">
-                                <div className="mb-4 text-[#F97316]">
-                                    <MicIcon className="h-12 w-12" />
+                            <h3 className="mb-1.5 max-w-[248px] text-[24px] font-semibold leading-[32px] tracking-[-0.4px] text-white">
+                                The Art of Disclosure
+                            </h3>
+                            <p className="max-w-[252px] text-[14px] leading-[20px] text-white/90">
+                                Reclaim control by casually introducing your
+                                stutter, reducing anxiety and listener
+                                confusion.
+                            </p>
+
+                            <div className="mb-8 mt-6">
+                                <div className="mb-2 flex items-center justify-between">
+                                    <span className="text-[12px] font-semibold text-white/90">
+                                        Module 1 of 6
+                                    </span>
+                                    <span className="text-[12px] font-semibold text-white/90">
+                                        17%
+                                    </span>
                                 </div>
-                                <h4 className="mb-2 text-[22px] font-extrabold leading-[28px] tracking-[-0.2px] text-[#431407]">
-                                    The Elephant in the Room
-                                </h4>
-                                <p className="text-[15px] leading-[22px] text-[#6B7280]">
-                                    Let&apos;s defuse the bomb.
-                                </p>
-                            </div>
-                            <div className="flex items-center justify-center gap-2 bg-[#FFEDD5] py-[18px]">
-                                <PlayIcon className="h-5 w-5" />
-                                <span className="text-[16px] font-extrabold tracking-[0.5px] text-[#EA580C]">
-                                    Start
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="absolute inset-x-0 top-0 h-[392px] rounded-b-[24px] bg-black/34" />
-
-                <div className="absolute inset-x-0 bottom-0 z-20 overflow-hidden rounded-t-[32px] bg-[linear-gradient(180deg,#FFFCF9_0%,#FFF7ED_100%)] shadow-[0_-10px_24px_rgba(0,0,0,0.22)]">
-                    <div className="absolute right-[-38px] top-[-22px] opacity-25">
-                        <BoltIcon
-                            color="#FFDABF"
-                            className="h-[180px] w-[135px] -rotate-[15deg]"
-                        />
-                    </div>
-
-                    <div className="absolute left-1/2 top-3 h-[5px] w-[44px] -translate-x-1/2 rounded-full bg-black/12" />
-
-                    <button
-                        type="button"
-                        className="absolute right-4 top-4 z-10 flex h-[34px] w-[34px] items-center justify-center rounded-full border border-black/[0.05] bg-white shadow-[0_2px_5px_rgba(0,0,0,0.1)]"
-                    >
-                        <CloseIcon className="h-5 w-5" />
-                    </button>
-
-                    <div className="relative z-[1] px-8 pb-8 pt-16 text-center">
-                        <h3 className="mb-2 text-[28px] font-extrabold tracking-[-0.5px] text-[#111827]">
-                            Ready to Start?
-                        </h3>
-                        <p className="mb-8 text-[17px] leading-[26px] text-[#374151]/90">
-                            Starting: The Elephant in the Room
-                        </p>
-
-                        <div className="space-y-4">
-                            <div className="rounded-[30px] shadow-[0_4px_8px_rgba(255,144,64,0.2)]">
-                                <div className="flex items-center justify-center rounded-[30px] bg-[linear-gradient(90deg,#FF9040_0%,#FF9040_100%)] px-6 py-[18px]">
-                                    <PlayIcon
-                                        color="#FFFFFF"
-                                        className="mr-2 h-6 w-6"
+                                <div className="h-[6px] overflow-hidden rounded-full bg-white/30">
+                                    <div
+                                        className="h-full rounded-full bg-white"
+                                        style={{ width: "17%" }}
                                     />
-                                    <span className="text-[16px] font-bold tracking-[0.5px] text-white">
-                                        Start
+                                </div>
+                            </div>
+
+                            <div className="mx-[-6px] mb-3 overflow-hidden rounded-[26px] bg-[#FFF7ED] text-center shadow-[0_-2px_12px_rgba(0,0,0,0.05)]">
+                                <div className="flex flex-col items-center px-8 pb-10 pt-8">
+                                    <div className="mb-5 text-[#F97316]">
+                                        <MicIcon className="h-[54px] w-[54px]" />
+                                    </div>
+                                    <h4 className="mb-3 text-[24px] font-extrabold leading-[30px] tracking-[-0.24px] text-[#431407]">
+                                        The Elephant in the Room
+                                    </h4>
+                                    <p className="text-[15px] leading-[22px] text-[#6B7280]">
+                                        Let&apos;s defuse the bomb.
+                                    </p>
+                                </div>
+                                <div className="clinical-pack-trigger flex items-center justify-center gap-2 bg-[#FFEDD5] py-5">
+                                    <PlayIcon className="h-5 w-5" />
+                                    <span className="text-[16px] font-extrabold tracking-[0.5px] text-[#EA580C]">
+                                        Resume
                                     </span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div className="flex items-center justify-center rounded-[30px] border border-black/10 bg-white px-6 py-[18px] shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
-                                <span className="text-[16px] font-bold tracking-[0.5px] text-[#374151]">
-                                    Not Now
-                                </span>
+                    <div className="absolute inset-0 bg-black/34" />
+
+                    <div className="clinical-pack-sheet absolute inset-x-0 bottom-0 z-20 overflow-hidden rounded-t-[32px] bg-[linear-gradient(180deg,#FFFCF9_0%,#FFF7ED_100%)] shadow-[0_-10px_24px_rgba(0,0,0,0.22)]">
+                        <div className="absolute right-[-38px] top-[-22px] opacity-25">
+                            <BoltIcon
+                                color="#FFDABF"
+                                className="h-[180px] w-[135px] -rotate-[15deg]"
+                            />
+                        </div>
+
+                        <div className="absolute left-1/2 top-3 h-[5px] w-[44px] -translate-x-1/2 rounded-full bg-black/12" />
+
+                        <button
+                            type="button"
+                            className="absolute right-4 top-4 z-10 flex h-[34px] w-[34px] items-center justify-center rounded-full border border-black/[0.05] bg-white shadow-[0_2px_5px_rgba(0,0,0,0.1)]"
+                        >
+                            <CloseIcon className="h-5 w-5" />
+                        </button>
+
+                        <div className="relative z-[1] px-8 pb-8 pt-16 text-center">
+                            <h3 className="mb-2 text-[28px] font-extrabold tracking-[-0.5px] text-[#111827]">
+                                Ready to Resume?
+                            </h3>
+                            <p className="mb-8 text-[17px] leading-[26px] text-[#374151]/90">
+                                Resuming: The Elephant in the Room
+                            </p>
+
+                            <div className="space-y-4">
+                                <div className="rounded-[30px] shadow-[0_4px_8px_rgba(255,144,64,0.2)]">
+                                    <div className="flex items-center justify-center rounded-[30px] bg-[linear-gradient(90deg,#FF9040_0%,#FF9040_100%)] px-6 py-[18px]">
+                                        <PlayIcon
+                                            color="#FFFFFF"
+                                            className="mr-2 h-6 w-6"
+                                        />
+                                        <span className="text-[16px] font-bold tracking-[0.5px] text-white">
+                                            Resume
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-center rounded-[30px] border border-black/10 bg-white px-6 py-[18px] shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+                                    <span className="text-[16px] font-bold tracking-[0.5px] text-[#374151]">
+                                        Not Now
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div className="absolute bottom-[8px] left-1/2 z-20 h-[5px] w-[88px] -translate-x-1/2 rounded-full bg-black/90" />
             </div>
 
-            <div className="absolute bottom-[8px] left-1/2 z-20 h-[5px] w-[88px] -translate-x-1/2 rounded-full bg-black/90" />
-        </div>
+            <style>{`
+                .clinical-pack-trigger {
+                    transform-origin: center center;
+                    animation: clinical-pack-trigger-loop 7.2s infinite;
+                    will-change: transform;
+                }
+
+                .clinical-pack-sheet {
+                    transform: translateY(calc(100% + 20px));
+                    opacity: 0;
+                    animation: clinical-pack-sheet-loop 7.2s infinite;
+                    will-change: transform, opacity;
+                }
+
+                @keyframes clinical-pack-trigger-loop {
+                    0%, 20%, 100% {
+                        transform: scale(1);
+                    }
+                    21.5% {
+                        transform: scale(0.96);
+                    }
+                    23.5% {
+                        transform: scale(1.02);
+                    }
+                    25% {
+                        transform: scale(1);
+                    }
+                }
+
+                @keyframes clinical-pack-sheet-loop {
+                    0%, 24%, 100% {
+                        transform: translateY(calc(100% + 20px));
+                        opacity: 0;
+                    }
+                    34% {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                    68% {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                    80% {
+                        transform: translateY(calc(100% + 20px));
+                        opacity: 1;
+                    }
+                    81%, 99% {
+                        transform: translateY(calc(100% + 20px));
+                        opacity: 0;
+                    }
+                }
+            `}</style>
+        </>
     );
 }
 
