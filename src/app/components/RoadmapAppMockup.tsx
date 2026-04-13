@@ -118,7 +118,7 @@ export default function RoadmapAppMockup({
         >
             <div
                 key={animKey}
-                className="relative h-[520px] w-[650px] md:h-[560px] md:w-[712px]"
+                className="relative -translate-x-[118px] h-[520px] w-[650px] md:-translate-x-[148px] md:h-[560px] md:w-[712px]"
                 style={{ transformStyle: "preserve-3d" }}
             >
                 <BlankPhoneMockup
