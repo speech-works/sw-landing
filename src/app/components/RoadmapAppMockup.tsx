@@ -467,7 +467,7 @@ function ReflectionLikertRow({
 }) {
     return (
         <div className="space-y-2.5">
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center justify-between gap-1.5">
                 {Array.from({ length: 5 }, (_, index) => {
                     const value = index + 1;
                     const isSelected = value === selected;
@@ -475,7 +475,7 @@ function ReflectionLikertRow({
                     return (
                         <div
                             key={value}
-                            className={`flex h-[40px] w-[40px] items-center justify-center rounded-[12px] border-[1.5px] text-[14px] font-bold ${
+                            className={`flex h-[32px] w-[32px] items-center justify-center rounded-[10px] border-[1.5px] text-[12px] font-bold ${
                                 isSelected
                                     ? "border-[#6366F1] bg-[#6366F1] text-white shadow-[0_8px_18px_rgba(99,102,241,0.28)]"
                                     : "border-[#6366F1]/15 bg-[#6366F1]/[0.06] text-[#6366F1]"
@@ -488,7 +488,7 @@ function ReflectionLikertRow({
             </div>
 
             {(minLabel || maxLabel) && (
-                <div className="flex items-center justify-between px-1 text-[11px] font-medium text-[#94A3B8]">
+                <div className="flex items-center justify-between px-1 text-[10px] font-medium text-[#94A3B8]">
                     <span>{minLabel || ""}</span>
                     <span>{maxLabel || ""}</span>
                 </div>
@@ -499,85 +499,81 @@ function ReflectionLikertRow({
 
 function RightReflectionScreen() {
     return (
-        <div className="absolute inset-0 overflow-hidden bg-white">
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,#EEF2FF_0%,#FFFFFF_40%,#FFFFFF_100%)]" />
-
-            <div className="absolute left-1/2 top-0 h-[680px] w-[320px] origin-top -translate-x-1/2 scale-[0.675] md:scale-[0.735]">
-                <div className="px-5 pb-[124px] pt-[52px] text-[#0F172A]">
-                    <div className="flex items-center justify-between">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-[12px] border border-black/[0.05] bg-white/80 shadow-[0_4px_14px_rgba(0,0,0,0.06)]">
-                            <BackChevronIcon color="#0F172A" className="h-5 w-5" />
-                        </div>
-
-                        <div className="flex-1 px-3 text-center">
-                            <div className="text-[10px] font-bold uppercase tracking-[1.6px] text-[#6366F1]">
-                                Reflection
-                            </div>
-                            <div className="mt-1 text-[17px] font-bold tracking-[-0.2px] text-[#0F172A]">
-                                Module Reflection
-                            </div>
-                        </div>
-
-                        <div className="w-10" />
+        <div className="absolute inset-0 overflow-hidden bg-[#F8F8FF]">
+            <div className="relative flex h-full flex-col px-[13px] pb-[54px] pt-[44px] text-[#0F172A]">
+                <div className="flex items-center justify-between">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-[11px] border border-black/[0.05] bg-white/85 shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+                        <BackChevronIcon color="#0F172A" className="h-4 w-4" />
                     </div>
 
-                    <p className="px-1 pt-4 text-[14px] leading-[20px] text-[#475569]">
-                        Incremental reflection after each module.
-                    </p>
-
-                    <div className="space-y-3.5 pt-5">
-                        <div className="rounded-[20px] border border-[#6366F1]/10 bg-white/90 p-4 shadow-[0_10px_22px_rgba(15,23,42,0.06)]">
-                            <div className="mb-4 flex items-start justify-between gap-3">
-                                <div className="flex-1 text-[15px] font-semibold leading-[21px] text-[#0F172A]">
-                                    Clarity of Concepts
-                                </div>
-                                <span className="rounded-[8px] bg-[#6366F1]/10 px-2 py-[3px] text-[9px] font-bold uppercase tracking-[0.5px] text-[#6366F1]">
-                                    Required
-                                </span>
-                            </div>
-                            <ReflectionLikertRow selected={4} />
+                    <div className="flex-1 px-2 text-center">
+                        <div className="text-[8px] font-bold uppercase tracking-[1.5px] text-[#6366F1]">
+                            Reflection
                         </div>
-
-                        <div className="rounded-[20px] border border-[#6366F1]/10 bg-white/90 p-4 shadow-[0_10px_22px_rgba(15,23,42,0.06)]">
-                            <div className="mb-4 flex items-start justify-between gap-3">
-                                <div className="flex-1 text-[15px] font-semibold leading-[21px] text-[#0F172A]">
-                                    Shift in Confidence
-                                </div>
-                                <span className="rounded-[8px] bg-[#6366F1]/10 px-2 py-[3px] text-[9px] font-bold uppercase tracking-[0.5px] text-[#6366F1]">
-                                    Required
-                                </span>
-                            </div>
-                            <ReflectionLikertRow
-                                selected={4}
-                                minLabel="None"
-                                maxLabel="Significant"
-                            />
+                        <div className="mt-0.5 text-[13px] font-bold tracking-[-0.15px] text-[#0F172A]">
+                            Module Reflection
                         </div>
+                    </div>
 
-                        <div className="rounded-[20px] border border-[#6366F1]/10 bg-white/90 p-4 shadow-[0_10px_22px_rgba(15,23,42,0.06)]">
-                            <div className="mb-4 flex items-start justify-between gap-3">
-                                <div className="flex-1 text-[15px] font-semibold leading-[21px] text-[#0F172A]">
-                                    Did this help you communicate better in real
-                                    life?
-                                </div>
-                                <span className="rounded-[8px] bg-[#6366F1]/10 px-2 py-[3px] text-[9px] font-bold uppercase tracking-[0.5px] text-[#6366F1]">
-                                    Required
-                                </span>
+                    <div className="w-8" />
+                </div>
+
+                <p className="px-1 pt-3 text-[11px] leading-[16px] text-[#475569]">
+                    Incremental reflection after each module.
+                </p>
+
+                <div className="space-y-3 pt-4">
+                    <div className="rounded-[18px] border border-[#6366F1]/10 bg-white p-3 shadow-[0_4px_10px_rgba(15,23,42,0.03)]">
+                        <div className="mb-3 flex items-start justify-between gap-2">
+                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#0F172A]">
+                                Clarity of Concepts
                             </div>
-                            <ReflectionLikertRow
-                                selected={5}
-                                minLabel="No"
-                                maxLabel="Yes"
-                            />
+                            <span className="rounded-[7px] bg-[#6366F1]/10 px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#6366F1]">
+                                Required
+                            </span>
                         </div>
+                        <ReflectionLikertRow selected={4} />
+                    </div>
+
+                    <div className="rounded-[18px] border border-[#6366F1]/10 bg-white p-3 shadow-[0_4px_10px_rgba(15,23,42,0.03)]">
+                        <div className="mb-3 flex items-start justify-between gap-2">
+                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#0F172A]">
+                                Shift in Confidence
+                            </div>
+                            <span className="rounded-[7px] bg-[#6366F1]/10 px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#6366F1]">
+                                Required
+                            </span>
+                        </div>
+                        <ReflectionLikertRow
+                            selected={4}
+                            minLabel="None"
+                            maxLabel="Significant"
+                        />
+                    </div>
+
+                    <div className="rounded-[18px] border border-[#6366F1]/10 bg-white p-3 shadow-[0_4px_10px_rgba(15,23,42,0.03)]">
+                        <div className="mb-3 flex items-start justify-between gap-2">
+                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#0F172A]">
+                                Did this help you communicate better in real
+                                life?
+                            </div>
+                            <span className="rounded-[7px] bg-[#6366F1]/10 px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#6366F1]">
+                                Required
+                            </span>
+                        </div>
+                        <ReflectionLikertRow
+                            selected={5}
+                            minLabel="No"
+                            maxLabel="Yes"
+                        />
                     </div>
                 </div>
 
-                <div className="absolute inset-x-0 bottom-0 border-t border-black/[0.04] bg-white/95 px-5 pb-8 pt-4 backdrop-blur-md">
-                    <div className="overflow-hidden rounded-[16px] shadow-[0_16px_30px_rgba(99,102,241,0.24)]">
-                        <div className="flex items-center justify-center gap-2 rounded-[16px] bg-[linear-gradient(90deg,#6366F1_0%,#8B5CF6_100%)] px-5 py-[15px]">
-                            <CheckIcon className="h-5 w-5" />
-                            <span className="text-[15px] font-bold tracking-[0.2px] text-white">
+                <div className="mt-auto px-[4px]">
+                    <div className="overflow-hidden rounded-[14px] shadow-[0_14px_26px_rgba(99,102,241,0.24)]">
+                        <div className="flex items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(90deg,#6366F1_0%,#8B5CF6_100%)] px-4 py-[13px]">
+                            <CheckIcon className="h-4.5 w-4.5" />
+                            <span className="text-[13px] font-bold tracking-[0.15px] text-white">
                                 Complete
                             </span>
                         </div>
@@ -592,31 +588,47 @@ function RightReflectionScreen() {
 
 function BlankPhoneMockup({
     className = "",
-    externalMousePos,
     style,
     screenContent,
+    screenDepth = 10,
+    useBareScreenSurface = false,
+    flattenHardwareLayers = false,
 }: {
     className?: string;
-    externalMousePos: { x: number; y: number };
     style: CSSProperties;
     screenContent?: ReactNode;
+    screenDepth?: number;
+    useBareScreenSurface?: boolean;
+    flattenHardwareLayers?: boolean;
 }) {
     return (
         <div
             className={`absolute h-[500px] w-[240px] transition-transform duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] md:h-[540px] md:w-[260px] ${className}`}
             style={{
-                transformStyle: "preserve-3d",
+                transformStyle: flattenHardwareLayers ? "flat" : "preserve-3d",
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
                 ...style,
             }}
         >
             <div
                 className="absolute inset-0 rounded-[3.5rem] bg-[#0F1115] shadow-[40px_80px_100px_rgba(0,0,0,0.6)]"
-                style={{ transform: "translateZ(-12px)" }}
+                style={{
+                    transform: flattenHardwareLayers
+                        ? "translateZ(0px)"
+                        : "translateZ(-12px)",
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                }}
             />
 
             <div
                 className="absolute inset-x-[1px] inset-y-[1px] rounded-[3.4rem] border-[0.5px] border-white/10 bg-[#0F1115]"
-                style={{ transform: "translateZ(0px)" }}
+                style={{
+                    transform: "translateZ(0px)",
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                }}
             >
                 <div className="absolute inset-0 rounded-[3.4rem] opacity-40 shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),inset_1px_0_2px_rgba(255,255,255,0.2)]" />
 
@@ -625,18 +637,23 @@ function BlankPhoneMockup({
                 <div className="absolute left-[-3px] top-[185px] h-11 w-[4px] rounded-l-[1px] border-y border-l border-white/10 bg-[#1A1D23] shadow-sm" style={{ transform: "translateZ(-2px)" }} />
                 <div className="absolute right-[-3px] top-[160px] h-16 w-[4px] rounded-r-[1px] border-y border-r border-white/10 bg-[#1A1D23] shadow-sm" style={{ transform: "translateZ(-2px)" }} />
                 <div className="absolute right-[-1.5px] bottom-[140px] h-14 w-[3px] rounded-r-md border border-white/5 bg-[#090A0C] opacity-80" style={{ transform: "translateZ(-2px)" }} />
-
-                <div
-                    className="absolute inset-0 rounded-[3.4rem] opacity-0 transition-opacity duration-1000 group-hover:opacity-100"
-                    style={{
-                        background: `radial-gradient(circle at ${50 + externalMousePos.x * 50}% ${50 + externalMousePos.y * 50}%, rgba(255,255,255,0.08) 0%, transparent 60%)`,
-                    }}
-                />
             </div>
 
             <div
-                className="absolute inset-[6px] flex flex-col overflow-hidden rounded-[3rem] bg-[#FCF9F7] shadow-[inset_0_0_10px_rgba(0,0,0,0.4)]"
-                style={{ transform: "translateZ(10px)", transformStyle: "preserve-3d" }}
+                className={`absolute inset-[6px] flex flex-col overflow-hidden rounded-[3rem] ${
+                    useBareScreenSurface
+                        ? "bg-transparent shadow-none"
+                        : "bg-[#FCF9F7] shadow-[inset_0_0_10px_rgba(0,0,0,0.4)]"
+                }`}
+                style={{
+                    transform: `translateZ(${screenDepth}px)`,
+                    transformStyle: useBareScreenSurface
+                        ? "flat"
+                        : "preserve-3d",
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                    isolation: "isolate",
+                }}
             >
                 {screenContent ? (
                     <>{screenContent}</>
@@ -650,14 +667,6 @@ function BlankPhoneMockup({
                         <div className="absolute inset-x-[12%] top-[26%] h-[1px] bg-black/[0.02]" />
                     </>
                 )}
-
-                <div
-                    className="absolute inset-0 z-[150] pointer-events-none mix-blend-overlay opacity-0 transition-all duration-700 group-hover:opacity-40"
-                    style={{
-                        background: `linear-gradient(${105 + externalMousePos.x * 30}deg, transparent, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.4) 55%, transparent)`,
-                        transform: `translateX(${externalMousePos.x * 100}%)`,
-                    }}
-                />
 
                 <div className="pointer-events-none absolute inset-x-0 top-0 z-[160] h-14">
                     <div className="flex h-[32px] items-center justify-between px-8 pt-1">
@@ -700,7 +709,7 @@ export default function RoadmapAppMockup({
 
     return (
         <div
-            className="relative flex h-full w-full select-none items-center justify-center p-4 md:p-8 group"
+            className="relative flex h-full w-full select-none items-center justify-center p-4 md:p-8"
             style={{ perspective: "2000px" }}
         >
             <div
@@ -710,7 +719,6 @@ export default function RoadmapAppMockup({
             >
                 <BlankPhoneMockup
                     className="left-[6px] top-[10px] z-10 md:left-[16px] md:top-[8px]"
-                    externalMousePos={externalMousePos}
                     style={{
                         transform: `rotateX(${rotateX}deg) rotateY(${mirroredRotateY}deg) rotateZ(${mirroredRotateZ}deg) scale(${activeScale})`,
                     }}
@@ -719,7 +727,6 @@ export default function RoadmapAppMockup({
 
                 <BlankPhoneMockup
                     className="left-[218px] top-[18px] z-20 md:left-[242px] md:top-[20px]"
-                    externalMousePos={externalMousePos}
                     style={{
                         transform: `rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${activeScale})`,
                     }}
@@ -728,10 +735,12 @@ export default function RoadmapAppMockup({
 
                 <BlankPhoneMockup
                     className="left-[412px] top-0 z-10 md:left-[448px] md:top-[2px]"
-                    externalMousePos={externalMousePos}
                     style={{
-                        transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${activeScale})`,
+                        transform: `rotateZ(${rotateZ}deg) scale(${activeScale})`,
                     }}
+                    screenDepth={0}
+                    useBareScreenSurface={true}
+                    flattenHardwareLayers={true}
                     screenContent={<RightReflectionScreen />}
                 />
             </div>

@@ -377,6 +377,7 @@ export default function Platform() {
 
   const [isHoveredStage, setIsHoveredStage] = useState(false);
   const [stageMousePos, setStageMousePos]     = useState({ x: 0, y: 0 });
+  const activeFeature = features[activeIndex];
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -556,13 +557,15 @@ export default function Platform() {
               {/* Card frame: Contains Glimmer and Backgrounds (Masked) */}
               <div className="absolute inset-0 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-card-hover border border-orange-100/50">
                 {/* Glass glare */}
-                <div
-                  className="absolute inset-0 z-30 pointer-events-none opacity-0 group-hover/stage:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: `radial-gradient(circle 600px at calc(var(--mouse-x-raw) * 1px) calc(var(--mouse-y-raw) * 1px), rgba(255,255,255,0.4) 0%, transparent 60%)`,
-                    mixBlendMode: "overlay",
-                  }}
-                />
+                {activeFeature.id !== "roadmap" && (
+                  <div
+                    className="absolute inset-0 z-30 pointer-events-none opacity-0 group-hover/stage:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background: `radial-gradient(circle 600px at calc(var(--mouse-x-raw) * 1px) calc(var(--mouse-y-raw) * 1px), rgba(255,255,255,0.4) 0%, transparent 60%)`,
+                      mixBlendMode: "overlay",
+                    }}
+                  />
+                )}
 
                 {/* Animated backgrounds */}
                 {features.map((feature, index) => {
