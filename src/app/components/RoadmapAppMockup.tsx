@@ -475,10 +475,10 @@ function ReflectionLikertRow({
                     return (
                         <div
                             key={value}
-                            className={`flex h-[32px] w-[32px] items-center justify-center rounded-[10px] border-[1.5px] text-[12px] font-bold ${
+                            className={`flex h-[32px] w-[32px] items-center justify-center rounded-[10px] border-[1.5px] text-[12px] font-bold transition-colors ${
                                 isSelected
-                                    ? "border-[#6366F1] bg-[#6366F1] text-white shadow-[0_8px_18px_rgba(99,102,241,0.28)]"
-                                    : "border-[#6366F1]/15 bg-[#6366F1]/[0.06] text-[#6366F1]"
+                                    ? "border-[#FFB066] bg-[linear-gradient(180deg,#FF9E50_0%,#F97316_100%)] text-white shadow-[0_10px_18px_rgba(249,115,22,0.26)]"
+                                    : "border-[#F1D8C2] bg-[#FFF8F1] text-[#B06335]"
                             }`}
                         >
                             {value}
@@ -488,7 +488,7 @@ function ReflectionLikertRow({
             </div>
 
             {(minLabel || maxLabel) && (
-                <div className="flex items-center justify-between px-1 text-[10px] font-medium text-[#94A3B8]">
+                <div className="flex items-center justify-between px-1 text-[10px] font-medium text-[#CDAA8E]">
                     <span>{minLabel || ""}</span>
                     <span>{maxLabel || ""}</span>
                 </div>
@@ -499,18 +499,21 @@ function ReflectionLikertRow({
 
 function RightReflectionScreen() {
     return (
-        <div className="absolute inset-0 overflow-hidden bg-[#F8F8FF]">
+        <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(180deg,#A7644D_0%,#B56E52_42%,#C47A58_100%)]">
+            <div className="absolute -right-10 -top-8 h-[150px] w-[150px] rounded-full bg-white/10 blur-md" />
+            <div className="absolute -left-8 bottom-[90px] h-[110px] w-[110px] rounded-full bg-[#FFD5B0]/10 blur-md" />
+
             <div className="relative flex h-full flex-col px-[13px] pb-[54px] pt-[44px] text-[#0F172A]">
                 <div className="flex items-center justify-between">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-[11px] border border-black/[0.05] bg-white/85 shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
-                        <BackChevronIcon color="#0F172A" className="h-4 w-4" />
+                    <div className="flex h-8 w-8 items-center justify-center rounded-[11px] border border-white/20 bg-white/16 shadow-[0_4px_14px_rgba(60,22,8,0.18)] backdrop-blur-sm">
+                        <BackChevronIcon color="#FFF8F1" className="h-4 w-4" />
                     </div>
 
                     <div className="flex-1 px-2 text-center">
-                        <div className="text-[8px] font-bold uppercase tracking-[1.5px] text-[#6366F1]">
+                        <div className="text-[8px] font-bold uppercase tracking-[1.5px] text-[#FFE1C8]">
                             Reflection
                         </div>
-                        <div className="mt-0.5 text-[13px] font-bold tracking-[-0.15px] text-[#0F172A]">
+                        <div className="mt-0.5 text-[13px] font-bold tracking-[-0.15px] text-white">
                             Module Reflection
                         </div>
                     </div>
@@ -518,29 +521,30 @@ function RightReflectionScreen() {
                     <div className="w-8" />
                 </div>
 
-                <p className="px-1 pt-3 text-[11px] leading-[16px] text-[#475569]">
+                <p className="px-1 pt-3 text-[11px] leading-[16px] text-[#FFF4EA]/82">
                     Incremental reflection after each module.
                 </p>
 
-                <div className="space-y-3 pt-4">
-                    <div className="rounded-[18px] border border-[#6366F1]/10 bg-white p-3 shadow-[0_4px_10px_rgba(15,23,42,0.03)]">
+                <div className="relative flex-1 pt-4">
+                    <div className="space-y-3">
+                    <div className="rounded-[18px] border border-white/55 bg-[linear-gradient(180deg,#FFF8F1_0%,#FFF1E2_100%)] p-3 shadow-[0_10px_24px_rgba(71,24,6,0.12)]">
                         <div className="mb-3 flex items-start justify-between gap-2">
-                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#0F172A]">
+                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#5A2914]">
                                 Clarity of Concepts
                             </div>
-                            <span className="rounded-[7px] bg-[#6366F1]/10 px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#6366F1]">
+                            <span className="rounded-[7px] bg-[#FFE6D2] px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#C36A2E]">
                                 Required
                             </span>
                         </div>
                         <ReflectionLikertRow selected={4} />
                     </div>
 
-                    <div className="rounded-[18px] border border-[#6366F1]/10 bg-white p-3 shadow-[0_4px_10px_rgba(15,23,42,0.03)]">
+                    <div className="rounded-[18px] border border-white/55 bg-[linear-gradient(180deg,#FFF8F1_0%,#FFF1E2_100%)] p-3 shadow-[0_10px_24px_rgba(71,24,6,0.12)]">
                         <div className="mb-3 flex items-start justify-between gap-2">
-                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#0F172A]">
+                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#5A2914]">
                                 Shift in Confidence
                             </div>
-                            <span className="rounded-[7px] bg-[#6366F1]/10 px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#6366F1]">
+                            <span className="rounded-[7px] bg-[#FFE6D2] px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#C36A2E]">
                                 Required
                             </span>
                         </div>
@@ -551,13 +555,13 @@ function RightReflectionScreen() {
                         />
                     </div>
 
-                    <div className="rounded-[18px] border border-[#6366F1]/10 bg-white p-3 shadow-[0_4px_10px_rgba(15,23,42,0.03)]">
+                    <div className="rounded-[18px] border border-white/55 bg-[linear-gradient(180deg,#FFF8F1_0%,#FFF1E2_100%)] p-3 shadow-[0_10px_24px_rgba(71,24,6,0.12)]">
                         <div className="mb-3 flex items-start justify-between gap-2">
-                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#0F172A]">
+                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#5A2914]">
                                 Did this help you communicate better in real
                                 life?
                             </div>
-                            <span className="rounded-[7px] bg-[#6366F1]/10 px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#6366F1]">
+                            <span className="rounded-[7px] bg-[#FFE6D2] px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#C36A2E]">
                                 Required
                             </span>
                         </div>
@@ -567,15 +571,16 @@ function RightReflectionScreen() {
                             maxLabel="Yes"
                         />
                     </div>
-                </div>
+                    </div>
 
-                <div className="mt-auto px-[4px]">
-                    <div className="overflow-hidden rounded-[14px] shadow-[0_14px_26px_rgba(99,102,241,0.24)]">
-                        <div className="flex items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(90deg,#6366F1_0%,#8B5CF6_100%)] px-4 py-[13px]">
-                            <CheckIcon className="h-4.5 w-4.5" />
-                            <span className="text-[13px] font-bold tracking-[0.15px] text-white">
-                                Complete
-                            </span>
+                    <div className="absolute inset-x-[4px] bottom-[12px] z-10">
+                        <div className="overflow-hidden rounded-[14px] shadow-[0_16px_28px_rgba(249,115,22,0.22)]">
+                            <div className="flex items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(90deg,#FF9C4A_0%,#F97316_100%)] px-4 py-[13px]">
+                                <CheckIcon className="h-4.5 w-4.5" />
+                                <span className="text-[13px] font-bold tracking-[0.15px] text-white">
+                                    Complete
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
