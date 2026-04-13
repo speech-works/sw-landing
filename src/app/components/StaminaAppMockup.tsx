@@ -5,13 +5,41 @@ const STAMINA_SCROLL_KEYFRAMES = `
 @keyframes stamina-energy-pulse {
   0%, 100% {
     transform: scaleX(1);
-    opacity: 0.92;
+    opacity: 0.96;
     box-shadow: 0 0 0 rgba(249, 115, 22, 0);
   }
   50% {
-    transform: scaleX(1.06);
+    transform: scaleX(1.12);
     opacity: 1;
-    box-shadow: 0 0 14px rgba(249, 115, 22, 0.34);
+    box-shadow: 0 0 16px rgba(249, 115, 22, 0.38);
+  }
+}
+
+@keyframes stamina-energy-reach {
+  0%, 100% {
+    transform: scaleX(0.88);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scaleX(1.18);
+    opacity: 0.42;
+  }
+}
+
+@keyframes stamina-energy-glint {
+  0%, 18%, 100% {
+    transform: translateX(-140%);
+    opacity: 0;
+  }
+  32% {
+    opacity: 0.55;
+  }
+  56% {
+    transform: translateX(175%);
+    opacity: 0.6;
+  }
+  68% {
+    opacity: 0;
   }
 }
 
@@ -80,16 +108,41 @@ function DailyProgressFloatingCard() {
                         </span>
                     </div>
 
-                    <div className="mt-2.5 h-[7px] w-full overflow-hidden rounded-full bg-black/[0.05]">
+                    <div className="relative mt-2.5 h-[7px] w-full overflow-hidden rounded-full bg-black/[0.05]">
                         <div
-                            className="h-full rounded-full bg-[#F97316]"
+                            className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-[#FB923C]/30 via-[#F97316]/18 to-transparent"
                             style={{
-                                width: `${ENERGY_PERCENT}%`,
+                                width: `calc(${ENERGY_PERCENT}% + 16px)`,
                                 transformOrigin: "left center",
-                                animation: "stamina-energy-pulse 2.2s ease-in-out infinite",
-                                willChange: "transform, opacity, box-shadow",
+                                animation: "stamina-energy-reach 1.9s ease-in-out infinite",
+                                willChange: "transform, opacity",
                             }}
                         />
+                        <div className="relative h-full overflow-visible rounded-full" style={{ width: `${ENERGY_PERCENT}%` }}>
+                            <div
+                                className="absolute inset-0 rounded-full bg-gradient-to-r from-[#ff7a1a] via-[#ff8d26] to-[#f97316]"
+                                style={{
+                                    transformOrigin: "left center",
+                                    animation: "stamina-energy-pulse 1.9s ease-in-out infinite",
+                                    willChange: "transform, opacity, box-shadow",
+                                }}
+                            />
+                            <div
+                                className="absolute inset-y-0 -right-[3px] w-[12px] rounded-full bg-[#fb923c]/55 blur-[3px]"
+                                style={{
+                                    transformOrigin: "left center",
+                                    animation: "stamina-energy-reach 1.9s ease-in-out infinite",
+                                    willChange: "transform, opacity",
+                                }}
+                            />
+                            <div
+                                className="absolute inset-y-0 left-[-22%] w-[40%] rounded-full bg-white/50 blur-[1.5px]"
+                                style={{
+                                    animation: "stamina-energy-glint 2.8s linear infinite",
+                                    willChange: "transform, opacity",
+                                }}
+                            />
+                        </div>
                     </div>
 
                     <div className="mt-2 flex justify-end">
@@ -191,6 +244,8 @@ const FREE_ACTIVITY_TOTAL = 5;
 const LEVEL_VALUE = 10;
 const XP_CURRENT = 140;
 const XP_TOTAL = 342;
+const SCREEN_BG_WIDTH = 260;
+const SCREEN_BG_HEIGHT = 430;
 
 const BoltIcon = () => (
     <svg viewBox="0 0 24 24" fill="currentColor" className="w-[16px] h-[16px]">
@@ -215,6 +270,139 @@ const StarWatermark = () => (
         <path d="m12 2.75 2.84 5.76 6.36.92-4.6 4.48 1.08 6.33L12 17.26l-5.68 2.98 1.08-6.33-4.6-4.48 6.36-.92L12 2.75Z" />
     </svg>
 );
+
+function StaminaScreenBackground() {
+    return (
+        <div className="absolute inset-0 overflow-hidden bg-[#fff8f3]">
+            <svg
+                viewBox={`0 0 ${SCREEN_BG_WIDTH} ${SCREEN_BG_HEIGHT}`}
+                preserveAspectRatio="xMidYMid slice"
+                className="absolute inset-0 h-full w-full"
+            >
+                <defs>
+                    <linearGradient id="stamina-screen-base" x1="8%" y1="4%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#FFFEFC" />
+                        <stop offset="42%" stopColor="#FFF2E8" />
+                        <stop offset="100%" stopColor="#FFE2D0" />
+                    </linearGradient>
+                    <radialGradient id="stamina-screen-coral" cx="72%" cy="20%" r="48%">
+                        <stop offset="0%" stopColor="#FF9C78" stopOpacity="0.88" />
+                        <stop offset="55%" stopColor="#FB923C" stopOpacity="0.42" />
+                        <stop offset="100%" stopColor="#FB923C" stopOpacity="0" />
+                    </radialGradient>
+                    <radialGradient id="stamina-screen-apricot" cx="26%" cy="78%" r="42%">
+                        <stop offset="0%" stopColor="#FFD3A8" stopOpacity="0.84" />
+                        <stop offset="58%" stopColor="#FDBA74" stopOpacity="0.34" />
+                        <stop offset="100%" stopColor="#FDBA74" stopOpacity="0" />
+                    </radialGradient>
+                    <linearGradient id="stamina-screen-beam" x1="8%" y1="0%" x2="86%" y2="100%">
+                        <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.54" />
+                        <stop offset="48%" stopColor="#FFFFFF" stopOpacity="0.12" />
+                        <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                    </linearGradient>
+                    <linearGradient id="stamina-screen-ribbon" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#FFF3EA" />
+                        <stop offset="100%" stopColor="#FFD9BF" />
+                    </linearGradient>
+                    <linearGradient id="stamina-screen-ribbon-strong" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#FFDFC7" />
+                        <stop offset="100%" stopColor="#FDBA74" />
+                    </linearGradient>
+                    <filter id="stamina-screen-paper" x="-20%" y="-20%" width="140%" height="140%">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="2" seed="17" stitchTiles="stitch" />
+                        <feColorMatrix type="saturate" values="0" />
+                        <feComponentTransfer>
+                            <feFuncA type="table" tableValues="0 0.16" />
+                        </feComponentTransfer>
+                    </filter>
+                    <filter id="stamina-screen-soft-blur" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur stdDeviation="18" />
+                    </filter>
+                </defs>
+
+                <rect width={SCREEN_BG_WIDTH} height={SCREEN_BG_HEIGHT} fill="url(#stamina-screen-base)" />
+                <ellipse cx="196" cy="92" rx="108" ry="112" fill="url(#stamina-screen-coral)" filter="url(#stamina-screen-soft-blur)" />
+                <ellipse cx="48" cy="336" rx="92" ry="84" fill="url(#stamina-screen-apricot)" filter="url(#stamina-screen-soft-blur)" />
+
+                <path
+                    d="M-24 214C30 172 88 170 146 194C186 212 228 216 290 206V266C230 286 184 304 130 324C74 346 16 344-32 314L-24 214Z"
+                    fill="url(#stamina-screen-ribbon)"
+                    opacity="0.82"
+                />
+                <path
+                    d="M176 -8C220 26 248 74 260 138C272 202 262 252 230 300C202 344 154 370 98 372C52 374 20 358 -14 330L-14 278C48 304 96 298 134 258C176 214 186 150 170 90C160 54 162 18 176 -8Z"
+                    fill="url(#stamina-screen-ribbon-strong)"
+                    opacity="0.34"
+                />
+
+                <rect
+                    x="-48"
+                    y="118"
+                    width="282"
+                    height="44"
+                    rx="22"
+                    transform="rotate(-16 93 140)"
+                    fill="url(#stamina-screen-beam)"
+                    opacity="0.76"
+                />
+                <rect
+                    x="112"
+                    y="204"
+                    width="168"
+                    height="30"
+                    rx="15"
+                    transform="rotate(-18 196 219)"
+                    fill="#FFFFFF"
+                    opacity="0.16"
+                />
+                <rect
+                    x="-12"
+                    y="260"
+                    width="140"
+                    height="24"
+                    rx="12"
+                    transform="rotate(18 58 272)"
+                    fill="#F97316"
+                    opacity="0.08"
+                />
+
+                <path
+                    d="M54 68C84 52 126 54 154 78"
+                    stroke="#FFFFFF"
+                    strokeOpacity="0.42"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                />
+                <path
+                    d="M168 288C152 314 122 332 88 336"
+                    stroke="#FFFFFF"
+                    strokeOpacity="0.3"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                />
+                <path
+                    d="M178 92C196 110 206 132 208 160"
+                    stroke="#EA580C"
+                    strokeOpacity="0.18"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    fill="none"
+                />
+
+                <rect
+                    width={SCREEN_BG_WIDTH}
+                    height={SCREEN_BG_HEIGHT}
+                    filter="url(#stamina-screen-paper)"
+                    opacity="0.88"
+                />
+            </svg>
+
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.34)_0%,rgba(255,255,255,0.12)_18%,rgba(255,255,255,0.04)_38%,rgba(124,45,18,0.12)_100%)]" />
+        </div>
+    );
+}
 
 function StaminaScreenUI({ timeStr }: { timeStr: string }) {
     return (
@@ -277,8 +465,7 @@ function PhoneShell({ mousePos }: { mousePos: { x: number; y: number } }) {
                 className="absolute inset-[5px] rounded-[3rem] bg-white overflow-hidden shadow-[inset_0_0_10px_rgba(0,0,0,0.4)] flex flex-col"
                 style={{ transform: "translateZ(1px)" }}
             >
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#fbfbfc_100%)]" />
-                <div className="absolute inset-x-0 top-0 h-[52px] bg-white z-20" />
+                <StaminaScreenBackground />
                 <StaminaScreenUI timeStr="20:22" />
 
                 <div className="absolute top-[18px] left-1/2 -translate-x-1/2 w-[92px] h-[28px] bg-black rounded-full z-50">
