@@ -644,7 +644,7 @@ export default function Platform() {
 
                     {/* Bottom CTA (roadmap only) */}
                     <div className="self-end mt-auto">
-                      {isDark && isActive && (
+                      {isDark && isActive && feature.id !== "roadmap" && (
                         <a
                           key={`cta-${animKey}`}
                           href="#roadmap"
