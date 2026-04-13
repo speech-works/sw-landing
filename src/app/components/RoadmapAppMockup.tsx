@@ -79,9 +79,43 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
     );
 }
 
+function RoadmapScreenUI({ timeStr }: { timeStr: string }) {
+    return (
+        <div className="absolute top-0 left-0 right-0 px-[1.4rem] pt-5 pb-3 flex justify-between items-center z-40">
+            {/* System Time - Scaled down for premium feel */}
+            <span className="text-[10px] font-bold text-slate-950 tracking-[-0.01em] leading-none mb-0.5">{timeStr}</span>
+            
+            <div className="flex items-center gap-1.5">
+                {/* Scaled down Signal Strength SVG */}
+                <svg className="w-[14px] h-[9px] text-slate-900" viewBox="0 0 17 10" fill="currentColor">
+                    <rect x="0" y="7" width="2.5" height="3" rx="0.5" />
+                    <rect x="4" y="5" width="2.5" height="5" rx="0.5" />
+                    <rect x="8" y="2.5" width="2.5" height="7.5" rx="0.5" />
+                    <rect x="12" y="0" width="2.5" height="10" rx="0.5" />
+                </svg>
+
+                {/* Scaled down Wi-Fi SVG */}
+                <svg className="w-[13px] h-[10px] text-slate-900" viewBox="0 0 15 11" fill="none">
+                    <path d="M7.5 11C8.32843 11 9 10.3284 9 9.5C9 8.67157 8.32843 8 7.5 8C6.67157 8 6 8.67157 6 9.5C6 10.3284 6.67157 11 7.5 11Z" fill="currentColor" />
+                    <path d="M12.11 6.39C10.884 5.16398 9.23199 4.4754 7.5 4.4754C5.76801 4.4754 4.11602 5.16398 2.89 6.39" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                    <path d="M14.61 3.89C12.7239 2.00392 10.166 0.945312 7.5 0.945312C4.83401 0.945312 2.27602 2.00392 0.39 3.89" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                </svg>
+
+                {/* Scaled down Battery SVG */}
+                <div className="flex items-center gap-0.4">
+                    <div className="w-[18px] h-[9px] rounded-[2px] border-[1px] border-slate-900/80 relative p-[0.8px]">
+                        <div className="h-full bg-slate-900 rounded-[0.4px] w-[80%]" />
+                    </div>
+                    <div className="w-[1px] h-[3px] bg-slate-400 rounded-r-full" />
+                </div>
+            </div>
+        </div>
+    );
+}
+
 function RoadmapInternalUI({ animKey }: { animKey: number }) {
     return (
-        <div className="flex flex-col gap-5 p-6 pt-16 h-full antialiased bg-[#FFF9F5]">
+        <div className="flex flex-col gap-5 p-6 pt-24 h-full antialiased bg-[#FFF9F5]">
             <div className="flex flex-col gap-1 mb-2">
                 <span className="text-[10px] font-black text-brand uppercase tracking-[0.2em]">Clinical Roadmap</span>
                 <h2 className="text-2xl font-black text-slate-900 leading-tight">Practice Packs</h2>
@@ -121,8 +155,27 @@ export default function RoadmapAppMockup({
     isSectionHovered?: boolean,
     externalMousePos?: { x: number, y: number }
 }) {
-    // STRAIGHT / NOT TILTED
-    const tiltTransform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${isSectionHovered ? 1.05 : 0.95})`;
+    // 1. Clock state for system parity
+    const [mounted, setMounted] = useState(false);
+    const [time, setTime] = useState(new Date());
+
+    useEffect(() => {
+        setMounted(true);
+        const timer = setInterval(() => setTime(new Date()), 10000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const formatTime = (d: Date) => {
+        const hours = d.getHours().toString().padStart(2, "0");
+        const minutes = d.getMinutes().toString().padStart(2, "0");
+        return `${hours}:${minutes}`;
+    };
+
+    const isHovered = isSectionHovered || false;
+    const mousePos = externalMousePos;
+
+    // SMOOTH / NOT TILTED (Stabilized and widened)
+    const tiltTransform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${isHovered ? 1.05 : 0.95})`;
 
     return (
         <div 
@@ -130,77 +183,53 @@ export default function RoadmapAppMockup({
             style={{ perspective: "3000px", transformStyle: "preserve-3d" }}
         >
             <div 
-                className="relative w-[230px] md:w-[240px] h-[440px] md:h-[480px] transition-transform duration-700 ease-out"
+                className="relative w-[260px] md:w-[280px] h-[460px] md:h-[500px] transition-transform duration-700 ease-out"
                 style={{ transformStyle: "preserve-3d", transform: tiltTransform }}
             >
                 {/* ── UNIFIED HI-FI CHASSIS (Space Black Titanium) ── */}
-                {/* 1. Main Hardware Body (Unified Material) */}
+                {/* 1. Main Hardware Body */}
                 <div 
                     className="absolute inset-0 rounded-[3.5rem] bg-[#0F1115] shadow-[40px_80px_100px_rgba(0,0,0,0.6)]" 
-                    style={{ 
-                        transform: "translateZ(-12px)",
-                    }}
+                    style={{ transform: "translateZ(-12px)" }}
                 />
 
                 {/* 2. Front Face / Metallic Bezel */}
                 <div 
-                    className="absolute inset-x-[1px] inset-y-[1px] rounded-[3.4rem] bg-[#0F1115] border-[0.5px] border-white/10" 
+                    className="absolute inset-x-[1px] inset-y-[1px] rounded-[3.4rem] bg-[#0F1115] border-[0.5px] border-white/10 overflow-hidden" 
                     style={{ transform: "translateZ(0px)" }}
                 >
-                    {/* Corner Specular Highlights (Ultra-thin metallic glints) */}
+                    {/* Hardware Bezel Specular Depth */}
                     <div className="absolute inset-0 rounded-[3.4rem] opacity-40 shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),inset_1px_0_2px_rgba(255,255,255,0.2)]" />
                     
-                    {/* Hardware Buttons - Unified Material */}
-                    {/* Left Side: Action (top), Vol Up, Vol Down */}
-                    <div className="absolute left-[-3px] top-[90px] w-[4px] h-6 bg-[#1A1D23] rounded-l-[1px] border-y border-l border-white/10 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
-                    <div className="absolute left-[-3px] top-[130px] w-[4px] h-11 bg-[#1A1D23] rounded-l-[1px] border-y border-l border-white/10 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
-                    <div className="absolute left-[-3px] top-[185px] w-[4px] h-11 bg-[#1A1D23] rounded-l-[1px] border-y border-l border-white/10 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
-                    
-                    {/* Right Side: Side Button (Power) */}
-                    <div className="absolute right-[-3px] top-[160px] w-[4px] h-16 bg-[#1A1D23] rounded-r-[1px] border-y border-r border-white/10 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
-
-                    {/* Camera Control - Minimalist Flush Recess */}
-                    <div className="absolute right-[-1.5px] bottom-[140px] w-[3px] h-14 bg-[#090A0C] rounded-r-md border border-white/5 opacity-80" style={{ transform: "translateZ(-2px)" }} />
-
-                    {/* Hardware Bezel Interactive Glimmer */}
+                    {/* Screen Layer (Flush Off-White) */}
                     <div 
-                        className="absolute inset-0 rounded-[3.4rem] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
-                        style={{
-                            background: `radial-gradient(circle at ${50 + externalMousePos.x * 50}% ${50 + externalMousePos.y * 50}%, rgba(255,255,255,0.08) 0%, transparent 60%)`,
-                        }}
-                    />
-                </div>
+                        className="absolute inset-[5px] rounded-[3rem] bg-[#FFF9F5] overflow-hidden shadow-[inset_0_0_10px_rgba(0,0,0,0.4)] flex flex-col"
+                        style={{ transform: "translateZ(1px)" }}
+                    >
+                        {/* Status Bar (System Time + Icons) */}
+                        <RoadmapScreenUI timeStr={mounted ? formatTime(time) : "09:41"} />
 
-                <div 
-                    className="absolute inset-[6px] rounded-[3rem] bg-[#FFF9F5] overflow-hidden flex flex-col" 
-                    style={{ transform: `translateZ(15px)`, transformStyle: "preserve-3d" }}
-                >
-                    <div className="absolute top-0 inset-x-0 h-14 z-[160] flex flex-col">
-                        <div className="h-[32px] pt-1.5 px-8 flex items-center justify-between">
-                            <span className="text-[10px] font-bold text-brand tracking-tight">09:41</span>
-                            <div className="flex items-center gap-1.5">
-                                <SignalIcon />
-                                <div className="w-[18px] h-[9px] border-[1px] border-brand rounded-[2px] p-[1.2px] flex">
-                                    <div className="w-[85%] h-full bg-brand rounded-px" />
-                                </div>
-                            </div>
+                        {/* Professional Dynamic Island */}
+                        <div className="absolute top-[18px] left-1/2 -translate-x-1/2 w-[92px] h-[28px] bg-black rounded-full z-50">
+                             <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-20" />
                         </div>
-                        <div className="absolute top-[10px] left-1/2 -translate-x-1/2 w-[84px] h-[25px] bg-black rounded-[14px]" />
+
+                        {/* Main UI Content */}
+                        <RoadmapInternalUI animKey={animKey} />
+
+                        {/* Interaction Glimmer */}
+                        <div 
+                            className="absolute inset-0 z-[60] pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-700"
+                            style={{
+                                background: `linear-gradient(${75 + mousePos.x * 20}deg, transparent, rgba(255,255,255,0.8) 45%, rgba(255,255,255,0.8) 55%, transparent)`,
+                                transform: `translateX(${mousePos.x * 100}%)`,
+                            }}
+                        />
                     </div>
-
-                    <RoadmapInternalUI animKey={animKey} />
-
-                    <div 
-                        className="absolute inset-0 z-[50] pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-700"
-                        style={{
-                            background: `linear-gradient(${75 + externalMousePos.x * 20}deg, transparent, rgba(255,255,255,0.8) 45%, rgba(255,255,255,0.8) 55%, transparent)`,
-                            transform: `translateX(${externalMousePos.x * 100}%)`,
-                        }}
-                    />
                 </div>
 
-                {/* ── FEATURE BUBBLES (MOVED INSIDE FOR MASKING) ── */}
-                <FeatureBubbles isHovered={isSectionHovered} tiltTransform={tiltTransform} />
+                {/* Exploded Bubble Layer */}
+                <FeatureBubbles isHovered={isHovered} tiltTransform={tiltTransform} />
             </div>
         </div>
     );
