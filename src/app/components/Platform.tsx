@@ -588,7 +588,7 @@ export default function Platform() {
 
                       {/* SUBMERGED MOCKUP (Stamina Only - Inside Masking) */}
                       {feature.id === "stamina" && isActive && (
-                        <div className="absolute inset-x-0 bottom-0 top-0 pointer-events-none">
+                        <div className="absolute inset-x-0 bottom-0 top-0 pointer-events-none translate-y-[25%]">
                            {feature.renderUI(animKey, isHoveredStage, stageMousePos)}
                         </div>
                       )}

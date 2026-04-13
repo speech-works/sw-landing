@@ -11,22 +11,16 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 );
 
 function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tiltTransform: string }) {
-    // Ultra-dense cluster exactly matching the condensed Pixar look
+    // 8 Choice items: High Fidelity, Vibrant Gradients, Premium Lighting
     const bubbles = [
-        { id: 1, type: "profile", label: "Elena", sub: "4.5 ⭐", color: "bg-white", angle: -5, radius: 25, z: 180, yOffset: -290 },
-        { id: 2, type: "speech", label: "Marseille", color: "bg-[#D97D3C]", angle: -25, radius: 35, z: 120, yOffset: -230 },
-        { id: 3, type: "speech", label: "Rennes", color: "bg-[#E94EAF]", angle: 20, radius: 30, z: 150, yOffset: -260 },
-        { id: 4, type: "eye-yellow", icon: "👁️", color: "bg-[#D9FD51]", angle: -45, radius: 50, z: 140, yOffset: -285 },
-        { id: 5, type: "circle-icon", icon: "€", color: "bg-black", iconColor: "text-orange-500", angle: 55, radius: 35, z: 170, yOffset: -245 },
-        { id: 6, type: "circle-icon", icon: "+", color: "bg-black", iconColor: "text-white", angle: 80, radius: 55, z: 200, yOffset: -310 },
-        { id: 7, type: "team", label: "TEAM", color: "bg-[#EEE963]", angle: 40, radius: 65, z: 110, yOffset: -320 },
-        { id: 8, type: "stamp", color: "bg-[#4ADE80]", angle: 5, radius: 20, z: 130, yOffset: -250 },
-        { id: 9, type: "tag-dark", label: "Paris", color: "bg-black", angle: -15, radius: 40, z: 160, yOffset: -220 },
-        { id: 10, type: "tag-soft", label: "Exposition", color: "bg-[#E67E22]", angle: -90, radius: 60, z: 170, yOffset: -280, icon: "🖼️" },
-        { id: 11, type: "tag-soft", label: "Nature", color: "bg-[#A7F3D0]", angle: 65, radius: 50, z: 140, yOffset: -275, icon: "🌿", isPill: true },
-        { id: 12, type: "currency", label: "+18€", color: "bg-black", angle: 95, radius: 80, z: 190, yOffset: -265 },
-        { id: 13, type: "currency", label: "+5€", color: "bg-[#FFEBE5]", labelColor: "text-[#E67E22]", angle: 30, radius: 85, z: 130, yOffset: -305 },
-        { id: 14, type: "eye-mini", color: "bg-black", angle: -110, radius: 60, z: 90, yOffset: -245 },
+        { id: 1, type: "profile", label: "Elena", sub: "4.5 ⭐", color: "bg-white/90", angle: -5, z: 200, yOffset: -310, xOffset: 0, gradient: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%)", glass: true },
+        { id: 2, type: "speech", label: "Mars", color: "bg-[#D97D3C]", angle: -8, z: 120, yOffset: -245, xOffset: -55, gradient: "linear-gradient(135deg, #F28044 0%, #FFB488 100%)", glow: "shadow-[0_0_20px_rgba(242,128,68,0.4)]" },
+        { id: 3, type: "speech", label: "Rennes", color: "bg-[#E94EAF]", angle: 6, z: 150, yOffset: -248, xOffset: 58, gradient: "linear-gradient(135deg, #E94EAF 0%, #FF92D0 100%)", glow: "shadow-[0_0_20px_rgba(233,78,175,0.4)]" },
+        { id: 4, type: "eye-yellow", icon: "👁️", color: "bg-[#D9FD51]", angle: -12, z: 140, yOffset: -345, xOffset: -35, gradient: "linear-gradient(135deg, #D9FD51 0%, #F1FFBC 100%)", glow: "shadow-[0_0_20px_rgba(217,253,81,0.3)]" },
+        { id: 5, type: "circle-icon", icon: "€", color: "bg-black", iconColor: "text-orange-500", angle: 10, z: 170, yOffset: -340, xOffset: 35, gradient: "linear-gradient(135deg, #0F1115 0%, #2A2D35 100%)", border: "border-white/20" },
+        { id: 6, type: "circle-icon", icon: "+", color: "bg-black", iconColor: "text-white", angle: 15, z: 220, yOffset: -385, xOffset: 12, gradient: "linear-gradient(135deg, #0F1115 0%, #2A2D35 100%)", border: "border-white/20" },
+        { id: 7, type: "team", label: "TEAM", color: "bg-[#EEE963]", angle: -5, z: 110, yOffset: -390, xOffset: -32, gradient: "linear-gradient(135deg, #EEE963 0%, #FFFBC7 100%)", glow: "shadow-[0_0_15px_rgba(238,233,99,0.3)]" },
+        { id: 8, type: "stamp", color: "bg-[#4ADE80]", angle: 8, z: 130, yOffset: -222, xOffset: 15, gradient: "linear-gradient(135deg, #10B981 0%, #34D399 100%)", glow: "shadow-[0_10px_25px_rgba(16,185,129,0.2)]" },
     ];
 
     const snappyEase = "cubic-bezier(0.19, 1, 0.22, 1)";
@@ -40,29 +34,27 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
                     style={{ transformStyle: "preserve-3d", transform: tiltTransform, willChange: "transform", zIndex: -10 }}
                 >
                     <div 
-                        className={`transition-all duration-[900ms] shadow-[0_12px_40px_rgba(0,0,0,0.15)] flex items-center justify-center
-                            ${b.type === 'profile'     ? 'w-28 h-12 rounded-2xl bg-white p-2 gap-2 border border-black/5' : ''}
-                            ${b.type === 'speech'      ? 'px-4 py-2 rounded-[1.3rem] text-white font-black text-[10px] uppercase italic' : ''}
-                            ${b.type === 'eye-yellow'  ? 'w-14 h-14 rounded-full border-2 border-black/20 flex items-center justify-center text-2xl scale-110' : ''}
-                            ${b.type === 'eye-mini'    ? 'w-9 h-9 rounded-full flex items-center justify-center border-2 border-emerald-400' : ''}
-                            ${b.type === 'team'        ? 'w-14 h-14 rounded-full flex flex-col items-center justify-center p-1 border border-black/10' : ''}
-                            ${b.type === 'stamp'       ? 'w-14 h-18 rounded-sm bg-[#4ADE80] border-2 border-dashed border-white/60 rotate-6 shadow-lg' : ''}
-                            ${b.type === 'circle-icon' ? 'w-10 h-10 rounded-full font-black text-xl' : ''}
-                            ${b.type === 'tag-dark'    ? 'px-4 py-1.5 rounded-lg text-white font-bold text-[9px] uppercase' : ''}
-                            ${b.type === 'tag-soft'    ? `px-3 py-1.5 rounded-full ${b.isPill ? 'bg-white/90 text-emerald-800' : 'text-white'} border border-black/5 gap-2 text-[9px] font-black uppercase tracking-tighter` : ''}
-                            ${b.type === 'currency'    ? `px-3 py-1.5 rounded-xl font-black text-[10px] ${b.labelColor || 'text-orange-500'} shadow-sm` : ''}
+                        className={`transition-all duration-[900ms] ${b.glow || 'shadow-[0_12px_40px_rgba(0,0,0,0.15)]'} flex items-center justify-center
+                            ${b.glass   ? 'backdrop-blur-md border border-white/60' : ''}
+                            ${b.border  ? `border ${b.border}` : ''}
+                            ${b.type === 'profile'     ? 'w-28 h-12 rounded-2xl p-2 gap-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.5)]' : ''}
+                            ${b.type === 'speech'      ? 'px-4 py-2 rounded-[1.3rem] text-white font-black text-[10px] uppercase italic shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]' : ''}
+                            ${b.type === 'eye-yellow'  ? 'w-14 h-14 rounded-full border-2 border-black/10 flex items-center justify-center text-2xl scale-110 shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)]' : ''}
+                            ${b.type === 'team'        ? 'w-14 h-14 rounded-full flex flex-col items-center justify-center p-1 border border-black/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)]' : ''}
+                            ${b.type === 'stamp'       ? 'w-14 h-18 rounded-sm border-2 border-dashed border-white/60 rotate-6 shadow-lg shadow-[inset_0_1px_1px_rgba(255,255,255,0.5)]' : ''}
+                            ${b.type === 'circle-icon' ? 'w-10 h-10 rounded-full font-black text-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)]' : ''}
                         `}
                         style={{ 
-                            backgroundColor: (b.type !== 'profile' && b.type !== 'tag-soft' && b.type !== 'stamp') ? b.color : undefined,
+                            background: b.gradient,
                             transformStyle: "preserve-3d",
                             backfaceVisibility: "hidden",
                             transitionTimingFunction: snappyEase,
                             transform: `
-                                rotateZ(${isHovered ? b.angle : b.angle - 40}deg)
-                                translateY(${isHovered ? b.yOffset : 0}px)
-                                translateX(${isHovered ? (b.angle > 0 ? 12 : -12) : 0}px)
+                                rotateZ(${isHovered ? b.angle : b.angle - 20}deg)
+                                translateY(${isHovered ? b.yOffset : -240}px)
+                                translateX(${isHovered ? b.xOffset : 0}px)
                                 translateZ(${isHovered ? b.z : -100}px)
-                                rotateZ(${isHovered ? -b.angle : -(b.angle - 40)}deg)
+                                rotateZ(${isHovered ? -b.angle : -(b.angle - 20)}deg)
                                 scale(${isHovered ? 1 : 0})
                             `,
                             opacity: isHovered ? 1 : 0,
@@ -71,39 +63,30 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
                     >
                         {b.type === 'profile' && (
                             <>
-                                <div className="w-8 h-8 rounded-full bg-slate-200 shrink-0 overflow-hidden">
+                                <div className="w-8 h-8 rounded-full bg-slate-200 shrink-0 overflow-hidden shadow-sm">
                                      <div className="w-full h-full bg-gradient-to-tr from-orange-400 to-rose-400" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-[10px] font-black text-slate-900 leading-none">{b.label}</span>
-                                    <span className="text-[8px] font-bold text-slate-400 mt-0.5">{b.sub}</span>
+                                    <span className="text-[10px] font-black text-indigo-950 leading-none">{b.label}</span>
+                                    <span className="text-[8px] font-bold text-slate-500 mt-0.5">{b.sub}</span>
                                 </div>
                             </>
                         )}
                         {b.type === 'speech' && <span>{b.label}</span>}
                         {b.type === 'team' && (
                             <div className="flex flex-col items-center leading-none">
-                                <span className="text-[5px] font-black text-black/40 uppercase mb-0.5">Team</span>
-                                <div className="w-4 h-4 rounded-full bg-black/80 mb-0.5" />
-                                <span className="text-[5px] font-black text-black/40 uppercase">Pimpel</span>
+                                <span className="text-[5px] font-black text-slate-900/40 uppercase mb-0.5 tracking-tighter">Team</span>
+                                <div className="w-4 h-4 rounded-full bg-slate-900 mb-0.5 shadow-sm" />
+                                <span className="text-[5px] font-black text-slate-900/40 uppercase tracking-tighter">Pimpel</span>
                             </div>
                         )}
-                        {b.type === 'stamp' && <div className="w-full h-full opacity-30 flex flex-col justify-between p-1">
+                        {b.type === 'stamp' && <div className="w-full h-full opacity-40 flex flex-col justify-between p-1">
                              <div className="h-0.5 bg-white w-full" />
                              <div className="h-0.5 bg-white w-2/3" />
                              <div className="h-0.5 bg-white w-full" />
                         </div>}
                         {b.type === 'circle-icon' && <span className={b.iconColor}>{b.icon}</span>}
-                        {b.type === 'tag-dark' && <span>{b.label}</span>}
-                        {b.type === 'tag-soft' && (
-                            <>
-                                <span className="text-[10px] opacity-80">{b.icon}</span>
-                                <span>{b.label}</span>
-                            </>
-                        )}
-                        {b.type === 'currency' && <span>{b.label}</span>}
                         {b.type === 'eye-yellow' && <span>👁️</span>}
-                        {b.type === 'eye-mini' && <div className="w-3 h-3 rounded-full bg-slate-900 border border-emerald-400" />}
                     </div>
                 </div>
             ))}
