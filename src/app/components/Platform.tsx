@@ -300,7 +300,7 @@ const features = [
     tagBorder: "border-emerald-200",
     activeBar: "bg-emerald-500",
     renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
-      <div className="md:translate-x-12 lg:translate-x-16 translate-y-32 md:translate-y-44 transition-transform duration-700">
+      <div className="md:translate-x-12 lg:translate-x-16 md:translate-y-6 transition-transform duration-700">
         <StaminaAppMockup animKey={animKey} isSectionHovered={isHovered} externalMousePos={mousePos} />
       </div>
     ),
@@ -588,7 +588,7 @@ export default function Platform() {
 
                       {/* SUBMERGED MOCKUP (Stamina Only - Inside Masking) */}
                       {feature.id === "stamina" && isActive && (
-                        <div className="absolute inset-x-0 bottom-0 top-0 pointer-events-none translate-y-[25%]">
+                        <div className="absolute inset-x-0 bottom-0 top-0 pointer-events-none translate-y-[10%] md:translate-y-[8%]">
                            {feature.renderUI(animKey, isHoveredStage, stageMousePos)}
                         </div>
                       )}
