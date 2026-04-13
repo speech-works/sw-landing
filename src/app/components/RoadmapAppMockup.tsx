@@ -200,33 +200,46 @@ export default function RoadmapAppMockup({
                 >
                     {/* Hardware Bezel Specular Depth */}
                     <div className="absolute inset-0 rounded-[3.4rem] opacity-40 shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),inset_1px_0_2px_rgba(255,255,255,0.2)]" />
+                         {/* Hardware Buttons - Unified Material (Separated from bezel to avoid overflow clipping) */}
+                <div className="absolute inset-0 pointer-events-none" style={{ transformStyle: "preserve-3d" }}>
+                    {/* Left Side: Action (top), Vol Up, Vol Down */}
+                    <div className="absolute left-[-3px] top-[90px] w-[4px] h-7 bg-[#1A1D23] rounded-l-[2px] border-y border-l border-white/20 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
+                    <div className="absolute left-[-3px] top-[130px] w-[4px] h-11 bg-[#1A1D23] rounded-l-[2px] border-y border-l border-white/20 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
+                    <div className="absolute left-[-3px] top-[185px] w-[4px] h-11 bg-[#1A1D23] rounded-l-[2px] border-y border-l border-white/20 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
                     
-                    {/* Screen Layer (Flush Off-White) */}
-                    <div 
-                        className="absolute inset-[5px] rounded-[3rem] bg-[#FFF9F5] overflow-hidden shadow-[inset_0_0_10px_rgba(0,0,0,0.4)] flex flex-col"
-                        style={{ transform: "translateZ(1px)" }}
-                    >
-                        {/* Status Bar (System Time + Icons) */}
-                        <RoadmapScreenUI timeStr={mounted ? formatTime(time) : "09:41"} />
+                    {/* Right Side: Side Button (Power) */}
+                    <div className="absolute right-[-3px] top-[160px] w-[4px] h-16 bg-[#1A1D23] rounded-r-[2px] border-y border-r border-white/20 shadow-sm" style={{ transform: "translateZ(-2px)" }} />
 
-                        {/* Professional Dynamic Island */}
-                        <div className="absolute top-[18px] left-1/2 -translate-x-1/2 w-[92px] h-[28px] bg-black rounded-full z-50">
-                             <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-20" />
-                        </div>
-
-                        {/* Main UI Content */}
-                        <RoadmapInternalUI animKey={animKey} />
-
-                        {/* Interaction Glimmer */}
-                        <div 
-                            className="absolute inset-0 z-[60] pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-700"
-                            style={{
-                                background: `linear-gradient(${75 + mousePos.x * 20}deg, transparent, rgba(255,255,255,0.8) 45%, rgba(255,255,255,0.8) 55%, transparent)`,
-                                transform: `translateX(${mousePos.x * 100}%)`,
-                            }}
-                        />
-                    </div>
+                    {/* Camera Control - Minimalist Flush Recess */}
+                    <div className="absolute right-[-1.5px] bottom-[140px] w-[3px] h-14 bg-[#090A0C] rounded-r-md border border-white/5 opacity-80" style={{ transform: "translateZ(-2px)" }} />
                 </div>
+
+                {/* ── MAIN SCREEN LAYER (Flush with Frame) ── */}
+                <div 
+                    className="absolute inset-[5px] rounded-[3rem] bg-[#FFF9F5] overflow-hidden flex flex-col shadow-[inset_0_0_10px_rgba(0,0,0,0.4)]" 
+                    style={{ transform: "translateZ(1px)" }}
+                >
+                    {/* Status Bar (System Time + Icons) */}
+                    <RoadmapScreenUI timeStr={mounted ? formatTime(time) : "09:41"} />
+
+                    {/* Professional Dynamic Island */}
+                    <div className="absolute top-[18px] left-1/2 -translate-x-1/2 w-[92px] h-[28px] bg-black rounded-full z-50">
+                            <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-20" />
+                    </div>
+
+                    {/* Main UI Content */}
+                    <RoadmapInternalUI animKey={animKey} />
+
+                    {/* Interaction Glimmer */}
+                    <div 
+                        className="absolute inset-0 z-[60] pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-700"
+                        style={{
+                            background: `linear-gradient(${75 + mousePos.x * 20}deg, transparent, rgba(255,255,255,0.8) 45%, rgba(255,255,255,0.8) 55%, transparent)`,
+                            transform: `translateX(${mousePos.x * 100}%)`,
+                        }}
+                    />
+                </div>
+        </div>
 
                 {/* Exploded Bubble Layer */}
                 <FeatureBubbles isHovered={isHovered} tiltTransform={tiltTransform} />
