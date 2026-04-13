@@ -81,6 +81,191 @@ const CloseIcon = ({ color = "#111827", className = "" }) => (
     </svg>
 );
 
+const CheckIcon = ({ color = "#FFFFFF", className = "" }) => (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+        <path
+            d="M5 12.5 9.2 16.7 19 7.5"
+            stroke={color}
+            strokeWidth="2.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
+
+const BackChevronIcon = ({ color = "#401B00", className = "" }) => (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+        <path
+            d="M14.5 5 7.5 12l7 7"
+            stroke={color}
+            strokeWidth="2.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
+
+const SpeakerIcon = ({ color = "#FFFFFF", className = "" }) => (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+        <path
+            d="M4 14.5v-5h4l4.5-4v13L8 14.5H4Z"
+            fill={color}
+        />
+        <path
+            d="M15.5 9.2c1.2.8 2 2.2 2 3.8s-.8 3-2 3.8"
+            stroke={color}
+            strokeWidth="2"
+            strokeLinecap="round"
+        />
+        <path
+            d="M17.8 6.8c2.1 1.5 3.4 4 3.4 6.2 0 2.3-1.3 4.8-3.4 6.2"
+            stroke={color}
+            strokeWidth="2"
+            strokeLinecap="round"
+            opacity="0.75"
+        />
+    </svg>
+);
+
+const PauseControlIcon = ({ color = "#FFFFFF", className = "" }) => (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+        <rect x="6.5" y="5" width="3.8" height="14" rx="1.2" fill={color} />
+        <rect x="13.7" y="5" width="3.8" height="14" rx="1.2" fill={color} />
+    </svg>
+);
+
+const SkipBackIcon = ({ color = "#FFFFFF", className = "" }) => (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+        <path d="M5 6h2v12H5z" fill={color} />
+        <path d="M18 6.8v10.4L9.5 12 18 6.8Z" fill={color} />
+    </svg>
+);
+
+const SkipForwardIcon = ({ color = "#FFFFFF", className = "" }) => (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+        <path d="M17 6h2v12h-2z" fill={color} />
+        <path d="M6 6.8v10.4L14.5 12 6 6.8Z" fill={color} />
+    </svg>
+);
+
+const ExpandCornersIcon = ({ color = "#FFFFFF", className = "" }) => (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+        <path
+            d="M8 4H4v4M16 4h4v4M8 20H4v-4M16 20h4v-4"
+            stroke={color}
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
+
+function LeftVideoPlayerScreen() {
+    return (
+        <div className="absolute inset-0 overflow-hidden bg-[#F8F2E8]">
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,#fbf7f1_0%,#f5ead9_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_86%_16%,rgba(255,128,128,0.16)_0%,transparent_33%),radial-gradient(circle_at_14%_78%,rgba(255,144,64,0.18)_0%,transparent_30%)]" />
+
+            <div className="absolute left-1/2 top-0 h-[680px] w-[320px] origin-top -translate-x-1/2 scale-[0.69] md:scale-[0.75]">
+                <div className="px-0 pt-[54px] text-[#401B00]">
+                    <div className="flex items-start px-6">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-[14px] border border-black/[0.05] bg-white/78 shadow-[0_4px_14px_rgba(0,0,0,0.06)]">
+                            <BackChevronIcon className="h-5 w-5" />
+                        </div>
+
+                        <div className="flex-1 px-3 pt-1 text-center">
+                            <div className="mb-1 text-[11px] font-bold uppercase tracking-[1px] text-[#A1A4AA]">
+                                Module 1
+                            </div>
+                            <div className="text-[17px] font-semibold tracking-[-0.2px] text-[#401B00]">
+                                The Elephant in the Room
+                            </div>
+                        </div>
+
+                        <div className="w-10" />
+                    </div>
+
+                    <div className="mt-6 h-[6px] w-full overflow-hidden bg-black/6">
+                        <div className="h-full w-[52%] rounded-r-full bg-[#FF9040]" />
+                    </div>
+
+                    <div className="pt-8 text-center text-[14px] font-semibold text-[#A1A4AA]">
+                        Step 1 of 2
+                    </div>
+
+                    <div className="px-6 pt-8">
+                        <div className="relative h-[430px] overflow-hidden rounded-[28px] shadow-[0_18px_40px_rgba(71,24,6,0.18)]">
+                            <div
+                                className="absolute inset-0 bg-cover bg-center"
+                                style={{
+                                    backgroundImage:
+                                        "url('/assets/joseph_avatar.jpg')",
+                                }}
+                            />
+                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.06)_0%,rgba(0,0,0,0.04)_48%,rgba(0,0,0,0.46)_100%)]" />
+
+                            <div className="absolute inset-x-0 bottom-0 px-5 pb-4 pt-10 text-white">
+                                <div className="mb-3 flex items-center gap-2.5">
+                                    <div className="relative h-[4px] flex-1 overflow-hidden rounded-full bg-white/30">
+                                        <div className="absolute inset-y-0 left-0 w-[56%] rounded-full bg-[#FF9040]" />
+                                        <div className="absolute left-[56%] top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#FFB580] bg-[#FF9040] shadow-[0_2px_10px_rgba(0,0,0,0.25)]" />
+                                    </div>
+                                    <span className="text-[12px] font-medium text-white/95">
+                                        0:51 / 1:34
+                                    </span>
+                                </div>
+
+                                <div className="mb-5 flex items-center gap-3">
+                                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
+                                        <SpeakerIcon className="h-4.5 w-4.5" />
+                                    </div>
+                                    <div className="relative h-[4px] flex-1 overflow-hidden rounded-full bg-white/28">
+                                        <div className="absolute inset-y-0 left-0 w-[84%] rounded-full bg-[#FF9040]" />
+                                        <div className="absolute left-[84%] top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white/80 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.25)]" />
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-between px-1">
+                                    <div className="flex h-10 min-w-[48px] items-center justify-center rounded-full bg-white/18 px-3 text-[15px] font-extrabold text-white backdrop-blur-sm">
+                                        1x
+                                    </div>
+
+                                    <div className="flex items-center gap-4">
+                                        <SkipBackIcon className="h-6.5 w-6.5" />
+
+                                        <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border-4 border-white bg-white/10 shadow-[0_10px_24px_rgba(0,0,0,0.22)] backdrop-blur-sm">
+                                            <PauseControlIcon className="h-7 w-7" />
+                                        </div>
+
+                                        <SkipForwardIcon className="h-6.5 w-6.5" />
+                                    </div>
+
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/12 backdrop-blur-sm">
+                                        <ExpandCornersIcon className="h-5 w-5" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="px-6 pt-10">
+                        <div className="rounded-[18px] shadow-[0_10px_22px_rgba(255,144,64,0.22)]">
+                            <div className="flex items-center justify-center rounded-[18px] bg-[linear-gradient(90deg,#FF9040_0%,#FF4040_100%)] px-6 py-[17px]">
+                                <PlayIcon color="#FFFFFF" className="mr-2.5 h-5 w-5" />
+                                <span className="text-[16px] font-bold tracking-[0.4px] text-white">
+                                    Next
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="absolute bottom-[8px] left-1/2 z-20 h-[5px] w-[88px] -translate-x-1/2 rounded-full bg-black/90" />
+            </div>
+        </div>
+    );
+}
+
 function CenterPackRecommendationScreen() {
     return (
         <>
@@ -271,6 +456,140 @@ function CenterPackRecommendationScreen() {
     );
 }
 
+function ReflectionLikertRow({
+    selected,
+    minLabel,
+    maxLabel,
+}: {
+    selected: number;
+    minLabel?: string;
+    maxLabel?: string;
+}) {
+    return (
+        <div className="space-y-2.5">
+            <div className="flex items-center justify-between gap-2">
+                {Array.from({ length: 5 }, (_, index) => {
+                    const value = index + 1;
+                    const isSelected = value === selected;
+
+                    return (
+                        <div
+                            key={value}
+                            className={`flex h-[40px] w-[40px] items-center justify-center rounded-[12px] border-[1.5px] text-[14px] font-bold ${
+                                isSelected
+                                    ? "border-[#6366F1] bg-[#6366F1] text-white shadow-[0_8px_18px_rgba(99,102,241,0.28)]"
+                                    : "border-[#6366F1]/15 bg-[#6366F1]/[0.06] text-[#6366F1]"
+                            }`}
+                        >
+                            {value}
+                        </div>
+                    );
+                })}
+            </div>
+
+            {(minLabel || maxLabel) && (
+                <div className="flex items-center justify-between px-1 text-[11px] font-medium text-[#94A3B8]">
+                    <span>{minLabel || ""}</span>
+                    <span>{maxLabel || ""}</span>
+                </div>
+            )}
+        </div>
+    );
+}
+
+function RightReflectionScreen() {
+    return (
+        <div className="absolute inset-0 overflow-hidden bg-white">
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,#EEF2FF_0%,#FFFFFF_40%,#FFFFFF_100%)]" />
+
+            <div className="absolute left-1/2 top-0 h-[680px] w-[320px] origin-top -translate-x-1/2 scale-[0.675] md:scale-[0.735]">
+                <div className="px-5 pb-[124px] pt-[52px] text-[#0F172A]">
+                    <div className="flex items-center justify-between">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-[12px] border border-black/[0.05] bg-white/80 shadow-[0_4px_14px_rgba(0,0,0,0.06)]">
+                            <BackChevronIcon color="#0F172A" className="h-5 w-5" />
+                        </div>
+
+                        <div className="flex-1 px-3 text-center">
+                            <div className="text-[10px] font-bold uppercase tracking-[1.6px] text-[#6366F1]">
+                                Reflection
+                            </div>
+                            <div className="mt-1 text-[17px] font-bold tracking-[-0.2px] text-[#0F172A]">
+                                Module Reflection
+                            </div>
+                        </div>
+
+                        <div className="w-10" />
+                    </div>
+
+                    <p className="px-1 pt-4 text-[14px] leading-[20px] text-[#475569]">
+                        Incremental reflection after each module.
+                    </p>
+
+                    <div className="space-y-3.5 pt-5">
+                        <div className="rounded-[20px] border border-[#6366F1]/10 bg-white/90 p-4 shadow-[0_10px_22px_rgba(15,23,42,0.06)]">
+                            <div className="mb-4 flex items-start justify-between gap-3">
+                                <div className="flex-1 text-[15px] font-semibold leading-[21px] text-[#0F172A]">
+                                    Clarity of Concepts
+                                </div>
+                                <span className="rounded-[8px] bg-[#6366F1]/10 px-2 py-[3px] text-[9px] font-bold uppercase tracking-[0.5px] text-[#6366F1]">
+                                    Required
+                                </span>
+                            </div>
+                            <ReflectionLikertRow selected={4} />
+                        </div>
+
+                        <div className="rounded-[20px] border border-[#6366F1]/10 bg-white/90 p-4 shadow-[0_10px_22px_rgba(15,23,42,0.06)]">
+                            <div className="mb-4 flex items-start justify-between gap-3">
+                                <div className="flex-1 text-[15px] font-semibold leading-[21px] text-[#0F172A]">
+                                    Shift in Confidence
+                                </div>
+                                <span className="rounded-[8px] bg-[#6366F1]/10 px-2 py-[3px] text-[9px] font-bold uppercase tracking-[0.5px] text-[#6366F1]">
+                                    Required
+                                </span>
+                            </div>
+                            <ReflectionLikertRow
+                                selected={4}
+                                minLabel="None"
+                                maxLabel="Significant"
+                            />
+                        </div>
+
+                        <div className="rounded-[20px] border border-[#6366F1]/10 bg-white/90 p-4 shadow-[0_10px_22px_rgba(15,23,42,0.06)]">
+                            <div className="mb-4 flex items-start justify-between gap-3">
+                                <div className="flex-1 text-[15px] font-semibold leading-[21px] text-[#0F172A]">
+                                    Did this help you communicate better in real
+                                    life?
+                                </div>
+                                <span className="rounded-[8px] bg-[#6366F1]/10 px-2 py-[3px] text-[9px] font-bold uppercase tracking-[0.5px] text-[#6366F1]">
+                                    Required
+                                </span>
+                            </div>
+                            <ReflectionLikertRow
+                                selected={5}
+                                minLabel="No"
+                                maxLabel="Yes"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="absolute inset-x-0 bottom-0 border-t border-black/[0.04] bg-white/95 px-5 pb-8 pt-4 backdrop-blur-md">
+                    <div className="overflow-hidden rounded-[16px] shadow-[0_16px_30px_rgba(99,102,241,0.24)]">
+                        <div className="flex items-center justify-center gap-2 rounded-[16px] bg-[linear-gradient(90deg,#6366F1_0%,#8B5CF6_100%)] px-5 py-[15px]">
+                            <CheckIcon className="h-5 w-5" />
+                            <span className="text-[15px] font-bold tracking-[0.2px] text-white">
+                                Complete
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="absolute bottom-[8px] left-1/2 z-20 h-[5px] w-[88px] -translate-x-1/2 rounded-full bg-black/90" />
+            </div>
+        </div>
+    );
+}
+
 function BlankPhoneMockup({
     className = "",
     externalMousePos,
@@ -395,6 +714,7 @@ export default function RoadmapAppMockup({
                     style={{
                         transform: `rotateX(${rotateX}deg) rotateY(${mirroredRotateY}deg) rotateZ(${mirroredRotateZ}deg) scale(${activeScale})`,
                     }}
+                    screenContent={<LeftVideoPlayerScreen />}
                 />
 
                 <BlankPhoneMockup
@@ -412,6 +732,7 @@ export default function RoadmapAppMockup({
                     style={{
                         transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${activeScale})`,
                     }}
+                    screenContent={<RightReflectionScreen />}
                 />
             </div>
         </div>
