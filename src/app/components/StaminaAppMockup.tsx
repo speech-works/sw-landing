@@ -11,22 +11,22 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 );
 
 function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tiltTransform: string }) {
-    // Exact mapping from the Pixar-style reference image
+    // Ultra-dense cluster exactly matching the condensed Pixar look
     const bubbles = [
-        { id: 1, type: "profile", label: "Elena", sub: "4.5 ⭐", color: "bg-white", angle: -10, radius: 60, z: 200, yOffset: -300 },
-        { id: 2, type: "speech", label: "Marseille", color: "bg-[#D97D3C]", angle: -40, radius: 90, z: 120, yOffset: -240 },
-        { id: 3, type: "speech", label: "Rennes", color: "bg-[#E94EAF]", angle: 30, radius: 85, z: 150, yOffset: -270 },
-        { id: 4, type: "eye-yellow", icon: "👁️", color: "bg-[#D9FD51]", angle: -70, radius: 110, z: 140, yOffset: -310 },
-        { id: 5, type: "circle-icon", icon: "€", color: "bg-black", iconColor: "text-orange-500", angle: 80, radius: 70, z: 180, yOffset: -250 },
-        { id: 6, type: "circle-icon", icon: "+", color: "bg-black", iconColor: "text-white", angle: 120, radius: 105, z: 220, yOffset: -330 },
-        { id: 7, type: "team", label: "TEAM", color: "bg-[#EEE963]", angle: 60, radius: 130, z: 110, yOffset: -340 },
-        { id: 8, type: "stamp", color: "bg-[#4ADE80]", angle: 5, radius: 40, z: 130, yOffset: -260 },
-        { id: 9, type: "tag-dark", label: "Paris", color: "bg-black", angle: -30, radius: 75, z: 160, yOffset: -220 },
-        { id: 10, type: "tag-soft", label: "Exposition", color: "bg-[#E67E22]", angle: -130, radius: 120, z: 170, yOffset: -290, icon: "🖼️" },
-        { id: 11, type: "tag-soft", label: "Nature", color: "bg-[#A7F3D0]", angle: 100, radius: 95, z: 140, yOffset: -280, icon: "🌿", isPill: true },
-        { id: 12, type: "currency", label: "+18€", color: "bg-black", angle: 140, radius: 140, z: 190, yOffset: -270 },
-        { id: 13, type: "currency", label: "+5€", color: "bg-[#FFEBE5]", labelColor: "text-[#E67E22]", angle: 45, radius: 150, z: 130, yOffset: -320 },
-        { id: 14, type: "eye-mini", color: "bg-black", angle: -160, radius: 110, z: 90, yOffset: -240 },
+        { id: 1, type: "profile", label: "Elena", sub: "4.5 ⭐", color: "bg-white", angle: -5, radius: 25, z: 180, yOffset: -290 },
+        { id: 2, type: "speech", label: "Marseille", color: "bg-[#D97D3C]", angle: -25, radius: 35, z: 120, yOffset: -230 },
+        { id: 3, type: "speech", label: "Rennes", color: "bg-[#E94EAF]", angle: 20, radius: 30, z: 150, yOffset: -260 },
+        { id: 4, type: "eye-yellow", icon: "👁️", color: "bg-[#D9FD51]", angle: -45, radius: 50, z: 140, yOffset: -285 },
+        { id: 5, type: "circle-icon", icon: "€", color: "bg-black", iconColor: "text-orange-500", angle: 55, radius: 35, z: 170, yOffset: -245 },
+        { id: 6, type: "circle-icon", icon: "+", color: "bg-black", iconColor: "text-white", angle: 80, radius: 55, z: 200, yOffset: -310 },
+        { id: 7, type: "team", label: "TEAM", color: "bg-[#EEE963]", angle: 40, radius: 65, z: 110, yOffset: -320 },
+        { id: 8, type: "stamp", color: "bg-[#4ADE80]", angle: 5, radius: 20, z: 130, yOffset: -250 },
+        { id: 9, type: "tag-dark", label: "Paris", color: "bg-black", angle: -15, radius: 40, z: 160, yOffset: -220 },
+        { id: 10, type: "tag-soft", label: "Exposition", color: "bg-[#E67E22]", angle: -90, radius: 60, z: 170, yOffset: -280, icon: "🖼️" },
+        { id: 11, type: "tag-soft", label: "Nature", color: "bg-[#A7F3D0]", angle: 65, radius: 50, z: 140, yOffset: -275, icon: "🌿", isPill: true },
+        { id: 12, type: "currency", label: "+18€", color: "bg-black", angle: 95, radius: 80, z: 190, yOffset: -265 },
+        { id: 13, type: "currency", label: "+5€", color: "bg-[#FFEBE5]", labelColor: "text-[#E67E22]", angle: 30, radius: 85, z: 130, yOffset: -305 },
+        { id: 14, type: "eye-mini", color: "bg-black", angle: -110, radius: 60, z: 90, yOffset: -245 },
     ];
 
     const snappyEase = "cubic-bezier(0.19, 1, 0.22, 1)";
@@ -60,7 +60,7 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
                             transform: `
                                 rotateZ(${isHovered ? b.angle : b.angle - 40}deg)
                                 translateY(${isHovered ? b.yOffset : 0}px)
-                                translateX(${isHovered ? (b.angle > 0 ? 30 : -30) : 0}px)
+                                translateX(${isHovered ? (b.angle > 0 ? 12 : -12) : 0}px)
                                 translateZ(${isHovered ? b.z : -100}px)
                                 rotateZ(${isHovered ? -b.angle : -(b.angle - 40)}deg)
                                 scale(${isHovered ? 1 : 0})
