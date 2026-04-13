@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-const SignalIcon = ({ color = "#10b981" }) => (
+const SignalIcon = ({ color = "#1E293B" }) => (
     <svg viewBox="0 0 17 12" fill={color} className="w-[14px] h-[10px]">
         <rect x="0" y="7" width="2.5" height="4" rx="0.5" />
         <rect x="4" y="5" width="2.5" height="6" rx="0.5" />
@@ -11,11 +11,16 @@ const SignalIcon = ({ color = "#10b981" }) => (
 );
 
 function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tiltTransform: string }) {
+    // Exact diverse bubbles inspired by the screenshot
     const bubbles = [
-        { id: 1, label: "Heart Rate", icon: "❤️", color: "bg-rose-400", angle: -140, radius: 85, z: 120, yOffset: -180 },
-        { id: 2, label: "Focus Layer", icon: "🧠", color: "bg-emerald-400", angle: -40, radius: 90, z: 160, yOffset: -150 },
-        { id: 3, label: "Vocal Arc", icon: "🌊", color: "bg-sky-400", angle: 140, radius: 95, z: 130, yOffset: -60 },
-        { id: 4, label: "Recovery", icon: "🔋", color: "bg-emerald-500", angle: 40, radius: 80, z: 180, yOffset: -110 }
+        { id: 1, type: "profile", label: "Elena", sub: "4.5 ⭐", color: "bg-white", angle: -30, radius: 100, z: 180, yOffset: -190 },
+        { id: 2, type: "tag", label: "Heart Rate", color: "bg-orange-500", angle: -140, radius: 110, z: 140, yOffset: -210 },
+        { id: 3, type: "tag", label: "Stress", color: "bg-pink-500", angle: 130, radius: 120, z: 150, yOffset: -50 },
+        { id: 4, type: "icon-circle", icon: "👁️", color: "bg-yellow-400", angle: -80, radius: 140, z: 130, yOffset: -230 },
+        { id: 5, type: "stamp", color: "bg-emerald-400", angle: 170, radius: 80, z: 110, yOffset: -120 },
+        { id: 6, type: "price", label: "+12XP", color: "bg-[#FBE9E7]", angle: 45, radius: 95, z: 190, yOffset: -140 }, // Soft red tag
+        { id: 7, type: "circle-badge", label: "TEAM", color: "bg-yellow-200", angle: -170, radius: 130, z: 160, yOffset: -160 },
+        { id: 8, type: "tag-dark", label: "Focus", color: "bg-black", angle: -110, radius: 125, z: 140, yOffset: -180 },
     ];
 
     const snappyEase = "cubic-bezier(0.19, 1, 0.22, 1)";
@@ -26,17 +31,20 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
                 <div 
                     key={b.id}
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                    style={{ 
-                        transformStyle: "preserve-3d",
-                        transform: tiltTransform,
-                        willChange: "transform",
-                        zIndex: 1000
-                    }}
+                    style={{ transformStyle: "preserve-3d", transform: tiltTransform, willChange: "transform", zIndex: 1000 }}
                 >
                     <div 
-                        className="px-5 py-2.5 rounded-full flex items-center gap-3 backdrop-blur-xl border border-white/40 shadow-[0_30px_100px_rgba(0,0,0,0.2)] transition-all duration-[750ms] overflow-hidden"
+                        className={`transition-all duration-[800ms] border border-white/20 overflow-hidden flex items-center shadow-[0_20px_60px_rgba(0,0,0,0.18)]
+                            ${b.type === 'profile'      ? 'w-24 h-12 rounded-2xl bg-white p-2 gap-2' : ''}
+                            ${b.type === 'tag'          ? 'px-4 py-1.5 rounded-full text-white font-bold' : ''}
+                            ${b.type === 'tag-dark'     ? 'px-4 py-1.5 rounded-lg text-white font-bold' : ''}
+                            ${b.type === 'icon-circle'  ? 'w-11 h-11 rounded-full flex items-center justify-center text-xl' : ''}
+                            ${b.type === 'stamp'        ? 'w-14 h-18 rounded-sm p-1.5 border-dashed border-2 border-white/40' : ''}
+                            ${b.type === 'price'        ? 'px-3 py-1 rounded-full text-orange-600 font-black border-red-100 bg-[#FBE9E7]' : ''}
+                            ${b.type === 'circle-badge' ? 'w-12 h-12 rounded-full border-2 border-black/10 flex flex-col items-center justify-center' : ''}
+                        `}
                         style={{ 
-                            backgroundColor: "rgba(255,255,255,0.92)",
+                            backgroundColor: (b.type === 'tag' || b.type === 'tag-dark' || b.type === 'icon-circle' || b.type === 'stamp' || b.type === 'circle-badge') ? b.color : undefined,
                             transformStyle: "preserve-3d",
                             backfaceVisibility: "hidden",
                             transitionTimingFunction: snappyEase,
@@ -44,23 +52,39 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
                                 rotateZ(${isHovered ? b.angle : b.angle - 120}deg)
                                 translateX(${isHovered ? b.radius : 0}px)
                                 translateY(${isHovered ? b.yOffset : 0}px)
-                                translateZ(${isHovered ? b.z : -250}px)
+                                translateZ(${isHovered ? b.z : -350}px)
                                 rotateZ(${isHovered ? -b.angle : -(b.angle - 120)}deg)
-                                scale(${isHovered ? 1 : 0.4})
+                                scale(${isHovered ? 1 : 0.3})
                             `,
                             opacity: isHovered ? 1 : 0,
                             willChange: "transform, opacity",
                         }}
                     >
-                        <div className={`w-7 h-7 rounded-full ${b.color} flex items-center justify-center text-xs shadow-inner shrink-0`}>
-                            {b.icon}
-                        </div>
-                        <span className="text-[11px] font-black uppercase tracking-wider text-emerald-900 whitespace-nowrap">
-                            {b.label}
-                        </span>
-                        <div className="absolute -right-1 -bottom-1 text-3xl opacity-[0.05]">
-                            {b.icon}
-                        </div>
+                        {b.type === 'profile' && (
+                            <>
+                                <div className="w-8 h-8 rounded-full bg-slate-200 shrink-0 overflow-hidden">
+                                     <div className="w-full h-full bg-gradient-to-tr from-brand to-rose-400" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-[9px] font-black text-slate-900 leading-none">{b.label}</span>
+                                    <span className="text-[7px] font-bold text-slate-400 mt-0.5">{b.sub}</span>
+                                </div>
+                            </>
+                        )}
+                        {b.type === 'circle-badge' && (
+                            <span className="text-[6px] font-black leading-none text-center">TEAM<br/>WORK</span>
+                        )}
+                        {b.type === 'tag' && <span className="text-[9px] uppercase tracking-wider">{b.label}</span>}
+                        {b.type === 'tag-dark' && <span className="text-[9px] uppercase tracking-wider">{b.label}</span>}
+                        {b.type === 'price' && <span className="text-[9px] font-black uppercase text-brand">{b.label}</span>}
+                        {b.type === 'icon-circle' && <span>{b.icon}</span>}
+                        {b.type === 'stamp' && (
+                            <div className="w-full h-full border border-white/20 rounded-xs flex flex-col gap-1 items-start justify-center">
+                                <div className="w-4 h-[1px] bg-white/40" />
+                                <div className="w-6 h-[1px] bg-white/40" />
+                                <div className="w-3 h-[1px] bg-white/40" />
+                            </div>
+                        )}
                     </div>
                 </div>
             ))}
@@ -68,50 +92,49 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
     );
 }
 
-function StaminaInternalUI({ animKey }: { animKey: number }) {
+function StaminaScreenUI() {
     return (
-        <div className="flex flex-col gap-6 p-6 pt-16 h-full antialiased bg-[#F0FDF4]/50">
-            {/* Main Battery Card */}
-            <div 
-                className="w-full bg-white rounded-[2rem] p-6 shadow-[0_20px_40px_rgba(16,185,129,0.08)] border border-emerald-50 flex flex-col items-center gap-4"
-                style={{ animation: "platform-chatReveal 0.6s cubic-bezier(0.19, 1, 0.22, 1) both" }}
-            >
-                <div className="relative w-32 h-32 flex items-center justify-center">
-                    <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full transform -rotate-90">
-                        <circle cx="50" cy="50" r="42" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-emerald-50" />
-                        <circle
-                            cx="50" cy="50" r="42" stroke="currentColor" strokeWidth="8"
-                            fill="transparent" strokeDasharray="264" strokeDashoffset="264"
-                            className="text-emerald-500"
-                            strokeLinecap="round"
-                            style={{ 
-                                animation: "platform-circleStroke 2s cubic-bezier(0.23,1,0.32,1) 0.5s both" 
-                            }}
-                        />
-                    </svg>
-                    <div className="flex flex-col items-center leading-none">
-                        <span className="text-3xl font-black text-emerald-900">42<span className="text-lg">%</span></span>
-                        <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mt-1">Stamina</span>
-                    </div>
+        <div className="flex flex-col h-full bg-[#F9F7F2] font-sans p-6 pt-20 relative overflow-hidden">
+            {/* Header / Meta */}
+            <div className="absolute top-20 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                <div className="w-6 h-6 rounded-full bg-slate-200 overflow-hidden shadow-sm border border-white">
+                    <div className="w-full h-full bg-gradient-to-b from-indigo-500 to-indigo-700" />
                 </div>
+                <span className="text-[8px] font-bold text-slate-400 mt-1 uppercase tracking-widest">Biological Center</span>
+            </div>
+
+            {/* Central Typography - matches screenshot style */}
+            <div className="flex-1 flex flex-col items-center justify-center text-center mt-[-40px]">
+                <h2 className="text-[32px] md:text-[38px] font-black text-slate-900 leading-[0.95] tracking-tighter">
+                    Sustainable
+                    <br />
+                    Speech
+                    <br />
+                    Stamina.
+                </h2>
                 
-                <div className="w-full flex flex-col gap-1 text-center">
-                    <div className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em]">Guardrail Status</div>
-                    <div className="text-emerald-900 font-bold text-lg">Active & Protecting</div>
+                {/* Floating Avatars on screen */}
+                <div className="absolute top-[45%] left-10 w-8 h-8 rounded-full bg-brand p-0.5 shadow-lg border border-white">
+                     <div className="w-full h-full rounded-full bg-indigo-500 overflow-hidden" />
+                </div>
+                <div className="absolute top-[60%] right-8 w-10 h-10 rounded-full bg-rose-400 p-0.5 shadow-lg border border-white">
+                     <div className="w-full h-full rounded-full bg-orange-400 overflow-hidden" />
                 </div>
             </div>
 
-            {/* Micro Stats */}
-            <div className="grid grid-cols-2 gap-3" style={{ animation: "platform-chatReveal 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0.2s both" }}>
-                <div className="bg-white rounded-3xl p-4 border border-emerald-50 shadow-sm flex flex-col gap-1">
-                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">HRV Buffer</span>
-                    <span className="text-emerald-600 font-black text-xl">High</span>
-                </div>
-                <div className="bg-white rounded-3xl p-4 border border-emerald-50 shadow-sm flex flex-col gap-1">
-                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Recovery</span>
-                    <span className="text-emerald-600 font-black text-xl">2.4h</span>
-                </div>
+            {/* Bottom Input Area - matches screenshot style */}
+            <div className="mt-auto mb-2 flex items-center justify-between gap-3">
+                 <div className="flex-1 h-10 rounded-full bg-[#1e1b4b] flex items-center px-4">
+                     <span className="text-[10px] font-bold text-white/40">Secure Session Monitoring</span>
+                 </div>
+                 <div className="flex gap-2">
+                     <div className="w-5 h-5 flex items-center justify-center text-slate-900 opacity-50">❤️</div>
+                     <div className="w-5 h-5 flex items-center justify-center text-slate-900 opacity-50">🔒</div>
+                 </div>
             </div>
+            
+            {/* Nav underline */}
+            <div className="w-12 h-1 bg-slate-900 rounded-full mx-auto mt-2" />
         </div>
     );
 }
@@ -125,11 +148,8 @@ export default function StaminaAppMockup({
     isSectionHovered?: boolean,
     externalMousePos?: { x: number, y: number }
 }) {
-    const rotateX = (18 - (externalMousePos.y * 11)); 
-    const rotateY = (28 - (externalMousePos.x * 13));
-    const rotateZ = (-6 - (externalMousePos.x * 4));
-
-    const tiltTransform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${isSectionHovered ? 1.05 : 0.95})`;
+    // STRAIGHT / NOT TILTED
+    const tiltTransform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${isSectionHovered ? 1.05 : 0.95})`;
 
     return (
         <div 
@@ -137,39 +157,43 @@ export default function StaminaAppMockup({
             style={{ perspective: "3000px", transformStyle: "preserve-3d" }}
         >
             <div 
-                className="relative w-[240px] md:w-[260px] h-[500px] md:h-[540px] transition-transform duration-700 ease-out"
+                className="relative w-[230px] md:w-[240px] h-[440px] md:h-[480px] transition-transform duration-700 ease-out"
                 style={{ transformStyle: "preserve-3d", transform: tiltTransform }}
             >
                 {/* ── PHONE BASE ── */}
                 <div 
-                    className="absolute inset-0 rounded-[3.5rem] bg-slate-900 shadow-[40px_80px_100px_rgba(0,0,0,0.3)] border-[6px] border-slate-800" 
+                    className="absolute inset-0 rounded-[3.5rem] bg-slate-900 shadow-[20px_40px_80px_rgba(0,0,0,0.35)] border-[6px] border-slate-800" 
                     style={{ transform: "translateZ(-10px)" }}
                 >
-                    <div className="absolute left-[-2px] top-[90px] w-[3px] h-4 bg-slate-800 rounded-l-sm border-y border-l border-white/10" />
-                    <div className="absolute left-[-2px] top-[125px] w-[3px] h-10 bg-slate-800 rounded-l-sm border-y border-l border-white/10" />
-                    <div className="absolute left-[-2px] top-[175px] w-[3px] h-10 bg-slate-800 rounded-l-sm border-y border-l border-white/10" />
-                    <div className="absolute right-[-2px] top-[160px] w-[3px] h-14 bg-slate-800 rounded-r-sm border-y border-r border-white/10" />
+                    {/* Left side: Action Button (Short), Volume Up, Volume Down */}
+                    <div className="absolute left-[-2px] top-[90px] w-[3px] h-4 bg-slate-800 rounded-l-sm border-y border-l border-white/20 shadow-[0_0_2px_rgba(255,255,255,0.1)]" />
+                    <div className="absolute left-[-2px] top-[125px] w-[3px] h-11 bg-slate-800 rounded-l-sm border-y border-l border-white/20 shadow-[0_0_2px_rgba(255,255,255,0.1)]" />
+                    <div className="absolute left-[-2px] top-[175px] w-[3px] h-11 bg-slate-800 rounded-l-sm border-y border-l border-white/20 shadow-[0_0_2px_rgba(255,255,255,0.1)]" />
+                    
+                    {/* Right side: Power Button (Long) */}
+                    <div className="absolute right-[-2px] top-[160px] w-[3px] h-14 bg-slate-800 rounded-r-sm border-y border-r border-white/20 shadow-[0_0_2px_rgba(255,255,255,0.1)]" />
                 </div>
 
                 {/* ── SCREEN ── */}
                 <div 
-                    className="absolute inset-[6px] rounded-[3rem] bg-[#F0FDF4] overflow-hidden flex flex-col" 
+                    className="absolute inset-[6px] rounded-[3rem] bg-[#F9F7F2] overflow-hidden flex flex-col shadow-inner" 
                     style={{ transform: `translateZ(15px)`, transformStyle: "preserve-3d" }}
                 >
                     <div className="absolute top-0 inset-x-0 h-14 z-[160] flex flex-col">
                         <div className="h-[32px] pt-1.5 px-8 flex items-center justify-between">
-                            <span className="text-[10px] font-bold text-emerald-900 tracking-tight">09:41</span>
+                            <span className="text-[10px] font-extrabold text-slate-800 tracking-tight">09:41</span>
                             <div className="flex items-center gap-1.5">
-                                <SignalIcon />
-                                <div className="w-[18px] h-[9px] border-[1px] border-emerald-900 rounded-[2px] p-[1.2px] flex">
-                                    <div className="w-[85%] h-full bg-emerald-900 rounded-px" />
+                                <SignalIcon color="#0f172a" />
+                                <div className="w-[18px] h-[9px] border-[1px] border-slate-900 rounded-[2px] p-[1.2px] flex">
+                                    <div className="w-[85%] h-full bg-slate-900 rounded-px" />
                                 </div>
                             </div>
                         </div>
+                        {/* Dynamic Island */}
                         <div className="absolute top-[10px] left-1/2 -translate-x-1/2 w-[84px] h-[25px] bg-black rounded-[14px]" />
                     </div>
 
-                    <StaminaInternalUI animKey={animKey} />
+                    <StaminaScreenUI />
 
                     <div 
                         className="absolute inset-0 z-[50] pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-700"
@@ -179,9 +203,10 @@ export default function StaminaAppMockup({
                         }}
                     />
                 </div>
-            </div>
 
-            <FeatureBubbles isHovered={isSectionHovered} tiltTransform={tiltTransform} />
+                {/* ── FEATURE BUBBLES (MOVED INSIDE FOR MASKING) ── */}
+                <FeatureBubbles isHovered={isSectionHovered} tiltTransform={tiltTransform} />
+            </div>
         </div>
     );
 }

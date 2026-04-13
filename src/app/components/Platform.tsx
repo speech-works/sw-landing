@@ -588,55 +588,56 @@ export default function Platform() {
                     </div>
                   );
                 })}
+
+                {/* Interactive app mockups & content cards (Moved inside for masking) */}
+                {features.map((feature, index) => {
+                  const isActive = index === activeIndex;
+                  const isDark   = feature.isDark;
+                  return (
+                    <div
+                      key={`content-${feature.id}`}
+                      className={`absolute inset-0 flex flex-col justify-between p-8 md:p-12 transition-opacity duration-500 ease-in-out ${isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+                      style={{ zIndex: 20 }}
+                    >
+                      {/* Tag chip */}
+                      {isActive && (
+                        <div
+                          key={`tag-${feature.id}-${animKey}`}
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
+                            ${feature.tagBg} ${feature.tagBorder} ${isDark ? "text-white" : feature.iconColor}`}
+                          style={{ animation: "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both" }}
+                        >
+                          {feature.tagIcon} {feature.shortTitle}
+                        </div>
+                      )}
+
+                      {/* Dynamic mock UI */}
+                      <div className="absolute inset-0 pointer-events-none">
+                        {isActive && feature.renderUI(animKey, isHoveredStage, stageMousePos)}
+                      </div>
+
+                      {/* Bottom CTA (roadmap only) */}
+                      <div className="self-end mt-auto">
+                        {isDark && isActive && (
+                          <a
+                            key={`cta-${animKey}`}
+                            href="#roadmap"
+                            className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-brand flex items-center justify-center hover:bg-brand-50 transition-all transform hover:scale-110 shadow-2xl group/btn pointer-events-auto"
+                            style={{ animation: "platform-popIn 0.55s cubic-bezier(0.23,1,0.32,1) 0.5s both" }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                              className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform">
+                              <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                            </svg>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
 
-              {/* Overflowing content cards */}
-              {features.map((feature, index) => {
-                const isActive = index === activeIndex;
-                const isDark   = feature.isDark;
-                return (
-                  <div
-                    key={`content-${feature.id}`}
-                    className={`absolute inset-0 flex flex-col justify-between p-8 md:p-12 transition-opacity duration-500 ease-in-out ${isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-                    style={{ zIndex: 20 }}
-                  >
-                    {/* Tag chip */}
-                    {isActive && (
-                      <div
-                        key={`tag-${feature.id}-${animKey}`}
-                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
-                          ${feature.tagBg} ${feature.tagBorder} ${isDark ? "text-white" : feature.iconColor}`}
-                        style={{ animation: "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both" }}
-                      >
-                        {feature.tagIcon} {feature.shortTitle}
-                      </div>
-                    )}
-
-                    {/* Dynamic mock UI */}
-                    <div className="absolute inset-0 pointer-events-none">
-                      {isActive && feature.renderUI(animKey, isHoveredStage, stageMousePos)}
-                    </div>
-
-                    {/* Bottom CTA (roadmap only) */}
-                    <div className="self-end mt-auto">
-                      {isDark && isActive && (
-                        <a
-                          key={`cta-${animKey}`}
-                          href="#roadmap"
-                          className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-brand flex items-center justify-center hover:bg-brand-50 transition-all transform hover:scale-110 shadow-2xl group/btn pointer-events-auto"
-                          style={{ animation: "platform-popIn 0.55s cubic-bezier(0.23,1,0.32,1) 0.5s both" }}
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                            className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform">
-                            <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                          </svg>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
             </div>
           </div>
         </div>

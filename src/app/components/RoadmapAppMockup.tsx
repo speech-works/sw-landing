@@ -121,11 +121,8 @@ export default function RoadmapAppMockup({
     isSectionHovered?: boolean,
     externalMousePos?: { x: number, y: number }
 }) {
-    const rotateX = (18 - (externalMousePos.y * 11)); 
-    const rotateY = (28 - (externalMousePos.x * 13));
-    const rotateZ = (-6 - (externalMousePos.x * 4));
-
-    const tiltTransform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${isSectionHovered ? 1.05 : 0.95})`;
+    // STRAIGHT / NOT TILTED
+    const tiltTransform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${isSectionHovered ? 1.05 : 0.95})`;
 
     return (
         <div 
@@ -133,16 +130,20 @@ export default function RoadmapAppMockup({
             style={{ perspective: "3000px", transformStyle: "preserve-3d" }}
         >
             <div 
-                className="relative w-[240px] md:w-[260px] h-[500px] md:h-[540px] transition-transform duration-700 ease-out"
+                className="relative w-[230px] md:w-[240px] h-[440px] md:h-[480px] transition-transform duration-700 ease-out"
                 style={{ transformStyle: "preserve-3d", transform: tiltTransform }}
             >
                 <div 
-                    className="absolute inset-0 rounded-[3.5rem] bg-slate-900 shadow-[40px_80px_100px_rgba(0,0,0,0.3)] border-[6px] border-slate-800" 
+                    className="absolute inset-0 rounded-[3.5rem] bg-slate-900 shadow-[20px_40px_80px_rgba(0,0,0,0.35)] border-[6px] border-slate-800" 
                     style={{ transform: "translateZ(-10px)" }}
                 >
-                    <div className="absolute left-[-2px] h-4 w-[3px] top-[90px] bg-slate-800 rounded-l-sm" />
-                    <div className="absolute left-[-2px] h-10 w-[3px] top-[125px] bg-slate-800 rounded-l-sm" />
-                    <div className="absolute right-[-2px] h-14 w-[3px] top-[160px] bg-slate-800 rounded-r-sm" />
+                    {/* Left side: Action Button (Short), Volume Up, Volume Down */}
+                    <div className="absolute left-[-2px] top-[90px] w-[3px] h-4 bg-slate-800 rounded-l-sm border-y border-l border-white/20 shadow-[0_0_2px_rgba(255,255,255,0.1)]" />
+                    <div className="absolute left-[-2px] top-[125px] w-[3px] h-11 bg-slate-800 rounded-l-sm border-y border-l border-white/20 shadow-[0_0_2px_rgba(255,255,255,0.1)]" />
+                    <div className="absolute left-[-2px] top-[175px] w-[3px] h-11 bg-slate-800 rounded-l-sm border-y border-l border-white/20 shadow-[0_0_2px_rgba(255,255,255,0.1)]" />
+                    
+                    {/* Right side: Power Button (Long) */}
+                    <div className="absolute right-[-2px] top-[160px] w-[3px] h-14 bg-slate-800 rounded-r-sm border-y border-r border-white/20 shadow-[0_0_2px_rgba(255,255,255,0.1)]" />
                 </div>
 
                 <div 
@@ -172,9 +173,10 @@ export default function RoadmapAppMockup({
                         }}
                     />
                 </div>
-            </div>
 
-            <FeatureBubbles isHovered={isSectionHovered} tiltTransform={tiltTransform} />
+                {/* ── FEATURE BUBBLES (MOVED INSIDE FOR MASKING) ── */}
+                <FeatureBubbles isHovered={isSectionHovered} tiltTransform={tiltTransform} />
+            </div>
         </div>
     );
 }

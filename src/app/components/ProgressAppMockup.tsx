@@ -20,23 +20,30 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 // AMBIENT PARTICLES
 // -------------------------------------------------------
 
-const AmbientParticles = () => (
-    <div className="absolute inset-0 pointer-events-none overflow-visible">
-        {[...Array(6)].map((_, i) => (
-            <div 
-                key={i}
-                className="absolute w-2 h-2 rounded-full bg-white/40 blur-[2px] animate-float-particle"
-                style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                    transform: `translateZ(${Math.random() * 200 - 100}px)`,
-                    animationDelay: `${i * 1.5}s`,
-                    animationDuration: `${10 + i * 2}s`
-                }}
-            />
-        ))}
-    </div>
-);
+const AmbientParticles = () => {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+
+    if (!mounted) return null;
+
+    return (
+        <div className="absolute inset-0 pointer-events-none overflow-visible">
+            {[...Array(6)].map((_, i) => (
+                <div 
+                    key={i}
+                    className="absolute w-2 h-2 rounded-full bg-white/40 blur-[2px] animate-float-particle"
+                    style={{
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                        transform: `translateZ(${Math.random() * 200 - 100}px)`,
+                        animationDelay: `${i * 1.5}s`,
+                        animationDuration: `${10 + i * 2}s`
+                    }}
+                />
+            ))}
+        </div>
+    );
+};
 
 // -------------------------------------------------------
 // MAIN COMPONENT — IMMERSIVE 3D SHOWCASE
