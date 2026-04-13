@@ -151,7 +151,7 @@ function CenterPackRecommendationScreen() {
 
                 <div className="absolute inset-x-0 top-0 h-[392px] rounded-b-[24px] bg-black/34" />
 
-                <div className="absolute inset-x-0 bottom-0 overflow-hidden rounded-t-[32px] bg-[linear-gradient(180deg,#FFFCF9_0%,#FFF7ED_100%)] shadow-[0_-10px_24px_rgba(0,0,0,0.22)]">
+                <div className="absolute inset-x-0 bottom-0 z-20 overflow-hidden rounded-t-[32px] bg-[linear-gradient(180deg,#FFFCF9_0%,#FFF7ED_100%)] shadow-[0_-10px_24px_rgba(0,0,0,0.22)]">
                     <div className="absolute right-[-38px] top-[-22px] opacity-25">
                         <BoltIcon
                             color="#FFDABF"
