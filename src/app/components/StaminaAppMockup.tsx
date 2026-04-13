@@ -11,18 +11,18 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 );
 
 function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tiltTransform: string }) {
-    // Highly diverse, playful bubbles inspired by Pixar/Modern UI
+    // Clustered high at the top 20% or above
     const bubbles = [
-        { id: 1, type: "profile", label: "Elena", sub: "4.5 ⭐", color: "bg-white", angle: -20, radius: 140, z: 200, yOffset: -280 },
-        { id: 2, type: "speech", label: "Marseille", color: "bg-[#F28B44]", angle: -60, radius: 100, z: 120, yOffset: -220 },
-        { id: 3, type: "speech-dark", label: "Paris", color: "bg-black", angle: 60, radius: 110, z: 150, yOffset: -240 },
-        { id: 4, type: "eye", icon: "👁️", color: "bg-[#D9FD51]", angle: -100, radius: 120, z: 140, yOffset: -260 },
-        { id: 5, type: "currency", label: "+18€", color: "bg-black", angle: 110, radius: 90, z: 180, yOffset: -180 },
-        { id: 6, type: "currency-soft", label: "+5€", color: "bg-[#FFEBE5]", subColor: "text-orange-600", angle: 30, radius: 80, z: 160, yOffset: -200 },
-        { id: 7, type: "stamp", label: "TEAM", color: "bg-[#F7F7F7]", angle: -140, radius: 130, z: 100, yOffset: -190 },
-        { id: 8, type: "pill", label: "Exposure", color: "bg-white/90", icon: "📊", angle: -170, radius: 150, z: 190, yOffset: -230 },
-        { id: 9, type: "plus", icon: "＋", color: "bg-black", angle: 140, radius: 115, z: 130, yOffset: -250 },
-        { id: 10, type: "eye-dark", icon: "👁️", color: "bg-black", angle: 10, radius: 120, z: 110, yOffset: -150 },
+        { id: 1, type: "profile", label: "Elena", sub: "4.5 ⭐", color: "bg-white", angle: -20, radius: 140, z: 200, yOffset: -320 },
+        { id: 2, type: "speech", label: "Marseille", color: "bg-[#F28B44]", angle: -60, radius: 100, z: 120, yOffset: -280 },
+        { id: 3, type: "speech-dark", label: "Paris", color: "bg-black", angle: 60, radius: 110, z: 150, yOffset: -300 },
+        { id: 4, type: "eye", icon: "👁️", color: "bg-[#D9FD51]", angle: -100, radius: 120, z: 140, yOffset: -330 },
+        { id: 5, type: "currency", label: "+18€", color: "bg-black", angle: 110, radius: 90, z: 180, yOffset: -270 },
+        { id: 6, type: "currency-soft", label: "+5€", color: "bg-[#FFEBE5]", subColor: "text-orange-600", angle: 30, radius: 80, z: 160, yOffset: -290 },
+        { id: 7, type: "stamp", label: "TEAM", color: "bg-[#F7F7F7]", angle: -140, radius: 130, z: 100, yOffset: -260 },
+        { id: 8, type: "pill", label: "Exposure", color: "bg-white/90", icon: "📊", angle: -170, radius: 150, z: 190, yOffset: -310 },
+        { id: 9, type: "plus", icon: "＋", color: "bg-black", angle: 140, radius: 115, z: 130, yOffset: -340 },
+        { id: 10, type: "eye-dark", icon: "👁️", color: "bg-black", angle: 10, radius: 120, z: 110, yOffset: -250 },
     ];
 
     const snappyEase = "cubic-bezier(0.19, 1, 0.22, 1)";
@@ -99,47 +99,8 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
 
 function StaminaScreenUI() {
     return (
-        <div className="flex flex-col h-full bg-[#F9F7F2] font-sans p-6 pt-20 relative overflow-hidden">
-            {/* Header / Meta */}
-            <div className="absolute top-20 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                <div className="w-6 h-6 rounded-full bg-slate-200 overflow-hidden shadow-sm border border-white">
-                    <div className="w-full h-full bg-gradient-to-b from-indigo-500 to-indigo-700" />
-                </div>
-                <span className="text-[8px] font-bold text-slate-400 mt-1 uppercase tracking-widest">Biological Center</span>
-            </div>
-
-            {/* Central Typography - matches screenshot style */}
-            <div className="flex-1 flex flex-col items-center justify-center text-center mt-[-40px]">
-                <h2 className="text-[32px] md:text-[38px] font-black text-slate-900 leading-[0.95] tracking-tighter">
-                    Sustainable
-                    <br />
-                    Speech
-                    <br />
-                    Stamina.
-                </h2>
-                
-                {/* Floating Avatars on screen */}
-                <div className="absolute top-[45%] left-10 w-8 h-8 rounded-full bg-brand p-0.5 shadow-lg border border-white">
-                     <div className="w-full h-full rounded-full bg-indigo-500 overflow-hidden" />
-                </div>
-                <div className="absolute top-[60%] right-8 w-10 h-10 rounded-full bg-rose-400 p-0.5 shadow-lg border border-white">
-                     <div className="w-full h-full rounded-full bg-orange-400 overflow-hidden" />
-                </div>
-            </div>
-
-            {/* Bottom Input Area - matches screenshot style */}
-            <div className="mt-auto mb-2 flex items-center justify-between gap-3">
-                 <div className="flex-1 h-10 rounded-full bg-[#1e1b4b] flex items-center px-4">
-                     <span className="text-[10px] font-bold text-white/40">Secure Session Monitoring</span>
-                 </div>
-                 <div className="flex gap-2">
-                     <div className="w-5 h-5 flex items-center justify-center text-slate-900 opacity-50">❤️</div>
-                     <div className="w-5 h-5 flex items-center justify-center text-slate-900 opacity-50">🔒</div>
-                 </div>
-            </div>
-            
-            {/* Nav underline */}
-            <div className="w-12 h-1 bg-slate-900 rounded-full mx-auto mt-2" />
+        <div className="flex flex-col h-full bg-[#F9F7F2] font-sans relative overflow-hidden">
+            {/* Blank Screen - keeping only background */}
         </div>
     );
 }
