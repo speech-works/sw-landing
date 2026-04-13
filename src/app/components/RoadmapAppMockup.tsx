@@ -129,23 +129,34 @@ function CenterPackRecommendationScreen() {
                                 </div>
                             </div>
 
-                            <div className="mx-[-6px] mb-3 overflow-hidden rounded-[26px] bg-[#FFF7ED] text-center shadow-[0_-2px_12px_rgba(0,0,0,0.05)]">
-                                <div className="flex flex-col items-center px-8 pb-10 pt-8">
-                                    <div className="mb-5 text-[#F97316]">
-                                        <MicIcon className="h-[54px] w-[54px]" />
+                            <div className="mx-[-8px] mb-3 overflow-hidden rounded-[28px] border border-white/60 bg-[linear-gradient(180deg,#FFF9F2_0%,#FFF3E3_100%)] text-center shadow-[0_20px_42px_rgba(71,24,6,0.16),inset_0_1px_0_rgba(255,255,255,0.72)]">
+                                <div className="relative">
+                                    <div className="absolute -right-10 -top-10 h-[120px] w-[120px] rounded-full bg-[#F97316]/10 blur-2xl" />
+                                    <div className="absolute -left-8 bottom-6 h-[90px] w-[90px] rounded-full bg-white/55 blur-xl" />
+
+                                    <div className="relative flex flex-col items-center px-8 pb-11 pt-9">
+                                        <div className="mb-5 flex h-[74px] w-[74px] items-center justify-center rounded-[24px] bg-[linear-gradient(180deg,#FFF2E2_0%,#FFE3BC_100%)] shadow-[0_14px_28px_rgba(249,115,22,0.18)] ring-1 ring-white/80">
+                                            <div className="text-[#F97316]">
+                                                <MicIcon className="h-[40px] w-[40px]" />
+                                            </div>
+                                        </div>
+
+                                        <h4 className="mb-3 max-w-[230px] text-[24px] font-extrabold leading-[30px] tracking-[-0.28px] text-[#431407]">
+                                            The Elephant in the Room
+                                        </h4>
+                                        <p className="max-w-[220px] text-[15px] leading-[22px] text-[#6B7280]">
+                                            Let&apos;s defuse the bomb.
+                                        </p>
                                     </div>
-                                    <h4 className="mb-3 text-[24px] font-extrabold leading-[30px] tracking-[-0.24px] text-[#431407]">
-                                        The Elephant in the Room
-                                    </h4>
-                                    <p className="text-[15px] leading-[22px] text-[#6B7280]">
-                                        Let&apos;s defuse the bomb.
-                                    </p>
                                 </div>
-                                <div className="clinical-pack-trigger flex items-center justify-center gap-2 bg-[#FFEDD5] py-5">
-                                    <PlayIcon className="h-5 w-5" />
-                                    <span className="text-[16px] font-extrabold tracking-[0.5px] text-[#EA580C]">
-                                        Resume
-                                    </span>
+
+                                <div className="clinical-pack-trigger border-t border-[#F3DFC8] bg-[linear-gradient(180deg,#FFF1D9_0%,#FEE8C4_100%)] px-6 py-5">
+                                    <div className="mx-auto flex w-fit items-center gap-2 rounded-full bg-white/55 px-5 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                                        <PlayIcon className="h-5 w-5" />
+                                        <span className="text-[16px] font-extrabold tracking-[0.5px] text-[#EA580C]">
+                                            Resume
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
