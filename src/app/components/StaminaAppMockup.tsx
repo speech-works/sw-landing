@@ -11,16 +11,18 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 );
 
 function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tiltTransform: string }) {
-    // Exact diverse bubbles inspired by the screenshot
+    // Highly diverse, playful bubbles inspired by Pixar/Modern UI
     const bubbles = [
-        { id: 1, type: "profile", label: "Elena", sub: "4.5 ⭐", color: "bg-white", angle: -30, radius: 100, z: 180, yOffset: -190 },
-        { id: 2, type: "tag", label: "Heart Rate", color: "bg-orange-500", angle: -140, radius: 110, z: 140, yOffset: -210 },
-        { id: 3, type: "tag", label: "Stress", color: "bg-pink-500", angle: 130, radius: 120, z: 150, yOffset: -50 },
-        { id: 4, type: "icon-circle", icon: "👁️", color: "bg-yellow-400", angle: -80, radius: 140, z: 130, yOffset: -230 },
-        { id: 5, type: "stamp", color: "bg-emerald-400", angle: 170, radius: 80, z: 110, yOffset: -120 },
-        { id: 6, type: "price", label: "+12XP", color: "bg-[#FBE9E7]", angle: 45, radius: 95, z: 190, yOffset: -140 }, // Soft red tag
-        { id: 7, type: "circle-badge", label: "TEAM", color: "bg-yellow-200", angle: -170, radius: 130, z: 160, yOffset: -160 },
-        { id: 8, type: "tag-dark", label: "Focus", color: "bg-black", angle: -110, radius: 125, z: 140, yOffset: -180 },
+        { id: 1, type: "profile", label: "Elena", sub: "4.5 ⭐", color: "bg-white", angle: -20, radius: 140, z: 200, yOffset: -280 },
+        { id: 2, type: "speech", label: "Marseille", color: "bg-[#F28B44]", angle: -60, radius: 100, z: 120, yOffset: -220 },
+        { id: 3, type: "speech-dark", label: "Paris", color: "bg-black", angle: 60, radius: 110, z: 150, yOffset: -240 },
+        { id: 4, type: "eye", icon: "👁️", color: "bg-[#D9FD51]", angle: -100, radius: 120, z: 140, yOffset: -260 },
+        { id: 5, type: "currency", label: "+18€", color: "bg-black", angle: 110, radius: 90, z: 180, yOffset: -180 },
+        { id: 6, type: "currency-soft", label: "+5€", color: "bg-[#FFEBE5]", subColor: "text-orange-600", angle: 30, radius: 80, z: 160, yOffset: -200 },
+        { id: 7, type: "stamp", label: "TEAM", color: "bg-[#F7F7F7]", angle: -140, radius: 130, z: 100, yOffset: -190 },
+        { id: 8, type: "pill", label: "Exposure", color: "bg-white/90", icon: "📊", angle: -170, radius: 150, z: 190, yOffset: -230 },
+        { id: 9, type: "plus", icon: "＋", color: "bg-black", angle: 140, radius: 115, z: 130, yOffset: -250 },
+        { id: 10, type: "eye-dark", icon: "👁️", color: "bg-black", angle: 10, radius: 120, z: 110, yOffset: -150 },
     ];
 
     const snappyEase = "cubic-bezier(0.19, 1, 0.22, 1)";
@@ -31,30 +33,31 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
                 <div 
                     key={b.id}
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                    style={{ transformStyle: "preserve-3d", transform: tiltTransform, willChange: "transform", zIndex: 1000 }}
+                    style={{ transformStyle: "preserve-3d", transform: tiltTransform, willChange: "transform", zIndex: -10 }}
                 >
                     <div 
-                        className={`transition-all duration-[800ms] border border-white/20 overflow-hidden flex items-center shadow-[0_20px_60px_rgba(0,0,0,0.18)]
-                            ${b.type === 'profile'      ? 'w-24 h-12 rounded-2xl bg-white p-2 gap-2' : ''}
-                            ${b.type === 'tag'          ? 'px-4 py-1.5 rounded-full text-white font-bold' : ''}
-                            ${b.type === 'tag-dark'     ? 'px-4 py-1.5 rounded-lg text-white font-bold' : ''}
-                            ${b.type === 'icon-circle'  ? 'w-11 h-11 rounded-full flex items-center justify-center text-xl' : ''}
-                            ${b.type === 'stamp'        ? 'w-14 h-18 rounded-sm p-1.5 border-dashed border-2 border-white/40' : ''}
-                            ${b.type === 'price'        ? 'px-3 py-1 rounded-full text-orange-600 font-black border-red-100 bg-[#FBE9E7]' : ''}
-                            ${b.type === 'circle-badge' ? 'w-12 h-12 rounded-full border-2 border-black/10 flex flex-col items-center justify-center' : ''}
+                        className={`transition-all duration-[900ms] shadow-[0_15px_45px_rgba(0,0,0,0.12)] flex items-center justify-center
+                            ${b.type === 'profile'     ? 'w-28 h-12 rounded-2xl bg-white p-2 gap-2 border border-black/5' : ''}
+                            ${b.type.startsWith('speech') ? 'px-4 py-2 rounded-[1.2rem] text-white font-bold text-[10px]' : ''}
+                            ${b.type === 'eye'         ? 'w-12 h-12 rounded-full border-2 border-black/10' : ''}
+                            ${b.type === 'eye-dark'    ? 'w-9 h-9 rounded-full' : ''}
+                            ${b.type.startsWith('currency') ? 'px-3 py-1.5 rounded-xl font-black text-[10px]' : ''}
+                            ${b.type === 'stamp'        ? 'w-16 h-16 rounded-full border-[1.5px] border-black/10 flex flex-col items-center justify-center' : ''}
+                            ${b.type === 'pill'         ? 'px-4 py-2 rounded-full border border-black/5 gap-2' : ''}
+                            ${b.type === 'plus'         ? 'w-11 h-11 rounded-full text-white text-xl font-bold' : ''}
                         `}
                         style={{ 
-                            backgroundColor: (b.type === 'tag' || b.type === 'tag-dark' || b.type === 'icon-circle' || b.type === 'stamp' || b.type === 'circle-badge') ? b.color : undefined,
+                            backgroundColor: (b.type !== 'profile' && b.type !== 'pill') ? b.color : undefined,
                             transformStyle: "preserve-3d",
                             backfaceVisibility: "hidden",
                             transitionTimingFunction: snappyEase,
                             transform: `
-                                rotateZ(${isHovered ? b.angle : b.angle - 120}deg)
-                                translateX(${isHovered ? b.radius : 0}px)
+                                rotateZ(${isHovered ? b.angle : b.angle - 60}deg)
                                 translateY(${isHovered ? b.yOffset : 0}px)
-                                translateZ(${isHovered ? b.z : -350}px)
-                                rotateZ(${isHovered ? -b.angle : -(b.angle - 120)}deg)
-                                scale(${isHovered ? 1 : 0.3})
+                                translateX(${isHovered ? (b.angle > 0 ? 40 : -40) : 0}px)
+                                translateZ(${isHovered ? b.z : -100}px)
+                                rotateZ(${isHovered ? -b.angle : -(b.angle - 60)}deg)
+                                scale(${isHovered ? 1 : 0})
                             `,
                             opacity: isHovered ? 1 : 0,
                             willChange: "transform, opacity",
@@ -63,28 +66,30 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
                         {b.type === 'profile' && (
                             <>
                                 <div className="w-8 h-8 rounded-full bg-slate-200 shrink-0 overflow-hidden">
-                                     <div className="w-full h-full bg-gradient-to-tr from-brand to-rose-400" />
+                                     <div className="w-full h-full bg-gradient-to-tr from-orange-400 to-rose-400" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-[9px] font-black text-slate-900 leading-none">{b.label}</span>
-                                    <span className="text-[7px] font-bold text-slate-400 mt-0.5">{b.sub}</span>
+                                    <span className="text-[10px] font-black text-slate-900 leading-none">{b.label}</span>
+                                    <span className="text-[8px] font-bold text-slate-400 mt-0.5">{b.sub}</span>
                                 </div>
                             </>
                         )}
-                        {b.type === 'circle-badge' && (
-                            <span className="text-[6px] font-black leading-none text-center">TEAM<br/>WORK</span>
-                        )}
-                        {b.type === 'tag' && <span className="text-[9px] uppercase tracking-wider">{b.label}</span>}
-                        {b.type === 'tag-dark' && <span className="text-[9px] uppercase tracking-wider">{b.label}</span>}
-                        {b.type === 'price' && <span className="text-[9px] font-black uppercase text-brand">{b.label}</span>}
-                        {b.type === 'icon-circle' && <span>{b.icon}</span>}
                         {b.type === 'stamp' && (
-                            <div className="w-full h-full border border-white/20 rounded-xs flex flex-col gap-1 items-start justify-center">
-                                <div className="w-4 h-[1px] bg-white/40" />
-                                <div className="w-6 h-[1px] bg-white/40" />
-                                <div className="w-3 h-[1px] bg-white/40" />
-                            </div>
+                            <>
+                                <span className="text-[6px] font-black leading-none text-center opacity-40 uppercase tracking-tighter">Team</span>
+                                <span className="text-[8px] font-black leading-none text-center uppercase tracking-tighter">Pimpel</span>
+                            </>
                         )}
+                        {b.type === 'pill' && (
+                            <>
+                                <span className="text-xs">{b.icon}</span>
+                                <span className="text-[10px] font-bold text-slate-700">{b.label}</span>
+                            </>
+                        )}
+                        {b.type.startsWith('speech') && <span className="uppercase tracking-tight">{b.label}</span>}
+                        {b.type === 'currency' && <span className="text-white">{b.label}</span>}
+                        {b.type === 'currency-soft' && <span className={b.subColor}>{b.label}</span>}
+                        {(b.type === 'eye' || b.type === 'eye-dark' || b.type === 'plus') && <span>{b.icon}</span>}
                     </div>
                 </div>
             ))}

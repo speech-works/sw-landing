@@ -300,7 +300,7 @@ const features = [
     tagBorder: "border-emerald-200",
     activeBar: "bg-emerald-500",
     renderUI: (animKey: number, isHovered?: boolean, mousePos?: { x: number, y: number }) => (
-      <div className="md:translate-x-20 lg:translate-x-28 transition-transform duration-700">
+      <div className="md:translate-x-12 lg:translate-x-16 translate-y-32 md:translate-y-44 transition-transform duration-700">
         <StaminaAppMockup animKey={animKey} isSectionHovered={isHovered} externalMousePos={mousePos} />
       </div>
     ),
@@ -585,6 +585,13 @@ export default function Platform() {
                       >
                         {feature.bgIcon}
                       </div>
+
+                      {/* SUBMERGED MOCKUP (Stamina Only - Inside Masking) */}
+                      {feature.id === "stamina" && isActive && (
+                        <div className="absolute inset-x-0 bottom-0 top-0 pointer-events-none">
+                           {feature.renderUI(animKey, isHoveredStage, stageMousePos)}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -594,6 +601,24 @@ export default function Platform() {
               {features.map((feature, index) => {
                 const isActive = index === activeIndex;
                 const isDark   = feature.isDark;
+                
+                // Stamina is rendered inside for the submerged/masked effect
+                if (feature.id === "stamina" && isActive) {
+                   return (
+                     <div key={`content-stamina-nav`} className="absolute inset-0 flex flex-col justify-between p-8 md:p-12 z-40">
+                         {/* Tag chip only */}
+                         <div
+                            key={`tag-stamina-${animKey}`}
+                            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
+                              bg-white border-emerald-200 text-emerald-500`}
+                            style={{ animation: "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both" }}
+                          >
+                            {feature.tagIcon} {feature.shortTitle}
+                          </div>
+                     </div>
+                   );
+                }
+
                 return (
                   <div
                     key={`content-${feature.id}`}
