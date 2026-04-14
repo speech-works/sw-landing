@@ -307,7 +307,7 @@ export default function Roadmap() {
               >
                 <div className="absolute inset-0 overflow-hidden rounded-[inherit] pointer-events-none">
                   <video
-                    className="absolute inset-0 h-full w-full object-cover object-center opacity-[0.3] mix-blend-screen saturate-[1.05] contrast-[1.04]"
+                    className="absolute inset-0 h-full w-full object-cover object-[85%_50%] opacity-[0.3] mix-blend-screen saturate-[1.05] contrast-[1.04]"
                     autoPlay
                     muted
                     loop
