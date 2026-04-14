@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import InviteOnlyModal from "./InviteOnlyModal";
 
 export default function CTA() {
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+
   return (
     <>
       <section
@@ -194,14 +197,19 @@ export default function CTA() {
             className="premium-reveal w-full sm:w-auto"
             style={{ transitionDelay: "0.5s" }}
           >
-            <a
-              href="#download"
+            <button
+              type="button"
               id="rebel-btn"
+              onClick={() => setIsInviteModalOpen(true)}
               onMouseEnter={() => {
-                document.getElementById("download")?.classList.add("btn-hovered");
+                document
+                  .getElementById("download")
+                  ?.classList.add("btn-hovered");
               }}
               onMouseLeave={() => {
-                document.getElementById("download")?.classList.remove("btn-hovered");
+                document
+                  .getElementById("download")
+                  ?.classList.remove("btn-hovered");
               }}
               className="dimension-btn-wrap relative z-30 cursor-pointer pointer-events-auto"
             >
@@ -214,7 +222,7 @@ export default function CTA() {
                   className="invisible shrink-0"
                 />
                 <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm whitespace-nowrap text-center">
-                  Download Speechworks
+                  Get Speechworks
                 </span>
                 {/* Placeholder for right icon */}
                 <svg
@@ -224,10 +232,15 @@ export default function CTA() {
                   className="invisible shrink-0"
                 />
               </div>
-            </a>
+            </button>
           </div>
         </div>
       </section>
+
+      <InviteOnlyModal
+        isOpen={isInviteModalOpen}
+        onClose={() => setIsInviteModalOpen(false)}
+      />
     </>
   );
 }
