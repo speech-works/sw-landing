@@ -1,5 +1,6 @@
 import React from 'react';
 import LiveAppMockup from './LiveAppMockup';
+import { useMockDeviceTime } from './useMockDeviceTime';
 
 const HERO_FAN_SCREEN_KEYFRAMES = `
   @keyframes hero-fan-screen {
@@ -15,6 +16,8 @@ const HERO_FAN_SCREEN_KEYFRAMES = `
 `;
 
 export default function Hero() {
+  const timeStr = useMockDeviceTime("09:41");
+
   return (
     <>
       {/*  EXPERIMENTAL HERO SECTION: Dark Mode Cinematic Entrance  */}
@@ -118,7 +121,7 @@ export default function Hero() {
                                           <div className="w-full h-full rounded-[inherit] overflow-hidden relative bg-[#f9fafb]">
                                               <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_18%,rgba(255,255,255,0.9),rgba(255,255,255,0.22)_28%,transparent_46%),linear-gradient(180deg,#fff8f1_0%,#fff0e2_55%,#ffd7bc_100%)]" />
                                               <div className="absolute top-0 left-0 right-0 z-40 flex items-center justify-between px-6 pb-3 pt-6 text-[12px] font-bold text-slate-900">
-                                                  <span className="tracking-tight">09:41</span>
+                                                  <span className="tracking-tight">{timeStr}</span>
                                                   <div className="flex items-center gap-1.5">
                                                       <svg className="h-[10px] w-[17px]" viewBox="0 0 17 10" fill="currentColor">
                                                           <rect x="0" y="7" width="2.5" height="3" rx="0.5" />
