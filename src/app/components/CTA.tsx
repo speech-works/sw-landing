@@ -92,85 +92,41 @@ export default function CTA() {
                       opacity: 0.25;
                       transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), color 1s ease;
                   }
-                  
-                  /* Interaction on button affects fist */
+
                   .group\\/cta.btn-hovered .rebel-fist-animator {
                       transform: translateY(0px) scale(1.15) rotate(2deg);
                       opacity: 0.6;
-                      color: #D9692E; /* Deepens color slightly on hover */
+                      color: #D9692E;
                       transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), color 1s ease;
                   }
-
-                  /* THE DUAL-REALITY LENS BUTTON */
+                  
+                  /* Clean CTA button */
                   .dimension-btn-wrap {
                       border-radius: 9999px;
                       background: linear-gradient(135deg, #FF955E 0%, #D9692E 100%);
                       border: 1px solid rgba(255, 255, 255, 0.4);
                       box-shadow: 0 15px 35px -5px rgba(242, 128, 68, 0.4), inset 0 2px 4px rgba(255,255,255,0.4);
                       cursor: pointer;
-                      will-change: transform;
-                      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                      overflow: visible; 
+                      will-change: transform, box-shadow;
+                      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
                       isolation: isolate;
                       display: inline-flex;
                   }
 
                   .dimension-btn-wrap:hover {
-                      box-shadow: 0 20px 40px -5px rgba(242, 128, 68, 0.5), inset 0 2px 4px rgba(255,255,255,0.5);
+                      transform: translateY(-1px);
+                      box-shadow: 0 17px 30px -9px rgba(121, 76, 57, 0.22), inset 0 2px 4px rgba(255,255,255,0.42);
                   }
 
-                  /* Standard Premium Base Layer */
                   .base-layer {
                       color: #ffffff;
-                      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
+                      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
                       white-space: nowrap;
                       text-shadow: 0 2px 4px rgba(0,0,0,0.1);
                   }
 
                   .dimension-btn-wrap:hover .base-layer {
-                      transform: scale(0.96);
-                      opacity: 0.8;
-                  }
-
-                  /* The Dark Mode Rebel Lens */
-                  .lens-layer {
-                      position: absolute;
-                      inset: -1px; 
-                      border: 1px solid rgba(242, 128, 68, 0.5);
-                      border-radius: 9999px;
-                      z-index: 2;
-                      pointer-events: none;
-                      overflow: hidden; 
-                      
-                      /* Mask */
-                      clip-path: circle(0px at var(--btn-mouse-x, 50%) var(--btn-mouse-y, 50%));
-                      transition: clip-path 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-                      box-shadow: inset 0 0 30px rgba(0,0,0,1);
-                  }
-
-                  .dimension-btn-wrap:hover .lens-layer {
-                      clip-path: circle(120px at var(--btn-mouse-x, 50%) var(--btn-mouse-y, 50%));
-                      transition: clip-path 0.05s linear; 
-                  }
-
-                  .dimension-btn-wrap:active .lens-layer {
-                      clip-path: circle(1000px at var(--btn-mouse-x, 50%) var(--btn-mouse-y, 50%));
-                      transition: clip-path 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-                  }
-
-                  /* Inside the Dark Lens */
-                  .lens-content {
-                      position: absolute;
-                      inset: 0;
-                      color: #F28044;
-                      transform: scale(1.1); 
-                      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-                      white-space: nowrap;
-                      text-shadow: 0 0 15px rgba(242,128,68,0.4);
-                  }
-
-                  .dimension-btn-wrap:hover .lens-content {
-                      transform: scale(1.15) translateX(4px);
+                      transform: scale(0.992);
                   }
               `,
           }}
@@ -242,28 +198,13 @@ export default function CTA() {
               href="#download"
               id="rebel-btn"
               onMouseEnter={() => {
-                document.getElementById('download')?.classList.add('btn-hovered');
+                document.getElementById("download")?.classList.add("btn-hovered");
               }}
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty(
-                  "--btn-mouse-x",
-                  `${e.clientX - rect.left}px`,
-                );
-                e.currentTarget.style.setProperty(
-                  "--btn-mouse-y",
-                  `${e.clientY - rect.top}px`,
-                );
+              onMouseLeave={() => {
+                document.getElementById("download")?.classList.remove("btn-hovered");
               }}
-              onMouseLeave={(e) => {
-                document.getElementById('download')?.classList.remove('btn-hovered');
-                // Reset to center on exit
-                e.currentTarget.style.setProperty("--btn-mouse-x", `50%`);
-                e.currentTarget.style.setProperty("--btn-mouse-y", `50%`);
-              }}
-              className="magnetic-btn group/btn dimension-btn-wrap relative z-30 cursor-pointer pointer-events-auto"
+              className="dimension-btn-wrap relative z-30 cursor-pointer pointer-events-auto"
             >
-              {/* Standard Premium Base Layer */}
               <div className="base-layer w-full h-full flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-12 py-5 sm:py-6">
                 {/* Phantom icon on left to flawlessly counter-balance the right icon and force text to dead-center */}
                 <svg
@@ -282,36 +223,6 @@ export default function CTA() {
                   height="20"
                   className="invisible shrink-0"
                 />
-              </div>
-
-              {/* Dark Mode Rebel X-Ray Lens Layer */}
-              <div className="lens-layer bg-app-text">
-                <div className="lens-content w-full h-full flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-12 py-5 sm:py-6 relative">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    className="invisible shrink-0"
-                  />
-                  <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm drop-shadow-md whitespace-nowrap text-center">
-                    Download Speechworks
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-arrow-up-right drop-shadow-md shrink-0"
-                  >
-                    <path d="M7 17L17 7" />
-                    <path d="M7 7h10v10" />
-                  </svg>
-                </div>
               </div>
             </a>
           </div>

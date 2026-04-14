@@ -123,16 +123,6 @@ export default function Home() {
         });
     })();
 
-    // Attach interaction for the fist rising specifically on button hover
-    (function() {
-        const btn = document.getElementById('rebel-btn');
-        const cta = document.getElementById('download');
-        if(btn && cta) {
-            btn.addEventListener('mouseenter', () => cta.classList.add('btn-hovered'));
-            btn.addEventListener('mouseleave', () => cta.classList.remove('btn-hovered'));
-        }
-    })();
-    
     // Initialize Icons
     if ((window as any).lucide) {
         (window as any).lucide.createIcons();
