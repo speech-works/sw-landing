@@ -14,6 +14,17 @@ const HERO_FAN_SCREEN_KEYFRAMES = `
       opacity: 0.98;
     }
   }
+
+  @keyframes hero-fan-screen-right {
+    0%, 100% {
+      transform: translate3d(34px, 48px, -40px) rotate(7deg) scale(0.955);
+      opacity: 1;
+    }
+    50% {
+      transform: translate3d(102px, 22px, -40px) rotate(15deg) scale(0.985);
+      opacity: 1;
+    }
+  }
 `;
 
 export default function Hero() {
@@ -403,6 +414,213 @@ export default function Hero() {
                             </div>
                             <div className="absolute bottom-2 inset-x-0 flex justify-center z-50">
                               <div className="w-24 h-1 bg-black/10 rounded-full"></div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="absolute top-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                        <div className="absolute top-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                        <div className="absolute bottom-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                        <div className="absolute bottom-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                      </div>
+                    </div>
+
+                    <div
+                      className="absolute left-0 top-0 z-0"
+                      style={{
+                        animation:
+                          "hero-fan-screen-right 5.2s cubic-bezier(0.45, 0.05, 0.2, 1) infinite",
+                        transformOrigin: "bottom center",
+                        willChange: "transform, opacity",
+                      }}
+                    >
+                      <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px]">
+                        <div className="absolute inset-0 rounded-[3.5rem] bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.46),inset_0_0_2px_rgba(255,255,255,0.16)]"></div>
+
+                        <div className="absolute top-[160px] -left-[4px] w-[7px] h-24 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.45)]"></div>
+                        <div className="absolute top-[85px] -right-[4px] w-[7px] h-9 bg-gradient-to-l from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-r-[3px] border-y border-r border-white/10 shadow-[-1px_0_3px_rgba(0,0,0,0.45)]"></div>
+                        <div className="absolute top-[140px] -right-[4px] w-[7px] h-14 bg-gradient-to-l from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-r-[3px] border-y border-r border-white/10 shadow-[-1px_0_3px_rgba(0,0,0,0.45)]"></div>
+                        <div className="absolute top-[210px] -right-[4px] w-[7px] h-14 bg-gradient-to-l from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-r-[3px] border-y border-r border-white/10 shadow-[-1px_0_3px_rgba(0,0,0,0.45)]"></div>
+
+                        <div className="absolute inset-[4px] rounded-[3.25rem] bg-black shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] overflow-hidden">
+                          <div className="absolute top-4 inset-x-0 flex justify-center z-[60] pointer-events-none">
+                            <div className="w-[85px] h-[26px] bg-[#050505] rounded-[20px] shadow-[inset_0_0_1px_rgba(255,255,255,0.1)] flex items-center justify-end pr-4">
+                              <div className="w-1.5 h-1.5 rounded-full bg-[#1a1c2e] shadow-[0_0_2px_#3b3b4d]"></div>
+                            </div>
+                          </div>
+
+                          <div className="w-full h-full rounded-[inherit] overflow-hidden relative bg-[#090a1f]">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_72%,rgba(91,52,197,0.34),transparent_36%),radial-gradient(circle_at_50%_92%,rgba(89,31,176,0.28),transparent_42%),linear-gradient(180deg,#070818_0%,#121236_44%,#2a1365_100%)]" />
+                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),transparent_18%,transparent_100%)]" />
+                            <div className="absolute top-0 left-0 right-0 z-40 flex items-center justify-between px-6 pb-3 pt-6 text-[12px] font-bold text-white/95">
+                              <span className="tracking-tight">{timeStr}</span>
+                              <div className="flex items-center gap-1.5">
+                                <svg
+                                  className="h-[10px] w-[17px]"
+                                  viewBox="0 0 17 10"
+                                  fill="currentColor"
+                                >
+                                  <rect x="0" y="7" width="2.5" height="3" rx="0.5" />
+                                  <rect x="4" y="5" width="2.5" height="5" rx="0.5" />
+                                  <rect x="8" y="2.5" width="2.5" height="7.5" rx="0.5" />
+                                  <rect x="12" y="0" width="2.5" height="10" rx="0.5" />
+                                </svg>
+                                <svg
+                                  className="h-[11px] w-[15px]"
+                                  viewBox="0 0 15 11"
+                                  fill="currentColor"
+                                >
+                                  <path d="M7.5 11C8.32843 11 9 10.3284 9 9.5C9 8.67157 8.32843 8 7.5 8C6.67157 8 6 8.67157 6 9.5C6 10.3284 6.67157 11 7.5 11Z" />
+                                  <path
+                                    d="M12.11 6.39C10.884 5.16398 9.23199 4.4754 7.5 4.4754C5.76801 4.4754 4.11602 5.16398 2.89 6.39"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.2"
+                                    strokeLinecap="round"
+                                  />
+                                  <path
+                                    d="M14.61 3.89C12.7239 2.00392 10.166 0.945312 7.5 0.945312C4.83401 0.945312 2.27602 2.00392 0.39 3.89"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.2"
+                                    strokeLinecap="round"
+                                  />
+                                </svg>
+                                <div className="ml-0.5 flex items-center gap-0.5">
+                                  <div className="relative h-[10px] w-[20px] rounded-[2.5px] border-[1px] border-white/85 p-[1px]">
+                                    <div className="h-full w-[85%] rounded-[1px] bg-white/95"></div>
+                                  </div>
+                                  <div className="h-[4px] w-[1.5px] rounded-r-full bg-white/45"></div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="absolute inset-x-[18px] top-[78px] bottom-[18px]">
+                              <div className="absolute left-0 top-0 flex h-[38px] w-[38px] items-center justify-center rounded-[14px] border border-white/10 bg-white/8 shadow-[0_8px_18px_rgba(0,0,0,0.18)] backdrop-blur-sm">
+                                <svg
+                                  className="h-[18px] w-[18px] text-white"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2.6"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <path d="m15 18-6-6 6-6" />
+                                </svg>
+                              </div>
+
+                              <div className="absolute inset-x-[44px] top-[0px] text-center">
+                                <div className="text-[12px] font-medium uppercase tracking-[0.16em] text-white/60">
+                                  AI Conversation
+                                </div>
+                                <div className="mt-1 flex items-center justify-center gap-1.5 text-[18px] font-medium tracking-[-0.03em] text-white">
+                                  <span>Order a pizza</span>
+                                  <svg
+                                    className="mt-0.5 h-[10px] w-[10px] text-white/70"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                  >
+                                    <path d="M7 10l5 6 5-6z" />
+                                  </svg>
+                                </div>
+                              </div>
+
+                              <div className="absolute inset-x-0 top-[146px] flex justify-center">
+                                <div className="relative h-[292px] w-[292px]">
+                                  <div className="absolute inset-0 rounded-full border border-white/[0.04]" />
+                                  <div className="absolute inset-[34px] rounded-full border border-[#8a79d6]/20" />
+                                  <div className="absolute inset-[84px] rounded-full bg-[radial-gradient(circle_at_30%_24%,rgba(117,96,207,0.92),rgba(47,31,102,0.96)_55%,rgba(14,10,40,1)_100%)] shadow-[0_18px_38px_rgba(0,0,0,0.46),inset_0_1px_0_rgba(255,255,255,0.12)]">
+                                    <div className="absolute inset-[10px] rounded-full border border-white/10" />
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                      <svg
+                                        className="h-[58px] w-[58px]"
+                                        viewBox="0 0 64 64"
+                                        fill="none"
+                                      >
+                                        <path
+                                          d="M17 50 29 14c8.8-3.2 18.2-3.2 27 0L43 50c-8.1 2.3-17.9 2.3-26 0Z"
+                                          fill="white"
+                                        />
+                                        <path
+                                          d="M29.5 14.5c8.1-2.7 16.5-2.7 24.6 0"
+                                          stroke="#1B1248"
+                                          strokeWidth="3.2"
+                                          strokeLinecap="round"
+                                        />
+                                        <circle cx="35.5" cy="31" r="3.1" fill="#1B1248" />
+                                        <circle cx="28" cy="39" r="2.7" fill="#1B1248" />
+                                        <circle cx="41.5" cy="39" r="2.9" fill="#1B1248" />
+                                      </svg>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="absolute inset-x-0 top-[452px] text-center text-[17px] font-medium uppercase tracking-[0.28em] text-white/90">
+                                AI IS READY
+                              </div>
+
+                              <div className="absolute inset-x-[16px] bottom-[28px] flex items-end justify-center">
+                                <div className="relative flex h-[74px] w-full max-w-[252px] items-center justify-between rounded-full border border-[#7c68cf]/20 bg-[rgba(20,13,60,0.46)] px-[26px] shadow-[0_18px_34px_rgba(0,0,0,0.28)] backdrop-blur-md">
+                                  <button
+                                    type="button"
+                                    className="flex h-[42px] w-[42px] items-center justify-center rounded-full text-white/92"
+                                    aria-label="Mute microphone"
+                                  >
+                                    <svg
+                                      className="h-[23px] w-[23px]"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2.2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
+                                      <path d="M12 15a3 3 0 0 0 3-3V7a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3Z" />
+                                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                                      <path d="M12 19v3" />
+                                    </svg>
+                                  </button>
+
+                                  <div className="absolute left-1/2 top-1/2 flex h-[74px] w-[74px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#ef1f57] shadow-[0_12px_26px_rgba(239,31,87,0.42)]">
+                                    <svg
+                                      className="h-[34px] w-[34px] text-white"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2.2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
+                                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.07 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.61 2.62a2 2 0 0 1-.45 2.11L8 9.91a16 16 0 0 0 6.09 6.09l1.46-1.23a2 2 0 0 1 2.11-.45c.84.28 1.72.49 2.62.61A2 2 0 0 1 22 16.92Z" />
+                                      <path d="M4 20 20 4" />
+                                    </svg>
+                                  </div>
+
+                                  <button
+                                    type="button"
+                                    className="ml-auto flex h-[42px] w-[42px] items-center justify-center rounded-full text-white/78"
+                                    aria-label="Open conversation messages"
+                                  >
+                                    <svg
+                                      className="h-[23px] w-[23px]"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2.15"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
+                                      <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+                                    </svg>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="absolute bottom-2 inset-x-0 flex justify-center z-50">
+                              <div className="w-24 h-1 bg-white/35 rounded-full"></div>
                             </div>
                           </div>
                         </div>
