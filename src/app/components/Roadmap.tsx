@@ -400,14 +400,16 @@ export default function Roadmap() {
               >
                 <div className="absolute inset-0 overflow-hidden rounded-[inherit] pointer-events-none">
                   <div className="absolute inset-y-0 -left-[30%] w-[130%]">
-                    <Image
-                      src="/assets/gif/bridge_gap.gif"
-                      alt=""
-                      fill
-                      unoptimized
+                    <video
                       className="absolute inset-0 h-full w-full object-cover object-center opacity-[0.33] mix-blend-screen saturate-[1.02] contrast-[1.04]"
-                      sizes="(min-width: 900px) 50vw, 100vw"
-                    />
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                    >
+                      <source src="/assets/gif/bridge_gap_loop.mp4" type="video/mp4" />
+                    </video>
                   </div>
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_24%),linear-gradient(135deg,rgba(255,255,255,0.04),transparent_38%),linear-gradient(180deg,rgba(6,95,70,0.08)_0%,rgba(6,95,70,0.02)_100%)]" />
                 </div>
