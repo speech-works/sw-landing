@@ -55,28 +55,8 @@ export default function Hero() {
 
         {/*  Fascinating Background: Floating Gradient Orbs & Kinetic Text  */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover opacity-[0.42] saturate-[1.05] contrast-[1.08] brightness-[0.88]"
-          >
-            <source src="/assets/videos/group_avatars_vid2.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_28%,rgba(242,128,68,0.16),transparent_24%),linear-gradient(180deg,rgba(10,7,5,0.72)_0%,rgba(10,7,5,0.42)_28%,rgba(10,7,5,0.58)_62%,rgba(10,7,5,0.82)_100%)]"></div>
-
-          {/*  Glowing Orbs  */}
-          <div className="absolute top-[-5%] right-[-5%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] bg-brand/30 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen animate-pulse"></div>
-          <div
-            className="absolute bottom-[-10%] left-[-5%] w-[50vw] md:w-[30vw] h-[50vw] md:h-[30vw] bg-purple-600/20 rounded-full blur-[60px] md:blur-[100px] mix-blend-screen animate-pulse"
-            style={{ animationDelay: "2s" }}
-          ></div>
-
           {/*  Diagonal Kinetic Typography  */}
-          <div className="absolute inset-0 flex flex-col justify-center opacity-[0.04] md:opacity-[0.03] -rotate-6 scale-110 md:scale-125">
+          <div className="absolute inset-0 z-0 flex flex-col justify-center opacity-[0.04] md:opacity-[0.03] -rotate-6 scale-110 md:scale-125">
             <div className="marquee-container w-full mb-2 md:mb-4">
               <div
                 className="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-white"
@@ -120,6 +100,26 @@ export default function Hero() {
               </div>
             </div>
           </div>
+
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            className="absolute inset-0 z-[1] h-full w-full object-cover opacity-[0.42] saturate-[1.05] contrast-[1.08] brightness-[0.97]"
+          >
+            <source src="/assets/videos/group_avatars_vid2.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 z-[2] bg-[radial-gradient(circle_at_50%_28%,rgba(242,128,68,0.16),transparent_24%),linear-gradient(180deg,rgba(10,7,5,0.72)_0%,rgba(10,7,5,0.42)_28%,rgba(10,7,5,0.58)_62%,rgba(10,7,5,0.82)_100%)]"></div>
+
+          {/*  Glowing Orbs  */}
+          <div className="absolute z-[3] top-[-5%] right-[-5%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] bg-brand/30 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen animate-pulse"></div>
+          <div
+            className="absolute z-[3] bottom-[-10%] left-[-5%] w-[50vw] md:w-[30vw] h-[50vw] md:h-[30vw] bg-purple-600/20 rounded-full blur-[60px] md:blur-[100px] mix-blend-screen animate-pulse"
+            style={{ animationDelay: "2s" }}
+          ></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full relative z-10">
