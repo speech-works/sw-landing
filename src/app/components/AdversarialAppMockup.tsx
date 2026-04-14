@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useMockDeviceTime } from "./useMockDeviceTime";
 
 // -------------------------------------------------------
 // ICONS
@@ -313,6 +314,8 @@ export default function AdversarialAppMockup({
     isSectionHovered?: boolean,
     externalMousePos?: { x: number, y: number }
 }) {
+    const timeStr = useMockDeviceTime("09:41");
+
     // OPPOSITE TILT
     const rotateX = (18 - (externalMousePos.y * 11)); 
     const rotateY = (28 - (externalMousePos.x * 13));
@@ -382,7 +385,7 @@ export default function AdversarialAppMockup({
                     {/* Status Bar & Dynamic Island (Pinned) */}
                     <div className="absolute top-0 inset-x-0 h-14 pointer-events-none z-[160] flex flex-col">
                         <div className="h-[32px] pt-1.5 px-8 flex items-center justify-between">
-                            <span className="text-[10px] font-bold text-slate-900 tracking-tight">9:41</span>
+                            <span className="text-[10px] font-bold text-slate-900 tracking-tight">{timeStr}</span>
                             <div className="flex items-center gap-1.5">
                                 <SignalIcon color="#0f172a" />
                                 <div className="w-[18px] h-[9px] border-[1px] border-slate-900 rounded-[2px] p-[1.2px] flex">

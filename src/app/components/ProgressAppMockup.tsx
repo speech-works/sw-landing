@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import MoodCarousel from "./MoodCarousel";
 import ProgressReportUI from "./ProgressReportUI";
+import { useMockDeviceTime } from "./useMockDeviceTime";
 
 // -------------------------------------------------------
 // ICONS
@@ -59,6 +60,7 @@ export default function ProgressAppMockup({
     externalMousePos?: { x: number, y: number }
 }) {
     const containerRef = useRef<HTMLDivElement>(null);
+    const timeStr = useMockDeviceTime("23:05");
 
     // COMBINE LOCAL TILT WITH GLOBAL STAGE TILT
     // We use externalMousePos which is stable (-1 to 1)
@@ -152,7 +154,7 @@ export default function ProgressAppMockup({
                     {/* Status Bar & Dynamic Island (Pinned) */}
                     <div className="absolute top-0 inset-x-0 h-14 pointer-events-none z-[160]">
                         <div className="h-[32px] pt-1 px-8 flex items-center justify-between">
-                            <span className="text-[10px] font-bold text-slate-900 tracking-tight">23:05</span>
+                            <span className="text-[10px] font-bold text-slate-900 tracking-tight">{timeStr}</span>
                             <div className="flex items-center gap-1.5">
                                 <SignalIcon />
                                 <div className="w-[18px] h-[9px] border-[1px] border-slate-900 rounded-[2px] p-[1.2px] flex">

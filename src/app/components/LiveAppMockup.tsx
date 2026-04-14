@@ -179,22 +179,6 @@ const PieChart = ({ className }: { className?: string }) => (
     <path d="M22 12A10 10 0 0 0 12 2v10z" />
   </svg>
 );
-const RefreshCw = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="23 4 23 10 17 10" />
-    <polyline points="1 20 1 14 7 14" />
-    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
-  </svg>
-);
 
 const AnimatedTherapistFace = () => (
   <svg
@@ -321,7 +305,11 @@ const AnimatedTherapistFace = () => (
   </svg>
 );
 
-export default function LiveAppMockup() {
+export default function LiveAppMockup({
+  disableVerticalPan = false,
+}: {
+  disableVerticalPan?: boolean;
+}) {
   const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState(new Date());
 
@@ -397,7 +385,7 @@ export default function LiveAppMockup() {
       <div className="flex-1 overflow-hidden relative pt-20 mask-fade-edges rounded-b-[inherit] isolate z-0">
         {/* Animated Scroll Wrapper - Increased offset for spacious top UI */}
         <div
-          className={`w-full flex flex-col gap-3 px-3 absolute inset-0 ${mounted ? "animate-app-pan" : ""}`}
+          className={`w-full flex flex-col gap-3 px-3 absolute inset-0 ${mounted && !disableVerticalPan ? "animate-app-pan" : ""}`}
           style={{ top: 52 }}
         >
           {/* Header */}
@@ -589,7 +577,7 @@ export default function LiveAppMockup() {
                 Bouncing Back (The Post-Block Reset)
               </h3>
               <p className="text-[10px] text-white/90 leading-snug max-w-[95%] mb-2">
-                Sever the emotional tie to a bad block so it doesn't ruin your
+                Sever the emotional tie to a bad block so it doesn&apos;t ruin your
                 day.
               </p>
 

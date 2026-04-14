@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
+import { useMockDeviceTime } from "./useMockDeviceTime";
 
 const SignalIcon = ({ color = "#1E293B" }) => (
     <svg viewBox="0 0 17 12" fill={color} className="h-[10px] w-[14px]">
@@ -743,6 +744,7 @@ function BlankPhoneMockup({
     className = "",
     style,
     screenContent,
+    timeStr,
     screenDepth = 10,
     useBareScreenSurface = false,
     flattenHardwareLayers = false,
@@ -750,6 +752,7 @@ function BlankPhoneMockup({
     className?: string;
     style: CSSProperties;
     screenContent?: ReactNode;
+    timeStr: string;
     screenDepth?: number;
     useBareScreenSurface?: boolean;
     flattenHardwareLayers?: boolean;
@@ -823,7 +826,7 @@ function BlankPhoneMockup({
 
                 <div className="pointer-events-none absolute inset-x-0 top-0 z-[160] h-14">
                     <div className="flex h-[32px] items-center justify-between px-8 pt-1">
-                        <span className="text-[10px] font-bold tracking-tight text-slate-900">23:05</span>
+                        <span className="text-[10px] font-bold tracking-tight text-slate-900">{timeStr}</span>
                         <div className="flex items-center gap-1.5">
                             <SignalIcon />
                             <div className="flex h-[9px] w-[18px] rounded-[2px] border-[1px] border-slate-900 p-[1.2px]">
@@ -850,6 +853,7 @@ export default function RoadmapAppMockup({
     isSectionHovered?: boolean;
     externalMousePos?: { x: number; y: number };
 }) {
+    const timeStr = useMockDeviceTime("23:05");
     const rotateX = 18 - externalMousePos.y * 10;
     const rotateY = -26 + externalMousePos.x * 12;
     const rotateZ = 6 + externalMousePos.x * 3;
@@ -875,6 +879,7 @@ export default function RoadmapAppMockup({
                     style={{
                         transform: `rotateX(${rotateX}deg) rotateY(${mirroredRotateY}deg) rotateZ(${mirroredRotateZ}deg) scale(${activeScale})`,
                     }}
+                    timeStr={timeStr}
                     screenContent={<LeftVideoPlayerScreen />}
                 />
 
@@ -883,6 +888,7 @@ export default function RoadmapAppMockup({
                     style={{
                         transform: `rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${activeScale})`,
                     }}
+                    timeStr={timeStr}
                     screenContent={<CenterPackRecommendationScreen />}
                 />
 
@@ -891,6 +897,7 @@ export default function RoadmapAppMockup({
                     style={{
                         transform: `rotateZ(${rotateZ}deg) scale(${activeScale})`,
                     }}
+                    timeStr={timeStr}
                     screenDepth={0}
                     useBareScreenSurface={true}
                     flattenHardwareLayers={true}

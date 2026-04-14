@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useMockDeviceTime } from "./useMockDeviceTime";
 
 const STAMINA_SCROLL_KEYFRAMES = `
 @keyframes stamina-energy-pulse {
@@ -539,7 +540,13 @@ function StaminaScreenUI({ timeStr }: { timeStr: string }) {
   );
 }
 
-function PhoneShell({ mousePos }: { mousePos: { x: number; y: number } }) {
+function PhoneShell({
+  mousePos,
+  timeStr,
+}: {
+  mousePos: { x: number; y: number };
+  timeStr: string;
+}) {
   return (
     <div
       className="relative h-[492px] w-[276px]"
@@ -588,7 +595,7 @@ function PhoneShell({ mousePos }: { mousePos: { x: number; y: number } }) {
         style={{ transform: "translateZ(1px)" }}
       >
         <StaminaScreenBackground />
-        <StaminaScreenUI timeStr="20:22" />
+        <StaminaScreenUI timeStr={timeStr} />
 
         <div className="absolute top-[18px] left-1/2 -translate-x-1/2 w-[92px] h-[28px] bg-black rounded-full z-50">
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-20" />
@@ -619,6 +626,7 @@ export default function StaminaAppMockup({
 }) {
   const isHovered = isSectionHovered || false;
   const mousePos = externalMousePos || { x: 0, y: 0 };
+  const timeStr = useMockDeviceTime("20:22");
 
   const compositionTransform = `translateY(${
     isHovered ? "-6px" : "0px"
@@ -650,7 +658,7 @@ export default function StaminaAppMockup({
           }}
         >
           <div className="origin-center scale-[0.82] md:scale-[0.9]">
-            <PhoneShell mousePos={mousePos} />
+            <PhoneShell mousePos={mousePos} timeStr={timeStr} />
           </div>
         </div>
 

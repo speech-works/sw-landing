@@ -1,11 +1,25 @@
 import React from 'react';
 import LiveAppMockup from './LiveAppMockup';
 
+const HERO_FAN_SCREEN_KEYFRAMES = `
+  @keyframes hero-fan-screen {
+    0%, 100% {
+      transform: translate3d(-36px, 42px, -40px) rotate(-9deg) scale(0.96);
+      opacity: 0.82;
+    }
+    50% {
+      transform: translate3d(-108px, 18px, -40px) rotate(-18deg) scale(0.99);
+      opacity: 0.98;
+    }
+  }
+`;
+
 export default function Hero() {
   return (
     <>
       {/*  EXPERIMENTAL HERO SECTION: Dark Mode Cinematic Entrance  */}
           <section className="relative min-h-[90vh] md:min-h-screen flex items-center pt-28 md:pt-32 pb-16 md:pb-20 z-10 bg-[#0A0705] overflow-hidden">
+              <style>{HERO_FAN_SCREEN_KEYFRAMES}</style>
               
               {/*  Fascinating Background: Floating Gradient Orbs & Kinetic Text  */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -75,7 +89,82 @@ export default function Hero() {
       
                       {/*  Realistic Mobile Frame (Ultra-Refined)  */}
                       <div className="lg:col-span-4 hidden lg:flex justify-end reveal reveal-delay-3 relative active">
+                          <div className="relative h-[305px] w-[150px] xl:h-[330px] xl:w-[162.5px]">
+                          <div className="absolute right-0 top-0 origin-top-right scale-50">
                           <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px] animate-float transform rotate-[-2deg] hover:rotate-0 transition-transform duration-700 hover:scale-105 group">
+                              <div
+                                  className="absolute left-0 top-0 z-0"
+                                  style={{
+                                      animation: "hero-fan-screen 5.6s cubic-bezier(0.45, 0.05, 0.2, 1) infinite",
+                                      transformOrigin: "bottom center",
+                                      willChange: "transform, opacity",
+                                  }}
+                              >
+                                  <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px]">
+                                      <div className="absolute inset-0 rounded-[3.5rem] bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),inset_0_0_2px_rgba(255,255,255,0.2)]"></div>
+
+                                      <div className="absolute top-[85px] -left-[4px] w-[7px] h-9 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
+                                      <div className="absolute top-[140px] -left-[4px] w-[7px] h-14 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
+                                      <div className="absolute top-[210px] -left-[4px] w-[7px] h-14 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
+                                      <div className="absolute top-[160px] -right-[4px] w-[7px] h-24 bg-gradient-to-l from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-r-[3px] border-y border-l border-white/10 shadow-[-1px_0_3px_rgba(0,0,0,0.5)]"></div>
+
+                                      <div className="absolute inset-[4px] rounded-[3.25rem] bg-black shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] overflow-hidden">
+                                          <div className="absolute top-4 inset-x-0 flex justify-center z-[60] pointer-events-none">
+                                              <div className="w-[85px] h-[26px] bg-[#050505] rounded-[20px] shadow-[inset_0_0_1px_rgba(255,255,255,0.1)] flex items-center justify-end pr-4">
+                                                  <div className="w-1.5 h-1.5 rounded-full bg-[#1a1c2e] shadow-[0_0_2px_#3b3b4d]"></div>
+                                              </div>
+                                          </div>
+
+                                          <div className="w-full h-full rounded-[inherit] overflow-hidden relative bg-[#f9fafb]">
+                                              <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_18%,rgba(255,255,255,0.9),rgba(255,255,255,0.22)_28%,transparent_46%),linear-gradient(180deg,#fff8f1_0%,#fff0e2_55%,#ffd7bc_100%)]" />
+                                              <div className="absolute top-0 left-0 right-0 z-40 flex items-center justify-between px-6 pb-3 pt-6 text-[12px] font-bold text-slate-900">
+                                                  <span className="tracking-tight">09:41</span>
+                                                  <div className="flex items-center gap-1.5">
+                                                      <svg className="h-[10px] w-[17px]" viewBox="0 0 17 10" fill="currentColor">
+                                                          <rect x="0" y="7" width="2.5" height="3" rx="0.5" />
+                                                          <rect x="4" y="5" width="2.5" height="5" rx="0.5" />
+                                                          <rect x="8" y="2.5" width="2.5" height="7.5" rx="0.5" />
+                                                          <rect x="12" y="0" width="2.5" height="10" rx="0.5" />
+                                                      </svg>
+                                                      <svg className="h-[11px] w-[15px]" viewBox="0 0 15 11" fill="currentColor">
+                                                          <path d="M7.5 11C8.32843 11 9 10.3284 9 9.5C9 8.67157 8.32843 8 7.5 8C6.67157 8 6 8.67157 6 9.5C6 10.3284 6.67157 11 7.5 11Z" />
+                                                          <path d="M12.11 6.39C10.884 5.16398 9.23199 4.4754 7.5 4.4754C5.76801 4.4754 4.11602 5.16398 2.89 6.39" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                                                          <path d="M14.61 3.89C12.7239 2.00392 10.166 0.945312 7.5 0.945312C4.83401 0.945312 2.27602 2.00392 0.39 3.89" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                                                      </svg>
+                                                      <div className="ml-0.5 flex items-center gap-0.5">
+                                                          <div className="relative h-[10px] w-[20px] rounded-[2.5px] border-[1px] border-black/80 p-[1px]">
+                                                              <div className="h-full w-[85%] rounded-[1px] bg-black/90"></div>
+                                                          </div>
+                                                          <div className="h-[4px] w-[1.5px] rounded-r-full bg-black/40"></div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div className="absolute inset-x-[22px] top-[76px] h-[94px] rounded-[26px] bg-gradient-to-br from-[#ff9d63] to-[#f97316] shadow-[0_14px_28px_rgba(249,115,22,0.2)] opacity-95">
+                                                  <div className="absolute left-[18px] top-[18px] h-[10px] w-[92px] rounded-full bg-white/35" />
+                                                  <div className="absolute left-[18px] top-[38px] h-[22px] w-[150px] rounded-full bg-white/90" />
+                                                  <div className="absolute left-[18px] top-[68px] h-[8px] w-[110px] rounded-full bg-white/35" />
+                                              </div>
+                                              <div className="absolute inset-x-[22px] top-[188px] grid grid-cols-2 gap-3">
+                                                  <div className="h-[124px] rounded-[24px] bg-white/88 shadow-[0_12px_24px_rgba(148,163,184,0.12)]" />
+                                                  <div className="h-[124px] rounded-[24px] bg-white/78 shadow-[0_12px_24px_rgba(148,163,184,0.08)]" />
+                                              </div>
+                                              <div className="absolute inset-x-[22px] bottom-[56px] h-[120px] rounded-[28px] bg-white/82 shadow-[0_16px_28px_rgba(15,23,42,0.08)]">
+                                                  <div className="absolute left-[18px] top-[18px] h-[12px] w-[118px] rounded-full bg-[#f97316]/20" />
+                                                  <div className="absolute left-[18px] top-[44px] h-[40px] w-[160px] rounded-[18px] bg-[#fff5eb]" />
+                                                  <div className="absolute right-[18px] bottom-[20px] h-[30px] w-[86px] rounded-full bg-[#3E2723]" />
+                                              </div>
+                                              <div className="absolute bottom-2 inset-x-0 flex justify-center z-50">
+                                                  <div className="w-24 h-1 bg-black/10 rounded-full"></div>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div className="absolute top-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                                      <div className="absolute top-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                                      <div className="absolute bottom-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                                      <div className="absolute bottom-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                                  </div>
+                              </div>
                               
                               {/* External Chassis (Titanium/Metal Edge) */}
                               <div className="absolute inset-0 rounded-[3.5rem] bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),inset_0_0_2px_rgba(255,255,255,0.2)]"></div>
@@ -106,7 +195,7 @@ export default function Hero() {
                                       {/* Screen Glass Reflection Overlay */}
                                       <div className="absolute inset-0 z-50 pointer-events-none bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.08] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                       
-                                      <LiveAppMockup />
+                                      <LiveAppMockup disableVerticalPan />
                                       
                                       {/* Home Indicator */}
                                       <div className="absolute bottom-2 inset-x-0 flex justify-center z-50">
@@ -120,6 +209,8 @@ export default function Hero() {
                               <div className="absolute top-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
                               <div className="absolute bottom-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
                               <div className="absolute bottom-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                          </div>
+                          </div>
                           </div>
                       </div>
                   </div>
