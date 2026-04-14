@@ -93,6 +93,26 @@ const CheckIcon = ({ color = "#FFFFFF", className = "" }) => (
     </svg>
 );
 
+const ShieldCheckIcon = ({ color = "#FFFFFF", className = "" }) => (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+        <path
+            d="M12 2.8 19 5.6v5.7c0 4.7-2.8 8.7-7 9.9-4.2-1.2-7-5.2-7-9.9V5.6l7-2.8Z"
+            fill={color}
+            fillOpacity="0.18"
+            stroke={color}
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+        />
+        <path
+            d="M8.5 12.2 10.8 14.5 15.6 9.7"
+            stroke={color}
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
+
 const BackChevronIcon = ({ color = "#401B00", className = "" }) => (
     <svg viewBox="0 0 24 24" fill="none" className={className}>
         <path
@@ -527,53 +547,53 @@ function RightReflectionScreen() {
 
                 <div className="relative flex-1 pt-4">
                     <div className="space-y-3">
-                    <div className="rounded-[18px] border border-white/55 bg-[linear-gradient(180deg,#FFF8F1_0%,#FFF1E2_100%)] p-3 shadow-[0_10px_24px_rgba(71,24,6,0.12)]">
-                        <div className="mb-3 flex items-start justify-between gap-2">
-                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#5A2914]">
-                                Clarity of Concepts
+                        <div className="rounded-[18px] border border-white/55 bg-[linear-gradient(180deg,#FFF8F1_0%,#FFF1E2_100%)] p-3 shadow-[0_10px_24px_rgba(71,24,6,0.12)]">
+                            <div className="mb-3 flex items-start justify-between gap-2">
+                                <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#5A2914]">
+                                    Clarity of Concepts
+                                </div>
+                                <span className="rounded-[7px] bg-[#FFE6D2] px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#C36A2E]">
+                                    Required
+                                </span>
                             </div>
-                            <span className="rounded-[7px] bg-[#FFE6D2] px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#C36A2E]">
-                                Required
-                            </span>
+                            <ReflectionLikertRow selected={4} />
                         </div>
-                        <ReflectionLikertRow selected={4} />
+
+                        <div className="rounded-[18px] border border-white/55 bg-[linear-gradient(180deg,#FFF8F1_0%,#FFF1E2_100%)] p-3 shadow-[0_10px_24px_rgba(71,24,6,0.12)]">
+                            <div className="mb-3 flex items-start justify-between gap-2">
+                                <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#5A2914]">
+                                    Shift in Confidence
+                                </div>
+                                <span className="rounded-[7px] bg-[#FFE6D2] px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#C36A2E]">
+                                    Required
+                                </span>
+                            </div>
+                            <ReflectionLikertRow
+                                selected={4}
+                                minLabel="None"
+                                maxLabel="Significant"
+                            />
+                        </div>
+
+                        <div className="rounded-[18px] border border-white/55 bg-[linear-gradient(180deg,#FFF8F1_0%,#FFF1E2_100%)] p-3 shadow-[0_10px_24px_rgba(71,24,6,0.12)]">
+                            <div className="mb-3 flex items-start justify-between gap-2">
+                                <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#5A2914]">
+                                    Did this help you communicate better in real
+                                    life?
+                                </div>
+                                <span className="rounded-[7px] bg-[#FFE6D2] px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#C36A2E]">
+                                    Required
+                                </span>
+                            </div>
+                            <ReflectionLikertRow
+                                selected={5}
+                                minLabel="No"
+                                maxLabel="Yes"
+                            />
+                        </div>
                     </div>
 
-                    <div className="rounded-[18px] border border-white/55 bg-[linear-gradient(180deg,#FFF8F1_0%,#FFF1E2_100%)] p-3 shadow-[0_10px_24px_rgba(71,24,6,0.12)]">
-                        <div className="mb-3 flex items-start justify-between gap-2">
-                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#5A2914]">
-                                Shift in Confidence
-                            </div>
-                            <span className="rounded-[7px] bg-[#FFE6D2] px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#C36A2E]">
-                                Required
-                            </span>
-                        </div>
-                        <ReflectionLikertRow
-                            selected={4}
-                            minLabel="None"
-                            maxLabel="Significant"
-                        />
-                    </div>
-
-                    <div className="rounded-[18px] border border-white/55 bg-[linear-gradient(180deg,#FFF8F1_0%,#FFF1E2_100%)] p-3 shadow-[0_10px_24px_rgba(71,24,6,0.12)]">
-                        <div className="mb-3 flex items-start justify-between gap-2">
-                            <div className="flex-1 text-[10px] font-semibold leading-[14px] text-[#5A2914]">
-                                Did this help you communicate better in real
-                                life?
-                            </div>
-                            <span className="rounded-[7px] bg-[#FFE6D2] px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.45px] text-[#C36A2E]">
-                                Required
-                            </span>
-                        </div>
-                        <ReflectionLikertRow
-                            selected={5}
-                            minLabel="No"
-                            maxLabel="Yes"
-                        />
-                    </div>
-                    </div>
-
-                    <div className="absolute inset-x-[4px] bottom-[12px] z-10">
+                    <div className="reflection-complete-trigger absolute inset-x-[4px] bottom-[12px] z-10">
                         <div className="overflow-hidden rounded-[14px] shadow-[0_16px_28px_rgba(249,115,22,0.22)]">
                             <div className="flex items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(90deg,#FF9C4A_0%,#F97316_100%)] px-4 py-[13px]">
                                 <CheckIcon className="h-4.5 w-4.5" />
@@ -585,8 +605,136 @@ function RightReflectionScreen() {
                     </div>
                 </div>
 
+                <div className="reflection-breakthrough-overlay absolute inset-0 z-20 bg-[#0F172A]/38" />
+
+                <div className="reflection-breakthrough-modal absolute inset-x-[24px] top-[90px] z-30 overflow-hidden rounded-[22px] bg-white px-5 pb-5 pt-6 text-center shadow-[0_18px_42px_rgba(15,23,42,0.28)]">
+                    <button
+                        type="button"
+                        className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full"
+                    >
+                        <CloseIcon color="#9CA3AF" className="h-4 w-4" />
+                    </button>
+
+                    <div className="mx-auto mb-3 flex h-[48px] w-[48px] items-center justify-center rounded-[16px] bg-[linear-gradient(180deg,#A96649_0%,#E9863E_100%)] shadow-[0_10px_20px_rgba(118,53,22,0.24)]">
+                        <ShieldCheckIcon className="h-6.5 w-6.5" />
+                    </div>
+
+                    <div className="mb-1.5 text-[9px] font-extrabold uppercase tracking-[1.4px] text-[#A45F37]">
+                        Breakthrough Detected
+                    </div>
+
+                    <h4 className="mb-2.5 text-[16px] font-extrabold tracking-[-0.25px] text-[#431407]">
+                        Courage Evolved
+                    </h4>
+
+                    <div className="mx-auto mb-4 flex w-fit items-center justify-center rounded-[10px] bg-[linear-gradient(180deg,#F5E4D4_0%,#FCE8D2_100%)] px-3 py-[6px] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
+                        <span className="text-[12px] font-bold text-[#A15A31]">
+                            +2 Points
+                        </span>
+                    </div>
+
+                    <p className="mb-4 text-[11px] leading-[17px] text-[#6B7280]">
+                        Avoidance reduction targets met. Courage index has
+                        shifted by 2 points.
+                    </p>
+
+                    <div className="mb-4 flex items-center justify-between border-t border-black/[0.06] pt-3">
+                        <span className="text-[11px] font-medium text-[#9CA3AF]">
+                            New Score
+                        </span>
+                        <span className="text-[17px] font-bold text-[#431407]">
+                            10
+                        </span>
+                    </div>
+
+                    <div className="flex items-center justify-center rounded-[16px] bg-[linear-gradient(90deg,#8C5A43_0%,#D97A34_100%)] px-4 py-[12px] shadow-[0_10px_18px_rgba(118,53,22,0.22)]">
+                        <span className="text-[13px] font-semibold text-white">
+                            Acknowledged
+                        </span>
+                    </div>
+                </div>
+
                 <div className="absolute bottom-[8px] left-1/2 z-20 h-[5px] w-[88px] -translate-x-1/2 rounded-full bg-black/90" />
             </div>
+
+            <style>{`
+                .reflection-complete-trigger {
+                    transform-origin: center center;
+                    animation: reflection-complete-trigger-loop 7.6s infinite;
+                    will-change: transform;
+                }
+
+                .reflection-breakthrough-overlay {
+                    opacity: 0;
+                    pointer-events: none;
+                    animation: reflection-breakthrough-overlay-loop 7.6s infinite;
+                    will-change: opacity;
+                }
+
+                .reflection-breakthrough-modal {
+                    opacity: 0;
+                    transform: translateY(28px) scale(0.9);
+                    pointer-events: none;
+                    animation: reflection-breakthrough-modal-loop 7.6s infinite;
+                    will-change: opacity, transform;
+                }
+
+                @keyframes reflection-complete-trigger-loop {
+                    0%, 16%, 100% {
+                        transform: scale(1);
+                    }
+                    18% {
+                        transform: scale(0.96);
+                    }
+                    21% {
+                        transform: scale(1.02);
+                    }
+                    24% {
+                        transform: scale(1);
+                    }
+                    28%, 76% {
+                        transform: scale(0.985);
+                    }
+                    82%, 99% {
+                        transform: scale(1);
+                    }
+                }
+
+                @keyframes reflection-breakthrough-overlay-loop {
+                    0%, 24%, 100% {
+                        opacity: 0;
+                    }
+                    34%, 72% {
+                        opacity: 1;
+                    }
+                    84%, 99% {
+                        opacity: 0;
+                    }
+                }
+
+                @keyframes reflection-breakthrough-modal-loop {
+                    0%, 24%, 100% {
+                        opacity: 0;
+                        transform: translateY(28px) scale(0.9);
+                    }
+                    36% {
+                        opacity: 1;
+                        transform: translateY(0) scale(1.02);
+                    }
+                    44%, 70% {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                    }
+                    82% {
+                        opacity: 0;
+                        transform: translateY(20px) scale(0.94);
+                    }
+                    83%, 99% {
+                        opacity: 0;
+                        transform: translateY(20px) scale(0.94);
+                    }
+                }
+            `}</style>
         </div>
     );
 }
