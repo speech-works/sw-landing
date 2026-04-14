@@ -55,6 +55,19 @@ export default function Hero() {
 
         {/*  Fascinating Background: Floating Gradient Orbs & Kinetic Text  */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover opacity-[0.42] saturate-[1.05] contrast-[1.08] brightness-[0.88]"
+          >
+            <source src="/assets/videos/group_avatars_vid2.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_28%,rgba(242,128,68,0.16),transparent_24%),linear-gradient(180deg,rgba(10,7,5,0.72)_0%,rgba(10,7,5,0.42)_28%,rgba(10,7,5,0.58)_62%,rgba(10,7,5,0.82)_100%)]"></div>
+
           {/*  Glowing Orbs  */}
           <div className="absolute top-[-5%] right-[-5%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] bg-brand/30 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen animate-pulse"></div>
           <div
@@ -181,8 +194,8 @@ export default function Hero() {
 
             {/*  Realistic Mobile Frame (Ultra-Refined)  */}
             <div className="lg:col-span-4 hidden lg:flex justify-end reveal reveal-delay-3 relative active">
-              <div className="relative h-[305px] w-[150px] xl:h-[330px] xl:w-[162.5px]">
-                <div className="absolute right-0 top-0 origin-top-right scale-50">
+              <div className="relative h-[369px] w-[182px] xl:h-[399px] xl:w-[197px]">
+                <div className="absolute right-0 top-0 origin-top-right scale-[0.604]">
                   <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px] animate-float transform rotate-[-2deg] hover:rotate-0 transition-transform duration-700 hover:scale-105 group">
                     <div
                       className="absolute left-0 top-0 z-0"
