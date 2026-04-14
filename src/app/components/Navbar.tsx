@@ -1,4 +1,5 @@
-import React from 'react';
+import Image from "next/image";
+import React from "react";
 
 export default function Navbar() {
   return (
@@ -9,7 +10,15 @@ export default function Navbar() {
                   <div className="flex justify-between items-center backdrop-blur-2xl bg-white/90 border border-orange-900/10 rounded-full px-4 md:px-6 py-2.5 md:py-3 shadow-lg">
                       {/*  Logo  */}
                   <div className="flex items-center gap-2 md:gap-3">
-                      <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-brand flex items-center justify-center text-white font-bold text-xs md:text-sm">S</div>
+                      <div className="relative h-7 w-7 overflow-hidden rounded-full md:h-8 md:w-8">
+                        <Image
+                          src="/assets/logo.png"
+                          alt="Speechworks logo"
+                          fill
+                          className="object-cover"
+                          sizes="32px"
+                        />
+                      </div>
                       <span className="font-bold text-base md:text-lg tracking-tight text-app-text">Speechworks</span>
                   </div>
                   

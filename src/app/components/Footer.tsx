@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useState } from "react";
 import ContactModal from "./ContactModal";
 
@@ -38,8 +39,14 @@ export default function Footer() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 mb-16 md:mb-20">
             <div className="sm:col-span-2">
               <div className="flex items-center gap-3 mb-4 md:mb-6">
-                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-brand font-bold text-sm shadow-sm">
-                  S
+                <div className="relative h-8 w-8">
+                  <Image
+                    src="/assets/logo.png"
+                    alt="Speechworks logo"
+                    fill
+                    className="object-cover brightness-0 invert"
+                    sizes="32px"
+                  />
                 </div>
                 <span className="font-bold text-lg md:text-xl tracking-tight text-white">
                   Speechworks
