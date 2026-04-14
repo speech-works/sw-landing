@@ -28,6 +28,28 @@ export default function Roadmap() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    const handleOpenRoadmapPhase = (
+      event: Event
+    ) => {
+      const customEvent = event as CustomEvent<{ phase?: number }>;
+      if (customEvent.detail?.phase) {
+        setActivePhase(customEvent.detail.phase);
+      }
+    };
+
+    window.addEventListener(
+      "speechworks:open-roadmap-phase",
+      handleOpenRoadmapPhase as EventListener
+    );
+
+    return () =>
+      window.removeEventListener(
+        "speechworks:open-roadmap-phase",
+        handleOpenRoadmapPhase as EventListener
+      );
+  }, []);
+
   return (
     <>
       <section

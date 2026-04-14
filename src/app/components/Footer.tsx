@@ -6,6 +6,14 @@ import ContactModal from "./ContactModal";
 export default function Footer() {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
+  const handleCommunityClick = () => {
+    window.dispatchEvent(
+      new CustomEvent("speechworks:open-roadmap-phase", {
+        detail: { phase: 2 },
+      })
+    );
+  };
+
   return (
     <>
       <footer className="bg-brand pt-16 md:pt-20 pb-8 md:pb-10 relative z-10 text-white overflow-hidden">
@@ -65,7 +73,11 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a
+                    href="#roadmap"
+                    onClick={handleCommunityClick}
+                    className="hover:text-white transition-colors"
+                  >
                     Community
                   </a>
                 </li>
@@ -128,12 +140,12 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs font-bold tracking-widest uppercase text-brand-100 mt-4 gap-4 md:gap-0">
             <p>© 2026 SPEECHWORKS.</p>
             <div className="flex gap-6 md:gap-8">
-              <a href="#" className="hover:text-white transition-colors">
+              {/* <a href="#" className="hover:text-white transition-colors">
                 Privacy
               </a>
               <a href="#" className="hover:text-white transition-colors">
                 Terms
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
