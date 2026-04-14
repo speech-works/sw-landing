@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
 
@@ -307,14 +306,19 @@ export default function Roadmap() {
                 }`}
               >
                 <div className="absolute inset-0 overflow-hidden rounded-[inherit] pointer-events-none">
-                  <Image
-                    src="/assets/gif/agif.gif"
-                    alt=""
-                    fill
-                    unoptimized
-                    className="absolute inset-y-0 -right-[72%] h-full w-[150%] object-cover object-right opacity-[0.24] mix-blend-screen saturate-[1.05] contrast-[1.06]"
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                  />
+                  <video
+                    className="absolute inset-0 h-full w-full object-cover object-center opacity-[0.3] mix-blend-screen saturate-[1.05] contrast-[1.04]"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                  >
+                    <source
+                      src="/assets/gif/community_together_loop.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_32%,rgba(255,255,255,0.12),transparent_24%),linear-gradient(135deg,rgba(168,85,247,0.16),transparent_42%),linear-gradient(180deg,rgba(76,29,149,0.12)_0%,rgba(76,29,149,0.04)_100%)]" />
                 </div>
 
@@ -399,7 +403,7 @@ export default function Roadmap() {
                 }`}
               >
                 <div className="absolute inset-0 overflow-hidden rounded-[inherit] pointer-events-none">
-                  <div className="absolute inset-y-0 -left-[30%] w-[130%]">
+                  <div className="absolute -inset-y-[2%] -left-[32%] w-[134%]">
                     <video
                       className="absolute inset-0 h-full w-full object-cover object-center opacity-[0.33] mix-blend-screen saturate-[1.02] contrast-[1.04]"
                       autoPlay
