@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Speechworks | Elevate Your Voice</title>
+    
+    <!-- Fonts: Inter for clean UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com/"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest" crossorigin="anonymous"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            DEFAULT: '#F28044', 
+                            50: '#FFF5F0',
+                            100: '#FFE6D9',
+                            500: '#F28044',
+                            600: '#D9692E',
+                        },
+                        app: {
+                            bg: '#FFFAF5', 
+                            text: '#3F332D', 
+                            muted: '#8C7C73', 
+                            card: '#FFFFFF',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    letterSpacing: {
+                        tighter: '-.04em',
+                        tightest: '-.06em',
+                    },
+                    boxShadow: {
+                        'soft-orange': '0 10px 40px -10px rgba(242, 128, 68, 0.15)',
+                        'card-hover': '0 20px 40px -10px rgba(63, 51, 45, 0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFAF5;
+            color: #3F332D;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Ambient Grid Background - Light Theme */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(242, 128, 68, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(242, 128, 68, 0.05) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        @media (min-width: 768px) {
+            ::-webkit-scrollbar { width: 8px; }
+        }
+        ::-webkit-scrollbar-track { background: #FFFAF5; }
+        ::-webkit-scrollbar-thumb { background: #F28044; border-radius: 4px; opacity: 0.5; }
+        ::-webkit-scrollbar-thumb:hover { background: #D9692E; }
+
+        /* Awwwards Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* Infinite Marquee */
+        .marquee-container {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            width: 100%;
+        }
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            min-width: 100%;
+            animation: scroll 20s linear infinite;
+        }
+        .marquee-content.slow {
+            animation-duration: 40s;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+
+        /* Smooth fade on edges for Light Theme */
+        .mask-edges {
+            -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+        }
+
+        /* Interactive Spotlight Glow Effect */
+        .glow-card {
+            position: relative;
+        }
+        .glow-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(242, 128, 68, 0.04), transparent 40%);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: inherit;
+        }
+        .glow-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Float Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Custom animation for the sliding tracker effect */
+        @keyframes translate {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(80px); } 
+        }
+        @media (min-width: 1024px) {
+            @keyframes translate {
+                100% { transform: translateX(120px); } 
+            }
+        }
+        /* Hide scrollbar for the mobile dock */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="relative bg-app-bg text-app-text overflow-x-hidden max-w-[100vw]">
+
+    <!-- Ambient Grid & Soft Glows (For the light sections) -->
+    <div class="fixed inset-0 bg-grid pointer-events-none z-0"></div>
+    <div class="fixed top-[-20%] right-[-10%] w-[50%] h-[50%] bg-brand-500/10 blur-[120px] rounded-full pointer-events-none z-0 hidden md:block"></div>
+    <div class="fixed bottom-[10%] left-[-10%] w-[40%] h-[40%] bg-orange-300/10 blur-[100px] rounded-full pointer-events-none z-0 hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-500 py-2 md:py-4 shadow-sm" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+            <!-- Floating Island Navbar works on both dark hero and light body -->
+            <div class="flex justify-between items-center backdrop-blur-2xl bg-white/90 border border-orange-900/10 rounded-full px-4 md:px-6 py-2.5 md:py-3 shadow-lg">
+                <!-- Logo -->
+            <div class="flex items-center gap-2 md:gap-3">
+                <div class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-brand flex items-center justify-center text-white font-bold text-xs md:text-sm">S</div>
+                <span class="font-bold text-base md:text-lg tracking-tight text-app-text">Speechworks</span>
+            </div>
+            
+            <!-- Desktop Links -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#roadmap" class="text-xs font-semibold uppercase tracking-widest text-app-muted hover:text-brand transition-colors">Roadmap</a>
+                    <a href="#platform" class="text-xs font-semibold uppercase tracking-widest text-app-muted hover:text-brand transition-colors">Platform</a>
+                </div>
+
+                <!-- CTA (Visible on mobile now) -->
+                <div class="flex items-center">
+                    <a href="#download" class="bg-brand text-white hover:bg-brand-600 px-4 md:px-6 py-2 md:py-2.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg">
+                        Get Access
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- EXPERIMENTAL HERO SECTION: Dark Mode Cinematic Entrance -->
+    <section class="relative min-h-[90vh] md:min-h-screen flex items-center pt-28 md:pt-32 pb-16 md:pb-20 z-10 bg-[#0A0705] overflow-hidden">
+        
+        <!-- Fascinating Background: Floating Gradient Orbs & Kinetic Text -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <!-- Glowing Orbs -->
+            <div class="absolute top-[-5%] right-[-5%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] bg-brand/30 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen animate-pulse"></div>
+            <div class="absolute bottom-[-10%] left-[-5%] w-[50vw] md:w-[30vw] h-[50vw] md:h-[30vw] bg-purple-600/20 rounded-full blur-[60px] md:blur-[100px] mix-blend-screen animate-pulse" style="animation-delay: 2s;"></div>
+            
+            <!-- Diagonal Kinetic Typography -->
+            <div class="absolute inset-0 flex flex-col justify-center opacity-[0.04] md:opacity-[0.03] -rotate-6 scale-110 md:scale-125">
+                <div class="marquee-container w-full mb-2 md:mb-4">
+                    <div class="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-white" style="animation-duration: 30s;">
+                        <span>CHANGE THE CONVERSATION</span><span>CHANGE THE CONVERSATION</span>
+                    </div>
+                    <div class="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-white" style="animation-duration: 30s;" aria-hidden="true">
+                        <span>CHANGE THE CONVERSATION</span><span>CHANGE THE CONVERSATION</span>
+                    </div>
+                </div>
+                <div class="marquee-container w-full">
+                    <div class="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-transparent" style="-webkit-text-stroke: 2px white; animation-duration: 40s; animation-direction: reverse;">
+                        <span>SPEAK ON YOUR TERMS</span><span>SPEAK ON YOUR TERMS</span>
+                    </div>
+                    <div class="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-transparent" style="-webkit-text-stroke: 2px white; animation-duration: 40s; animation-direction: reverse;" aria-hidden="true">
+                        <span>SPEAK ON YOUR TERMS</span><span>SPEAK ON YOUR TERMS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full relative z-10">
+            <div class="grid lg:grid-cols-12 gap-8 md:gap-12 items-center">
+                
+                <!-- Left Content -->
+                <div class="lg:col-span-8 reveal active">
+                    <div class="inline-flex items-center gap-2 md:gap-3 px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl text-brand-100 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-6 md:mb-8">
+                        <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-brand animate-ping absolute"></span>
+                        <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-brand relative z-10 shadow-[0_0_10px_#F28044]"></span>
+                        A Movement For Every Voice
+                    </div>
+                    
+                    <div class="mb-6 md:mb-10 flex flex-col gap-1 md:gap-3 relative">
+                        <div class="text-[12vw] sm:text-[10vw] lg:text-[4.5rem] xl:text-[5.5rem] font-black tracking-tighter leading-none text-transparent select-none" style="-webkit-text-stroke: 1px rgba(255,255,255,0.4);">
+                            CHANGE THE
+                        </div>
+                        <h1 class="text-[13vw] sm:text-[11vw] lg:text-[5.5rem] xl:text-[6.5rem] font-black tracking-tighter leading-[0.9] text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+                            CONVERSATION.
+                        </h1>
+                    </div>
+                    
+                    <!-- Neon Separator -->
+                    <div class="w-10 md:w-12 h-1 bg-gradient-to-r from-brand to-purple-500 rounded-full mb-6 md:mb-8 reveal reveal-delay-1 shadow-[0_0_10px_#F28044] active"></div>
+                    
+                    <p class="text-lg sm:text-xl md:text-2xl text-white/70 leading-relaxed max-w-2xl font-light mb-8 md:mb-10 reveal reveal-delay-1 active">
+                        We are forging a comprehensive ecosystem—AI-powered practice, a united community, and expert therapists. Add your voice to the movement and <strong class="text-brand font-semibold drop-shadow-md">speak on your terms.</strong>
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 md:gap-5 reveal reveal-delay-2 w-full sm:w-auto active">
+                        <a href="#download" class="group relative flex items-center justify-center gap-3 px-6 md:px-8 py-3.5 md:py-4 rounded-full font-bold text-xs md:text-sm uppercase tracking-wider transition-all shadow-soft-orange overflow-hidden bg-brand border border-brand text-white hover:scale-105 w-full sm:w-auto">
+                            <div class="absolute inset-0 w-0 bg-white transition-all duration-[250ms] ease-out group-hover:w-full z-0"></div>
+                            <span class="relative z-10 group-hover:text-brand transition-colors">Start Your Journey</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3.5 h-3.5 md:w-4 md:h-4 relative z-10 group-hover:text-brand group-hover:translate-x-1 transition-all"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </a>
+                        <a href="#platform" class="flex items-center justify-center gap-3 bg-white/5 backdrop-blur-md border border-white/20 text-white px-6 md:px-8 py-3.5 md:py-4 rounded-full font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-white/10 hover:border-white/40 transition-all shadow-sm w-full sm:w-auto">
+                            Explore The Academy
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Visual -->
+                <div class="lg:col-span-4 hidden lg:flex justify-end reveal reveal-delay-3 relative active">
+                    <div class="w-72 xl:w-80 h-[450px] xl:h-[500px] rounded-[2.5rem] xl:rounded-[3rem] border border-white/20 bg-black/40 backdrop-blur-3xl p-6 relative overflow-hidden flex flex-col justify-between shadow-[0_20px_60px_-15px_rgba(242,128,68,0.3)] animate-float">
+                        <div class="absolute inset-0 bg-gradient-to-b from-brand/20 to-purple-500/10 mix-blend-overlay"></div>
+                        <div class="flex justify-between items-center z-10">
+                            <div class="w-10 xl:w-12 h-3 xl:h-4 rounded-full bg-white/20"></div>
+                            <div class="w-8 h-8 rounded-full bg-white/10 backdrop-blur-md shadow-sm flex items-center justify-center border border-white/20"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="mic" aria-hidden="true" class="lucide lucide-mic w-4 h-4 text-brand-100"><path d="M12 19v3"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><rect x="9" y="2" width="6" height="13" rx="3"></rect></svg></div>
+                        </div>
+                        <div class="z-10 space-y-4">
+                            <div class="w-full h-28 xl:h-32 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex items-end p-4">
+                                <div class="w-full flex items-end gap-1.5 h-12 xl:h-16">
+                                    <div class="w-full bg-white/20 rounded-t-md h-[40%] transition-all duration-1000"></div>
+                                    <div class="w-full bg-white/20 rounded-t-md h-[60%] transition-all duration-1000"></div>
+                                    <div class="w-full bg-white/20 rounded-t-md h-[50%] transition-all duration-1000"></div>
+                                    <div class="w-full bg-white/20 rounded-t-md h-[80%] transition-all duration-1000"></div>
+                                    <div class="w-full bg-brand rounded-t-md h-[95%] shadow-[0_0_15px_rgba(242,128,68,0.6)] animate-pulse"></div>
+                                </div>
+                            </div>
+                            <div class="w-3/4 h-3 xl:h-4 rounded bg-white/20 backdrop-blur-md"></div>
+                            <div class="w-1/2 h-3 xl:h-4 rounded bg-white/10 backdrop-blur-md"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Infinite Marquee -->
+    <div class="w-full border-b border-orange-900/5 bg-white py-4 md:py-6 overflow-hidden flex relative z-10 reveal mask-edges active">
+        <div class="marquee-container w-full">
+            <div class="marquee-content pr-4 md:pr-8 flex items-center gap-6 md:gap-8 text-app-muted font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm">
+                <span class="whitespace-nowrap">Adversarial AI</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="asterisk" aria-hidden="true" class="lucide lucide-asterisk w-3 h-3 md:w-4 md:h-4 text-brand-100 shrink-0"><path d="M12 6v12"></path><path d="M17.196 9 6.804 15"></path><path d="m6.804 9 10.392 6"></path></svg>
+                <span class="whitespace-nowrap">Speech Audit</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="asterisk" aria-hidden="true" class="lucide lucide-asterisk w-3 h-3 md:w-4 md:h-4 text-brand-100 shrink-0"><path d="M12 6v12"></path><path d="M17.196 9 6.804 15"></path><path d="m6.804 9 10.392 6"></path></svg>
+                <span class="whitespace-nowrap">Clinical Packs</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="asterisk" aria-hidden="true" class="lucide lucide-asterisk w-3 h-3 md:w-4 md:h-4 text-brand-100 shrink-0"><path d="M12 6v12"></path><path d="M17.196 9 6.804 15"></path><path d="m6.804 9 10.392 6"></path></svg>
+                <span class="whitespace-nowrap">Biological Stamina</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="asterisk" aria-hidden="true" class="lucide lucide-asterisk w-3 h-3 md:w-4 md:h-4 text-brand-100 shrink-0"><path d="M12 6v12"></path><path d="M17.196 9 6.804 15"></path><path d="m6.804 9 10.392 6"></path></svg>
+                <span class="whitespace-nowrap">Evidence Based</span>
+            </div>
+            <!-- Duplicate for seamless loop -->
+            <div class="marquee-content pr-4 md:pr-8 flex items-center gap-6 md:gap-8 text-app-muted font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm" aria-hidden="true">
+                <span class="whitespace-nowrap">Adversarial AI</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="asterisk" aria-hidden="true" class="lucide lucide-asterisk w-3 h-3 md:w-4 md:h-4 text-brand-100 shrink-0"><path d="M12 6v12"></path><path d="M17.196 9 6.804 15"></path><path d="m6.804 9 10.392 6"></path></svg>
+                <span class="whitespace-nowrap">Speech Audit</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="asterisk" aria-hidden="true" class="lucide lucide-asterisk w-3 h-3 md:w-4 md:h-4 text-brand-100 shrink-0"><path d="M12 6v12"></path><path d="M17.196 9 6.804 15"></path><path d="m6.804 9 10.392 6"></path></svg>
+                <span class="whitespace-nowrap">Clinical Packs</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="asterisk" aria-hidden="true" class="lucide lucide-asterisk w-3 h-3 md:w-4 md:h-4 text-brand-100 shrink-0"><path d="M12 6v12"></path><path d="M17.196 9 6.804 15"></path><path d="m6.804 9 10.392 6"></path></svg>
+                <span class="whitespace-nowrap">Biological Stamina</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="asterisk" aria-hidden="true" class="lucide lucide-asterisk w-3 h-3 md:w-4 md:h-4 text-brand-100 shrink-0"><path d="M12 6v12"></path><path d="M17.196 9 6.804 15"></path><path d="m6.804 9 10.392 6"></path></svg>
+                <span class="whitespace-nowrap">Evidence Based</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Roadmap (Awwwards Editorial Layout) -->
+    <section id="roadmap" class="py-20 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+            
+            <div class="mb-12 md:mb-16 reveal text-center lg:text-left active">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
+                    Master Plan
+                </div>
+                <h3 class="text-4xl sm:text-5xl md:text-7xl lg:text-[5rem] font-black tracking-tighter leading-[0.95] text-app-text">
+                    THE SPEECHWORKS<br>ROADMAP.
+                </h3>
+            </div>
+                
+            <div class="flex flex-col lg:flex-row gap-10 md:gap-16 items-stretch reveal reveal-delay-1 active">
+                
+                <!-- Left: Editorial Typography Menu -->
+                <div class="w-full lg:w-5/12 relative pl-6 md:pl-10 border-l-2 border-black/[0.04] flex flex-col gap-6 md:gap-10 lg:self-center">
+                    
+                    <!-- Nav 1 -->
+                    <button onclick="switchRoadmap(1)" id="rm-btn-1" class="text-left group outline-none w-full opacity-100 transition-opacity duration-300 relative cursor-pointer">
+                        <div id="rm-line-1" class="absolute left-[-27px] md:left-[-43px] -top-[2px] -bottom-[2px] w-[4px] bg-brand transition-all duration-500 opacity-100 scale-y-100 origin-top"></div>
+                        
+                        <span id="rm-label-1" class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1 md:mb-2 block text-brand transition-colors duration-300">01 / We Built</span>
+                        <h4 id="rm-title-1" class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-app-text transition-all duration-500">Forging the Tools</h4>
+                        <div id="rm-desc-1" class="overflow-hidden transition-all duration-500 opacity-100 mt-2 md:mt-4" style="max-height: 200px;">
+                            <p class="text-app-muted font-medium leading-relaxed pr-2 md:pr-4 text-sm md:text-base">A clinical-grade sandbox. Live and available now. We have built an AI-driven app that provides a safe environment for you to practice real-world scenarios and build confidence at your own pace.</p>
+                        </div>
+                    </button>
+
+                    <!-- Nav 2 -->
+                    <button onclick="switchRoadmap(2)" id="rm-btn-2" class="text-left group outline-none w-full opacity-50 hover:opacity-100 transition-opacity duration-300 relative cursor-pointer">
+                        <div id="rm-line-2" class="absolute left-[-27px] md:left-[-43px] -top-[2px] -bottom-[2px] w-[4px] bg-transparent transition-all duration-500 opacity-0 scale-y-0 origin-top"></div>
+                        
+                        <span id="rm-label-2" class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1 md:mb-2 block text-app-muted transition-colors duration-300">02 / We Are Building</span>
+                        <h4 id="rm-title-2" class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-transparent [-webkit-text-stroke:1px_rgba(63,51,45,0.3)] group-hover:[-webkit-text-stroke:1px_rgba(63,51,45,0.7)] transition-all duration-500">Uniting the Community</h4>
+                        <div id="rm-desc-2" class="overflow-hidden transition-all duration-500 opacity-0 mt-0" style="max-height: 0px;">
+                            <p class="text-app-muted font-medium leading-relaxed pr-2 md:pr-4 text-sm md:text-base">We are actively building a unified community space where users can share their experiences, celebrate victories, and find support from others who truly understand.</p>
+                        </div>
+                    </button>
+
+                    <!-- Nav 3 -->
+                    <button onclick="switchRoadmap(3)" id="rm-btn-3" class="text-left group outline-none w-full opacity-50 hover:opacity-100 transition-opacity duration-300 relative cursor-pointer">
+                        <div id="rm-line-3" class="absolute left-[-27px] md:left-[-43px] -top-[2px] -bottom-[2px] w-[4px] bg-transparent transition-all duration-500 opacity-0 scale-y-0 origin-top"></div>
+                        
+                        <span id="rm-label-3" class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1 md:mb-2 block text-app-muted transition-colors duration-300">03 / We Will Build</span>
+                        <h4 id="rm-title-3" class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-transparent [-webkit-text-stroke:1px_rgba(63,51,45,0.3)] group-hover:[-webkit-text-stroke:1px_rgba(63,51,45,0.7)] transition-all duration-500">Bridging the Gap</h4>
+                        <div id="rm-desc-3" class="overflow-hidden transition-all duration-500 opacity-0 mt-0" style="max-height: 0px;">
+                            <p class="text-app-muted font-medium leading-relaxed pr-2 md:pr-4 text-sm md:text-base">Bridging the gap between practice and professional therapy. Connect seamlessly with vetted Speech-Language Pathologists through a built-in portal.</p>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Right: The Glassmorphic Stage -->
+                <div class="w-full lg:w-7/12 relative h-[350px] sm:h-[400px] lg:h-[550px] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] bg-white ring-1 ring-black/5 mt-6 lg:mt-0">
+                    
+                    <!-- Canvas 1 -->
+                    <div id="rm-canvas-1" class="absolute inset-0 bg-gradient-to-br from-brand to-[#D9692E] p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto">
+                        <div class="absolute -right-4 md:-right-10 -bottom-10 md:-bottom-16 text-[12rem] md:text-[18rem] font-black text-white/10 leading-none select-none pointer-events-none">1</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="mic" aria-hidden="true" class="lucide lucide-mic absolute -right-4 md:right-10 top-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 text-white opacity-[0.05] -rotate-12 pointer-events-none"><path d="M12 19v3"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><rect x="9" y="2" width="6" height="13" rx="3"></rect></svg>
+                        
+                        <div class="relative z-10 flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] w-fit shadow-lg">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                            Live &amp; Available
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <h3 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter leading-[1.05]">A clinical-grade<br>sandbox.</h3>
+                        </div>
+                    </div>
+
+                    <!-- Canvas 2 -->
+                    <div id="rm-canvas-2" class="absolute inset-0 bg-gradient-to-br from-purple-500 to-purple-800 p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none">
+                        <div class="absolute -right-4 md:-right-10 -bottom-10 md:-bottom-16 text-[12rem] md:text-[18rem] font-black text-white/10 leading-none select-none pointer-events-none">2</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="users" aria-hidden="true" class="lucide lucide-users absolute -right-4 md:right-10 top-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 text-white opacity-[0.05] -rotate-12 pointer-events-none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        
+                        <div class="relative z-10 flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] w-fit shadow-lg">
+                            <span class="relative flex h-1.5 w-1.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+                            </span>
+                            Active Development
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <h3 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter leading-[1.05]">You never<br>walk alone.</h3>
+                        </div>
+                    </div>
+
+                    <!-- Canvas 3 -->
+                    <div id="rm-canvas-3" class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-800 p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none">
+                        <div class="absolute -right-4 md:-right-10 -bottom-10 md:-bottom-16 text-[12rem] md:text-[18rem] font-black text-white/10 leading-none select-none pointer-events-none">3</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="stethoscope" aria-hidden="true" class="lucide lucide-stethoscope absolute -right-4 md:right-10 top-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 text-white opacity-[0.05] -rotate-12 pointer-events-none"><path d="M11 2v2"></path><path d="M5 2v2"></path><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"></path><path d="M8 15a6 6 0 0 0 12 0v-3"></path><circle cx="20" cy="10" r="2"></circle></svg>
+                        
+                        <div class="relative z-10 flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] w-fit shadow-lg">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                            On the Horizon
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <h3 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter leading-[1.05]">Professional<br>care.</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Grid Features Section -->
+    <section id="platform" class="py-20 md:py-32 bg-white relative z-10 border-t border-orange-900/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 reveal text-center md:text-left active">
+                <div class="max-w-2xl mx-auto md:mx-0">
+                    <h2 class="text-brand font-bold tracking-[0.2em] uppercase text-[10px] md:text-xs mb-3 md:mb-4">Professional Speech Academy</h2>
+                    <h3 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter leading-none text-app-text">POWERED BY<br>ADVERSARIAL AI.</h3>
+                </div>
+                <p class="text-app-muted font-medium mt-4 md:mt-0 max-w-xs mx-auto md:mx-0 md:text-right text-sm md:text-base">A clinical-grade foundation designed to analyze, challenge, and elevate your speech patterns.</p>
+            </div>
+
+            <!-- Bento Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+                
+                <!-- Large Feature (Spans 2 cols) -->
+                <div class="md:col-span-2 bg-[#FFFAF5] border border-orange-100 rounded-[2rem] p-6 sm:p-8 md:p-10 relative overflow-hidden group reveal glow-card hover:-translate-y-1 hover:shadow-card-hover transition-all duration-500 active" style="--mouse-x: 463px; --mouse-y: 331.0730743408203px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trending-up" aria-hidden="true" class="lucide lucide-trending-up absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 w-40 h-40 md:w-56 md:h-56 text-brand opacity-10 -rotate-12 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"><path d="M16 7h6v6"></path><path d="m22 7-8.5 8.5-5-5L2 17"></path></svg>
+                    
+                    <div class="relative z-10 flex flex-col h-full justify-between min-h-[220px] md:min-h-[250px]">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-orange-100 text-brand text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-sm mb-6 md:mb-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="pie-chart" aria-hidden="true" class="lucide lucide-pie-chart w-3 md:w-3.5 h-3 md:h-3.5"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"></path><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path></svg> Growth Profile
+                        </div>
+                        <div>
+                            <h4 class="text-xl sm:text-2xl md:text-3xl font-bold text-app-text tracking-tight mb-2 md:mb-3">Pro-Level Progress Tracking</h4>
+                            <p class="text-app-muted font-medium max-w-lg text-sm md:text-base">A 5-axis Radar Chart tracking Mastery, Ease, Courage, Confidence, and Social Participation. Leveling up isn't just a number—it’s an expansion of capability. See your growth not as a fluency score, but as a resilience map.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Feature 1 -->
+                <div class="group bg-[#FFFAF5] border border-orange-100 rounded-[2rem] p-6 sm:p-8 relative overflow-hidden reveal reveal-delay-1 glow-card hover:-translate-y-1 hover:shadow-card-hover transition-all duration-500 flex flex-col justify-between min-h-[220px] active" style="--mouse-x: 100.671875px; --mouse-y: 253.40625px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cpu" aria-hidden="true" class="lucide lucide-cpu absolute -bottom-6 -right-6 w-32 h-32 md:w-40 md:h-40 text-purple-500 opacity-10 -rotate-12 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"><path d="M12 20v2"></path><path d="M12 2v2"></path><path d="M17 20v2"></path><path d="M17 2v2"></path><path d="M2 12h2"></path><path d="M2 17h2"></path><path d="M2 7h2"></path><path d="M20 12h2"></path><path d="M20 17h2"></path><path d="M20 7h2"></path><path d="M7 20v2"></path><path d="M7 2v2"></path><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="8" y="8" width="8" height="8" rx="1"></rect></svg>
+                    
+                    <div class="relative z-10 mb-6 md:mb-8">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-purple-100 text-purple-600 text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="zap" aria-hidden="true" class="lucide lucide-zap w-3 md:w-3.5 h-3 md:h-3.5"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg> Adversarial AI
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h4 class="text-lg md:text-xl font-bold text-app-text tracking-tight mb-2">The Pressure Test</h4>
+                        <p class="text-app-muted font-medium text-sm">Most tools are too "polite." Our AI mimics the friction of real life. It will rush you, misinterpret your silence, and challenge your composure.</p>
+                    </div>
+                </div>
+
+                <!-- Small Feature 2 -->
+                <div class="group bg-[#FFFAF5] border border-orange-100 rounded-[2rem] p-6 sm:p-8 relative overflow-hidden reveal glow-card hover:-translate-y-1 hover:shadow-card-hover transition-all duration-500 flex flex-col justify-between min-h-[220px] active" style="--mouse-x: 365px; --mouse-y: 9.51251220703125px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="battery-charging" aria-hidden="true" class="lucide lucide-battery-charging absolute -bottom-6 -right-6 w-32 h-32 md:w-40 md:h-40 text-emerald-500 opacity-10 -rotate-12 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"><path d="m11 7-3 5h4l-3 5"></path><path d="M14.856 6H16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.935"></path><path d="M22 14v-4"></path><path d="M5.14 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2.936"></path></svg>
+                    
+                    <div class="relative z-10 mb-6 md:mb-8">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-emerald-100 text-emerald-600 text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="heart-pulse" aria-hidden="true" class="lucide lucide-heart-pulse w-3 md:w-3.5 h-3 md:h-3.5"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"></path></svg> Biological Stamina
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h4 class="text-lg md:text-xl font-bold text-app-text tracking-tight mb-2">Sustainable Training</h4>
+                        <p class="text-app-muted font-medium text-sm">We treat speech mastery like an elite sport. Stamina Guardrails prevent burnout and ensure you only practice at your peak.</p>
+                    </div>
+                </div>
+
+                <!-- Medium Feature (Spans 2 cols) -->
+                <div class="group md:col-span-2 bg-brand text-white rounded-[2rem] p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row sm:items-center justify-between reveal reveal-delay-1 shadow-soft-orange hover:-translate-y-1 transition-all duration-500 relative overflow-hidden gap-6 md:gap-8 active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="library" aria-hidden="true" class="lucide lucide-library absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 w-48 h-48 md:w-64 md:h-64 text-white opacity-20 -rotate-12 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"><path d="m16 6 4 14"></path><path d="M12 6v14"></path><path d="M8 8v12"></path><path d="M4 4v16"></path></svg>
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent to-white/10"></div>
+                    
+                    <div class="relative z-10 flex flex-col justify-between h-full">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/20 border border-white/30 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-sm mb-6 md:mb-8 backdrop-blur-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="route" aria-hidden="true" class="lucide lucide-route w-3 md:w-3.5 h-3 md:h-3.5"><circle cx="6" cy="19" r="3"></circle><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path><circle cx="18" cy="5" r="3"></circle></svg> Clinical Packs
+                        </div>
+                        <div>
+                            <h4 class="text-xl sm:text-2xl font-bold tracking-tight mb-2 md:mb-3">Your 0-to-100 Roadmap</h4>
+                            <p class="text-brand-50 font-medium max-w-lg text-sm md:text-base">Expert-designed curriculums that follow a strict Clinical Arc. No more guesswork. Our Recommendation Engine audits your unique speech profile and presents the exact "Pack" you need right now.</p>
+                        </div>
+                    </div>
+                    <div class="relative z-10 self-start sm:self-end mt-2 sm:mt-0">
+                        <a href="#roadmap" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white text-brand flex items-center justify-center hover:bg-brand-50 transition-all transform hover:scale-110 shadow-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-5 h-5 md:w-6 md:h-6"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SCENARIOS SECTION: PERFECTED BRIDGING THE GAP -->
+    <section class="relative z-10 bg-[#FFFAF5] overflow-hidden flex flex-col justify-center min-h-[85vh] md:min-h-screen py-8 md:py-12">
+        
+        <!-- EXPERIMENTAL STYLES ONLY FOR THIS SECTION -->
+        <style>
+            .magnetic-btn {
+                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.5s, color 0.5s, box-shadow 0.5s;
+            }
+            .tilt-card {
+                transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                transform-style: preserve-3d;
+                will-change: transform;
+            }
+            .tilt-inner {
+                transform: translateZ(0px);
+                transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                transform-style: preserve-3d;
+            }
+            .tilt-card:hover .tilt-inner {
+                transform: translateZ(30px);
+            }
+            .tilt-card:hover .tilt-floating-element {
+                transform: translateZ(50px) scale(1.02);
+            }
+            .tilt-floating-element {
+                transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+            .stage-grid-glow {
+                mask-image: radial-gradient(350px circle at var(--stage-mouse-x, 50%) var(--stage-mouse-y, 50%), black 15%, transparent 100%);
+                -webkit-mask-image: radial-gradient(350px circle at var(--stage-mouse-x, 50%) var(--stage-mouse-y, 50%), black 15%, transparent 100%);
+                opacity: 0;
+                transition: opacity 0.5s ease;
+            }
+            #simulator-stage:hover .stage-grid-glow {
+                opacity: 1;
+            }
+            @keyframes text-glitch {
+                0% { transform: translate(0) skew(0) }
+                20% { transform: translate(-3px, 1px) skew(-5deg) }
+                40% { transform: translate(-1px, -2px) skew(5deg) }
+                60% { transform: translate(3px, 1px) skew(0) }
+                80% { transform: translate(1px, -1px) skew(-2deg) }
+                100% { transform: translate(0) skew(0) }
+            }
+            .animate-glitch {
+                animation: text-glitch 0.4s cubic-bezier(.25, .46, .45, .94) both;
+            }
+            .pointer-none-children * {
+                pointer-events: none;
+            }
+            
+            /* Enhanced Card Interaction Styles */
+            @keyframes scanline {
+                0% { transform: translateY(-170px); }
+                100% { transform: translateY(170px); }
+            }
+            @keyframes shimmer {
+                100% { transform: translateX(100%); }
+            }
+            .card-watermark {
+                transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+                will-change: transform, opacity;
+            }
+            .tilt-card:hover .card-watermark {
+                transform: scale(1.5) rotate(-10deg) translateZ(40px) translateX(-15px) translateY(-15px);
+                opacity: 0.15;
+            }
+
+            /* New Cinematic Sticker Animation Styles */
+            @keyframes sticker-fly-in {
+                0% {
+                    opacity: 0;
+                    transform: translateX(150px) translateY(30px) rotate(15deg) scale(1.1);
+                    filter: blur(12px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+                    filter: blur(0);
+                }
+            }
+            .reveal.active .sticker-animate-in {
+                animation: sticker-fly-in 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+                opacity: 0;
+            }
+            @keyframes sticker-float {
+                0%, 100% { transform: translateY(0px) rotate(2deg); }
+                50% { transform: translateY(-15px) rotate(-1deg); }
+            }
+            .sticker-float {
+                animation: sticker-float 6s ease-in-out infinite;
+                transform-origin: center right;
+                will-change: transform;
+            }
+            .magnetic-sticker {
+                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                will-change: transform;
+            }
+        </style>
+
+        <div class="max-w-7xl mx-auto px-6 w-full flex flex-col items-center">
+            
+            <div class="text-center mb-6 md:mb-8 reveal active">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-black/5 text-app-text text-[9px] font-black uppercase tracking-[0.2em] mb-3">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
+                    The Adversarial Simulator
+                </div>
+                <h3 class="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-none text-app-text">BRIDGING THE GAP.</h3>
+            </div>
+
+            <div class="w-full max-w-6xl flex flex-col items-center gap-6">
+                <!-- Toggles -->
+                <div class="flex justify-center z-30">
+                    <div class="bg-white/70 backdrop-blur-3xl border border-white/60 p-1.5 rounded-full shadow-lg flex items-center gap-1 overflow-x-auto hide-scrollbar">
+                        <button id="sim-btn-1" onclick="activateSimulator(1)" class="magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-app-text text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] whitespace-nowrap outline-none cursor-pointer">
+                            <div id="sim-icon-1" class="text-brand transition-colors"><i data-lucide="coffee" class="w-4 h-4"></i></div>
+                            <h4 class="text-xs font-bold tracking-wide">The Café Order</h4>
+                        </button>
+                        <button id="sim-btn-2" onclick="activateSimulator(2)" class="magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-transparent text-app-muted hover:bg-black/5 whitespace-nowrap outline-none cursor-pointer">
+                            <div id="sim-icon-2" class="transition-colors group-hover:text-purple-500"><i data-lucide="phone-call" class="w-4 h-4"></i></div>
+                            <h4 class="text-xs font-bold tracking-wide">High-Pressure Call</h4>
+                        </button>
+                        <button id="sim-btn-3" onclick="activateSimulator(3)" class="magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-transparent text-app-muted hover:bg-black/5 whitespace-nowrap outline-none cursor-pointer">
+                            <div id="sim-icon-3" class="transition-colors group-hover:text-emerald-500"><i data-lucide="briefcase" class="w-4 h-4"></i></div>
+                            <h4 class="text-xs font-bold tracking-wide">Pro Interview</h4>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Unified Viewport -->
+                <div class="w-full relative">
+                    
+                    <!-- THE STICKER: OVERFLOW OFF RIGHT SIDE (Fixed scaling for MacBook) -->
+                    <div class="absolute -right-4 md:-right-8 lg:-right-16 top-1/2 -translate-y-[55%] z-40 pointer-events-none sticker-animate-in">
+                        <div class="sticker-float pointer-events-auto">
+                            <div class="magnetic-sticker flex flex-col items-end origin-right cursor-grab">
+                                <div class="bg-brand text-white px-6 md:px-8 py-3 md:py-5 text-[clamp(2.2rem,5vw,5.5rem)] font-black tracking-tightest leading-none -rotate-3 shadow-2xl border border-white/10 relative z-20">
+                                    OVER 1,000+
+                                </div>
+                                <div class="flex items-start -mt-2 md:-mt-4 transform translate-x-4">
+                                    <div class="bg-white text-app-text px-6 md:px-8 py-3 md:py-5 text-[clamp(2.2rem,5vw,5.5rem)] font-black tracking-tightest leading-none rotate-2 shadow-2xl border border-black/5">
+                                        SCENARIOS
+                                    </div>
+                                    <span class="text-4xl md:text-7xl text-brand ml-2 font-black drop-shadow-lg">*</span>
+                                </div>
+                                <div class="mt-8 md:mt-10 mr-6 md:mr-12 border border-white/5 bg-[#0a0a0a]/95 backdrop-blur-xl rounded-xl px-5 py-3 flex items-center gap-3 shadow-2xl">
+                                    <span class="text-brand text-xl font-black leading-none">*</span>
+                                    <p class="text-white/60 font-mono text-[9px] md:text-[10px] tracking-[0.25em] uppercase font-bold leading-relaxed">Curated continuously by expert therapists.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stage Viewport: Strictly constrained height -->
+                    <div id="simulator-stage" class="relative w-full h-[480px] md:h-[440px] lg:h-[420px] bg-[#080808] rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 overflow-hidden cursor-crosshair">
+                        <!-- Standard Subtle Grid -->
+                        <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+                        <!-- Mouse Tracking Holographic Grid Glow -->
+                        <div class="stage-grid-glow absolute inset-0 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+
+                        <!-- STAGE VIEW 1: CAFE -->
+                        <div id="sim-view-1" class="absolute inset-0 flex flex-col justify-between p-8 md:p-10 transition-all duration-[800ms] opacity-100 translate-y-0 scale-100 z-20 pointer-events-none">
+                            <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-brand/10 blur-[120px] rounded-full pointer-events-none"></div>
+                            
+                            <div class="max-w-[50%] relative z-10 animate-glitch pointer-events-auto">
+                                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand-100 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand animate-ping"></span> Live Simulation
+                                </div>
+                                <h3 class="text-4xl md:text-5xl font-black text-white tracking-tighter leading-none mb-3">The Café Order</h3>
+                                <p class="text-white/60 text-sm md:text-base leading-relaxed">Navigating the ambient noise and rapid exchanges of a busy service environment.</p>
+                            </div>
+
+                            <div class="relative z-10 flex justify-start mt-auto max-w-[50%] transform md:-translate-x-4 pointer-events-auto perspective-[1000px]">
+                                <div class="tilt-card w-full md:w-[480px] h-[170px] bg-gradient-to-br from-brand/80 to-[#D9692E]/80 p-[1px] rounded-3xl group/obj shadow-[0_20px_50px_-10px_rgba(242,128,68,0.3)] relative">
+                                    
+                                    <!-- Interactive Mouse Border Glow Overlay -->
+                                    <div class="absolute inset-0 opacity-0 group-hover/obj:opacity-100 transition-opacity duration-500 rounded-3xl z-0 mix-blend-screen pointer-events-none" style="background: radial-gradient(300px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(242, 128, 68, 0.6), transparent 40%);"></div>
+
+                                    <div class="tilt-inner bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
+                                        
+                                        <!-- Massive 3D Watermark -->
+                                        <i data-lucide="coffee" class="absolute -right-2 -bottom-6 w-36 h-36 text-brand opacity-[0.03] card-watermark pointer-events-none"></i>
+                                        
+                                        <!-- Sweeping Laser Scanline -->
+                                        <div class="absolute inset-0 pointer-events-none opacity-0 group-hover/obj:opacity-100 transition-opacity duration-500">
+                                            <div class="w-full h-[1px] bg-brand/50 shadow-[0_0_15px_#F28044] absolute top-0 left-0 animate-[scanline_2s_linear_infinite]"></div>
+                                        </div>
+
+                                        <div class="flex justify-end items-start relative z-10 tilt-floating-element">
+                                            <span class="text-brand font-mono text-[9px] uppercase tracking-widest bg-brand/10 px-2.5 py-1 rounded-full border border-brand/20 shadow-[0_0_10px_rgba(242,128,68,0.1)] group-hover/obj:bg-brand/20 group-hover/obj:border-brand/40 transition-all duration-300">SCN-01-A</span>
+                                        </div>
+                                        
+                                        <div class="relative z-10 tilt-floating-element">
+                                            <h4 class="text-white/50 text-[9px] font-black uppercase tracking-[0.2em] mb-1.5 flex items-center gap-2">
+                                                <span class="w-1 h-1 rounded-full bg-brand/30 group-hover/obj:bg-brand group-hover/obj:animate-ping"></span>
+                                                Primary Objective
+                                            </h4>
+                                            <p class="text-white text-base md:text-lg font-medium leading-relaxed flex items-center flex-wrap gap-x-1">
+                                                Execute 
+                                                <strong class="relative inline-flex items-center justify-center px-3 py-0.5 bg-brand/10 border border-brand/30 rounded-lg overflow-hidden transition-all duration-500 group-hover/obj:border-brand/60 group-hover/obj:shadow-[0_0_15px_rgba(242,128,68,0.3)] group-hover/obj:scale-105 mx-1">
+                                                    <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/obj:animate-[shimmer_1.5s_infinite]"></span>
+                                                    <span class="font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-brand-100 tracking-wide relative z-10">Easy Onset</span>
+                                                </strong> 
+                                                under active pressure.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STAGE VIEW 2 -->
+                        <div id="sim-view-2" class="absolute inset-0 flex flex-col justify-between p-8 md:p-10 transition-all duration-[800ms] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none">
+                            <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+                            <div class="max-w-[50%] relative z-10 pointer-events-auto">
+                                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-200 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping"></span> Live Simulation
+                                </div>
+                                <h3 class="text-4xl md:text-5xl font-black text-white tracking-tighter leading-none mb-3">High-Pressure Call</h3>
+                                <p class="text-white/60 text-sm md:text-base leading-relaxed">Navigate an impatient listener when visual feedback is absent.</p>
+                            </div>
+                            <div class="relative z-10 flex justify-start mt-auto max-w-[50%] transform md:-translate-x-4 pointer-events-auto perspective-[1000px]">
+                                <div class="tilt-card w-full md:w-[480px] h-[170px] bg-gradient-to-br from-purple-600/80 to-[#4C1D95]/80 p-[1px] rounded-3xl group/obj shadow-[0_20px_50px_-10px_rgba(168,85,247,0.3)] relative">
+                                    
+                                    <!-- Interactive Mouse Border Glow Overlay -->
+                                    <div class="absolute inset-0 opacity-0 group-hover/obj:opacity-100 transition-opacity duration-500 rounded-3xl z-0 mix-blend-screen pointer-events-none" style="background: radial-gradient(300px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(168, 85, 247, 0.6), transparent 40%);"></div>
+
+                                    <div class="tilt-inner bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
+                                        
+                                        <!-- Massive 3D Watermark -->
+                                        <i data-lucide="phone-call" class="absolute -right-2 -bottom-6 w-36 h-36 text-purple-500 opacity-[0.03] card-watermark pointer-events-none"></i>
+                                        
+                                        <!-- Sweeping Laser Scanline -->
+                                        <div class="absolute inset-0 pointer-events-none opacity-0 group-hover/obj:opacity-100 transition-opacity duration-500">
+                                            <div class="w-full h-[1px] bg-purple-500/50 shadow-[0_0_15px_#A855F7] absolute top-0 left-0 animate-[scanline_2s_linear_infinite]"></div>
+                                        </div>
+
+                                        <div class="flex justify-end items-start relative z-10 tilt-floating-element">
+                                            <span class="text-purple-400 font-mono text-[9px] uppercase tracking-widest bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20 shadow-[0_0_10px_rgba(168,85,247,0.1)] group-hover/obj:bg-purple-500/20 group-hover/obj:border-purple-500/40 transition-all duration-300">SCN-02-B</span>
+                                        </div>
+                                        
+                                        <div class="relative z-10 tilt-floating-element">
+                                            <h4 class="text-white/50 text-[9px] font-black uppercase tracking-[0.2em] mb-1.5 flex items-center gap-2">
+                                                <span class="w-1 h-1 rounded-full bg-purple-500/30 group-hover/obj:bg-purple-500 group-hover/obj:animate-ping"></span>
+                                                Primary Objective
+                                            </h4>
+                                            <p class="text-white text-base md:text-lg font-medium leading-relaxed flex items-center flex-wrap gap-x-1">
+                                                Practice boundaries and 
+                                                <strong class="relative inline-flex items-center justify-center px-3 py-0.5 bg-purple-500/10 border border-purple-500/30 rounded-lg overflow-hidden transition-all duration-500 group-hover/obj:border-purple-500/60 group-hover/obj:shadow-[0_0_15px_rgba(168,85,247,0.3)] group-hover/obj:scale-105 mx-1">
+                                                    <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/obj:animate-[shimmer_1.5s_infinite]"></span>
+                                                    <span class="font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-purple-200 relative z-10">Advertise</span>
+                                                </strong> 
+                                                your patterns.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STAGE VIEW 3 -->
+                        <div id="sim-view-3" class="absolute inset-0 flex flex-col justify-between p-8 md:p-10 transition-all duration-[800ms] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none">
+                            <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+                            <div class="max-w-[50%] relative z-10 pointer-events-auto">
+                                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-200 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Live Simulation
+                                </div>
+                                <h3 class="text-4xl md:text-5xl font-black text-white tracking-tighter leading-none mb-3">Pro Interview</h3>
+                                <p class="text-white/60 text-sm md:text-base leading-relaxed">A formal Q&A targeting high-stakes conversations.</p>
+                            </div>
+                            <div class="relative z-10 flex justify-start mt-auto max-w-[50%] transform md:-translate-x-4 pointer-events-auto perspective-[1000px]">
+                                <div class="tilt-card w-full md:w-[480px] h-[170px] bg-gradient-to-br from-emerald-500/80 to-[#047857]/80 p-[1px] rounded-3xl group/obj shadow-[0_20px_50px_-10px_rgba(16,185,129,0.3)] relative">
+                                    
+                                    <!-- Interactive Mouse Border Glow Overlay -->
+                                    <div class="absolute inset-0 opacity-0 group-hover/obj:opacity-100 transition-opacity duration-500 rounded-3xl z-0 mix-blend-screen pointer-events-none" style="background: radial-gradient(300px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(16, 185, 129, 0.6), transparent 40%);"></div>
+
+                                    <div class="tilt-inner bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
+                                        
+                                        <!-- Massive 3D Watermark -->
+                                        <i data-lucide="briefcase" class="absolute -right-2 -bottom-6 w-36 h-36 text-emerald-500 opacity-[0.03] card-watermark pointer-events-none"></i>
+                                        
+                                        <!-- Sweeping Laser Scanline -->
+                                        <div class="absolute inset-0 pointer-events-none opacity-0 group-hover/obj:opacity-100 transition-opacity duration-500">
+                                            <div class="w-full h-[1px] bg-emerald-500/50 shadow-[0_0_15px_#10B981] absolute top-0 left-0 animate-[scanline_2s_linear_infinite]"></div>
+                                        </div>
+
+                                        <div class="flex justify-end items-start relative z-10 tilt-floating-element">
+                                            <span class="text-emerald-400 font-mono text-[9px] uppercase tracking-widest bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)] group-hover/obj:bg-emerald-500/20 group-hover/obj:border-emerald-500/40 transition-all duration-300">SCN-03-C</span>
+                                        </div>
+                                        
+                                        <div class="relative z-10 tilt-floating-element">
+                                            <h4 class="text-white/50 text-[9px] font-black uppercase tracking-[0.2em] mb-1.5 flex items-center gap-2">
+                                                <span class="w-1 h-1 rounded-full bg-emerald-500/30 group-hover/obj:bg-emerald-500 group-hover/obj:animate-ping"></span>
+                                                Primary Objective
+                                            </h4>
+                                            <p class="text-white text-base md:text-lg font-medium leading-relaxed flex items-center flex-wrap gap-x-1">
+                                                Maintain 
+                                                <strong class="relative inline-flex items-center justify-center px-3 py-0.5 bg-emerald-500/10 border border-emerald-500/30 rounded-lg overflow-hidden transition-all duration-500 group-hover/obj:border-emerald-500/60 group-hover/obj:shadow-[0_0_15px_rgba(16,185,129,0.3)] group-hover/obj:scale-105 mx-1">
+                                                    <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/obj:animate-[shimmer_1.5s_infinite]"></span>
+                                                    <span class="font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-emerald-200 relative z-10">Authority</span>
+                                                </strong> 
+                                                during blocks.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function activateSimulator(index) {
+            const configs = {
+                1: { text: 'text-brand', hover: 'group-hover:text-brand' },
+                2: { text: 'text-purple-500', hover: 'group-hover:text-purple-500' },
+                3: { text: 'text-emerald-500', hover: 'group-hover:text-emerald-500' }
+            };
+
+            for(let i=1; i<=3; i++) {
+                const btn = document.getElementById('sim-btn-' + i);
+                const icon = document.getElementById('sim-icon-' + i);
+                const view = document.getElementById('sim-view-' + i);
+                const config = configs[i];
+                
+                if(i === index) {
+                    btn.className = 'magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-app-text text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] whitespace-nowrap outline-none cursor-pointer';
+                    icon.className = `${config.text} transition-colors`;
+                    view.className = 'absolute inset-0 flex flex-col justify-between p-8 md:p-10 transition-all duration-[800ms] opacity-100 translate-y-0 scale-100 z-20 pointer-events-none';
+                    
+                    // Trigger Glitch Text Re-animation
+                    const content = view.querySelector('.max-w-\\[50\\%\\]');
+                    if(content) {
+                        content.classList.remove('animate-glitch');
+                        void content.offsetWidth; // Force DOM reflow
+                        content.classList.add('animate-glitch');
+                    }
+                } else {
+                    btn.className = 'magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-transparent text-app-muted hover:bg-black/5 whitespace-nowrap outline-none cursor-pointer';
+                    icon.className = `transition-colors ${config.hover}`;
+                    view.className = 'absolute inset-0 flex flex-col justify-between p-8 md:p-10 transition-all duration-[800ms] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none';
+                }
+            }
+        }
+
+        // Initialize Advanced Experimental Interactions
+        (function initExperimental() {
+            // Magnetic Dock Buttons
+            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = (e.clientX - rect.left - rect.width / 2) * 0.4;
+                    const y = (e.clientY - rect.top - rect.height / 2) * 0.4;
+                    btn.style.transform = `translate(${x}px, ${y}px)`;
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = `translate(0px, 0px)`;
+                });
+            });
+
+            // Stage Grid Flashlight Hologram
+            const stage = document.getElementById('simulator-stage');
+            if(stage) {
+                stage.addEventListener('mousemove', (e) => {
+                    const rect = stage.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    stage.style.setProperty('--stage-mouse-x', `${x}px`);
+                    stage.style.setProperty('--stage-mouse-y', `${y}px`);
+                });
+            }
+
+            // 3D Parallax Tilt Cards & Border Glow
+            document.querySelectorAll('.tilt-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    // Tilt calculations
+                    const rotateX = ((y - centerY) / centerY) * -12; 
+                    const rotateY = ((x - centerX) / centerX) * 12;
+                    
+                    // Apply Tilt
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                    
+                    // Apply Border Tracker Glow
+                    card.style.setProperty('--card-mouse-x', `${x}px`);
+                    card.style.setProperty('--card-mouse-y', `${y}px`);
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                });
+            });
+
+            // Magnetic Sticker Interaction
+            document.querySelectorAll('.magnetic-sticker').forEach(sticker => {
+                sticker.addEventListener('mousemove', (e) => {
+                    const rect = sticker.getBoundingClientRect();
+                    const x = (e.clientX - rect.left - rect.width / 2) * 0.08;
+                    const y = (e.clientY - rect.top - rect.height / 2) * 0.08;
+                    
+                    const rotateX = ((e.clientY - rect.top - rect.height / 2) / (rect.height / 2)) * -5; 
+                    const rotateY = ((e.clientX - rect.left - rect.width / 2) / (rect.width / 2)) * 5;
+                    
+                    sticker.style.transform = `perspective(1000px) translate(${x}px, ${y}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                });
+                
+                sticker.addEventListener('mouseleave', () => {
+                    sticker.style.transform = `perspective(1000px) translate(0px, 0px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                });
+            });
+        })();
+    </script>
+        <style>
+            /* Custom animation for the sliding tracker effect */
+            @keyframes translate {
+                0% { transform: translateX(0%); }
+                100% { transform: translateX(80px); } 
+            }
+            @media (min-width: 1024px) {
+                @keyframes translate {
+                    100% { transform: translateX(120px); } 
+                }
+            }
+            /* Hide scrollbar for the mobile dock */
+            .hide-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .hide-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        </style>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="download" class="py-24 md:py-32 relative z-10 bg-white overflow-hidden group/cta">
+        <div class="absolute inset-0 bg-brand-50/50 z-0 pointer-events-none"></div>
+
+        <!-- EXPERIMENTAL STYLES FOR CTA -->
+        <style>
+            /* Epic Rebel Text Animation */
+            .rebel-word {
+                display: inline-block;
+                opacity: 0;
+                transform: translateY(60px) scale(0.85) rotate(4deg);
+                transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
+                will-change: transform, opacity;
+            }
+            .reveal.active .rebel-word {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            
+            /* Rebellious Glitch Shake on Load & Hover */
+            @keyframes rebel-shake {
+                0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                25% { transform: translate(-3px, 2px) rotate(-1deg); }
+                50% { transform: translate(3px, -2px) rotate(1deg); }
+                75% { transform: translate(-3px, -2px) rotate(-1deg); }
+            }
+            .reveal.active .rebel-shake-anim {
+                animation: rebel-shake 0.5s cubic-bezier(.36,.07,.19,.97) 0.8s both;
+            }
+            .rebel-glitch-hover:hover {
+                animation: rebel-shake 0.3s infinite;
+                color: #D9692E;
+                cursor: crosshair;
+            }
+
+            /* The Rising Rebel Fist */
+            .rebel-fist-wrapper {
+                margin-bottom: -20px; /* Sits cleanly behind the button position */
+            }
+            .rebel-fist-animator {
+                opacity: 0;
+                transform: translateY(120%) scale(0.6);
+                transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1s ease 0.3s, color 0.4s ease;
+                will-change: transform, opacity;
+            }
+            .reveal.active .rebel-fist-animator {
+                transform: translateY(0px) scale(1);
+                opacity: 0.05; /* Subtle watermark behind text */
+            }
+            
+            /* Interaction on button affects fist */
+            .group\/cta.btn-hovered .rebel-fist-animator {
+                transform: translateY(-30px) scale(1.1) rotate(4deg);
+                opacity: 0.12;
+                color: #D9692E; /* Deepens color slightly on hover */
+                transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, color 0.4s ease;
+            }
+        </style>
+
+        <!-- The Rising Fist Watermark (Z-index 10 to stay behind text Z-20) -->
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[350px] sm:w-[450px] h-[450px] sm:h-[550px] z-10 pointer-events-none rebel-fist-wrapper flex items-end justify-center">
+            <div class="w-full h-full rebel-fist-animator flex justify-center items-end text-brand" style="filter: drop-shadow(0 25px 50px rgba(0,0,0,0.15));">
+                
+                <!-- 
+                   ================================================================================
+                   IMPORTANT: The preview environment cannot load local files directly via URL, 
+                   so the external mask image trick didn't show up. 
+                   
+                   TO USE YOUR EXACT CUSTOM SVG (Screenshot 2026-04-11 at 4.56.59 AM.svg):
+                   1. Open your SVG file in a text/code editor (like VS Code or Notepad).
+                   2. Copy all the code inside it (the <svg> and <path> tags).
+                   3. Replace the entire temporary <svg> block below with your code.
+                   4. Ensure your <svg> tag has these classes: 
+                      class="w-[85%] h-auto max-h-[90%] fill-current transform origin-bottom" 
+                      so it perfectly inherits the glowing hover animations!
+                   ================================================================================
+                -->
+                <svg viewBox="0 0 100 120" class="w-[85%] h-auto max-h-[90%] fill-current transform origin-bottom">
+                    <path d="M35 120 V60 H65 V120 Z" />
+                    <rect x="20" y="56" width="45" height="14" rx="4" />
+                    <rect x="20" y="40" width="50" height="14" rx="4" />
+                    <rect x="20" y="24" width="50" height="14" rx="4" />
+                    <rect x="20" y="8" width="50" height="14" rx="4" />
+                    <path d="M65 32 Q85 32 85 50 Q85 65 65 65 Z" />
+                </svg>
+
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-20 reveal active flex flex-col items-center">
+            
+            <!-- Staggered Rebellion Typography -->
+            <h2 class="text-5xl sm:text-6xl md:text-[6rem] lg:text-[7rem] font-black text-app-text tracking-tighter mb-6 md:mb-8 leading-[0.95] rebel-shake-anim rebel-glitch-hover transition-colors duration-300 pointer-events-auto">
+                <span class="rebel-word" style="transition-delay: 0.1s">JOIN</span>
+                <span class="rebel-word" style="transition-delay: 0.2s">THE</span><br>
+                <span class="rebel-word text-brand drop-shadow-md mt-2" style="transition-delay: 0.3s">REBELLION.</span>
+            </h2>
+            <p class="text-base sm:text-lg md:text-xl text-app-muted mb-10 md:mb-12 font-medium rebel-word pointer-events-none" style="transition-delay: 0.4s">
+                Stop waiting for the world to listen. Make them.
+            </p>
+            
+            <div class="rebel-word w-full sm:w-auto" style="transition-delay: 0.5s">
+                <a href="#download" id="rebel-btn" class="relative z-30 inline-flex items-center justify-center gap-3 bg-brand text-white px-8 sm:px-12 py-4 sm:py-5 rounded-full font-black uppercase tracking-widest text-xs sm:text-sm hover:bg-brand-600 transition-all duration-300 transform hover:-translate-y-1 shadow-[0_15px_40px_-10px_rgba(242,128,68,0.4)] hover:shadow-[0_20px_50px_-10px_rgba(242,128,68,0.6)] w-full sm:w-auto overflow-hidden group/btn pointer-events-auto">
+                    <div class="absolute inset-0 w-0 bg-white/20 transition-all duration-300 ease-out group-hover/btn:w-full z-0"></div>
+                    <span class="relative z-10">Download Speechworks</span>
+                </a>
+            </div>
+        </div>
+
+        <script>
+            // Attach interaction for the fist rising specifically on button hover
+            (function() {
+                const btn = document.getElementById('rebel-btn');
+                const cta = document.getElementById('download');
+                if(btn && cta) {
+                    btn.addEventListener('mouseenter', () => cta.classList.add('btn-hovered'));
+                    btn.addEventListener('mouseleave', () => cta.classList.remove('btn-hovered'));
+                }
+            })();
+        </script>
+    </section>
+
+    <!-- App-Themed Footer -->
+    <footer class="bg-brand pt-16 md:pt-20 pb-8 md:pb-10 relative z-10 text-white overflow-hidden">
+        <div class="absolute top-[-50%] right-[-10%] w-[80%] h-[150%] bg-white/10 blur-[100px] rounded-full pointer-events-none hidden md:block"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 mb-16 md:mb-20">
+                <div class="sm:col-span-2">
+                    <div class="flex items-center gap-3 mb-4 md:mb-6">
+                        <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-brand font-bold text-sm shadow-sm">S</div>
+                        <span class="font-bold text-lg md:text-xl tracking-tight text-white">Speechworks</span>
+                    </div>
+                    <p class="text-brand-50 font-medium max-w-sm text-sm md:text-base leading-relaxed">Combining AI-powered practice, a supportive community, and professional therapists to help you speak on your terms.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4 md:mb-6 tracking-widest text-[10px] md:text-xs uppercase">Platform</h4>
+                    <ul class="space-y-3 md:space-y-4 text-sm font-medium text-brand-100">
+                        <li><a href="#platform" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#roadmap" class="hover:text-white transition-colors">Roadmap</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4 md:mb-6 tracking-widest text-[10px] md:text-xs uppercase">Company</h4>
+                    <ul class="space-y-3 md:space-y-4 text-sm font-medium text-brand-100">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">For Therapists</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            
+        <!-- Massive Footer Type Marquee (Moved outside max-w container for true edge-to-edge) -->
+        <div class="w-full border-t border-white/20 pt-10 md:pt-16 pb-6 md:pb-8 overflow-hidden flex relative z-10">
+            <div class="marquee-container w-full">
+                <div class="marquee-content slow flex flex-nowrap items-center text-[18vw] font-black tracking-tighter leading-none select-none py-2 md:py-4">
+                    <span class="text-white px-4 md:px-8 drop-shadow-sm">SPEECHWORKS</span>
+                    <span class="text-white/30 px-4 md:px-8">•</span>
+                    <span class="text-white px-4 md:px-8 drop-shadow-sm">SPEECHWORKS</span>
+                    <span class="text-white/30 px-4 md:px-8">•</span>
+                </div>
+                <div class="marquee-content slow flex flex-nowrap items-center text-[18vw] font-black tracking-tighter leading-none select-none py-2 md:py-4" aria-hidden="true">
+                    <span class="text-white px-4 md:px-8 drop-shadow-sm">SPEECHWORKS</span>
+                    <span class="text-white/30 px-4 md:px-8">•</span>
+                    <span class="text-white px-4 md:px-8 drop-shadow-sm">SPEECHWORKS</span>
+                    <span class="text-white/30 px-4 md:px-8">•</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs font-bold tracking-widest uppercase text-brand-100 mt-4 gap-4 md:gap-0">
+                <p>© 2026 SPEECHWORKS.</p>
+                <div class="flex gap-6 md:gap-8">
+                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2', 'md:py-4', 'shadow-sm');
+                nav.classList.remove('py-4', 'md:py-6');
+            } else {
+                nav.classList.add('py-4', 'md:py-6');
+                nav.classList.remove('py-2', 'md:py-4', 'shadow-sm');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach((element) => {
+            observer.observe(element);
+        });
+
+        // Interactive Roadmap Logic
+        function switchRoadmap(phase) {
+            const themes = {
+                1: 'brand',
+                2: 'purple-500',
+                3: 'emerald-500'
+            };
+
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById('rm-btn-' + i);
+                const label = document.getElementById('rm-label-' + i);
+                const title = document.getElementById('rm-title-' + i);
+                const desc = document.getElementById('rm-desc-' + i);
+                const line = document.getElementById('rm-line-' + i);
+                const canvas = document.getElementById('rm-canvas-' + i);
+                
+                if (i === phase) {
+                    // Activate Menu Item
+                    btn.classList.remove('opacity-50', 'hover:opacity-100');
+                    btn.classList.add('opacity-100');
+                    
+                    label.className = `text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1 md:mb-2 block transition-colors duration-300 text-${themes[i]}`;
+                    title.className = `text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-app-text transition-all duration-500`;
+                    
+                    desc.style.maxHeight = desc.scrollHeight + "px";
+                    desc.classList.remove('opacity-0', 'mt-0');
+                    desc.classList.add('opacity-100', 'mt-2', 'md:mt-4');
+
+                    line.className = `absolute left-[-27px] md:left-[-43px] -top-[2px] -bottom-[2px] w-[4px] bg-${themes[i]} transition-all duration-500 opacity-100 scale-y-100 origin-top`;
+                    
+                    // Activate Canvas Stage
+                    canvas.className = `absolute inset-0 bg-gradient-to-br p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto`;
+                    if(i===1) canvas.classList.add('from-brand', 'to-[#D9692E]');
+                    if(i===2) canvas.classList.add('from-purple-500', 'to-purple-800');
+                    if(i===3) canvas.classList.add('from-emerald-500', 'to-emerald-800');
+
+                } else {
+                    // Deactivate Menu Item
+                    btn.classList.remove('opacity-100');
+                    btn.classList.add('opacity-50', 'hover:opacity-100');
+                    
+                    label.className = `text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1 md:mb-2 block text-app-muted transition-colors duration-300`;
+                    title.className = `text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-transparent [-webkit-text-stroke:1px_rgba(63,51,45,0.3)] group-hover:[-webkit-text-stroke:1px_rgba(63,51,45,0.7)] transition-all duration-500`;
+                    
+                    desc.style.maxHeight = "0px";
+                    desc.classList.remove('opacity-100', 'mt-2', 'md:mt-4');
+                    desc.classList.add('opacity-0', 'mt-0');
+
+                    line.className = `absolute left-[-27px] md:left-[-43px] -top-[2px] -bottom-[2px] w-[4px] bg-transparent transition-all duration-500 opacity-0 scale-y-0 origin-top`;
+                    
+                    // Deactivate Canvas Stage
+                    canvas.className = `absolute inset-0 bg-gradient-to-br p-6 sm:p-8 md:p-12 flex flex-col justify-between transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-0 translate-y-16 scale-95 z-0 pointer-events-none`;
+                    if(i===1) canvas.classList.add('from-brand', 'to-[#D9692E]');
+                    if(i===2) canvas.classList.add('from-purple-500', 'to-purple-800');
+                    if(i===3) canvas.classList.add('from-emerald-500', 'to-emerald-800');
+                }
+            }
+        }
+
+        // Spotlight Mouse Effect
+        document.querySelectorAll('.glow-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+
+</body>
+</html>
