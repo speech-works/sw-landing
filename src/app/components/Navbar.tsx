@@ -1,7 +1,12 @@
+ "use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import ContactModal from "./ContactModal";
 
 export default function Navbar() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
   return (
     <>
       <nav className="fixed w-full z-50 transition-all duration-500 py-2 md:py-4 shadow-sm" id="navbar">
@@ -26,6 +31,13 @@ export default function Navbar() {
                       <div className="hidden lg:flex items-center space-x-8">
                           <a href="#roadmap" className="text-xs font-semibold uppercase tracking-widest text-app-muted hover:text-brand transition-colors">Roadmap</a>
                           <a href="#platform" className="text-xs font-semibold uppercase tracking-widest text-app-muted hover:text-brand transition-colors">Platform</a>
+                          <button
+                            type="button"
+                            onClick={() => setIsContactOpen(true)}
+                            className="text-xs font-semibold uppercase tracking-widest text-app-muted hover:text-brand transition-colors"
+                          >
+                            Contact Us
+                          </button>
                       </div>
       
                       {/*  CTA (Visible on mobile now)  */}
@@ -37,6 +49,10 @@ export default function Navbar() {
                   </div>
               </div>
           </nav>
+      <ContactModal
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+      />
     </>
   );
 }

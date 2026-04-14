@@ -177,10 +177,10 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             </div>
             
             <h2 className={`text-[40px] md:text-[44px] font-semibold tracking-tight text-white mb-4 transition-all duration-700 delay-75 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${isRendered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-              Let's talk.
+              Let&apos;s talk.
             </h2>
             <p className={`text-[#A39B95] text-[16px] font-normal leading-[1.7] transition-all duration-700 delay-150 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${isRendered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-              We are incredibly friendly people and we genuinely love chatting about speech, answering questions, or just saying hi. Don't be a stranger!
+              We are incredibly friendly people and we genuinely love chatting about speech, answering questions, or just saying hi. Don&apos;t be a stranger!
             </p>
           </div>
 

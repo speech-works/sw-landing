@@ -1,5 +1,61 @@
 import React from 'react';
 
+declare global {
+  interface Window {
+    activateSimulator?: (index: number) => void;
+  }
+}
+
+const CoffeeIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M10 2v2" />
+    <path d="M14 2v2" />
+    <path d="M16 8h1a4 4 0 1 1 0 8h-1" />
+    <path d="M6 8h10v6a5 5 0 0 1-5 5h0a5 5 0 0 1-5-5V8Z" />
+    <path d="M6 12h10" />
+  </svg>
+);
+
+const PhoneCallIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.77.63 2.6a2 2 0 0 1-.45 2.11L8 9.91a16 16 0 0 0 6.09 6.09l1.48-1.29a2 2 0 0 1 2.11-.45c.83.3 1.7.51 2.6.63A2 2 0 0 1 22 16.92z" />
+    <path d="M14.5 3.5a5 5 0 0 1 5 5" />
+    <path d="M14.5 7.5a1 1 0 0 1 1 1" />
+  </svg>
+);
+
+const BriefcaseIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+    <path d="M2 12h20" />
+  </svg>
+);
+
 export default function Simulator() {
   return (
     <>
@@ -116,16 +172,16 @@ export default function Simulator() {
                       {/*  Toggles  */}
                       <div className="flex justify-center z-30">
                           <div className="bg-white/70 backdrop-blur-3xl border border-white/60 p-1.5 rounded-full shadow-lg flex items-center gap-1 overflow-x-auto hide-scrollbar">
-                              <button id="sim-btn-1" onClick={() => {(window as any).activateSimulator(1)}} className="magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-app-text text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] whitespace-nowrap outline-none cursor-pointer">
-                                  <div id="sim-icon-1" className="text-brand transition-colors"><i data-lucide="coffee" className="w-4 h-4"></i></div>
+                              <button id="sim-btn-1" onClick={() => {window.activateSimulator?.(1)}} className="magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-app-text text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] whitespace-nowrap outline-none cursor-pointer">
+                                  <div id="sim-icon-1" className="text-brand transition-colors"><CoffeeIcon className="w-4 h-4" /></div>
                                   <h4 className="text-xs font-bold tracking-wide">The Café Order</h4>
                               </button>
-                              <button id="sim-btn-2" onClick={() => {(window as any).activateSimulator(2)}} className="magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-transparent text-app-muted hover:bg-black/5 whitespace-nowrap outline-none cursor-pointer">
-                                  <div id="sim-icon-2" className="transition-colors group-hover:text-purple-500"><i data-lucide="phone-call" className="w-4 h-4"></i></div>
+                              <button id="sim-btn-2" onClick={() => {window.activateSimulator?.(2)}} className="magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-transparent text-app-muted hover:bg-black/5 whitespace-nowrap outline-none cursor-pointer">
+                                  <div id="sim-icon-2" className="transition-colors group-hover:text-purple-500"><PhoneCallIcon className="w-4 h-4" /></div>
                                   <h4 className="text-xs font-bold tracking-wide">High-Pressure Call</h4>
                               </button>
-                              <button id="sim-btn-3" onClick={() => {(window as any).activateSimulator(3)}} className="magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-transparent text-app-muted hover:bg-black/5 whitespace-nowrap outline-none cursor-pointer">
-                                  <div id="sim-icon-3" className="transition-colors group-hover:text-emerald-500"><i data-lucide="briefcase" className="w-4 h-4"></i></div>
+                              <button id="sim-btn-3" onClick={() => {window.activateSimulator?.(3)}} className="magnetic-btn pointer-none-children group flex items-center gap-3 px-6 py-2.5 rounded-full transition-all duration-500 bg-transparent text-app-muted hover:bg-black/5 whitespace-nowrap outline-none cursor-pointer">
+                                  <div id="sim-icon-3" className="transition-colors group-hover:text-emerald-500"><BriefcaseIcon className="w-4 h-4" /></div>
                                   <h4 className="text-xs font-bold tracking-wide">Pro Interview</h4>
                               </button>
                           </div>
@@ -183,7 +239,7 @@ export default function Simulator() {
                                           <div className="tilt-inner bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
                                               
                                               {/*  Massive 3D Watermark  */}
-                                              <i data-lucide="coffee" className="absolute -right-2 -bottom-6 w-36 h-36 text-brand opacity-[0.03] card-watermark pointer-events-none"></i>
+                                              <CoffeeIcon className="absolute -right-2 -bottom-6 w-36 h-36 text-brand opacity-[0.03] card-watermark pointer-events-none" />
                                               
                                               {/*  Sweeping Laser Scanline  */}
                                               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover/obj:opacity-100 transition-opacity duration-500">
@@ -232,7 +288,7 @@ export default function Simulator() {
                                           <div className="tilt-inner bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
                                               
                                               {/*  Massive 3D Watermark  */}
-                                              <i data-lucide="phone-call" className="absolute -right-2 -bottom-6 w-36 h-36 text-purple-500 opacity-[0.03] card-watermark pointer-events-none"></i>
+                                              <PhoneCallIcon className="absolute -right-2 -bottom-6 w-36 h-36 text-purple-500 opacity-[0.03] card-watermark pointer-events-none" />
                                               
                                               {/*  Sweeping Laser Scanline  */}
                                               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover/obj:opacity-100 transition-opacity duration-500">
@@ -281,7 +337,7 @@ export default function Simulator() {
                                           <div className="tilt-inner bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
                                               
                                               {/*  Massive 3D Watermark  */}
-                                              <i data-lucide="briefcase" className="absolute -right-2 -bottom-6 w-36 h-36 text-emerald-500 opacity-[0.03] card-watermark pointer-events-none"></i>
+                                              <BriefcaseIcon className="absolute -right-2 -bottom-6 w-36 h-36 text-emerald-500 opacity-[0.03] card-watermark pointer-events-none" />
                                               
                                               {/*  Sweeping Laser Scanline  */}
                                               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover/obj:opacity-100 transition-opacity duration-500">

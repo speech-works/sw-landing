@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 interface InviteOnlyModalProps {
   isOpen: boolean;
   onClose: () => void;
+  variant?: "default" | "premium";
 }
 
 type InviteFormState = {
@@ -47,12 +48,34 @@ const COUNTRY_CODES = [
 export default function InviteOnlyModal({
   isOpen,
   onClose,
+  variant = "default",
 }: InviteOnlyModalProps) {
   const [isRendered, setIsRendered] = useState(false);
   const [step, setStep] = useState<InviteStep>("pitch");
   const [form, setForm] = useState<InviteFormState>(INITIAL_FORM);
   const [attemptedSubmit, setAttemptedSubmit] = useState(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const physics = useRef({
+    x: 0,
+    y: 0,
+    rotateX: 0,
+    rotateY: 0,
+    scale: 0.985,
+    vX: 0,
+    vY: 0,
+    vRotateX: 0,
+    vRotateY: 0,
+    vScale: 0,
+  });
+  const targets = useRef({
+    x: 0,
+    y: 0,
+    rotateX: 0,
+    rotateY: 0,
+    scale: 1,
+  });
 
   useEffect(() => {
     if (isOpen) {
@@ -61,12 +84,99 @@ export default function InviteOnlyModal({
       setAttemptedSubmit(false);
       setForm(INITIAL_FORM);
       document.body.style.overflow = "hidden";
+      physics.current = {
+        x: 0,
+        y: 18,
+        rotateX: -4,
+        rotateY: 0,
+        scale: 0.975,
+        vX: 0,
+        vY: 0,
+        vRotateX: 0,
+        vRotateY: 0,
+        vScale: 0,
+      };
+      targets.current = {
+        x: 0,
+        y: 0,
+        rotateX: 0,
+        rotateY: 0,
+        scale: 1,
+      };
     } else {
       document.body.style.overflow = "";
       const timeout = window.setTimeout(() => setIsRendered(false), 240);
       return () => window.clearTimeout(timeout);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const tension = 0.09;
+    const friction = 0.78;
+
+    const animate = () => {
+      const p = physics.current;
+      const t = targets.current;
+
+      p.vX += (t.x - p.x) * tension;
+      p.vX *= friction;
+      p.x += p.vX;
+
+      p.vY += (t.y - p.y) * tension;
+      p.vY *= friction;
+      p.y += p.vY;
+
+      p.vRotateX += (t.rotateX - p.rotateX) * tension;
+      p.vRotateX *= friction;
+      p.rotateX += p.vRotateX;
+
+      p.vRotateY += (t.rotateY - p.rotateY) * tension;
+      p.vRotateY *= friction;
+      p.rotateY += p.vRotateY;
+
+      p.vScale += (t.scale - p.scale) * tension;
+      p.vScale *= friction;
+      p.scale += p.vScale;
+
+      if (modalRef.current) {
+        modalRef.current.style.transform = `perspective(1400px) translate3d(${p.x}px, ${p.y}px, 0) scale3d(${p.scale}, ${p.scale}, ${p.scale}) rotateX(${p.rotateX}deg) rotateY(${p.rotateY}deg)`;
+      }
+
+      rafRef.current = window.requestAnimationFrame(animate);
+    };
+
+    rafRef.current = window.requestAnimationFrame(animate);
+
+    return () => {
+      if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
+    };
+  }, [isOpen]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!modalRef.current) return;
+
+    const rect = modalRef.current.getBoundingClientRect();
+    const offsetX = event.clientX - rect.left;
+    const offsetY = event.clientY - rect.top;
+    const normalizedX = (offsetX - rect.width / 2) / (rect.width / 2);
+    const normalizedY = (offsetY - rect.height / 2) / (rect.height / 2);
+
+    targets.current.x = normalizedX * -8;
+    targets.current.y = normalizedY * -6;
+    targets.current.rotateX = normalizedY * -4;
+    targets.current.rotateY = normalizedX * 7;
+    targets.current.scale = 1.01;
+  };
+
+  const handleMouseLeave = () => {
+    targets.current.x = 0;
+    targets.current.y = 0;
+    targets.current.rotateX = 0;
+    targets.current.rotateY = 0;
+    targets.current.scale = 1;
+  };
 
   useEffect(() => {
     if (!isOpen || step !== "details") return;
@@ -133,6 +243,30 @@ export default function InviteOnlyModal({
 
   if (!isOpen && !isRendered) return null;
 
+  const isPremiumVariant = variant === "premium";
+  const eyebrowCopy = isPremiumVariant
+    ? "Priority premium invite"
+    : "Invite-only release";
+  const sublineCopy = isPremiumVariant
+    ? "Free premium seats are being assigned right now."
+    : "The first wave is live.";
+  const badgeCopy = isPremiumVariant
+    ? "You may not need to pay"
+    : "Access is opening in waves";
+  const titleCopy = isPremiumVariant
+    ? "You may already qualify for premium."
+    : "Don’t be the one hearing about it later.";
+  const bodyCopy = isPremiumVariant
+    ? "Before paid access matters, we’re selecting a limited group for free premium membership. If you want in, put your name forward now and show us you should be among the people helping shape what Speechworks becomes."
+    : "The first wave is already open. We’re giving a limited number of people free premium access in exchange for sharp feedback that helps us make Speechworks better before the doors open wider.";
+  const reasonTitle = isPremiumVariant ? "Why this is different" : "Why act now";
+  const reasonBody = isPremiumVariant
+    ? "This is a chance to skip the paywall, get premium access early, and be part of the group that helps define the standard from the inside."
+    : "If you want the free premium pass, this is the moment to put your name in front of us before the list gets crowded.";
+  const ctaLabel = isPremiumVariant
+    ? "See if I qualify"
+    : "Claim a premium spot";
+
   return (
     <div
       className={`fixed inset-0 z-[120] flex items-center justify-center p-4 transition-opacity duration-300 ${
@@ -148,11 +282,13 @@ export default function InviteOnlyModal({
       />
 
       <div
-        className={`relative w-full max-w-[540px] overflow-hidden rounded-[2rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] transition-all duration-500 ${
-          isOpen
-            ? "translate-y-0 scale-100 opacity-100"
-            : "translate-y-8 scale-[0.96] opacity-0"
+        ref={modalRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className={`relative w-full max-w-[540px] overflow-hidden rounded-[2rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] transition-opacity duration-500 ${
+          isOpen ? "opacity-100" : "opacity-0"
         }`}
+        style={{ willChange: "transform" }}
       >
         <style>{`
           @keyframes invite-fade-up {
@@ -171,7 +307,7 @@ export default function InviteOnlyModal({
 
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-all duration-300 hover:rotate-90 hover:bg-white/10 hover:text-white"
+          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-all duration-300 hover:scale-110 hover:rotate-90 hover:border-[#ffb28a]/25 hover:bg-white/10 hover:text-white"
           aria-label="Close invite modal"
         >
           <svg
@@ -192,10 +328,10 @@ export default function InviteOnlyModal({
           <div className="mb-4 flex items-start justify-between gap-4 pr-12">
             <div>
               <div className="text-[11px] font-black uppercase tracking-[0.22em] text-[#ffb28a]">
-                Invite-only release
+                {eyebrowCopy}
               </div>
               <div className="mt-1 text-[13px] font-semibold text-white/60">
-                The first wave is live.
+                {sublineCopy}
               </div>
             </div>
             <div className="pointer-events-none text-[2.8rem] font-black leading-none tracking-[-0.08em] text-white/[0.05]">
@@ -222,7 +358,7 @@ export default function InviteOnlyModal({
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff8b55] opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-[#ff8b55]" />
                   </span>
-                  Access is opening in waves
+                  {badgeCopy}
                 </div>
 
                 <h2
@@ -233,7 +369,7 @@ export default function InviteOnlyModal({
                       "invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) 60ms both",
                   }}
                 >
-                  Don&apos;t be the one hearing about it later.
+                  {titleCopy}
                 </h2>
 
                 <p
@@ -243,10 +379,7 @@ export default function InviteOnlyModal({
                       "invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) 120ms both",
                   }}
                 >
-                  The first wave is already open. We&apos;re giving a limited
-                  number of people free premium access in exchange for sharp
-                  feedback that helps us make Speechworks better before the
-                  doors open wider.
+                  {bodyCopy}
                 </p>
 
                 <div
@@ -257,11 +390,10 @@ export default function InviteOnlyModal({
                   }}
                 >
                   <div className="text-[10px] font-black uppercase tracking-[0.18em] text-[#ffb28a]">
-                    Why act now
+                    {reasonTitle}
                   </div>
                   <div className="mt-1.5 text-[13px] leading-5 text-white/76">
-                    If you want the free premium pass, this is the moment to put
-                    your name in front of us before the list gets crowded.
+                    {reasonBody}
                   </div>
                 </div>
 
@@ -275,9 +407,9 @@ export default function InviteOnlyModal({
                   <button
                     type="button"
                     onClick={() => setStep("details")}
-                    className="inline-flex min-h-[54px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+                    className="inline-flex min-h-[54px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0"
                   >
-                    Claim a premium spot
+                    {ctaLabel}
                   </button>
                 </div>
               </>
@@ -299,7 +431,7 @@ export default function InviteOnlyModal({
                   <button
                     type="button"
                     onClick={() => setStep("pitch")}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.12em] text-white/70 transition-all duration-300 hover:bg-white/10 hover:text-white"
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.12em] text-white/70 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
                   >
                     Back
                   </button>
@@ -400,7 +532,7 @@ export default function InviteOnlyModal({
                   <button
                     type="button"
                     onClick={openDraftedEmail}
-                    className="inline-flex min-h-[54px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+                    className="inline-flex min-h-[54px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0"
                   >
                     Be a rebel
                   </button>

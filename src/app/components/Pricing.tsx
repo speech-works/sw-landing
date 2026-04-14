@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useCallback } from "react";
+import InviteOnlyModal from "./InviteOnlyModal";
 
 /* ─────────────────────────────────────────────
    REFINED DESIGN SYSTEM UTILS
@@ -84,9 +85,15 @@ const pricingTiers = [
   },
 ];
 
+type PricingTier = (typeof pricingTiers)[number];
+
 export default function Pricing() {
   const [activeCard, setActiveCard] = useState(1);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const [inviteVariant, setInviteVariant] = useState<"default" | "premium">(
+    "default"
+  );
   const isHoverLocked = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -142,7 +149,12 @@ export default function Pricing() {
     }
   };
 
-  const renderCard = (tier: any, pos: number = 0) => {
+  const handleTierClick = (tierId: string) => {
+    setInviteVariant(tierId === "foundation" ? "default" : "premium");
+    setIsInviteModalOpen(true);
+  };
+
+  const renderCard = (tier: PricingTier, pos: number = 0) => {
     const isActive = pos === 0;
     const isDark = tier.theme === "dark";
 
@@ -206,6 +218,8 @@ export default function Pricing() {
           </div>
 
           <button
+            type="button"
+            onClick={() => handleTierClick(tier.id)}
             className={`w-full py-4 md:py-5 px-8 rounded-[1.25rem] font-black tracking-[0.15em] mb-12 transition-all duration-300 text-[10px] md:text-xs uppercase shrink-0 flex items-center justify-center gap-3 group/btn active:scale-[0.97] border-2
             ${
               isDark
@@ -214,21 +228,6 @@ export default function Pricing() {
             }`}
           >
             <span>{tier.buttonLabel}</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1"
-            >
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
           </button>
 
           <div className="flex flex-col gap-5 text-[13px] font-bold tracking-tight">
@@ -273,13 +272,14 @@ export default function Pricing() {
   };
 
   return (
-    <section
-      id="pricing"
-      className="py-24 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden"
-    >
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
+    <>
+      <section
+        id="pricing"
+        className="py-24 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden"
+      >
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
         @keyframes pricing-holo {
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
@@ -295,64 +295,70 @@ export default function Pricing() {
             perspective: 2000px;
         }
       `,
-        }}
-      />
+          }}
+        />
 
-      <div className="max-w-7xl mx-auto px-6 relative w-full flex flex-col items-center">
-        {/* Designer Header */}
-        <div className="text-center mb-24 reveal active flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-black uppercase tracking-[0.25em] mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-            The Movement
-          </div>
-          <h2 className="text-6xl sm:text-7xl md:text-[6.5rem] font-black text-app-text tracking-tightest leading-[0.85] mb-10">
-            FORGE YOUR <br className="hidden md:block" />
-            <span className="holo-text px-2">LEGACY.</span>
-          </h2>
-          <p className="text-app-muted text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed opacity-80">
-            Your voice is the most powerful instrument you own. Join a
-            collective of pioneers elevating how you are heard.
-          </p>
-        </div>
-
-        {/* Mobile View */}
-        <div className="flex lg:hidden flex-col gap-10 w-full max-w-md mx-auto">
-          {pricingTiers.map((tier, i) => (
-            <div key={`m-${i}`} className="w-full h-auto min-h-[600px]">
-              {renderCard(tier)}
+        <div className="max-w-7xl mx-auto px-6 relative w-full flex flex-col items-center">
+          {/* Designer Header */}
+          <div className="text-center mb-24 reveal active flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-black uppercase tracking-[0.25em] mb-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
+              The Movement
             </div>
-          ))}
-        </div>
+            <h2 className="text-6xl sm:text-7xl md:text-[6.5rem] font-black text-app-text tracking-tightest leading-[0.85] mb-10">
+              FORGE YOUR <br className="hidden md:block" />
+              <span className="holo-text px-2">LEGACY.</span>
+            </h2>
+            <p className="text-app-muted text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed opacity-80">
+              Your voice is the most powerful instrument you own. Join a
+              collective of pioneers elevating how you are heard.
+            </p>
+          </div>
 
-        {/* Desktop Interactive Stages */}
-        <div
-          ref={containerRef}
-          onMouseMove={handleMouseMove}
-          className="hidden lg:block relative w-full h-[850px] max-w-6xl mx-auto pricing-grid"
-        >
-          {pricingTiers.map((tier, i) => {
-            const pos = getPos(i, activeCard);
-            const style = getDesktopStyles(pos);
-
-            return (
-              <div
-                key={`pivot-${i}`}
-                onMouseEnter={() => handleCardHover(i)}
-                onClick={() => handleCardHover(i)}
-                className="absolute top-0 left-1/2 w-full max-w-[360px] xl:max-w-[400px] h-auto min-h-[780px] transition-all duration-700 ease-[cubic-bezier(0.2,1,0.3,1)] cursor-pointer group active:scale-[0.98]"
-                style={style}
-              >
-                {/* Visual Depth Lock Shield (prevents interactions while blurred) */}
-                <div
-                  className="absolute inset-0 z-50 rounded-[2.8rem]"
-                  style={{ pointerEvents: pos === 0 ? "none" : "auto" }}
-                />
-                {renderCard(tier, pos)}
+          {/* Mobile View */}
+          <div className="flex lg:hidden flex-col gap-10 w-full max-w-md mx-auto">
+            {pricingTiers.map((tier, i) => (
+              <div key={`m-${i}`} className="w-full h-auto min-h-[600px]">
+                {renderCard(tier)}
               </div>
-            );
-          })}
+            ))}
+          </div>
+
+          {/* Desktop Interactive Stages */}
+          <div
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            className="hidden lg:block relative w-full h-[850px] max-w-6xl mx-auto pricing-grid"
+          >
+            {pricingTiers.map((tier, i) => {
+              const pos = getPos(i, activeCard);
+              const style = getDesktopStyles(pos);
+
+              return (
+                <div
+                  key={`pivot-${i}`}
+                  onMouseEnter={() => handleCardHover(i)}
+                  onClick={() => handleCardHover(i)}
+                  className="absolute top-0 left-1/2 w-full max-w-[360px] xl:max-w-[400px] h-auto min-h-[780px] transition-all duration-700 ease-[cubic-bezier(0.2,1,0.3,1)] cursor-pointer group active:scale-[0.98]"
+                  style={style}
+                >
+                  {/* Visual Depth Lock Shield (prevents interactions while blurred) */}
+                  <div
+                    className="absolute inset-0 z-50 rounded-[2.8rem]"
+                    style={{ pointerEvents: pos === 0 ? "none" : "auto" }}
+                  />
+                  {renderCard(tier, pos)}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <InviteOnlyModal
+        isOpen={isInviteModalOpen}
+        onClose={() => setIsInviteModalOpen(false)}
+        variant={inviteVariant}
+      />
+    </>
   );
 }

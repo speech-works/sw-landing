@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 // -------------------------------------------------------
 // FACES — ported from sw-faces/ in the mobile repo
@@ -67,12 +67,6 @@ const XIcon = () => (
 // -------------------------------------------------------
 
 export default function BreathingAppMockup({ showSheet = true }: { showSheet?: boolean }) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <div className="w-full h-full flex flex-col font-sans select-none overflow-hidden relative" style={{ background: "linear-gradient(135deg, #000000 0%, #020617 50%, #0F172A 100%)" }}>
       

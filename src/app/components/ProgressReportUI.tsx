@@ -198,7 +198,7 @@ const Achievements = () => (
             </div>
             <div className="relative bg-white/12 border border-white/20 rounded-[16px] p-[16px] flex flex-col gap-[10px] overflow-visible mt-2 transition-all group-hover/card:bg-white/15">
                 <div className="absolute top-[-8px] right-[-4px] bg-[#F43F5E] px-[8px] py-[3px] rounded-[10px] shadow-lg z-20 transition-transform group-hover/card:scale-110">
-                    <span className="text-[9px] font-black text-white uppercase tracking-[0.5px]">You're here</span>
+                    <span className="text-[9px] font-black text-white uppercase tracking-[0.5px]">You&apos;re here</span>
                 </div>
                 <div className="flex items-center gap-[12px]">
                     <div className="w-[44px] h-[44px] rounded-full bg-white/20 border border-white/30 flex items-center justify-center shadow-inner group-hover/card:scale-105 transition-transform">
@@ -210,7 +210,7 @@ const Achievements = () => (
                     </div>
                 </div>
                 <p className="text-[10px] font-medium text-white/90 leading-relaxed italic">
-                    "You've successfully established basic pathways. Stability is improving daily."
+                    &ldquo;You&apos;ve successfully established basic pathways. Stability is improving daily.&rdquo;
                 </p>
             </div>
         </div>

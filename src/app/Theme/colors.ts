@@ -1,4 +1,4 @@
-export default {
+const colors = {
   purple: {
     100: "#F6EEFF",
     200: "#CEA6FF",
@@ -80,3 +80,5 @@ export default {
     800: "#403900",
   },
 };
+
+export default colors;

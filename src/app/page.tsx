@@ -12,6 +12,16 @@ import CTA from './components/CTA';
 import Footer from './components/Footer';
 import Pricing from './components/Pricing';
 
+declare global {
+  interface Window {
+    lucide?: {
+      createIcons: () => void;
+    };
+    switchRoadmap?: (phase: number) => void;
+    activateSimulator?: (index: number) => void;
+  }
+}
+
 export default function Home() {
   useEffect(() => {
     // Shared Logic for Component Interactions
@@ -124,8 +134,8 @@ export default function Home() {
     })();
 
     // Initialize Icons
-    if ((window as any).lucide) {
-        (window as any).lucide.createIcons();
+    if (window.lucide) {
+        window.lucide.createIcons();
     }
 
     // Navbar Scroll Effect
@@ -227,8 +237,8 @@ export default function Home() {
         });
     });
     
-    (window as any).switchRoadmap = switchRoadmap;
-    (window as any).activateSimulator = activateSimulator;
+    window.switchRoadmap = switchRoadmap;
+    window.activateSimulator = activateSimulator;
 
   }, []);
 
