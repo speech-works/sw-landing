@@ -138,6 +138,25 @@ export default function Roadmap() {
                     : "opacity-0 translate-y-8 scale-95 z-0 pointer-events-none"
                 }`}
               >
+                <div className="absolute inset-0 overflow-hidden rounded-[inherit] pointer-events-none">
+                  <div className="absolute -inset-y-[2%] -left-[23%] w-[124%] overflow-hidden">
+                    <video
+                      className="absolute inset-0 h-full w-full object-cover object-[60%_50%] opacity-[0.42] mix-blend-screen saturate-[1.04] contrast-[1.02]"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                    >
+                      <source
+                        src="/assets/gif/forge_tools_loop.mp4"
+                        type="video/mp4"
+                      />
+                    </video>
+                  </div>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_26%_24%,rgba(255,255,255,0.1),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.06),transparent_36%),linear-gradient(180deg,rgba(194,65,12,0.08)_0%,rgba(124,45,18,0.03)_100%)]" />
+                </div>
+
                 {/* Layer 1: Technical Grid Watermark (Deepest) */}
                 <div
                   className="absolute inset-0 opacity-[0.1] mix-blend-overlay pointer-events-none"
