@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
 
@@ -217,6 +218,18 @@ export default function Roadmap() {
               <div
                 className={`absolute inset-0 overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-purple-500 to-purple-800 p-6 sm:p-8 md:p-12 transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] border border-white/10 shadow-2xl group/canvas flex flex-col justify-between ${activePhase === 2 ? "opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto" : "opacity-0 translate-y-8 scale-95 z-0 pointer-events-none"}`}
               >
+                <div className="absolute inset-0 overflow-hidden rounded-[inherit] pointer-events-none">
+                  <Image
+                    src="/assets/gif/agif.gif"
+                    alt=""
+                    fill
+                    unoptimized
+                    className="absolute inset-y-0 -right-[72%] h-full w-[150%] object-cover object-right opacity-[0.24] mix-blend-screen saturate-[1.05] contrast-[1.06]"
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                  />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_32%,rgba(255,255,255,0.12),transparent_24%),linear-gradient(135deg,rgba(168,85,247,0.16),transparent_42%),linear-gradient(180deg,rgba(76,29,149,0.12)_0%,rgba(76,29,149,0.04)_100%)]" />
+                </div>
+
                 <div
                   className="absolute inset-x-0 top-0 h-1/2 opacity-[0.05] mix-blend-overlay pointer-events-none"
                   style={{
@@ -271,6 +284,18 @@ export default function Roadmap() {
               <div
                 className={`absolute inset-0 overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-emerald-500 to-emerald-800 p-6 sm:p-8 md:p-12 transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)] border border-white/10 shadow-2xl group/canvas flex flex-col justify-between ${activePhase === 3 ? "opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto" : "opacity-0 translate-y-8 scale-95 z-0 pointer-events-none"}`}
               >
+                <div className="absolute inset-0 overflow-hidden rounded-[inherit] pointer-events-none">
+                  <Image
+                    src="/assets/gif/bridge_gap.gif"
+                    alt=""
+                    fill
+                    unoptimized
+                    className="absolute inset-y-0 -left-[10%] h-full w-[120%] object-cover object-center opacity-[0.18] mix-blend-screen saturate-[1.02] contrast-[1.04]"
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                  />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_24%),linear-gradient(135deg,rgba(255,255,255,0.04),transparent_38%),linear-gradient(180deg,rgba(6,95,70,0.08)_0%,rgba(6,95,70,0.02)_100%)]" />
+                </div>
+
                 <div
                   className="absolute inset-0 h-1/2 opacity-[0.05] mix-blend-overlay pointer-events-none"
                   style={{
