@@ -108,7 +108,7 @@ export default function Hero() {
             playsInline
             preload="auto"
             aria-hidden="true"
-            className="absolute inset-0 z-[1] h-full w-full object-cover opacity-[0.42] saturate-[1.05] contrast-[1.08] brightness-[0.97]"
+            className="absolute inset-x-0 -top-[2%] z-[1] h-[112%] w-full object-cover object-center opacity-[0.42] saturate-[1.05] contrast-[1.08] brightness-[0.97]"
           >
             <source src="/assets/videos/group_avatars_vid2_loop.mp4" type="video/mp4" />
           </video>
