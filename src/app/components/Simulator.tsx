@@ -109,7 +109,7 @@ export default function Simulator() {
                           <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
                           The Adversarial Simulator
                       </div>
-                      <h3 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-none text-app-text">BRIDGING THE GAP.</h3>
+                      <h3 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-none text-app-text">SIMULATE THE MOMENT.</h3>
                   </div>
       
                   <div className="w-full max-w-6xl flex flex-col items-center gap-6">
