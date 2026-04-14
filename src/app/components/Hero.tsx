@@ -6,23 +6,40 @@ import { useMockDeviceTime } from "./useMockDeviceTime";
 const HERO_FAN_SCREEN_KEYFRAMES = `
   @keyframes hero-fan-screen {
     0%, 100% {
-      transform: translate3d(-36px, 42px, -40px) rotate(-9deg) scale(0.96);
-      opacity: 0.82;
+      transform: translate3d(-64px, 48px, -40px) rotate(-12deg) scale(0.96);
+      opacity: 0.9;
     }
     50% {
-      transform: translate3d(-108px, 18px, -40px) rotate(-18deg) scale(0.99);
-      opacity: 0.98;
+      transform: translate3d(-164px, 10px, -40px) rotate(-22deg) scale(0.99);
+      opacity: 1;
     }
   }
 
   @keyframes hero-fan-screen-right {
     0%, 100% {
-      transform: translate3d(34px, 48px, -40px) rotate(7deg) scale(0.955);
+      transform: translate3d(58px, 50px, -40px) rotate(10deg) scale(0.955);
       opacity: 1;
     }
     50% {
-      transform: translate3d(102px, 22px, -40px) rotate(15deg) scale(0.985);
+      transform: translate3d(156px, 12px, -40px) rotate(19deg) scale(0.985);
       opacity: 1;
+    }
+  }
+
+  @keyframes hero-ai-ripple {
+    0% {
+      transform: scale(0.72);
+      opacity: 0;
+    }
+    18% {
+      opacity: 0.34;
+    }
+    68% {
+      opacity: 0.12;
+    }
+    100% {
+      transform: scale(1.18);
+      opacity: 0;
     }
   }
 `;
@@ -528,6 +545,18 @@ export default function Hero() {
 
                               <div className="absolute inset-x-0 top-[146px] flex justify-center">
                                 <div className="relative h-[292px] w-[292px]">
+                                  <div
+                                    className="absolute left-1/2 top-1/2 h-[248px] w-[248px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#8a79d6]/18"
+                                    style={{ animation: "hero-ai-ripple 3.4s ease-out infinite" }}
+                                  />
+                                  <div
+                                    className="absolute left-1/2 top-1/2 h-[208px] w-[208px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#8a79d6]/16"
+                                    style={{ animation: "hero-ai-ripple 3.4s ease-out 1.1s infinite" }}
+                                  />
+                                  <div
+                                    className="absolute left-1/2 top-1/2 h-[168px] w-[168px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#8a79d6]/14"
+                                    style={{ animation: "hero-ai-ripple 3.4s ease-out 2.2s infinite" }}
+                                  />
                                   <div className="absolute inset-0 rounded-full border border-white/[0.04]" />
                                   <div className="absolute inset-[34px] rounded-full border border-[#8a79d6]/20" />
                                   <div className="absolute inset-[84px] rounded-full bg-[radial-gradient(circle_at_30%_24%,rgba(117,96,207,0.92),rgba(47,31,102,0.96)_55%,rgba(14,10,40,1)_100%)] shadow-[0_18px_38px_rgba(0,0,0,0.46),inset_0_1px_0_rgba(255,255,255,0.12)]">
@@ -543,14 +572,22 @@ export default function Hero() {
                                           fill="white"
                                         />
                                         <path
-                                          d="M29.5 14.5c8.1-2.7 16.5-2.7 24.6 0"
-                                          stroke="#1B1248"
-                                          strokeWidth="3.2"
+                                          d="M28.2 17.2c8-2.8 16.1-2.8 24.2 0"
+                                          stroke="#FFB54F"
+                                          strokeWidth="4.8"
                                           strokeLinecap="round"
+                                        />
+                                        <path
+                                          d="M28.5 22.2c6.8-2.2 14-2.2 21.2 0"
+                                          stroke="#1B1248"
+                                          strokeWidth="2.1"
+                                          strokeLinecap="round"
+                                          opacity="0.6"
                                         />
                                         <circle cx="35.5" cy="31" r="3.1" fill="#1B1248" />
                                         <circle cx="28" cy="39" r="2.7" fill="#1B1248" />
                                         <circle cx="41.5" cy="39" r="2.9" fill="#1B1248" />
+                                        <circle cx="34.2" cy="41.8" r="1.6" fill="#FFB54F" />
                                       </svg>
                                     </div>
                                   </div>
