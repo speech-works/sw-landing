@@ -110,7 +110,7 @@ export default function Hero() {
             aria-hidden="true"
             className="absolute inset-0 z-[1] h-full w-full object-cover opacity-[0.42] saturate-[1.05] contrast-[1.08] brightness-[0.97]"
           >
-            <source src="/assets/videos/group_avatars_vid2.mp4" type="video/mp4" />
+            <source src="/assets/videos/group_avatars_vid2_loop.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 z-[2] bg-[radial-gradient(circle_at_50%_28%,rgba(242,128,68,0.16),transparent_24%),linear-gradient(180deg,rgba(10,7,5,0.72)_0%,rgba(10,7,5,0.42)_28%,rgba(10,7,5,0.58)_62%,rgba(10,7,5,0.82)_100%)]"></div>
 
