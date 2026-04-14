@@ -1,31 +1,9 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import LiveAppMockup from "./LiveAppMockup";
 import { useMockDeviceTime } from "./useMockDeviceTime";
 
 const HERO_FAN_SCREEN_KEYFRAMES = `
-  @keyframes hero-fan-screen {
-    0%, 100% {
-      transform: translate3d(-64px, 48px, -40px) rotate(-12deg) scale(0.96);
-      opacity: 0.9;
-    }
-    50% {
-      transform: translate3d(-164px, 10px, -40px) rotate(-22deg) scale(0.99);
-      opacity: 1;
-    }
-  }
-
-  @keyframes hero-fan-screen-right {
-    0%, 100% {
-      transform: translate3d(58px, 50px, -40px) rotate(10deg) scale(0.955);
-      opacity: 1;
-    }
-    50% {
-      transform: translate3d(156px, 12px, -40px) rotate(19deg) scale(0.985);
-      opacity: 1;
-    }
-  }
-
   @keyframes hero-ai-ripple {
     0% {
       transform: scale(0.72);
@@ -44,8 +22,101 @@ const HERO_FAN_SCREEN_KEYFRAMES = `
   }
 `;
 
+type HeroPhoneId = "left" | "center" | "right";
+
+const HERO_PHONE_SLOT_BY_ACTIVE: Record<
+  HeroPhoneId,
+  Record<HeroPhoneId, HeroPhoneId>
+> = {
+  center: {
+    left: "left",
+    center: "center",
+    right: "right",
+  },
+  left: {
+    left: "center",
+    center: "left",
+    right: "right",
+  },
+  right: {
+    left: "left",
+    center: "right",
+    right: "center",
+  },
+};
+
+const HERO_PHONE_SLOT_STYLE: Record<
+  HeroPhoneId,
+  {
+    translateX: number;
+    translateY: number;
+    rotate: number;
+    scale: number;
+    zIndex: number;
+    opacity: number;
+    filter: string;
+  }
+> = {
+  left: {
+    translateX: -122,
+    translateY: 50,
+    rotate: -15,
+    scale: 0.955,
+    zIndex: 10,
+    opacity: 0.98,
+    filter: "drop-shadow(0 30px 42px rgba(0,0,0,0.26))",
+  },
+  center: {
+    translateX: 0,
+    translateY: 0,
+    rotate: 0,
+    scale: 1,
+    zIndex: 30,
+    opacity: 1,
+    filter: "drop-shadow(0 42px 58px rgba(0,0,0,0.34))",
+  },
+  right: {
+    translateX: 126,
+    translateY: 56,
+    rotate: 14,
+    scale: 0.955,
+    zIndex: 12,
+    opacity: 0.98,
+    filter: "drop-shadow(0 30px 42px rgba(0,0,0,0.28))",
+  },
+};
+
 export default function Hero() {
   const timeStr = useMockDeviceTime("09:41");
+  const [activePhone, setActivePhone] = useState<HeroPhoneId>("center");
+  const [hoveredPhone, setHoveredPhone] = useState<HeroPhoneId | null>(null);
+
+  const getPhoneStyle = (phoneId: HeroPhoneId) => {
+    const slot = HERO_PHONE_SLOT_BY_ACTIVE[activePhone][phoneId];
+    const slotStyle = HERO_PHONE_SLOT_STYLE[slot];
+    const isHovered = hoveredPhone === phoneId;
+    const hoverScaleBoost = isHovered ? 0.045 : 0;
+    const transform = `translate3d(${slotStyle.translateX}px, ${slotStyle.translateY}px, 0) rotate(${slotStyle.rotate}deg) scale(${slotStyle.scale + hoverScaleBoost})`;
+
+    return {
+      zIndex: slotStyle.zIndex,
+      opacity: slotStyle.opacity,
+      filter: slotStyle.filter,
+      transform,
+      transformOrigin: "bottom center" as const,
+      willChange: "transform, opacity",
+      transition:
+        "transform 720ms cubic-bezier(0.22, 1, 0.36, 1), opacity 520ms ease, filter 720ms cubic-bezier(0.22, 1, 0.36, 1)",
+    };
+  };
+
+  const handlePhoneKeyDown =
+    (phoneId: HeroPhoneId) => (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        setActivePhone(phoneId);
+      }
+    };
 
   return (
     <>
@@ -196,15 +267,19 @@ export default function Hero() {
             <div className="lg:col-span-4 hidden lg:flex justify-end reveal reveal-delay-3 relative active">
               <div className="relative h-[369px] w-[182px] xl:h-[399px] xl:w-[197px]">
                 <div className="absolute right-0 top-0 origin-top-right translate-y-[15%] scale-[0.604]">
-                  <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px] animate-float transform rotate-[-2deg] hover:rotate-0 transition-transform duration-700 hover:scale-105 group">
+                  <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px] animate-float transform rotate-[-2deg] group">
                     <div
-                      className="absolute left-0 top-0 z-0"
-                      style={{
-                        animation:
-                          "hero-fan-screen 5.6s cubic-bezier(0.45, 0.05, 0.2, 1) infinite",
-                        transformOrigin: "bottom center",
-                        willChange: "transform, opacity",
-                      }}
+                      className="absolute left-0 top-0 cursor-pointer"
+                      style={getPhoneStyle("left")}
+                      onClick={() => setActivePhone("left")}
+                      onKeyDown={handlePhoneKeyDown("left")}
+                      onMouseEnter={() => setHoveredPhone("left")}
+                      onMouseLeave={() => setHoveredPhone((current) => (current === "left" ? null : current))}
+                      onFocus={() => setHoveredPhone("left")}
+                      onBlur={() => setHoveredPhone((current) => (current === "left" ? null : current))}
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Bring tutorial screen to front"
                     >
                       <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px]">
                         <div className="absolute inset-0 rounded-[3.5rem] bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),inset_0_0_2px_rgba(255,255,255,0.2)]"></div>
@@ -456,13 +531,17 @@ export default function Hero() {
                     </div>
 
                     <div
-                      className="absolute left-0 top-0 z-0"
-                      style={{
-                        animation:
-                          "hero-fan-screen-right 5.2s cubic-bezier(0.45, 0.05, 0.2, 1) infinite",
-                        transformOrigin: "bottom center",
-                        willChange: "transform, opacity",
-                      }}
+                      className="absolute left-0 top-0 cursor-pointer"
+                      style={getPhoneStyle("right")}
+                      onClick={() => setActivePhone("right")}
+                      onKeyDown={handlePhoneKeyDown("right")}
+                      onMouseEnter={() => setHoveredPhone("right")}
+                      onMouseLeave={() => setHoveredPhone((current) => (current === "right" ? null : current))}
+                      onFocus={() => setHoveredPhone("right")}
+                      onBlur={() => setHoveredPhone((current) => (current === "right" ? null : current))}
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Bring AI conversation screen to front"
                     >
                       <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px]">
                         <div className="absolute inset-0 rounded-[3.5rem] bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.46),inset_0_0_2px_rgba(255,255,255,0.16)]"></div>
@@ -682,48 +761,60 @@ export default function Hero() {
                       </div>
                     </div>
 
-                    {/* External Chassis (Titanium/Metal Edge) */}
-                    <div className="absolute inset-0 rounded-[3.5rem] bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),inset_0_0_2px_rgba(255,255,255,0.2)]"></div>
+                    <div
+                      className="absolute left-0 top-0 cursor-pointer"
+                      style={getPhoneStyle("center")}
+                      onClick={() => setActivePhone("center")}
+                      onKeyDown={handlePhoneKeyDown("center")}
+                      onMouseEnter={() => setHoveredPhone("center")}
+                      onMouseLeave={() => setHoveredPhone((current) => (current === "center" ? null : current))}
+                      onFocus={() => setHoveredPhone("center")}
+                      onBlur={() => setHoveredPhone((current) => (current === "center" ? null : current))}
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Bring main dashboard screen to front"
+                    >
+                      <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px]">
+                      {/* External Chassis (Titanium/Metal Edge) */}
+                      <div className="absolute inset-0 rounded-[3.5rem] bg-gradient-to-tr from-[#1a1a1a] via-[#3a3a3a] to-[#2a2a2a] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),inset_0_0_2px_rgba(255,255,255,0.2)]"></div>
 
-                    {/* Physical Buttons - High-Fidelity Realistic Details */}
-                    {/* Silent Switch / Action Button */}
-                    <div className="absolute top-[85px] -left-[4px] w-[7px] h-9 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
-                    {/* Volume Up */}
-                    <div className="absolute top-[140px] -left-[4px] w-[7px] h-14 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
-                    {/* Volume Down */}
-                    <div className="absolute top-[210px] -left-[4px] w-[7px] h-14 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-l-[3px] border-y border-l border-white/10 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
-                    {/* Power Button */}
-                    <div className="absolute top-[160px] -right-[4px] w-[7px] h-24 bg-gradient-to-l from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 rounded-r-[3px] border-y border-l border-white/10 shadow-[-1px_0_3px_rgba(0,0,0,0.5)]"></div>
+                      {/* Physical Buttons - High-Fidelity Realistic Details */}
+                      <div className="pointer-events-none absolute top-[85px] -left-[4px] w-[7px] h-9 rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
+                      <div className="pointer-events-none absolute top-[140px] -left-[4px] w-[7px] h-14 rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
+                      <div className="pointer-events-none absolute top-[210px] -left-[4px] w-[7px] h-14 rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 shadow-[1px_0_3px_rgba(0,0,0,0.5)]"></div>
+                      <div className="pointer-events-none absolute top-[160px] -right-[4px] w-[7px] h-24 rounded-r-[3px] border-y border-l border-white/10 bg-gradient-to-l from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] z-20 shadow-[-1px_0_3px_rgba(0,0,0,0.5)]"></div>
 
-                    {/* Inner Bezel (Black Glass Edge) */}
-                    <div className="absolute inset-[4px] rounded-[3.25rem] bg-black shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] overflow-hidden">
-                      {/* Dynamic Island */}
-                      <div className="absolute top-4 inset-x-0 flex justify-center z-[60] pointer-events-none">
-                        <div className="w-[85px] h-[26px] bg-[#050505] rounded-[20px] shadow-[inset_0_0_1px_rgba(255,255,255,0.1)] flex items-center justify-end pr-4">
-                          {/* Subtle Lens Reflection */}
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#1a1c2e] shadow-[0_0_2px_#3b3b4d]"></div>
+                      {/* Inner Bezel (Black Glass Edge) */}
+                      <div className="absolute inset-[4px] overflow-hidden rounded-[3.25rem] bg-black shadow-[inset_0_0_10px_rgba(255,255,255,0.1)]">
+                        {/* Dynamic Island */}
+                        <div className="absolute top-4 inset-x-0 flex justify-center z-[60] pointer-events-none">
+                          <div className="w-[85px] h-[26px] bg-[#050505] rounded-[20px] shadow-[inset_0_0_1px_rgba(255,255,255,0.1)] flex items-center justify-end pr-4">
+                            {/* Subtle Lens Reflection */}
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#1a1c2e] shadow-[0_0_2px_#3b3b4d]"></div>
+                          </div>
+                        </div>
+
+                        {/* Live Screen Content - SEAMLESS FIT */}
+                        <div className="w-full h-full rounded-[inherit] overflow-hidden relative bg-[#f9fafb]">
+                          {/* Screen Glass Reflection Overlay */}
+                          <div className="absolute inset-0 z-50 pointer-events-none bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.08] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+                          <LiveAppMockup disableVerticalPan />
+
+                          {/* Home Indicator */}
+                          <div className="absolute bottom-2 inset-x-0 flex justify-center z-50">
+                            <div className="w-24 h-1 bg-black/10 rounded-full"></div>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Live Screen Content - SEAMLESS FIT */}
-                      <div className="w-full h-full rounded-[inherit] overflow-hidden relative bg-[#f9fafb]">
-                        {/* Screen Glass Reflection Overlay */}
-                        <div className="absolute inset-0 z-50 pointer-events-none bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.08] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-
-                        <LiveAppMockup disableVerticalPan />
-
-                        {/* Home Indicator */}
-                        <div className="absolute bottom-2 inset-x-0 flex justify-center z-50">
-                          <div className="w-24 h-1 bg-black/10 rounded-full"></div>
-                        </div>
+                      {/* Antenna Bands (Subtle detail) */}
+                      <div className="absolute top-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                      <div className="absolute top-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                      <div className="absolute bottom-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
+                      <div className="absolute bottom-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
                       </div>
                     </div>
-
-                    {/* Antenna Bands (Subtle detail) */}
-                    <div className="absolute top-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
-                    <div className="absolute top-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
-                    <div className="absolute bottom-10 left-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
-                    <div className="absolute bottom-10 right-[45px] w-[2px] h-[3px] bg-white/10 opacity-20"></div>
                   </div>
                 </div>
               </div>
