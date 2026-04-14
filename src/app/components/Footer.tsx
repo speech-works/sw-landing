@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
 import ContactModal from "./ContactModal";
@@ -9,6 +9,22 @@ export default function Footer() {
   return (
     <>
       <footer className="bg-brand pt-16 md:pt-20 pb-8 md:pb-10 relative z-10 text-white overflow-hidden">
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <video
+            className="absolute inset-0 h-full w-full object-cover object-center opacity-[0.7] mix-blend-multiply"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source
+              src="/assets/gif/avatars_discussing_loop.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(242,128,68,0.76)_0%,rgba(242,128,68,0.82)_100%)]" />
+        </div>
         <div className="absolute top-[-50%] right-[-10%] w-[80%] h-[150%] bg-white/10 blur-[100px] rounded-full pointer-events-none hidden md:block"></div>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 mb-16 md:mb-20">
@@ -22,7 +38,8 @@ export default function Footer() {
                 </span>
               </div>
               <p className="text-brand-50 font-medium max-w-sm text-sm md:text-base leading-relaxed">
-                A radical fusion of AI-sculpted practice, community fuel, and expert therapy. Reclaim your voice. Join the rebellion.
+                A radical fusion of AI-sculpted practice, community fuel, and
+                expert therapy. Reclaim your voice. Join the rebellion.
               </p>
             </div>
 
@@ -53,7 +70,6 @@ export default function Footer() {
                   </a>
                 </li>
               </ul>
-
             </div>
 
             <div>
@@ -67,7 +83,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <button 
+                  <button
                     onClick={() => setIsContactOpen(true)}
                     className="hover:text-white transition-colors cursor-pointer"
                   >
@@ -123,9 +139,9 @@ export default function Footer() {
         </div>
       </footer>
 
-      <ContactModal 
-        isOpen={isContactOpen} 
-        onClose={() => setIsContactOpen(false)} 
+      <ContactModal
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
       />
     </>
   );
