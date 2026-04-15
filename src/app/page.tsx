@@ -8,6 +8,7 @@ import MarqueeDivider from './components/MarqueeDivider';
 import Roadmap from './components/Roadmap';
 import Platform from './components/Platform';
 import Simulator from './components/Simulator';
+import Team from './components/Team';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import Pricing from './components/Pricing';
@@ -290,6 +291,7 @@ export default function Home() {
       <Roadmap />
       <Platform />
       <Simulator />
+      <Team />
       <Pricing />
       <CTA />
       <Footer />

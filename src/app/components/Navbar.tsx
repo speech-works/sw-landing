@@ -100,6 +100,12 @@ export default function Navbar() {
               >
                 Platform
               </a>
+              <a
+                href="#team"
+                className="text-xs font-semibold uppercase tracking-widest text-app-muted transition-colors hover:text-brand"
+              >
+                Team
+              </a>
               <button
                 type="button"
                 onClick={() => setIsContactOpen(true)}
@@ -183,6 +189,13 @@ export default function Navbar() {
                   className="rounded-2xl px-4 py-3 text-sm font-semibold text-app-text transition-colors hover:bg-brand-50"
                 >
                   Platform
+                </a>
+                <a
+                  href="#team"
+                  onClick={closeMenu}
+                  className="rounded-2xl px-4 py-3 text-sm font-semibold text-app-text transition-colors hover:bg-brand-50"
+                >
+                  Team
                 </a>
                 <button
                   type="button"

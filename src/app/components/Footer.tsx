@@ -98,8 +98,8 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3 md:space-y-4 text-sm font-medium text-brand-100">
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    About Us
+                  <a href="#team" className="hover:text-white transition-colors">
+                    Team
                   </a>
                 </li>
                 <li>

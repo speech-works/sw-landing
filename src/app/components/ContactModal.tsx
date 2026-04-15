@@ -9,6 +9,7 @@ interface ContactModalProps {
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [isRendered, setIsRendered] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   
   // Custom Physics Engine State
@@ -34,6 +35,22 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   });
 
   const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const mediaQuery = window.matchMedia('(max-width: 639px)');
+    const syncViewport = () => {
+      setIsMobileViewport(mediaQuery.matches);
+    };
+
+    syncViewport();
+    mediaQuery.addEventListener('change', syncViewport);
+
+    return () => {
+      mediaQuery.removeEventListener('change', syncViewport);
+    };
+  }, []);
 
   // Physics Loop
   useEffect(() => {
@@ -73,7 +90,9 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
       // Apply to DOM directly (bypassing React state for 60fps locked performance)
       if (modalRef.current) {
-        modalRef.current.style.transform = `perspective(1200px) translateX(${p.x}px) translateY(${p.y}px) scale3d(${p.scale}, ${p.scale}, ${p.scale}) rotateX(${p.rotateX}deg) rotateY(${p.rotateY}deg)`;
+        modalRef.current.style.transform = isMobileViewport
+          ? `translate3d(0, ${p.y}px, 0) scale3d(${p.scale}, ${p.scale}, ${p.scale})`
+          : `perspective(1200px) translateX(${p.x}px) translateY(${p.y}px) scale3d(${p.scale}, ${p.scale}, ${p.scale}) rotateX(${p.rotateX}deg) rotateY(${p.rotateY}deg)`;
       }
 
       rafRef.current = requestAnimationFrame(loop);
@@ -84,14 +103,26 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [isOpen]);
+  }, [isMobileViewport, isOpen]);
 
   // Handle Lifecycle
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       // Reset physics to bottom state before showing
-      physics.current = { ...physics.current, scale: 0.7, y: 120, x: 0, rotateX: -10, rotateY: 0, vScale: 0, vY: 0, vX: 0, vRotateX: 0, vRotateY: 0 };
+      physics.current = {
+        ...physics.current,
+        scale: isMobileViewport ? 0.92 : 0.7,
+        y: isMobileViewport ? 56 : 120,
+        x: 0,
+        rotateX: isMobileViewport ? 0 : -10,
+        rotateY: 0,
+        vScale: 0,
+        vY: 0,
+        vX: 0,
+        vRotateX: 0,
+        vRotateY: 0,
+      };
       setIsRendered(true);
     } else {
       setIsRendered(false);
@@ -102,7 +133,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         document.body.style.overflow = 'unset';
       }, 500); 
     }
-  }, [isOpen]);
+  }, [isMobileViewport, isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -119,7 +150,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   // Mouse Tracking drives the physics targets
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!modalRef.current) return;
+    if (!modalRef.current || isMobileViewport) return;
     const rect = modalRef.current.getBoundingClientRect();
     const cursorX = e.clientX - rect.left;
     const cursorY = e.clientY - rect.top;
@@ -167,7 +198,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   return (
     <div 
-      className={`fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 transition-opacity duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isRendered ? 'opacity-100' : 'opacity-0'}`}
+      className={`fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-3 sm:p-6 transition-opacity duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isRendered ? 'opacity-100' : 'opacity-0'}`}
       role="dialog"
       aria-modal="true"
     >
@@ -181,7 +212,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         // Force hardware acceleration
-        className="relative w-full max-w-[500px] overflow-hidden rounded-[2.5rem] border border-white/5 bg-[#0c0a09] p-6 shadow-[0_40px_100px_rgba(0,0,0,0.8)] sm:p-7 md:p-10"
+        className="relative mx-auto w-full max-w-[500px] overflow-hidden rounded-[2.5rem] border border-white/5 bg-[#0c0a09] p-6 shadow-[0_40px_100px_rgba(0,0,0,0.8)] sm:p-7 md:p-10"
         style={{ willChange: 'transform' }}
       >
         {/* Soft Ambient Lights inside the physics container so they move with it */}
