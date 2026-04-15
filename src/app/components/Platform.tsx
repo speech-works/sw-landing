@@ -608,10 +608,11 @@ export default function Platform() {
         );
       case "roadmap":
         return renderMobileMockupShell(
-          "scale-[0.36] sm:scale-[0.44]",
+          "scale-[0.63] sm:scale-[0.7]",
           <RoadmapAppMockup
             animKey={mobileAnimKey}
             compactVerticalPadding={true}
+            compactCarouselLayout={true}
             softDeviceShadow={true}
             {...baseProps}
           />
@@ -830,6 +831,10 @@ export default function Platform() {
                       : feature.id === "stamina"
                       ? "h-[280px] sm:h-[308px]"
                       : "h-[286px] sm:h-[316px]";
+                  const mobileStageOverflow =
+                    feature.id === "roadmap"
+                      ? "overflow-hidden"
+                      : "overflow-visible";
 
                   return (
                     <div
@@ -854,7 +859,7 @@ export default function Platform() {
                         </div>
 
                         <div
-                          className={`relative ${mobileStageHeight} overflow-visible rounded-[2rem]`}
+                          className={`relative ${mobileStageHeight} ${mobileStageOverflow} rounded-[2rem]`}
                         >
                           <div
                             className={`absolute inset-0 overflow-hidden rounded-[2rem] ${

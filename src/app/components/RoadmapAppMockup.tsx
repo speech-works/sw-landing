@@ -856,12 +856,14 @@ export default function RoadmapAppMockup({
     externalMousePos = { x: 0, y: 0 },
     softDeviceShadow = false,
     compactVerticalPadding = false,
+    compactCarouselLayout = false,
 }: {
     animKey: number;
     isSectionHovered?: boolean;
     externalMousePos?: { x: number; y: number };
     softDeviceShadow?: boolean;
     compactVerticalPadding?: boolean;
+    compactCarouselLayout?: boolean;
 }) {
     const timeStr = useMockDeviceTime("23:05");
     const rotateX = 18 - externalMousePos.y * 10;
@@ -873,6 +875,18 @@ export default function RoadmapAppMockup({
     const activeScale = isSectionHovered ? hoverScale : idleScale;
     const mirroredRotateY = -rotateY;
     const mirroredRotateZ = -rotateZ;
+    const canvasClassName = compactCarouselLayout
+        ? "relative -translate-x-[56px] -translate-y-[16px] h-[420px] w-[520px] md:-translate-x-[148px] md:h-[560px] md:w-[712px]"
+        : "relative -translate-x-[118px] h-[520px] w-[650px] md:-translate-x-[148px] md:h-[560px] md:w-[712px]";
+    const leftPhoneClassName = compactCarouselLayout
+        ? "left-0 top-[6px] z-10 md:left-[16px] md:top-[8px]"
+        : "left-[6px] top-[10px] z-10 md:left-[16px] md:top-[8px]";
+    const centerPhoneClassName = compactCarouselLayout
+        ? "left-[174px] top-[14px] z-20 md:left-[242px] md:top-[20px]"
+        : "left-[218px] top-[18px] z-20 md:left-[242px] md:top-[20px]";
+    const rightPhoneClassName = compactCarouselLayout
+        ? "left-[332px] -top-[6px] z-10 md:left-[448px] md:top-[2px]"
+        : "left-[412px] top-0 z-10 md:left-[448px] md:top-[2px]";
 
     return (
         <div
@@ -883,11 +897,11 @@ export default function RoadmapAppMockup({
         >
             <div
                 key={animKey}
-                className="relative -translate-x-[118px] h-[520px] w-[650px] md:-translate-x-[148px] md:h-[560px] md:w-[712px]"
+                className={canvasClassName}
                 style={{ transformStyle: "preserve-3d" }}
             >
                 <BlankPhoneMockup
-                    className="left-[6px] top-[10px] z-10 md:left-[16px] md:top-[8px]"
+                    className={leftPhoneClassName}
                     style={{
                         transform: `rotateX(${rotateX}deg) rotateY(${mirroredRotateY}deg) rotateZ(${mirroredRotateZ}deg) scale(${activeScale})`,
                     }}
@@ -897,7 +911,7 @@ export default function RoadmapAppMockup({
                 />
 
                 <BlankPhoneMockup
-                    className="left-[218px] top-[18px] z-20 md:left-[242px] md:top-[20px]"
+                    className={centerPhoneClassName}
                     style={{
                         transform: `rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${activeScale})`,
                     }}
@@ -907,7 +921,7 @@ export default function RoadmapAppMockup({
                 />
 
                 <BlankPhoneMockup
-                    className="left-[412px] top-0 z-10 md:left-[448px] md:top-[2px]"
+                    className={rightPhoneClassName}
                     style={{
                         transform: `rotateZ(${rotateZ}deg) scale(${activeScale})`,
                     }}
