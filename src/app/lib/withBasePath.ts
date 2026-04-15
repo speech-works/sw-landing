@@ -1,4 +1,4 @@
-const BASE_PATH = process.env.NODE_ENV === "production" ? "/sw-landing" : "";
+const BASE_PATH = "";
 
 export function withBasePath(path: string) {
   if (!path) return path;
