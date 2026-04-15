@@ -386,6 +386,7 @@ export default function Hero() {
                     role="region"
                     aria-roledescription="carousel"
                     aria-label="Speechworks mobile showcase"
+                    onTouchStartCapture={stopMobileCarouselAutoplay}
                     onTouchStart={handleMobileCarouselTouchStart}
                     onTouchMove={handleMobileCarouselTouchMove}
                     onTouchEnd={handleMobileCarouselTouchEnd}

@@ -744,6 +744,7 @@ export default function Platform() {
           role="region"
           aria-roledescription="carousel"
           aria-label="Speechworks platform features"
+          onTouchStartCapture={stopMobileCarouselAutoplay}
           onTouchStart={handleMobileCarouselTouchStart}
           onTouchMove={handleMobileCarouselTouchMove}
           onTouchEnd={handleMobileCarouselTouchEnd}

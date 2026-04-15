@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useMockDeviceTime } from "./useMockDeviceTime";
 
 const STAMINA_SCROLL_KEYFRAMES = `
@@ -625,6 +625,8 @@ export default function StaminaAppMockup({
   externalMousePos?: { x: number; y: number };
 }) {
   const isHovered = isSectionHovered || false;
+  const [hasCarouselTouchInteracted, setHasCarouselTouchInteracted] =
+    useState(false);
   const mousePos = externalMousePos || { x: 0, y: 0 };
   const timeStr = useMockDeviceTime("20:22");
 
@@ -664,6 +666,7 @@ export default function StaminaAppMockup({
 
         <div
           className="absolute left-1/2 top-[108px] z-30 h-[232px] w-[344px] -translate-x-1/2 transition-transform duration-700 ease-out md:top-[124px] md:h-[248px] md:w-[418px]"
+          onTouchStartCapture={() => setHasCarouselTouchInteracted(true)}
           style={{
             transformStyle: "preserve-3d",
             transform: `translate3d(0, ${isHovered ? "-4px" : "0px"}, 0)`,
@@ -674,7 +677,9 @@ export default function StaminaAppMockup({
             style={
               {
                 transformStyle: "preserve-3d",
-                animation: `stamina-carousel-plane ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`,
+                animation: hasCarouselTouchInteracted
+                  ? "none"
+                  : `stamina-carousel-plane ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`,
                 "--stamina-slide-shift": "224px",
               } as React.CSSProperties
             }
@@ -682,13 +687,17 @@ export default function StaminaAppMockup({
             <div
               className="flex items-start gap-4 px-1 will-change-transform"
               style={{
-                animation: `stamina-carousel-track ${STAMINA_CAROUSEL_DURATION} cubic-bezier(0.65, 0, 0.35, 1) infinite`,
+                animation: hasCarouselTouchInteracted
+                  ? "none"
+                  : `stamina-carousel-track ${STAMINA_CAROUSEL_DURATION} cubic-bezier(0.65, 0, 0.35, 1) infinite`,
               }}
             >
               <div
                 className="rounded-[24px]"
                 style={{
-                  animation: `stamina-carousel-card ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`,
+                  animation: hasCarouselTouchInteracted
+                    ? "none"
+                    : `stamina-carousel-card ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`,
                 }}
               >
                 <DailyProgressFloatingCard />
@@ -696,7 +705,9 @@ export default function StaminaAppMockup({
               <div
                 className="rounded-[24px]"
                 style={{
-                  animation: `stamina-carousel-card ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`,
+                  animation: hasCarouselTouchInteracted
+                    ? "none"
+                    : `stamina-carousel-card ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`,
                 }}
               >
                 <LowStaminaFloatingCard />

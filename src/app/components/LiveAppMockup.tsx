@@ -315,6 +315,8 @@ export default function LiveAppMockup({
   hideStatusBar?: boolean;
 }) {
   const [mounted, setMounted] = useState(false);
+  const [hasCarouselTouchInteracted, setHasCarouselTouchInteracted] =
+    useState(false);
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -411,9 +413,16 @@ export default function LiveAppMockup({
             </div>
           </div>
           {/* Top Carousel Section - Orange card exactly matches widths below */}
-          <div className="w-full mr-[-12px] relative min-h-[160px] flex overflow-visible shrink-0 transition-transform duration-1000">
+          <div
+            className="w-full mr-[-12px] relative min-h-[160px] flex overflow-visible shrink-0 transition-transform duration-1000"
+            onTouchStartCapture={() => setHasCarouselTouchInteracted(true)}
+          >
             <div
-              className={`flex gap-3 w-full h-full ${mounted ? "animate-carousel-peek" : ""}`}
+              className={`flex gap-3 w-full h-full ${
+                mounted && !hasCarouselTouchInteracted
+                  ? "animate-carousel-peek"
+                  : ""
+              }`}
             >
               {/* Card 1: Clinical Assessment (OASES Replica) - EXACTLY matches other cards (w-full in px-3) */}
               <div className="w-full flex-shrink-0 rounded-[20px] overflow-hidden bg-gradient-to-br from-[#F97316] to-[#EA580C] p-4 pb-4 text-white relative shadow-[0_4px_12px_rgba(234,88,12,0.15)] h-full flex flex-col justify-between">

@@ -13,7 +13,6 @@ const GOOGLE_FORM_EMAIL_ENTRY_ID =
   process.env.NEXT_PUBLIC_GOOGLE_FORM_EMAIL_ENTRY_ID || "";
 const GOOGLE_FORM_SOURCE_ENTRY_ID =
   process.env.NEXT_PUBLIC_GOOGLE_FORM_SOURCE_ENTRY_ID || "";
-const STORAGE_KEY = "speechworks_launch_updates_subscribed";
 const BUBBLE_AVATARS = [
   {
     name: "Mayank",
@@ -59,21 +58,13 @@ export default function LaunchUpdates() {
     syncViewport();
     mediaQuery.addEventListener("change", syncViewport);
 
-    if (window.localStorage.getItem(STORAGE_KEY) === "true") {
-      setIsHidden(true);
-    } else {
-      const bubbleTimer = window.setTimeout(() => {
-        setIsBubbleReady(true);
-      }, 180);
-
-      return () => {
-        mediaQuery.removeEventListener("change", syncViewport);
-        window.clearTimeout(bubbleTimer);
-      };
-    }
+    const bubbleTimer = window.setTimeout(() => {
+      setIsBubbleReady(true);
+    }, 180);
 
     return () => {
       mediaQuery.removeEventListener("change", syncViewport);
+      window.clearTimeout(bubbleTimer);
     };
   }, []);
 
@@ -128,10 +119,6 @@ export default function LaunchUpdates() {
 
   useEffect(() => {
     if (submitState !== "success") return;
-
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, "true");
-    }
 
     const hideTimer = window.setTimeout(() => {
       setIsOpen(false);

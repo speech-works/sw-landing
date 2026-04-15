@@ -223,13 +223,16 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
 // ──────────────────────────────────────────────────────────────────────────
 function CardStack({ isSectionHovered }: { isSectionHovered: boolean }) {
     const [activeIndex, setActiveIndex] = useState(0);
+    const [hasTouchInteracted, setHasTouchInteracted] = useState(false);
 
     useEffect(() => {
+        if (hasTouchInteracted) return;
+
         const interval = setInterval(() => {
             setActiveIndex((current) => (current + 1) % 3);
         }, 3200);
         return () => clearInterval(interval);
-    }, []);
+    }, [hasTouchInteracted]);
 
     const cards = [
         {
@@ -264,6 +267,7 @@ function CardStack({ isSectionHovered }: { isSectionHovered: boolean }) {
     return (
         <div 
             className="absolute bottom-8 left-4 right-4 h-[180px]"
+            onTouchStartCapture={() => setHasTouchInteracted(true)}
             style={{ 
                 transformStyle: "preserve-3d",
                 zIndex: 300 
