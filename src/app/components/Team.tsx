@@ -149,7 +149,7 @@ const teamMembers: TeamMember[] = [
     image: "/assets/Sanae_avatar.jpeg",
     story: [
       "Growing up, I never saw anyone else who stuttered, but I knew I couldn't be the only one. When I finally connected with others who shared that exact experience, I realized I wanted to do more than just belong. I wanted to build.",
-      "At SpeechWorks, I jump between writing code and driving communications to create the platform I always wished existed. We're laying the foundation right now, but it won't be complete without you. Bring your ideas, and let's finish building this together.",
+      "At Speechworks, I jump between writing code and driving communications to create the platform I always wished existed. We're laying the foundation right now, but it won't be complete without you. Bring your ideas, and let's finish building this together.",
     ],
     highlights: ["Development", "Community Care"],
   },
@@ -231,19 +231,21 @@ export default function Team() {
   };
 
   const activeMember = teamMembers[activeMemberIndex];
-  const visibleHighlights = activeMember.highlights.filter((item, index, all) => {
-    const normalizedItem = normalizeTeamTag(item);
-    const normalizedBadge = normalizeTeamTag(activeMember.badge);
+  const visibleHighlights = activeMember.highlights.filter(
+    (item, index, all) => {
+      const normalizedItem = normalizeTeamTag(item);
+      const normalizedBadge = normalizeTeamTag(activeMember.badge);
 
-    if (normalizedItem === normalizedBadge) {
-      return false;
+      if (normalizedItem === normalizedBadge) {
+        return false;
+      }
+
+      return (
+        all.findIndex((entry) => normalizeTeamTag(entry) === normalizedItem) ===
+        index
+      );
     }
-
-    return (
-      all.findIndex((entry) => normalizeTeamTag(entry) === normalizedItem) ===
-      index
-    );
-  });
+  );
 
   return (
     <>
@@ -281,7 +283,7 @@ export default function Team() {
 
           <div
             ref={stageRef}
-            className="mt-10 reveal reveal-delay-1 relative overflow-hidden rounded-[2.7rem] border border-[#2e221c] bg-[#120d0a] px-5 py-6 shadow-[0_46px_110px_-58px_rgba(18,13,10,0.92)] sm:px-7 sm:py-8 lg:px-9 lg:py-10"
+            className="mt-10 reveal reveal-delay-1 relative overflow-hidden rounded-[2.7rem] border border-[#2e221c] bg-[#120d0a] px-5 pb-6 pt-8 shadow-[0_46px_110px_-58px_rgba(18,13,10,0.92)] sm:px-7 sm:py-8 lg:px-9 lg:py-10"
             onPointerEnter={stopIdleMotion}
             onPointerDown={stopIdleMotion}
             onTouchStart={stopIdleMotion}
@@ -310,29 +312,22 @@ export default function Team() {
                   strokeWidth="2"
                   strokeDasharray="8 12"
                 />
-                <circle
-                  cx="248"
-                  cy="206"
-                  r="5"
-                  fill="rgba(242,128,68,0.7)"
-                />
-                <circle
-                  cx="830"
-                  cy="404"
-                  r="5"
-                  fill="rgba(255,255,255,0.5)"
-                />
+                <circle cx="248" cy="206" r="5" fill="rgba(242,128,68,0.7)" />
+                <circle cx="830" cy="404" r="5" fill="rgba(255,255,255,0.5)" />
               </svg>
             </div>
 
-            <div className="relative z-10 grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center xl:gap-14">
-              <div className="relative min-h-[18rem] sm:min-h-[22rem] lg:min-h-[32rem]">
+            <div className="relative z-10 grid gap-4 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:items-center xl:gap-14">
+              <div className="relative min-h-[8.5rem] sm:min-h-[10rem] lg:min-h-[32rem]">
                 <div className="absolute inset-0 hidden lg:block">
                   <div className="absolute left-[6%] top-[16%] h-44 w-44 rounded-full border border-white/6" />
                   <div className="absolute right-[10%] bottom-[18%] h-52 w-52 rounded-full border border-brand/10" />
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2 lg:hidden">
+                <div className="relative h-[7.75rem] lg:hidden">
+                  <div className="pointer-events-none absolute left-3 top-8 h-16 w-16 rounded-full border border-brand/10" />
+                  <div className="pointer-events-none absolute left-12 top-3 h-24 w-24 rounded-full border border-white/8" />
+
                   {teamMembers.map((member, index) => {
                     const isActive = index === activeMemberIndex;
                     const portraitImageStyle =
@@ -346,6 +341,9 @@ export default function Team() {
                     const selectorMotionStyle = {
                       [teamAnimationStateVar]: selectorAnimationState,
                     } as React.CSSProperties;
+                    const positionClass = isActive
+                      ? "translate-x-[3.85rem] translate-y-0 z-20"
+                      : "translate-x-0 translate-y-7 z-10";
 
                     return (
                       <button
@@ -354,21 +352,24 @@ export default function Team() {
                         onClick={() => handleMemberSelect(index)}
                         aria-pressed={isActive}
                         style={selectorMotionStyle}
-                        className="group text-left"
+                        className={`group absolute left-0 top-0 text-left transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform ${positionClass}`}
                       >
                         <div
-                          className={`relative transition-all duration-500 ${
+                          className={`relative transform-gpu transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                             isActive
                               ? "scale-100 opacity-100"
-                              : "scale-[0.98] opacity-80"
+                              : "scale-[0.96] opacity-82"
                           }`}
                         >
                           <div
-                            className={`pointer-events-none absolute -inset-x-2 top-4 h-16 rounded-full blur-2xl transition-all duration-500 ${
-                              isActive ? "bg-brand/28" : "bg-white/8"
+                            className={`pointer-events-none absolute rounded-full blur-2xl transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                              isActive
+                                ? "-inset-x-3 top-3 h-16 bg-brand/26"
+                                : "-inset-1 top-2 h-14 bg-white/8"
                             }`}
                           />
-                          <div className="relative flex items-center gap-3">
+
+                          <div className="relative flex items-center">
                             <div className="relative shrink-0">
                               <span
                                 className={`team-selector-pulse pointer-events-none absolute -inset-2 rounded-[1.5rem] border ${
@@ -377,7 +378,9 @@ export default function Team() {
                                     : "border-white/10"
                                 }`}
                               />
-                              <div className="relative h-16 w-16 overflow-hidden rounded-[1.35rem] border border-white/10 bg-white/5 shadow-[0_20px_40px_-24px_rgba(0,0,0,0.85)]">
+                              <div
+                                className="relative h-[4.35rem] w-[4.35rem] overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 shadow-[0_20px_40px_-24px_rgba(0,0,0,0.85)]"
+                              >
                                 <Image
                                   src={withBasePath(member.image)}
                                   alt={`${member.name} portrait`}
@@ -396,21 +399,30 @@ export default function Team() {
                               />
                             </div>
 
-                            <div className="min-w-0 flex-1">
+                            <div
+                              className={`pointer-events-none absolute left-[4.95rem] top-1/2 w-[10.75rem] min-w-0 -translate-y-1/2 transform-gpu transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                                isActive
+                                  ? "translate-x-0 opacity-100"
+                                  : "-translate-x-2 opacity-0"
+                              }`}
+                            >
                               <div
-                                className={`relative overflow-hidden rounded-[1.6rem] border px-4 py-3.5 backdrop-blur-xl transition-all duration-500 ${
+                                className={`relative overflow-hidden rounded-[1.7rem] border backdrop-blur-xl transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                   isActive
-                                    ? "border-white/10 bg-white/10 text-white shadow-[0_24px_50px_-28px_rgba(0,0,0,0.9)]"
-                                    : "border-white/8 bg-white/[0.04] text-white/82"
+                                    ? "border-white/10 bg-white/10 px-4 py-3 text-white shadow-[0_24px_50px_-28px_rgba(0,0,0,0.9)]"
+                                    : "border-transparent bg-transparent px-0 py-0 text-white/82 shadow-none"
                                 }`}
                               >
                                 <span className="team-selector-sheen pointer-events-none absolute inset-y-0 left-[-20%] w-20 -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent)]" />
 
                                 <div className="relative z-10 min-w-0">
-                                  <h3 className="truncate text-[1.45rem] font-black tracking-tight text-white">
+                                  <p className="text-[9px] font-black uppercase tracking-[0.18em] text-brand/90">
+                                    {member.badge}
+                                  </p>
+                                  <h3 className="mt-1 truncate text-[1.45rem] font-black tracking-tight text-white">
                                     {member.name}
                                   </h3>
-                                  <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-white/48">
+                                  <p className="mt-1 text-[9px] font-black uppercase tracking-[0.18em] text-white/48">
                                     {member.role}
                                   </p>
                                 </div>
@@ -481,9 +493,7 @@ export default function Team() {
                                 ? "-left-6 -top-8 h-56 w-56"
                                 : "-right-8 -bottom-10 h-60 w-60"
                             } rounded-full border border-dashed transition-colors duration-500 ${
-                              isActive
-                                ? "border-brand/18"
-                                : "border-white/8"
+                              isActive ? "border-brand/18" : "border-white/8"
                             }`}
                           />
 
@@ -552,14 +562,14 @@ export default function Team() {
 
               <div className="min-w-0">
                 <div key={activeMember.name} className="team-story-reveal">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-3 py-1.5 shadow-sm">
+                  <div className="hidden sm:inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-3 py-1.5 shadow-sm">
                     <span className="h-2 w-2 rounded-full bg-brand" />
                     <span className="text-[10px] font-black uppercase tracking-[0.22em] text-brand">
                       {activeMember.badge}
                     </span>
                   </div>
 
-                  <div className="mt-6 min-w-0">
+                  <div className="hidden min-w-0 sm:mt-6 sm:block">
                     <h3 className="text-5xl font-black tracking-tightest text-white sm:text-6xl xl:text-[5.3rem]">
                       {activeMember.name}
                     </h3>
@@ -568,7 +578,7 @@ export default function Team() {
                     </p>
                   </div>
 
-                  <div className="mt-6 flex flex-wrap gap-2">
+                  <div className="mt-2 flex flex-wrap gap-2 sm:mt-6">
                     {visibleHighlights.map((item) => (
                       <span
                         key={item}
