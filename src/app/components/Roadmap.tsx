@@ -1,13 +1,61 @@
+import { withBasePath } from "@/app/lib/withBasePath";
 import { useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
 
+const ROADMAP_PHASES = [
+  {
+    id: 1,
+    themeClass: "text-brand",
+    stageGradient: "from-[#F97316] to-[#EA580C]",
+    stageGlow: "shadow-[0_28px_70px_-18px_rgba(234,88,12,0.28)]",
+    kicker: "We Built",
+    title: "Forging the Tools",
+    description:
+      "A clinical-grade sandbox. Live and available now. We have built an AI-driven app that provides a safe environment for you to practice real-world scenarios.",
+    status: "Live now",
+    mockupPhase: 1,
+    comingSoon: false,
+  },
+  {
+    id: 2,
+    themeClass: "text-purple-500",
+    stageGradient: "from-purple-500 to-purple-800",
+    stageGlow: "shadow-[0_28px_70px_-18px_rgba(107,33,168,0.28)]",
+    kicker: "We Are Building",
+    title: "Uniting the Community",
+    description:
+      "We are actively building a unified community space where users can share their experiences, celebrate victories, and find support.",
+    status: "In build",
+    mockupPhase: 2,
+    comingSoon: true,
+  },
+  {
+    id: 3,
+    themeClass: "text-emerald-500",
+    stageGradient: "from-emerald-500 to-emerald-800",
+    stageGlow: "shadow-[0_28px_70px_-18px_rgba(5,150,105,0.28)]",
+    kicker: "We Will Build",
+    title: "Bridging the Gap",
+    description:
+      "Bridging the gap between practice and professional therapy. Connect seamlessly with vetted Speech-Language Pathologists.",
+    status: "Coming next",
+    mockupPhase: 3,
+    comingSoon: true,
+  },
+] as const;
+
+const MOBILE_ROADMAP_STACK_PHASES = [2, 3, 1] as const;
+
 export default function Roadmap() {
   const [activePhase, setActivePhase] = useState(1);
+  const [mobileStackFrontPhase, setMobileStackFrontPhase] = useState<number>(1);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const [hoveredStackIndex, setHoveredStackIndex] = useState<number | null>(
     null
   );
   const sectionRef = useRef<HTMLElement>(null);
+  const mobileTouchStartXRef = useRef<number | null>(null);
+  const mobileTouchCurrentXRef = useRef<number | null>(null);
 
   // Navigation Themes
   const themes: Record<number, string> = {
@@ -15,7 +63,6 @@ export default function Roadmap() {
     2: "purple-500",
     3: "emerald-500",
   };
-
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!sectionRef.current) return;
@@ -50,12 +97,86 @@ export default function Roadmap() {
       );
   }, []);
 
+  const handleMobileCarouselTouchStart = (
+    event: React.TouchEvent<HTMLDivElement>
+  ) => {
+    mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
+    mobileTouchCurrentXRef.current = null;
+  };
+
+  const handleMobileCarouselTouchMove = (
+    event: React.TouchEvent<HTMLDivElement>
+  ) => {
+    mobileTouchCurrentXRef.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleMobileCarouselTouchEnd = () => {
+    if (
+      mobileTouchStartXRef.current === null ||
+      mobileTouchCurrentXRef.current === null
+    ) {
+      mobileTouchStartXRef.current = null;
+      mobileTouchCurrentXRef.current = null;
+      return;
+    }
+
+    const swipeDistance =
+      mobileTouchStartXRef.current - mobileTouchCurrentXRef.current;
+
+    if (Math.abs(swipeDistance) > 40) {
+      if (swipeDistance > 0) {
+        setActivePhase((currentPhase) => (currentPhase % ROADMAP_PHASES.length) + 1);
+      } else {
+        setActivePhase((currentPhase) =>
+          currentPhase === 1 ? ROADMAP_PHASES.length : currentPhase - 1
+        );
+      }
+    }
+
+    mobileTouchStartXRef.current = null;
+    mobileTouchCurrentXRef.current = null;
+  };
+
+  const getMobileStackStyle = (phase: number) => {
+    const leftStyle = {
+      transform: "translate3d(-88px, 196px, 0) scale(0.31) rotate(-14deg)",
+      zIndex: 10,
+      opacity: 0.94,
+    };
+    const centerStyle = {
+      transform: "translate3d(0, 148px, 0) scale(0.41) rotate(0deg)",
+      zIndex: 30,
+      opacity: 1,
+    };
+    const rightStyle = {
+      transform: "translate3d(88px, 196px, 0) scale(0.31) rotate(14deg)",
+      zIndex: 12,
+      opacity: 0.94,
+    };
+
+    if (mobileStackFrontPhase === 1) {
+      if (phase === 1) return centerStyle;
+      if (phase === 2) return leftStyle;
+      return rightStyle;
+    }
+
+    if (mobileStackFrontPhase === 2) {
+      if (phase === 2) return centerStyle;
+      if (phase === 1) return leftStyle;
+      return rightStyle;
+    }
+
+    if (phase === 3) return centerStyle;
+    if (phase === 2) return leftStyle;
+    return rightStyle;
+  };
+
   return (
     <>
       <section
         id="roadmap"
         ref={sectionRef}
-        className="py-20 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden font-sans select-none"
+        className="pt-12 pb-8 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden font-sans select-none"
         style={
           {
             "--mouse-x": `${mousePos.x * 100}%`,
@@ -76,7 +197,160 @@ export default function Roadmap() {
             </h3>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-10 md:gap-16 items-stretch reveal reveal-delay-1 active">
+          <div className="lg:hidden reveal reveal-delay-1 active">
+            <div
+              className="overflow-hidden"
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="Speechworks roadmap phases"
+              onTouchStart={handleMobileCarouselTouchStart}
+              onTouchMove={handleMobileCarouselTouchMove}
+              onTouchEnd={handleMobileCarouselTouchEnd}
+            >
+              <div
+                className="flex will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                style={{
+                  width: `${ROADMAP_PHASES.length * 100}%`,
+                  transform: `translate3d(-${(activePhase - 1) * (100 / ROADMAP_PHASES.length)}%, 0, 0)`,
+                }}
+              >
+                {ROADMAP_PHASES.map((phase) => (
+                  <div
+                    key={phase.id}
+                    className="shrink-0"
+                    style={{ width: `${100 / ROADMAP_PHASES.length}%` }}
+                  >
+                    <div className="px-[1px]">
+                      <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-black/6 bg-white shadow-[0_22px_54px_rgba(63,51,45,0.08)]">
+                        <div className="min-h-[282px] border-b border-black/6 px-5 py-5 sm:min-h-[258px]">
+                          <div
+                            className={`text-[10px] font-black uppercase tracking-[0.2em] ${phase.themeClass}`}
+                          >
+                            0{phase.id} / {phase.kicker}
+                          </div>
+                          <div className="mt-2 flex items-center gap-2">
+                            <span
+                              className={`inline-flex h-2.5 w-2.5 rounded-full ${
+                                phase.id === 1
+                                  ? "bg-brand"
+                                  : phase.id === 2
+                                  ? "bg-purple-500"
+                                  : "bg-emerald-500"
+                              }`}
+                            />
+                            <span className="text-[10px] font-black uppercase tracking-[0.18em] text-app-muted">
+                              {phase.status}
+                            </span>
+                          </div>
+                          <h4 className="mt-3 text-[2rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text">
+                            {phase.title}
+                          </h4>
+                          <p className="mt-3 max-w-[34ch] text-sm leading-6 text-app-muted">
+                            {phase.description}
+                          </p>
+                        </div>
+
+                        <div
+                          className={`relative h-[360px] overflow-hidden bg-gradient-to-br ${phase.stageGradient} ${phase.stageGlow}`}
+                        >
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.18),transparent_22%),linear-gradient(180deg,rgba(255,255,255,0.06),transparent_58%)]" />
+                          <div className="absolute inset-0 opacity-[0.08] bg-grid" />
+                          {phase.id === 1 ? (
+                            <div className="absolute inset-0 flex items-end justify-center overflow-hidden px-3 pb-2">
+                              <div className="relative h-full w-full max-w-[320px]">
+                                {MOBILE_ROADMAP_STACK_PHASES.map((stackPhase) => {
+                                  const stackStyle = getMobileStackStyle(stackPhase);
+                                  const isFocused = mobileStackFrontPhase === stackPhase;
+
+                                  return (
+                                    <button
+                                      key={stackPhase}
+                                      type="button"
+                                      onClick={() => setMobileStackFrontPhase(stackPhase)}
+                                      className="absolute bottom-0 left-1/2 block will-change-transform bg-transparent p-0 text-left transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                                      style={{
+                                        transform: `translateX(-50%) ${stackStyle.transform}`,
+                                        zIndex: stackStyle.zIndex,
+                                        opacity: stackStyle.opacity,
+                                      }}
+                                      aria-label={`Bring roadmap preview ${stackPhase} to front`}
+                                      aria-pressed={isFocused}
+                                    >
+                                      <div
+                                        className={`transition-all duration-700 ${
+                                          isFocused
+                                            ? "opacity-100 blur-0"
+                                            : "opacity-80 blur-[0.6px]"
+                                        }`}
+                                      >
+                                        <RoadmapMockup
+                                          phase={stackPhase}
+                                          status={
+                                            stackPhase === 1
+                                              ? "live"
+                                              : stackPhase === 2
+                                              ? "building"
+                                              : "future"
+                                          }
+                                        />
+                                      </div>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="absolute inset-x-0 bottom-0 flex items-end justify-center">
+                              <div
+                                className={`origin-bottom scale-[0.54] sm:scale-[0.58] ${
+                                  phase.comingSoon ? "translate-y-[7.25rem]" : ""
+                                }`}
+                              >
+                                <RoadmapMockup
+                                  phase={phase.mockupPhase}
+                                  status={
+                                    phase.id === 2 ? "building" : "future"
+                                  }
+                                  comingSoon={phase.comingSoon}
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4 flex items-center justify-center gap-2.5">
+                {ROADMAP_PHASES.map((phase) => {
+                  const isActive = activePhase === phase.id;
+
+                  return (
+                    <button
+                      key={phase.id}
+                      type="button"
+                      onClick={() => setActivePhase(phase.id)}
+                      className="flex h-7 items-center justify-center"
+                      aria-label={`Show roadmap phase ${phase.id}`}
+                      aria-pressed={isActive}
+                    >
+                      <span
+                        className={`block h-2.5 rounded-full transition-all duration-300 ${
+                          isActive
+                            ? "w-8 bg-app-text shadow-[0_0_18px_rgba(63,51,45,0.18)]"
+                            : "w-2.5 bg-black/18"
+                        }`}
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className="hidden lg:flex flex-col lg:flex-row gap-10 md:gap-16 items-stretch reveal reveal-delay-1 active">
             {/*  Left: Editorial Typography Menu  */}
             <div className="w-full lg:w-5/12 relative pl-6 md:pl-10 border-l-2 border-black/[0.04] flex flex-col gap-6 md:gap-10 lg:self-center">
               {[1, 2, 3].map((phase) => (
@@ -532,4 +806,3 @@ export default function Roadmap() {
     </>
   );
 }
-import { withBasePath } from "@/app/lib/withBasePath";

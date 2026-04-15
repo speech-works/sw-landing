@@ -393,6 +393,8 @@ export default function Platform() {
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const animKey = useAnimKey(activeIndex);
+  const mobileTouchStartXRef = useRef<number | null>(null);
+  const mobileTouchCurrentXRef = useRef<number | null>(null);
 
   const DURATION = 6000;
   const UPDATE_INTERVAL = 50;
@@ -418,6 +420,46 @@ export default function Platform() {
     setProgress(0);
   }, []);
 
+  const handleMobileCarouselTouchStart = (
+    event: React.TouchEvent<HTMLDivElement>
+  ) => {
+    mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
+    mobileTouchCurrentXRef.current = null;
+  };
+
+  const handleMobileCarouselTouchMove = (
+    event: React.TouchEvent<HTMLDivElement>
+  ) => {
+    mobileTouchCurrentXRef.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleMobileCarouselTouchEnd = () => {
+    if (
+      mobileTouchStartXRef.current === null ||
+      mobileTouchCurrentXRef.current === null
+    ) {
+      mobileTouchStartXRef.current = null;
+      mobileTouchCurrentXRef.current = null;
+      return;
+    }
+
+    const swipeDistance =
+      mobileTouchStartXRef.current - mobileTouchCurrentXRef.current;
+
+    if (Math.abs(swipeDistance) > 40) {
+      if (swipeDistance > 0) {
+        handleFeatureClick((activeIndex + 1) % features.length);
+      } else {
+        handleFeatureClick(
+          (activeIndex - 1 + features.length) % features.length
+        );
+      }
+    }
+
+    mobileTouchStartXRef.current = null;
+    mobileTouchCurrentXRef.current = null;
+  };
+
   const [isHoveredStage, setIsHoveredStage] = useState(false);
   const [stageMousePos, setStageMousePos] = useState({ x: 0, y: 0 });
   const activeFeature = features[activeIndex];
@@ -439,10 +481,53 @@ export default function Platform() {
     e.currentTarget.style.setProperty("--mouse-y-raw", `${y}`);
   };
 
+  const renderMobileFeatureUI = (
+    featureId: string,
+    index: number,
+    mobileAnimKey: number
+  ) => {
+    const baseProps = {
+      isSectionHovered: false,
+      externalMousePos: { x: 0, y: 0 },
+    };
+
+    switch (featureId) {
+      case "progress":
+        return (
+          <div className="flex h-full items-center justify-center scale-[0.72] sm:scale-[0.82]">
+            <ProgressAppMockup
+              radarChart={<RadarUI animKey={mobileAnimKey} isFloating={true} />}
+              {...baseProps}
+            />
+          </div>
+        );
+      case "adversarial":
+        return (
+          <div className="flex h-full items-center justify-center scale-[0.72] sm:scale-[0.82]">
+            <AdversarialAppMockup animKey={mobileAnimKey} {...baseProps} />
+          </div>
+        );
+      case "stamina":
+        return (
+          <div className="flex h-full items-center justify-center scale-[0.72] sm:scale-[0.8]">
+            <StaminaAppMockup animKey={mobileAnimKey} {...baseProps} />
+          </div>
+        );
+      case "roadmap":
+        return (
+          <div className="flex h-full items-center justify-center scale-[0.54] sm:scale-[0.6]">
+            <RoadmapAppMockup animKey={mobileAnimKey} {...baseProps} />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <section
       id="platform"
-      className="py-20 md:py-32 bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
+      className="pt-10 pb-10 md:py-32 bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
       onMouseMove={handleMouseMove}
       style={
         {
@@ -616,7 +701,126 @@ export default function Platform() {
         </div>
 
         <div
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
+          className="lg:hidden"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Speechworks platform features"
+          onTouchStart={handleMobileCarouselTouchStart}
+          onTouchMove={handleMobileCarouselTouchMove}
+          onTouchEnd={handleMobileCarouselTouchEnd}
+        >
+          <div className="overflow-hidden">
+            <div
+              className="flex will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={{
+                width: `${features.length * 100}%`,
+                transform: `translate3d(-${activeIndex * (100 / features.length)}%, 0, 0)`,
+              }}
+            >
+              {features.map((feature, index) => {
+                const mobileChipClasses =
+                  feature.id === "roadmap"
+                    ? "border-brand/15 bg-brand/10 text-brand"
+                    : feature.id === "adversarial"
+                    ? "border-purple-200 bg-white text-purple-500"
+                    : feature.id === "stamina"
+                    ? "border-emerald-200 bg-white text-emerald-500"
+                    : "border-orange-100 bg-white text-brand";
+
+                const mobileStageHeight =
+                  feature.id === "roadmap"
+                    ? "h-[310px] sm:h-[340px]"
+                    : feature.id === "stamina"
+                    ? "h-[300px] sm:h-[330px]"
+                    : "h-[320px] sm:h-[350px]";
+
+                return (
+                  <div
+                    key={`mobile-${feature.id}`}
+                    className="shrink-0"
+                    style={{ width: `${100 / features.length}%` }}
+                  >
+                    <article className="mx-[1px] flex h-full flex-col overflow-hidden rounded-[2rem] border border-black/6 bg-white shadow-[0_18px_44px_rgba(63,51,45,0.08)]">
+                      <div className="relative flex min-h-[272px] flex-col px-5 py-5 sm:min-h-[248px]">
+                        <div
+                          className={`absolute bottom-5 left-0 top-5 w-1 rounded-r-full ${feature.activeBar}`}
+                        />
+                        <div
+                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] shadow-sm ${mobileChipClasses}`}
+                        >
+                          {feature.tagIcon}
+                          {feature.shortTitle}
+                        </div>
+                        <h4 className="mt-4 text-[2rem] font-black leading-[0.96] tracking-[-0.05em] text-app-text">
+                          {feature.title}
+                        </h4>
+                        <p className="mt-3 text-sm leading-6 text-app-muted">
+                          {feature.desc}
+                        </p>
+                      </div>
+
+                      <div
+                        className={`relative overflow-hidden border-t border-black/6 ${mobileStageHeight} ${
+                          feature.id === "roadmap"
+                            ? "bg-gradient-to-br from-brand to-[#D9692E]"
+                            : `bg-gradient-to-br ${feature.bgGradient}`
+                        } mt-auto`}
+                      >
+                        <div className="absolute inset-0 opacity-[0.08] bg-grid" />
+                        <div
+                          className={`absolute inset-0 flex items-center justify-center ${
+                            feature.id === "roadmap"
+                              ? "text-white/12"
+                              : feature.iconColor
+                          }`}
+                        >
+                          <div className="h-[78%] w-[78%] opacity-[0.12]">
+                            {feature.bgIcon}
+                          </div>
+                        </div>
+                        <div className="absolute inset-0">
+                          {renderMobileFeatureUI(
+                            feature.id,
+                            index,
+                            activeIndex === index ? animKey : index + 1
+                          )}
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-4 flex items-center justify-center gap-2.5">
+            {features.map((feature, index) => {
+              const isActive = activeIndex === index;
+
+              return (
+                <button
+                  key={`mobile-dot-${feature.id}`}
+                  type="button"
+                  onClick={() => handleFeatureClick(index)}
+                  className="flex h-7 items-center justify-center"
+                  aria-label={`Show ${feature.shortTitle} slide`}
+                  aria-pressed={isActive}
+                >
+                  <span
+                    className={`block h-2.5 rounded-full transition-all duration-300 ${
+                      isActive
+                        ? "w-8 bg-app-text shadow-[0_0_18px_rgba(63,51,45,0.18)]"
+                        : "w-2.5 bg-black/18"
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div
+          className="hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onTouchStart={() => setIsHovered(true)}
@@ -875,4 +1079,3 @@ export default function Platform() {
     </section>
   );
 }
-import { withBasePath } from "@/app/lib/withBasePath";
