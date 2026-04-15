@@ -76,6 +76,19 @@ const TEAM_STAGE_KEYFRAMES = `
     }
   }
 
+  @keyframes team-hover-avatar-enter {
+    from {
+      opacity: 0;
+      transform: scale(1.04);
+      filter: saturate(0.9) brightness(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+      filter: saturate(1) brightness(1);
+    }
+  }
+
   .team-selector-float {
     will-change: transform;
     animation-duration: 5s;
@@ -112,12 +125,17 @@ const TEAM_STAGE_KEYFRAMES = `
     animation-play-state: var(--team-anim-state, running);
   }
 
+  .team-hover-avatar-enter {
+    animation: team-hover-avatar-enter 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .team-selector-float,
     .team-story-reveal,
     .team-selector-orbit,
     .team-selector-pulse,
-    .team-selector-sheen {
+    .team-selector-sheen,
+    .team-hover-avatar-enter {
       animation: none !important;
     }
   }
@@ -139,6 +157,7 @@ type TeamMember = {
   story: string[];
   highlights: string[];
   image: string;
+  animatedImage: string;
 };
 
 const teamMembers: TeamMember[] = [
@@ -147,6 +166,7 @@ const teamMembers: TeamMember[] = [
     role: "Communications & Development",
     badge: "Communications",
     image: "/assets/Sanae_avatar.jpeg",
+    animatedImage: "/assets/Sanae_avatar_animated.gif",
     story: [
       "Growing up, I never saw anyone else who stuttered, but I knew I couldn't be the only one. When I finally connected with others who shared that exact experience, I realized I wanted to do more than just belong. I wanted to build.",
       "At Speechworks, I jump between writing code and driving communications to create the platform I always wished existed. We're laying the foundation right now, but it won't be complete without you. Bring your ideas, and let's finish building this together.",
@@ -158,6 +178,7 @@ const teamMembers: TeamMember[] = [
     role: "Founder & Developer",
     badge: "Founder",
     image: "/assets/mayank_avatar.png",
+    animatedImage: "/assets/mayank_avatar_animated.gif",
     story: [
       "I don't have a stutter, but I've watched brilliant people silence themselves because they do. Seeing remarkable minds choose to stay quiet rather than face judgment showed me a broken system.",
       "I founded Speechworks to build a different reality. We are laying the groundwork for a platform where no brilliant mind has to choose between speaking up and feeling safe.",
@@ -172,6 +193,7 @@ const teamAnimationStateVar = "--team-anim-state" as const;
 export default function Team() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [activeMemberIndex, setActiveMemberIndex] = useState(0);
+  const [hoveredDesktopMemberIndex, setHoveredDesktopMemberIndex] = useState<number | null>(null);
   const [hasStoppedIdleMotion, setHasStoppedIdleMotion] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -438,6 +460,8 @@ export default function Team() {
                 <div className="hidden h-full lg:block">
                   {teamMembers.map((member, index) => {
                     const isActive = index === activeMemberIndex;
+                    const isDesktopAvatarAnimated =
+                      hoveredDesktopMemberIndex === index;
                     const portraitImageStyle =
                       member.name === "Mayank"
                         ? { objectPosition: "center 22%" }
@@ -466,6 +490,12 @@ export default function Team() {
                         key={member.name}
                         type="button"
                         onClick={() => handleMemberSelect(index)}
+                        onMouseEnter={() => setHoveredDesktopMemberIndex(index)}
+                        onMouseLeave={() =>
+                          setHoveredDesktopMemberIndex((current) =>
+                            current === index ? null : current
+                          )
+                        }
                         aria-pressed={isActive}
                         className={`absolute ${positionClass} ${floatClass} text-left transition-all duration-500 ${
                           isActive
@@ -512,14 +542,25 @@ export default function Team() {
                                 }`}
                               />
                               <div className="relative h-24 w-24 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-[0_28px_48px_-30px_rgba(0,0,0,0.95)]">
-                                <Image
-                                  src={withBasePath(member.image)}
-                                  alt={`${member.name} portrait`}
-                                  fill
-                                  className="object-cover"
-                                  style={portraitImageStyle}
-                                  sizes="96px"
-                                />
+                                {isDesktopAvatarAnimated ? (
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    src={withBasePath(member.animatedImage)}
+                                    alt={`${member.name} portrait`}
+                                    className="team-hover-avatar-enter h-full w-full object-cover"
+                                    style={portraitImageStyle}
+                                    draggable={false}
+                                  />
+                                ) : (
+                                  <Image
+                                    src={withBasePath(member.image)}
+                                    alt={`${member.name} portrait`}
+                                    fill
+                                    className="object-cover"
+                                    style={portraitImageStyle}
+                                    sizes="96px"
+                                  />
+                                )}
                               </div>
                               <span
                                 className={`absolute -right-2 top-3 h-3 w-3 rounded-full ${
