@@ -53,11 +53,13 @@ const AmbientParticles = () => {
 export default function ProgressAppMockup({ 
     radarChart, 
     isSectionHovered = false,
-    externalMousePos = { x: 0, y: 0 } 
+    externalMousePos = { x: 0, y: 0 },
+    softDeviceShadow = false,
 }: { 
     radarChart?: React.ReactNode,
     isSectionHovered?: boolean,
-    externalMousePos?: { x: number, y: number }
+    externalMousePos?: { x: number, y: number },
+    softDeviceShadow?: boolean,
 }) {
     const containerRef = useRef<HTMLDivElement>(null);
     const timeStr = useMockDeviceTime("23:05");
@@ -96,7 +98,11 @@ export default function ProgressAppMockup({
                 {/* ── UNIFIED HI-FI CHASSIS (Space Black Titanium) ── */}
                 {/* 1. Main Hardware Body (Unified Material) */}
                 <div 
-                    className="absolute inset-0 rounded-[3.5rem] bg-[#0F1115] shadow-[40px_80px_100px_rgba(0,0,0,0.6)]" 
+                    className={`absolute inset-0 rounded-[3.5rem] bg-[#0F1115] ${
+                        softDeviceShadow
+                            ? "shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
+                            : "shadow-[40px_80px_100px_rgba(0,0,0,0.6)]"
+                    }`} 
                     style={{ 
                         transform: "translateZ(-12px)",
                     }}

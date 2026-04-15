@@ -748,6 +748,7 @@ function BlankPhoneMockup({
     screenDepth = 10,
     useBareScreenSurface = false,
     flattenHardwareLayers = false,
+    softDeviceShadow = false,
 }: {
     className?: string;
     style: CSSProperties;
@@ -756,6 +757,7 @@ function BlankPhoneMockup({
     screenDepth?: number;
     useBareScreenSurface?: boolean;
     flattenHardwareLayers?: boolean;
+    softDeviceShadow?: boolean;
 }) {
     return (
         <div
@@ -768,7 +770,11 @@ function BlankPhoneMockup({
             }}
         >
             <div
-                className="absolute inset-0 rounded-[3.5rem] bg-[#0F1115] shadow-[40px_80px_100px_rgba(0,0,0,0.6)]"
+                className={`absolute inset-0 rounded-[3.5rem] bg-[#0F1115] ${
+                    softDeviceShadow
+                        ? "shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
+                        : "shadow-[40px_80px_100px_rgba(0,0,0,0.6)]"
+                }`}
                 style={{
                     transform: flattenHardwareLayers
                         ? "translateZ(0px)"
@@ -848,10 +854,14 @@ export default function RoadmapAppMockup({
     animKey,
     isSectionHovered = false,
     externalMousePos = { x: 0, y: 0 },
+    softDeviceShadow = false,
+    compactVerticalPadding = false,
 }: {
     animKey: number;
     isSectionHovered?: boolean;
     externalMousePos?: { x: number; y: number };
+    softDeviceShadow?: boolean;
+    compactVerticalPadding?: boolean;
 }) {
     const timeStr = useMockDeviceTime("23:05");
     const rotateX = 18 - externalMousePos.y * 10;
@@ -866,7 +876,9 @@ export default function RoadmapAppMockup({
 
     return (
         <div
-            className="relative flex h-full w-full select-none items-center justify-center p-4 md:p-8"
+            className={`relative flex h-full w-full select-none items-center justify-center ${
+                compactVerticalPadding ? "px-4 py-0 md:p-8" : "p-4 md:p-8"
+            }`}
             style={{ perspective: "2000px" }}
         >
             <div
@@ -880,6 +892,7 @@ export default function RoadmapAppMockup({
                         transform: `rotateX(${rotateX}deg) rotateY(${mirroredRotateY}deg) rotateZ(${mirroredRotateZ}deg) scale(${activeScale})`,
                     }}
                     timeStr={timeStr}
+                    softDeviceShadow={softDeviceShadow}
                     screenContent={<LeftVideoPlayerScreen />}
                 />
 
@@ -889,6 +902,7 @@ export default function RoadmapAppMockup({
                         transform: `rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${activeScale})`,
                     }}
                     timeStr={timeStr}
+                    softDeviceShadow={softDeviceShadow}
                     screenContent={<CenterPackRecommendationScreen />}
                 />
 
@@ -901,6 +915,7 @@ export default function RoadmapAppMockup({
                     screenDepth={0}
                     useBareScreenSurface={true}
                     flattenHardwareLayers={true}
+                    softDeviceShadow={softDeviceShadow}
                     screenContent={<RightReflectionScreen />}
                 />
             </div>

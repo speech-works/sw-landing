@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useCallback } from "react";
 import InviteOnlyModal from "./InviteOnlyModal";
+import MobileCarouselControls from "./MobileCarouselControls";
 
 /* ─────────────────────────────────────────────
    REFINED DESIGN SYSTEM UTILS
@@ -97,8 +98,8 @@ export default function Pricing() {
   );
   const isHoverLocked = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const mobileTouchStartXRef = useRef<number | null>(null);
-  const mobileTouchCurrentXRef = useRef<number | null>(null);
+  const pricingTouchStartX = useRef<number | null>(null);
+  const pricingTouchStartY = useRef<number | null>(null);
 
   // Track mouse coordinates for the 3D 'Magnetic' Tilt effect
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -157,44 +158,52 @@ export default function Pricing() {
     setIsInviteModalOpen(true);
   };
 
-  const handleMobileCarouselTouchStart = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
-    mobileTouchCurrentXRef.current = null;
+  const showPreviousTier = () => {
+    setMobileCard(
+      (current) => (current - 1 + pricingTiers.length) % pricingTiers.length
+    );
   };
 
-  const handleMobileCarouselTouchMove = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    mobileTouchCurrentXRef.current = event.touches[0]?.clientX ?? null;
+  const showNextTier = () => {
+    setMobileCard((current) => (current + 1) % pricingTiers.length);
   };
 
-  const handleMobileCarouselTouchEnd = () => {
+  const handlePricingTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    pricingTouchStartX.current = touch.clientX;
+    pricingTouchStartY.current = touch.clientY;
+  };
+
+  const handlePricingTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
     if (
-      mobileTouchStartXRef.current === null ||
-      mobileTouchCurrentXRef.current === null
+      pricingTouchStartX.current === null ||
+      pricingTouchStartY.current === null
     ) {
-      mobileTouchStartXRef.current = null;
-      mobileTouchCurrentXRef.current = null;
       return;
     }
 
-    const swipeDistance =
-      mobileTouchStartXRef.current - mobileTouchCurrentXRef.current;
+    const touch = e.changedTouches[0];
+    const deltaX = touch.clientX - pricingTouchStartX.current;
+    const deltaY = touch.clientY - pricingTouchStartY.current;
 
-    if (Math.abs(swipeDistance) > 40) {
-      if (swipeDistance > 0) {
-        setMobileCard((current) => (current + 1) % pricingTiers.length);
-      } else {
-        setMobileCard(
-          (current) => (current - 1 + pricingTiers.length) % pricingTiers.length
-        );
-      }
+    pricingTouchStartX.current = null;
+    pricingTouchStartY.current = null;
+
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY)) {
+      return;
     }
 
-    mobileTouchStartXRef.current = null;
-    mobileTouchCurrentXRef.current = null;
+    if (deltaX < 0) {
+      showNextTier();
+      return;
+    }
+
+    showPreviousTier();
+  };
+
+  const handlePricingTouchCancel = () => {
+    pricingTouchStartX.current = null;
+    pricingTouchStartY.current = null;
   };
 
   const renderCard = (
@@ -336,7 +345,7 @@ export default function Pricing() {
     <>
       <section
         id="pricing"
-        className="pt-12 pb-24 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden"
+        className="pt-8 pb-8 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden"
       >
         <style
           dangerouslySetInnerHTML={{
@@ -378,15 +387,16 @@ export default function Pricing() {
 
           {/* Mobile View */}
           <div
-            className="lg:hidden w-full max-w-sm mx-auto"
+            className="relative lg:hidden w-full max-w-sm mx-auto"
             role="region"
             aria-roledescription="carousel"
             aria-label="Pricing tiers"
-            onTouchStart={handleMobileCarouselTouchStart}
-            onTouchMove={handleMobileCarouselTouchMove}
-            onTouchEnd={handleMobileCarouselTouchEnd}
+            onTouchStart={handlePricingTouchStart}
+            onTouchEnd={handlePricingTouchEnd}
+            onTouchCancel={handlePricingTouchCancel}
+            style={{ touchAction: "pan-y" }}
           >
-            <div className="overflow-x-hidden overflow-y-visible px-5 pt-4 pb-8">
+            <div className="overflow-x-hidden overflow-y-visible pt-4 pb-8">
               <div
                 className="flex will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{
@@ -397,7 +407,7 @@ export default function Pricing() {
                 {pricingTiers.map((tier, i) => (
                   <div
                     key={`m-${i}`}
-                    className="shrink-0"
+                    className="shrink-0 px-5"
                     style={{ width: `${100 / pricingTiers.length}%` }}
                   >
                     <div className="mx-auto w-full max-w-[19.75rem] min-h-[478px]">
@@ -408,30 +418,15 @@ export default function Pricing() {
               </div>
             </div>
 
-            <div className="mt-2 flex items-center justify-center gap-2.5">
-              {pricingTiers.map((tier, index) => {
-                const isActive = mobileCard === index;
-
-                return (
-                  <button
-                    key={`pricing-dot-${tier.id}`}
-                    type="button"
-                    onClick={() => setMobileCard(index)}
-                    className="flex h-7 items-center justify-center"
-                    aria-label={`Show ${tier.title} tier`}
-                    aria-pressed={isActive}
-                  >
-                    <span
-                      className={`block h-2.5 rounded-full transition-all duration-300 ${
-                        isActive
-                          ? "w-8 bg-app-text shadow-[0_0_18px_rgba(63,51,45,0.18)]"
-                          : "w-2.5 bg-black/18"
-                      }`}
-                    />
-                  </button>
-                );
-              })}
-            </div>
+            <MobileCarouselControls
+              currentIndex={mobileCard}
+              count={pricingTiers.length}
+              onPrevious={showPreviousTier}
+              onNext={showNextTier}
+              onSelect={setMobileCard}
+              getItemLabel={(index) => pricingTiers[index].title}
+              layout="inline"
+            />
           </div>
 
           {/* Desktop Interactive Stages */}

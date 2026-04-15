@@ -8,7 +8,7 @@ export default function CTA() {
     <>
       <section
         id="download"
-        className="py-24 md:py-32 relative z-10 bg-white group/cta"
+        className="py-8 md:py-32 relative z-10 bg-white group/cta"
       >
         <div className="absolute inset-0 bg-brand-50/50 z-0 pointer-events-none"></div>
 

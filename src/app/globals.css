@@ -104,6 +104,31 @@ section[id] {
   scroll-margin-top: var(--nav-height);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  :where(
+    a[href],
+    button:not(:disabled),
+    [role="button"]:not([aria-disabled="true"]),
+    summary,
+    label[for],
+    input[type="button"],
+    input[type="submit"],
+    input[type="reset"]
+  ) {
+    cursor: pointer;
+  }
+
+  :where(
+    button:disabled,
+    [role="button"][aria-disabled="true"],
+    input[type="button"]:disabled,
+    input[type="submit"]:disabled,
+    input[type="reset"]:disabled
+  ) {
+    cursor: not-allowed;
+  }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 @media (min-width: 768px) {

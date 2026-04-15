@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+import MobileCarouselControls from "./MobileCarouselControls";
 
 declare global {
   interface Window {
@@ -58,10 +59,6 @@ const BriefcaseIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
 
 export default function Simulator() {
   const [activeSimulator, setActiveSimulator] = useState(1);
-  const [hasMobileCarouselInteracted, setHasMobileCarouselInteracted] =
-    useState(false);
-  const mobileTouchStartXRef = useRef<number | null>(null);
-  const mobileTouchCurrentXRef = useRef<number | null>(null);
 
   useEffect(() => {
     window.activateSimulator = (index: number) => {
@@ -73,92 +70,22 @@ export default function Simulator() {
     };
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const mobileMediaQuery = window.matchMedia("(max-width: 767px)");
-    let autoRotateId: number | null = null;
-
-    const syncAutoRotate = () => {
-      if (autoRotateId) {
-        clearInterval(autoRotateId);
-        autoRotateId = null;
-      }
-
-      if (!mobileMediaQuery.matches || hasMobileCarouselInteracted) return;
-
-      autoRotateId = window.setInterval(() => {
-        setActiveSimulator((current) => (current % 3) + 1);
-      }, 3600);
-    };
-
-    syncAutoRotate();
-
-    const handleViewportChange = () => {
-      syncAutoRotate();
-    };
-
-    mobileMediaQuery.addEventListener("change", handleViewportChange);
-
-    return () => {
-      if (autoRotateId) {
-        clearInterval(autoRotateId);
-      }
-      mobileMediaQuery.removeEventListener("change", handleViewportChange);
-    };
-  }, [hasMobileCarouselInteracted]);
-
-  const stopMobileCarouselAutoplay = () => {
-    setHasMobileCarouselInteracted(true);
-  };
-
-  const handleMobileCarouselTouchStart = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    stopMobileCarouselAutoplay();
-    mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
-    mobileTouchCurrentXRef.current = null;
-  };
-
-  const handleMobileCarouselTouchMove = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    mobileTouchCurrentXRef.current = event.touches[0]?.clientX ?? null;
-  };
-
-  const handleMobileCarouselTouchEnd = () => {
-    if (
-      mobileTouchStartXRef.current === null ||
-      mobileTouchCurrentXRef.current === null
-    ) {
-      mobileTouchStartXRef.current = null;
-      mobileTouchCurrentXRef.current = null;
-      return;
-    }
-
-    const swipeDistance =
-      mobileTouchStartXRef.current - mobileTouchCurrentXRef.current;
-
-    if (Math.abs(swipeDistance) > 40) {
-      if (swipeDistance > 0) {
-        setActiveSimulator((current) => (current % 3) + 1);
-      } else {
-        setActiveSimulator((current) => (current === 1 ? 3 : current - 1));
-      }
-    }
-
-    mobileTouchStartXRef.current = null;
-    mobileTouchCurrentXRef.current = null;
-  };
-
   const getStageViewClasses = (index: number) =>
     activeSimulator === index
       ? "opacity-100 translate-y-0 scale-100 z-20 pointer-events-none"
       : "opacity-0 translate-y-16 scale-95 z-0 pointer-events-none";
 
+  const showPreviousSimulator = () => {
+    setActiveSimulator((current) => (current === 1 ? 3 : current - 1));
+  };
+
+  const showNextSimulator = () => {
+    setActiveSimulator((current) => (current % 3) + 1);
+  };
+
   return (
     <>
-      <section className="relative z-10 bg-[#FFFAF5] overflow-hidden flex flex-col justify-start md:justify-center min-h-0 md:min-h-screen py-8 md:py-12">
+      <section className="relative z-10 bg-[#FFFAF5] overflow-hidden flex flex-col justify-start md:justify-center min-h-0 md:min-h-screen pt-8 pb-8 md:py-12">
         {/*  EXPERIMENTAL STYLES ONLY FOR THIS SECTION  */}
         <style
           dangerouslySetInnerHTML={{
@@ -354,19 +281,15 @@ export default function Simulator() {
             </div>
 
             {/*  Unified Viewport  */}
-            <div
-              className="w-full relative"
-              onTouchStartCapture={stopMobileCarouselAutoplay}
-              onTouchStart={handleMobileCarouselTouchStart}
-              onTouchMove={handleMobileCarouselTouchMove}
-              onTouchEnd={handleMobileCarouselTouchEnd}
-            >
+            <div className="w-full" style={{ touchAction: "pan-y" }}>
               <div className="mb-4 flex md:hidden justify-center">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#0d0d0d] px-3.5 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-white/75 shadow-[0_18px_45px_rgba(0,0,0,0.28)]">
                   <span className="h-2 w-2 rounded-full bg-brand shadow-[0_0_12px_rgba(242,128,68,0.65)]"></span>
                   1,000+ curated scenarios
                 </div>
               </div>
+
+              <div className="relative">
 
               {/*  THE STICKER: OVERFLOW OFF RIGHT SIDE (Fixed scaling for MacBook)  */}
               <div className="hidden md:block absolute -right-4 md:-right-8 lg:-right-16 top-1/2 -translate-y-[55%] z-40 pointer-events-none sticker-animate-in">
@@ -611,28 +534,18 @@ export default function Simulator() {
                 </div>
               </div>
 
-              <div className="mt-4 flex md:hidden items-center justify-center gap-2.5">
-                {[1, 2, 3].map((index) => (
-                  <button
-                    key={`sim-mobile-dot-${index}`}
-                    type="button"
-                    onClick={() => {
-                      stopMobileCarouselAutoplay();
-                      setActiveSimulator(index);
-                    }}
-                    className="flex h-7 items-center justify-center"
-                    aria-label={`Show simulator scenario ${index}`}
-                    aria-pressed={activeSimulator === index}
-                  >
-                    <span
-                      className={`block h-2.5 rounded-full transition-all duration-300 ${
-                        activeSimulator === index
-                          ? "w-8 bg-app-text shadow-[0_0_18px_rgba(63,51,45,0.18)]"
-                          : "w-2.5 bg-black/18"
-                      }`}
-                    />
-                  </button>
-                ))}
+              <div className="md:hidden">
+                <MobileCarouselControls
+                  currentIndex={activeSimulator - 1}
+                  count={3}
+                  onPrevious={showPreviousSimulator}
+                  onNext={showNextSimulator}
+                  onSelect={(index) => setActiveSimulator(index + 1)}
+                  getItemLabel={(index) =>
+                    ["Cafe Order", "Phone Call", "Pro Interview"][index]
+                  }
+                />
+              </div>
               </div>
             </div>
           </div>

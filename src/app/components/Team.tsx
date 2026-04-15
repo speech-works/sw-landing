@@ -270,7 +270,7 @@ export default function Team() {
       <style>{TEAM_STAGE_KEYFRAMES}</style>
       <section
         id="team"
-        className="relative z-10 overflow-hidden bg-[linear-gradient(180deg,#fffdf9_0%,#fff7f0_45%,#fffdf9_100%)] py-20 md:py-28"
+        className="relative z-10 overflow-hidden bg-[linear-gradient(180deg,#fffdf9_0%,#fff7f0_45%,#fffdf9_100%)] py-8 md:py-28"
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(242,128,68,0.18),transparent_26%),radial-gradient(circle_at_86%_20%,rgba(63,51,45,0.08),transparent_24%),radial-gradient(circle_at_80%_84%,rgba(242,128,68,0.1),transparent_28%)]" />
@@ -301,7 +301,7 @@ export default function Team() {
 
           <div
             ref={stageRef}
-            className="mt-10 reveal reveal-delay-1 relative overflow-hidden rounded-[2.7rem] border border-[#2e221c] bg-[#120d0a] px-5 pb-6 pt-8 shadow-[0_46px_110px_-58px_rgba(18,13,10,0.92)] sm:px-7 sm:py-8 lg:px-9 lg:py-10"
+            className="mt-10 reveal reveal-delay-1 relative overflow-hidden rounded-[2.7rem] border border-[#2e221c] bg-[#120d0a] px-5 pb-6 pt-8 shadow-[0_16px_36px_-20px_rgba(18,13,10,0.42)] sm:px-7 sm:py-8 sm:shadow-[0_46px_110px_-58px_rgba(18,13,10,0.92)] lg:px-9 lg:py-10"
             onPointerEnter={stopIdleMotion}
             onPointerDown={stopIdleMotion}
             onTouchStart={stopIdleMotion}

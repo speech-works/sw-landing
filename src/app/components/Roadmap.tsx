@@ -1,5 +1,6 @@
 import { withBasePath } from "@/app/lib/withBasePath";
 import { useEffect, useRef, useState } from "react";
+import MobileCarouselControls from "./MobileCarouselControls";
 import RoadmapMockup from "./RoadmapMockup";
 
 const ROADMAP_PHASES = [
@@ -54,8 +55,6 @@ export default function Roadmap() {
     null
   );
   const sectionRef = useRef<HTMLElement>(null);
-  const mobileTouchStartXRef = useRef<number | null>(null);
-  const mobileTouchCurrentXRef = useRef<number | null>(null);
 
   // Navigation Themes
   const themes: Record<number, string> = {
@@ -97,44 +96,14 @@ export default function Roadmap() {
       );
   }, []);
 
-  const handleMobileCarouselTouchStart = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
-    mobileTouchCurrentXRef.current = null;
+  const showPreviousPhase = () => {
+    setActivePhase((currentPhase) =>
+      currentPhase === 1 ? ROADMAP_PHASES.length : currentPhase - 1
+    );
   };
 
-  const handleMobileCarouselTouchMove = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    mobileTouchCurrentXRef.current = event.touches[0]?.clientX ?? null;
-  };
-
-  const handleMobileCarouselTouchEnd = () => {
-    if (
-      mobileTouchStartXRef.current === null ||
-      mobileTouchCurrentXRef.current === null
-    ) {
-      mobileTouchStartXRef.current = null;
-      mobileTouchCurrentXRef.current = null;
-      return;
-    }
-
-    const swipeDistance =
-      mobileTouchStartXRef.current - mobileTouchCurrentXRef.current;
-
-    if (Math.abs(swipeDistance) > 40) {
-      if (swipeDistance > 0) {
-        setActivePhase((currentPhase) => (currentPhase % ROADMAP_PHASES.length) + 1);
-      } else {
-        setActivePhase((currentPhase) =>
-          currentPhase === 1 ? ROADMAP_PHASES.length : currentPhase - 1
-        );
-      }
-    }
-
-    mobileTouchStartXRef.current = null;
-    mobileTouchCurrentXRef.current = null;
+  const showNextPhase = () => {
+    setActivePhase((currentPhase) => (currentPhase % ROADMAP_PHASES.length) + 1);
   };
 
   const getMobileStackStyle = (phase: number) => {
@@ -176,7 +145,7 @@ export default function Roadmap() {
       <section
         id="roadmap"
         ref={sectionRef}
-        className="pt-12 pb-8 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden font-sans select-none"
+        className="pt-8 pb-8 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden font-sans select-none"
         style={
           {
             "--mouse-x": `${mousePos.x * 100}%`,
@@ -197,15 +166,13 @@ export default function Roadmap() {
             </h3>
           </div>
 
-          <div className="lg:hidden reveal reveal-delay-1 active">
+          <div className="relative lg:hidden reveal reveal-delay-1 active">
             <div
-              className="overflow-hidden"
+              className="overflow-hidden pt-2 sm:pt-3"
               role="region"
               aria-roledescription="carousel"
               aria-label="Speechworks roadmap phases"
-              onTouchStart={handleMobileCarouselTouchStart}
-              onTouchMove={handleMobileCarouselTouchMove}
-              onTouchEnd={handleMobileCarouselTouchEnd}
+              style={{ touchAction: "pan-y" }}
             >
               <div
                 className="flex will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
@@ -217,12 +184,13 @@ export default function Roadmap() {
                 {ROADMAP_PHASES.map((phase) => (
                   <div
                     key={phase.id}
-                    className="shrink-0"
+                    className="shrink-0 py-1.5 sm:py-2"
                     style={{ width: `${100 / ROADMAP_PHASES.length}%` }}
                   >
-                    <div className="px-[1px]">
-                      <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-black/6 bg-white shadow-[0_22px_54px_rgba(63,51,45,0.08)]">
-                        <div className="min-h-[282px] border-b border-black/6 px-5 py-5 sm:min-h-[258px]">
+                    <div className="px-[2px]">
+                      <div className="overflow-visible rounded-[2rem]">
+                        <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-black/[0.04] bg-white">
+                        <div className="min-h-[282px] border-b border-black/[0.04] px-5 py-5 sm:min-h-[258px]">
                           <div
                             className={`text-[10px] font-black uppercase tracking-[0.2em] ${phase.themeClass}`}
                           >
@@ -318,6 +286,7 @@ export default function Roadmap() {
                           )}
                         </div>
                       </div>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -348,6 +317,16 @@ export default function Roadmap() {
                 })}
               </div>
             </div>
+
+            <MobileCarouselControls
+              currentIndex={activePhase - 1}
+              count={ROADMAP_PHASES.length}
+              onPrevious={showPreviousPhase}
+              onNext={showNextPhase}
+              onSelect={(index) => setActivePhase(index + 1)}
+              getItemLabel={(index) => ROADMAP_PHASES[index].title}
+              showDots={false}
+            />
           </div>
 
           <div className="hidden lg:flex flex-col lg:flex-row gap-10 md:gap-16 items-stretch reveal reveal-delay-1 active">
