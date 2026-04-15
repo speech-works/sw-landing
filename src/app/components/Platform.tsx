@@ -426,7 +426,7 @@ export default function Platform() {
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
-  const [mobileActiveSlideHeight, setMobileActiveSlideHeight] = useState<
+  const [mobileCarouselHeight, setMobileCarouselHeight] = useState<
     number | null
   >(null);
   const mobileSlideRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -481,30 +481,37 @@ export default function Platform() {
     handleFeatureClick((activeIndex + 1) % features.length);
   }, [activeIndex, handleFeatureClick]);
 
-  const syncMobileActiveSlideHeight = useCallback(() => {
+  const syncMobileCarouselHeight = useCallback(() => {
     if (!isMobileViewport) {
-      setMobileActiveSlideHeight(null);
+      setMobileCarouselHeight(null);
       return;
     }
 
-    const activeSlide = mobileSlideRefs.current[activeIndex];
-    if (!activeSlide) return;
+    const nextHeight = mobileSlideRefs.current.reduce((maxHeight, slide) => {
+      if (!slide) return maxHeight;
 
-    const nextHeight = Math.ceil(activeSlide.getBoundingClientRect().height);
-    setMobileActiveSlideHeight((current) =>
+      return Math.max(
+        maxHeight,
+        Math.ceil(slide.getBoundingClientRect().height)
+      );
+    }, 0);
+
+    if (!nextHeight) return;
+
+    setMobileCarouselHeight((current) =>
       current === nextHeight ? current : nextHeight
     );
-  }, [activeIndex, isMobileViewport]);
+  }, [isMobileViewport]);
 
   useEffect(() => {
-    syncMobileActiveSlideHeight();
-  }, [syncMobileActiveSlideHeight, animKey]);
+    syncMobileCarouselHeight();
+  }, [syncMobileCarouselHeight, animKey]);
 
   useEffect(() => {
     if (!isMobileViewport) return;
 
     const handleResize = () => {
-      syncMobileActiveSlideHeight();
+      syncMobileCarouselHeight();
     };
 
     window.addEventListener("resize", handleResize);
@@ -513,7 +520,7 @@ export default function Platform() {
       typeof ResizeObserver === "undefined"
         ? null
         : new ResizeObserver(() => {
-            syncMobileActiveSlideHeight();
+            syncMobileCarouselHeight();
           });
 
     mobileSlideRefs.current.forEach((slide) => {
@@ -526,7 +533,7 @@ export default function Platform() {
       window.removeEventListener("resize", handleResize);
       resizeObserver?.disconnect();
     };
-  }, [isMobileViewport, syncMobileActiveSlideHeight]);
+  }, [isMobileViewport, syncMobileCarouselHeight]);
 
   const [isHoveredStage, setIsHoveredStage] = useState(false);
   const [stageMousePos, setStageMousePos] = useState({ x: 0, y: 0 });
@@ -757,12 +764,12 @@ export default function Platform() {
       </div>
 
       {/* ── Main content ── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10 space-y-6 sm:space-y-7 md:space-y-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10 space-y-12 sm:space-y-12 md:space-y-0">
         {/* Section heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between md:mb-16 text-center md:text-left">
           <div className="max-w-2xl mx-auto md:mx-0">
             <h2
-              className="text-brand font-bold tracking-[0.16em] uppercase text-[8px] md:text-xs mb-1.5 md:mb-4"
+              className="text-brand font-bold tracking-[0.16em] uppercase text-[9px] sm:text-[10px] md:text-xs mb-2 md:mb-4"
               style={{
                 animation: "platform-fadeSlideDown 0.6s ease 0.1s both",
               }}
@@ -770,7 +777,7 @@ export default function Platform() {
               Professional Speech Academy
             </h2>
             <h3
-              className="text-[1.32rem] sm:text-4xl md:text-5xl font-black tracking-tighter leading-[0.92] text-app-text"
+              className="text-[2rem] sm:text-4xl md:text-5xl font-black tracking-tighter leading-[0.92] text-app-text"
               style={{
                 animation:
                   "platform-headingReveal 0.8s cubic-bezier(0.23,1,0.32,1) 0.2s both",
@@ -804,8 +811,8 @@ export default function Platform() {
             <div
               className="transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
               style={
-                mobileActiveSlideHeight
-                  ? { height: `${mobileActiveSlideHeight}px` }
+                mobileCarouselHeight
+                  ? { height: `${mobileCarouselHeight}px` }
                   : undefined
               }
             >
@@ -838,10 +845,10 @@ export default function Platform() {
                           <div
                             className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${feature.activeBar}`}
                           />
-                          <h4 className="text-[1.08rem] font-black leading-[0.92] tracking-[-0.05em] text-app-text sm:text-[1.18rem] sm:leading-[0.92]">
+                          <h4 className="text-[1.6rem] font-black leading-[0.95] tracking-[-0.05em] text-app-text sm:text-[1.75rem] sm:leading-[0.95]">
                             {feature.mobileTitle ?? feature.title}
                           </h4>
-                          <p className="mt-1.5 max-w-[32ch] text-[0.72rem] leading-[1.34] text-app-muted sm:max-w-[34ch] sm:text-[0.78rem] sm:leading-[1.38]">
+                          <p className="mt-2.5 max-w-[31ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
                             {feature.mobileDesc ?? feature.desc}
                           </p>
                         </div>
