@@ -344,18 +344,22 @@ const moods = [
 
 export default function MoodCarousel() {
   const [index, setIndex] = useState(0);
+  const [hasTouchInteracted, setHasTouchInteracted] = useState(false);
 
   useEffect(() => {
+    if (hasTouchInteracted) return;
+
     const timer = setInterval(() => {
       setIndex((i) => (i + 1) % moods.length);
     }, 4500);
     return () => clearInterval(timer);
-  }, []);
+  }, [hasTouchInteracted]);
 
   return (
     <div
       className="w-full h-full flex items-center p-4 bg-slate-100/90 backdrop-blur-2xl rounded-2xl relative overflow-hidden transition-colors duration-1000 border border-white/40 shadow-2xl"
       style={{ background: moods[index].bg + "C0" }}
+      onTouchStartCapture={() => setHasTouchInteracted(true)}
     >
       {/* Horizontal Layout for smaller card */}
       <div className="flex-1 flex flex-col justify-center">

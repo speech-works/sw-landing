@@ -356,6 +356,7 @@ export default function Simulator() {
             {/*  Unified Viewport  */}
             <div
               className="w-full relative"
+              onTouchStartCapture={stopMobileCarouselAutoplay}
               onTouchStart={handleMobileCarouselTouchStart}
               onTouchMove={handleMobileCarouselTouchMove}
               onTouchEnd={handleMobileCarouselTouchEnd}

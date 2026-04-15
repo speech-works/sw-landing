@@ -189,11 +189,19 @@ const teamMembers: TeamMember[] = [
 ];
 
 const teamAnimationStateVar = "--team-anim-state" as const;
+const defaultTeamMemberIndex = Math.max(
+  teamMembers.findIndex((member) => member.name === "Sanae"),
+  0
+);
 
 export default function Team() {
   const [isContactOpen, setIsContactOpen] = useState(false);
-  const [activeMemberIndex, setActiveMemberIndex] = useState(0);
-  const [hoveredDesktopMemberIndex, setHoveredDesktopMemberIndex] = useState<number | null>(null);
+  const [activeMemberIndex, setActiveMemberIndex] = useState(
+    defaultTeamMemberIndex
+  );
+  const [hoveredDesktopMemberIndex, setHoveredDesktopMemberIndex] = useState<
+    number | null
+  >(null);
   const [hasStoppedIdleMotion, setHasStoppedIdleMotion] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -220,18 +228,6 @@ export default function Team() {
       stageRef.current.style.setProperty("--team-mouse-y", "28%");
     }
   }, []);
-
-  useEffect(() => {
-    if (hasStoppedIdleMotion || prefersReducedMotion) return;
-
-    const intervalId = window.setInterval(() => {
-      setActiveMemberIndex((current) => (current + 1) % teamMembers.length);
-    }, 4600);
-
-    return () => {
-      window.clearInterval(intervalId);
-    };
-  }, [hasStoppedIdleMotion, prefersReducedMotion]);
 
   const stopIdleMotion = () => {
     setHasStoppedIdleMotion(true);
