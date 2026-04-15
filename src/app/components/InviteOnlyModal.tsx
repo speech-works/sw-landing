@@ -282,7 +282,7 @@ export default function InviteOnlyModal({
 
   return (
     <div
-      className={`fixed inset-0 z-[120] flex items-start justify-center overflow-y-auto p-4 sm:items-center sm:p-6 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[120] flex items-center justify-center overflow-hidden p-3 sm:p-6 transition-opacity duration-300 ${
         isOpen ? "opacity-100" : "opacity-0"
       }`}
       role="dialog"
@@ -298,7 +298,7 @@ export default function InviteOnlyModal({
         ref={modalRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`relative mt-12 w-full max-w-[540px] max-h-[calc(100dvh-2rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-[2rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] transition-opacity duration-500 sm:mt-0 sm:max-h-[min(820px,calc(100dvh-3rem))] ${
+        className={`relative w-full max-w-[480px] max-h-[calc(100dvh-1.25rem)] overflow-hidden rounded-[1.7rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] transition-opacity duration-500 sm:max-w-[540px] sm:max-h-[min(820px,calc(100dvh-3rem))] sm:overflow-x-hidden sm:overflow-y-auto sm:overscroll-contain sm:rounded-[2rem] ${
           isOpen ? "opacity-100" : "opacity-0"
         }`}
         style={{ willChange: "transform" }}
@@ -320,7 +320,7 @@ export default function InviteOnlyModal({
 
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-all duration-300 hover:scale-110 hover:rotate-90 hover:border-[#ffb28a]/25 hover:bg-white/10 hover:text-white"
+          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-all duration-300 hover:scale-110 hover:rotate-90 hover:border-[#ffb28a]/25 hover:bg-white/10 hover:text-white sm:right-4 sm:top-4 sm:h-10 sm:w-10"
           aria-label="Close invite modal"
         >
           <svg
@@ -337,31 +337,31 @@ export default function InviteOnlyModal({
           </svg>
         </button>
 
-        <div className="relative z-10 p-5 md:p-6">
-          <div className="mb-4 flex items-start justify-between gap-4 pr-12">
+        <div className="relative z-10 p-3.5 sm:p-5 md:p-6">
+          <div className="mb-3 flex items-start justify-between gap-3 pr-10 sm:mb-4 sm:gap-4 sm:pr-12">
             <div>
-              <div className="text-[11px] font-black uppercase tracking-[0.22em] text-[#ffb28a]">
+              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#ffb28a] sm:text-[11px] sm:tracking-[0.22em]">
                 {eyebrowCopy}
               </div>
-              <div className="mt-1 text-[13px] font-semibold text-white/60">
+              <div className="mt-0.5 text-[11px] font-semibold text-white/60 sm:mt-1 sm:text-[13px]">
                 {sublineCopy}
               </div>
             </div>
-            <div className="pointer-events-none text-[2.8rem] font-black leading-none tracking-[-0.08em] text-white/[0.05]">
+            <div className="pointer-events-none text-[2rem] font-black leading-none tracking-[-0.08em] text-white/[0.05] sm:text-[2.8rem]">
               WAVE 01
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-[1.6rem] border border-white/8 bg-white/[0.03] px-5 py-5 md:px-6 md:py-6">
+          <div className="relative overflow-hidden rounded-[1.3rem] border border-white/8 bg-white/[0.03] px-3.5 py-3.5 sm:rounded-[1.6rem] sm:px-5 sm:py-5 md:px-6 md:py-6">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/18 to-transparent" />
-            <div className="pointer-events-none absolute right-5 top-5 text-[4.8rem] font-black leading-none tracking-[-0.08em] text-white/[0.035]">
+            <div className="pointer-events-none absolute right-3 top-3 text-[3.35rem] font-black leading-none tracking-[-0.08em] text-white/[0.03] sm:right-5 sm:top-5 sm:text-[4.8rem]">
               {step === "pitch" ? "EARLY" : "REBEL"}
             </div>
 
             {step === "pitch" ? (
               <>
                 <div
-                  className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#ffb28a]/25 bg-[#ffb28a]/10 px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.16em] text-[#ffd6bf]"
+                  className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-[#ffb28a]/25 bg-[#ffb28a]/10 px-3 py-1.5 text-[8.5px] font-black uppercase tracking-[0.16em] text-[#ffd6bf] sm:mb-3 sm:text-[9px]"
                   style={{
                     animation:
                       "invite-fade-up 460ms cubic-bezier(0.22,1,0.36,1) both",
@@ -376,7 +376,7 @@ export default function InviteOnlyModal({
 
                 <h2
                   id="invite-only-title"
-                  className="max-w-[10ch] text-[1.9rem] font-black leading-[0.92] tracking-[-0.055em] text-white md:text-[2.4rem]"
+                  className="max-w-[10ch] text-[1.72rem] font-black leading-[0.92] tracking-[-0.055em] text-white sm:text-[1.9rem] md:text-[2.4rem]"
                   style={{
                     animation:
                       "invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) 60ms both",
@@ -386,7 +386,7 @@ export default function InviteOnlyModal({
                 </h2>
 
                 <p
-                  className="mt-3 max-w-[38ch] text-[14px] leading-6 text-white/72 md:text-[15px]"
+                  className="mt-2.5 max-w-[38ch] text-[13px] leading-[1.72] text-white/72 sm:mt-3 sm:text-[14px] sm:leading-6 md:text-[15px]"
                   style={{
                     animation:
                       "invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) 120ms both",
@@ -396,7 +396,7 @@ export default function InviteOnlyModal({
                 </p>
 
                 <div
-                  className="mt-5 rounded-[1.15rem] border border-[#ffb28a]/12 bg-[#ffb28a]/6 px-4 py-3"
+                  className="mt-4 rounded-[1.05rem] border border-[#ffb28a]/12 bg-[#ffb28a]/6 px-3.5 py-3 sm:mt-5 sm:rounded-[1.15rem] sm:px-4"
                   style={{
                     animation:
                       "invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) 220ms both",
@@ -405,13 +405,13 @@ export default function InviteOnlyModal({
                   <div className="text-[10px] font-black uppercase tracking-[0.18em] text-[#ffb28a]">
                     {reasonTitle}
                   </div>
-                  <div className="mt-1.5 text-[13px] leading-5 text-white/76">
+                  <div className="mt-1.5 text-[12.5px] leading-[1.6] text-white/76 sm:text-[13px] sm:leading-5">
                     {reasonBody}
                   </div>
                 </div>
 
                 <div
-                  className="mt-5"
+                  className="mt-4 sm:mt-5"
                   style={{
                     animation:
                       "invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) 320ms both",
@@ -420,7 +420,7 @@ export default function InviteOnlyModal({
                   <button
                     type="button"
                     onClick={() => setStep("details")}
-                    className="inline-flex min-h-[54px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0"
+                    className="inline-flex min-h-[50px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[10.5px] font-black uppercase tracking-[0.16em] text-white transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 sm:min-h-[54px] sm:text-[11px]"
                   >
                     {ctaLabel}
                   </button>
@@ -428,15 +428,15 @@ export default function InviteOnlyModal({
               </>
             ) : (
               <>
-                <div className="mb-4 flex items-start justify-between gap-4">
+                <div className="mb-2.5 flex items-start justify-between gap-2.5 sm:mb-4 sm:gap-4">
                   <div>
                     <div className="text-[10px] font-black uppercase tracking-[0.18em] text-[#ffb28a]">
                       One clean step
                     </div>
-                    <h2 className="mt-1.5 text-[1.55rem] font-black tracking-[-0.045em] text-white">
+                    <h2 className="mt-0.5 text-[1.24rem] font-black tracking-[-0.05em] text-white sm:mt-1.5 sm:text-[1.55rem]">
                       Raise your hand.
                     </h2>
-                    <p className="mt-1.5 max-w-[34ch] text-[13px] leading-5 text-white/62">
+                    <p className="mt-0.5 max-w-[32ch] text-[11px] leading-[1.42] text-white/62 sm:mt-1.5 sm:text-[13px] sm:leading-5">
                       Give us the essentials and we&apos;ll prepare the email
                       draft around your details.
                     </p>
@@ -444,16 +444,16 @@ export default function InviteOnlyModal({
                   <button
                     type="button"
                     onClick={() => setStep("pitch")}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.12em] text-white/70 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
+                    className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.12em] text-white/70 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:text-white sm:px-3 sm:py-2 sm:text-[10px]"
                   >
                     Back
                   </button>
                 </div>
 
-                <div className="grid gap-3">
-                  <div className="grid gap-3 md:grid-cols-2">
+                <div className="grid gap-2 sm:gap-3">
+                  <div className="grid gap-2 md:grid-cols-2 sm:gap-3">
                     <label className="block">
-                      <span className="mb-1.5 block text-[10px] font-black uppercase tracking-[0.16em] text-white/55">
+                      <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
                         Name
                       </span>
                       <input
@@ -462,12 +462,12 @@ export default function InviteOnlyModal({
                         value={form.name}
                         onChange={updateField("name")}
                         placeholder="Your full name"
-                        className="w-full rounded-[1rem] border border-white/10 bg-[#1a130f] px-4 py-3 text-[14px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511]"
+                        className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
                       />
                     </label>
 
                     <label className="block">
-                      <span className="mb-1.5 block text-[10px] font-black uppercase tracking-[0.16em] text-white/55">
+                      <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
                         Email
                       </span>
                       <input
@@ -475,14 +475,14 @@ export default function InviteOnlyModal({
                         value={form.email}
                         onChange={updateField("email")}
                         placeholder="you@example.com"
-                        className="w-full rounded-[1rem] border border-white/10 bg-[#1a130f] px-4 py-3 text-[14px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511]"
+                        className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
                       />
                     </label>
                   </div>
 
-                  <div className="grid gap-3 md:grid-cols-[118px_minmax(0,1fr)]">
+                  <div className="grid gap-2 md:grid-cols-[118px_minmax(0,1fr)] sm:gap-3">
                     <label className="block">
-                      <span className="mb-1.5 block text-[10px] font-black uppercase tracking-[0.16em] text-white/55">
+                      <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
                         Code
                       </span>
                       <input
@@ -490,7 +490,7 @@ export default function InviteOnlyModal({
                         value={form.countryCode}
                         onChange={updateField("countryCode")}
                         placeholder="+1"
-                        className="w-full rounded-[1rem] border border-white/10 bg-[#1a130f] px-3 py-3 text-[14px] font-semibold text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511]"
+                        className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3 py-2.25 text-[12.5px] font-semibold text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:py-3 sm:text-[14px]"
                       />
                       <datalist id="invite-country-codes">
                         {COUNTRY_CODES.map((option, index) => (
@@ -505,7 +505,7 @@ export default function InviteOnlyModal({
                     </label>
 
                     <label className="block">
-                      <span className="mb-1.5 block text-[10px] font-black uppercase tracking-[0.16em] text-white/55">
+                      <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
                         Contact number{" "}
                         <span className="text-white/30">(optional)</span>
                       </span>
@@ -514,13 +514,13 @@ export default function InviteOnlyModal({
                         value={form.phone}
                         onChange={updateField("phone")}
                         placeholder="Contact number"
-                        className="w-full rounded-[1rem] border border-white/10 bg-[#1a130f] px-4 py-3 text-[14px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511]"
+                        className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
                       />
                     </label>
                   </div>
 
                   <label className="block">
-                    <span className="mb-1.5 block text-[10px] font-black uppercase tracking-[0.16em] text-white/55">
+                    <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
                       Referral code{" "}
                       <span className="text-white/30">(optional)</span>
                     </span>
@@ -529,23 +529,23 @@ export default function InviteOnlyModal({
                       value={form.referralCode}
                       onChange={updateField("referralCode")}
                       placeholder="This gives you bonus points, but we’ll still consider you"
-                      className="w-full rounded-[1rem] border border-white/10 bg-[#1a130f] px-4 py-3 text-[14px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511]"
+                      className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
                     />
                   </label>
                 </div>
 
                 {attemptedSubmit && !isValid ? (
-                  <p className="mt-3 text-[12px] font-semibold text-[#ffb28a]">
+                  <p className="mt-2.5 text-[11.5px] font-semibold text-[#ffb28a] sm:mt-3 sm:text-[12px]">
                     Add your name and a valid email so we can prepare the invite
                     draft for you.
                   </p>
                 ) : null}
 
-                <div className="mt-4">
+                <div className="mt-2.5 sm:mt-4">
                   <button
                     type="button"
                     onClick={openDraftedEmail}
-                    className="inline-flex min-h-[54px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0"
+                    className="inline-flex min-h-[46px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] text-white transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 sm:min-h-[54px] sm:px-6 sm:py-3 sm:text-[11px] sm:tracking-[0.16em]"
                   >
                     Be a rebel
                   </button>
