@@ -98,8 +98,8 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3 md:space-y-4 text-sm font-medium text-brand-100">
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    About Us
+                  <a href="#team" className="hover:text-white transition-colors">
+                    Team
                   </a>
                 </li>
                 <li>
@@ -115,7 +115,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/*  Massive Footer Type Marquee (Moved outside max-w container for true edge-to-edge)  */}
         <div className="w-full border-t border-white/20 pt-10 md:pt-16 pb-6 md:pb-8 overflow-hidden flex relative z-10">
           <div className="marquee-container w-full">
             <div className="marquee-content slow flex flex-nowrap items-center text-[18vw] font-black tracking-tighter leading-none select-none py-2 md:py-4">
@@ -147,14 +146,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs font-bold tracking-widest uppercase text-brand-100 mt-4 gap-4 md:gap-0">
             <p>© 2026 SPEECHWORKS.</p>
-            <div className="flex gap-6 md:gap-8">
-              {/* <a href="#" className="hover:text-white transition-colors">
-                Privacy
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                Terms
-              </a> */}
-            </div>
+            <div className="flex gap-6 md:gap-8"></div>
           </div>
         </div>
       </footer>

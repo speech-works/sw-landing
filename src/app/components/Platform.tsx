@@ -392,6 +392,9 @@ export default function Platform() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [hasMobileCarouselInteracted, setHasMobileCarouselInteracted] =
+    useState(false);
   const animKey = useAnimKey(activeIndex);
   const mobileTouchStartXRef = useRef<number | null>(null);
   const mobileTouchCurrentXRef = useRef<number | null>(null);
@@ -400,29 +403,65 @@ export default function Platform() {
   const UPDATE_INTERVAL = 50;
 
   useEffect(() => {
-    if (isHovered) return;
+    if (typeof window === "undefined") return;
+
+    const mobileMediaQuery = window.matchMedia("(max-width: 767px)");
+    const syncViewport = () => {
+      setIsMobileViewport(mobileMediaQuery.matches);
+    };
+
+    syncViewport();
+    mobileMediaQuery.addEventListener("change", syncViewport);
+
+    return () => {
+      mobileMediaQuery.removeEventListener("change", syncViewport);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isMobileViewport || isHovered) return;
     const tick = (UPDATE_INTERVAL / DURATION) * 100;
     const timer = setInterval(() => {
       setProgress((prev) => (prev >= 100 ? 100 : prev + tick));
     }, UPDATE_INTERVAL);
     return () => clearInterval(timer);
-  }, [activeIndex, isHovered]);
+  }, [activeIndex, isHovered, isMobileViewport]);
 
   useEffect(() => {
+    if (isMobileViewport) return;
     if (progress >= 100) {
       setActiveIndex((c) => (c + 1) % features.length);
       setProgress(0);
     }
-  }, [progress]);
+  }, [progress, isMobileViewport]);
+
+  useEffect(() => {
+    if (!isMobileViewport || hasMobileCarouselInteracted) return;
+
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % features.length);
+    }, DURATION);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [DURATION, hasMobileCarouselInteracted, isMobileViewport]);
 
   const handleFeatureClick = useCallback((index: number) => {
     setActiveIndex(index);
     setProgress(0);
   }, []);
 
+  const stopMobileCarouselAutoplay = useCallback(() => {
+    if (isMobileViewport) {
+      setHasMobileCarouselInteracted(true);
+    }
+  }, [isMobileViewport]);
+
   const handleMobileCarouselTouchStart = (
     event: React.TouchEvent<HTMLDivElement>
   ) => {
+    stopMobileCarouselAutoplay();
     mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
     mobileTouchCurrentXRef.current = null;
   };
@@ -801,7 +840,10 @@ export default function Platform() {
                 <button
                   key={`mobile-dot-${feature.id}`}
                   type="button"
-                  onClick={() => handleFeatureClick(index)}
+                  onClick={() => {
+                    stopMobileCarouselAutoplay();
+                    handleFeatureClick(index);
+                  }}
                   className="flex h-7 items-center justify-center"
                   aria-label={`Show ${feature.shortTitle} slide`}
                   aria-pressed={isActive}

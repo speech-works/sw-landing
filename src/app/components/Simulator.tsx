@@ -58,6 +58,8 @@ const BriefcaseIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
 
 export default function Simulator() {
   const [activeSimulator, setActiveSimulator] = useState(1);
+  const [hasMobileCarouselInteracted, setHasMobileCarouselInteracted] =
+    useState(false);
   const mobileTouchStartXRef = useRef<number | null>(null);
   const mobileTouchCurrentXRef = useRef<number | null>(null);
 
@@ -83,7 +85,7 @@ export default function Simulator() {
         autoRotateId = null;
       }
 
-      if (!mobileMediaQuery.matches) return;
+      if (!mobileMediaQuery.matches || hasMobileCarouselInteracted) return;
 
       autoRotateId = window.setInterval(() => {
         setActiveSimulator((current) => (current % 3) + 1);
@@ -104,11 +106,16 @@ export default function Simulator() {
       }
       mobileMediaQuery.removeEventListener("change", handleViewportChange);
     };
-  }, []);
+  }, [hasMobileCarouselInteracted]);
+
+  const stopMobileCarouselAutoplay = () => {
+    setHasMobileCarouselInteracted(true);
+  };
 
   const handleMobileCarouselTouchStart = (
     event: React.TouchEvent<HTMLDivElement>
   ) => {
+    stopMobileCarouselAutoplay();
     mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
     mobileTouchCurrentXRef.current = null;
   };
@@ -608,7 +615,10 @@ export default function Simulator() {
                   <button
                     key={`sim-mobile-dot-${index}`}
                     type="button"
-                    onClick={() => setActiveSimulator(index)}
+                    onClick={() => {
+                      stopMobileCarouselAutoplay();
+                      setActiveSimulator(index);
+                    }}
                     className="flex h-7 items-center justify-center"
                     aria-label={`Show simulator scenario ${index}`}
                     aria-pressed={activeSimulator === index}

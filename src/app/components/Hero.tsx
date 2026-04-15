@@ -129,12 +129,33 @@ export default function Hero() {
   const timeStr = useMockDeviceTime("09:41");
   const [activePhone, setActivePhone] = useState<HeroPhoneId>("center");
   const [hoveredPhone, setHoveredPhone] = useState<HeroPhoneId | null>(null);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [hasMobileCarouselInteracted, setHasMobileCarouselInteracted] =
+    useState(false);
   const activeHeroPhone = HERO_PHONE_COPY[activePhone];
   const activePhoneIndex = Math.max(0, HERO_PHONE_IDS.indexOf(activePhone));
   const mobileTouchStartXRef = useRef<number | null>(null);
   const mobileTouchCurrentXRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mobileMediaQuery = window.matchMedia("(max-width: 767px)");
+    const syncViewport = () => {
+      setIsMobileViewport(mobileMediaQuery.matches);
+    };
+
+    syncViewport();
+    mobileMediaQuery.addEventListener("change", syncViewport);
+
+    return () => {
+      mobileMediaQuery.removeEventListener("change", syncViewport);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isMobileViewport && hasMobileCarouselInteracted) return;
+
     const intervalId = window.setInterval(() => {
       setActivePhone((currentPhone) => {
         const currentIndex = HERO_PHONE_IDS.indexOf(currentPhone);
@@ -143,7 +164,13 @@ export default function Hero() {
     }, 4200);
 
     return () => window.clearInterval(intervalId);
-  }, []);
+  }, [hasMobileCarouselInteracted, isMobileViewport]);
+
+  const stopMobileCarouselAutoplay = () => {
+    if (isMobileViewport) {
+      setHasMobileCarouselInteracted(true);
+    }
+  };
 
   const getPhoneStyle = (phoneId: HeroPhoneId) => {
     const slot = HERO_PHONE_SLOT_BY_ACTIVE[activePhone][phoneId];
@@ -179,6 +206,7 @@ export default function Hero() {
   const handleMobileCarouselTouchStart = (
     event: React.TouchEvent<HTMLDivElement>
   ) => {
+    stopMobileCarouselAutoplay();
     mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
     mobileTouchCurrentXRef.current = null;
   };
@@ -570,7 +598,10 @@ export default function Hero() {
                         <button
                           key={phoneId}
                           type="button"
-                          onClick={() => setActivePhone(phoneId)}
+                          onClick={() => {
+                            stopMobileCarouselAutoplay();
+                            setActivePhone(phoneId);
+                          }}
                           className="flex h-7 items-center justify-center"
                           aria-label={`Show ${HERO_PHONE_COPY[phoneId].tab} slide`}
                           aria-pressed={isActive}
