@@ -12,6 +12,7 @@ import Team from './components/Team';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import Pricing from './components/Pricing';
+import LaunchUpdates from './components/LaunchUpdates';
 
 declare global {
   interface Window {
@@ -294,6 +295,7 @@ export default function Home() {
       <Team />
       <Pricing />
       <CTA />
+      <LaunchUpdates />
       <Footer />
     </main>
   );

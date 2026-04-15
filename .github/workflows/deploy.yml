@@ -23,6 +23,10 @@ jobs:
         run: npm install
 
       - name: Build and export
+        env:
+          NEXT_PUBLIC_GOOGLE_FORM_ACTION_URL: ${{ vars.NEXT_PUBLIC_GOOGLE_FORM_ACTION_URL }}
+          NEXT_PUBLIC_GOOGLE_FORM_EMAIL_ENTRY_ID: ${{ vars.NEXT_PUBLIC_GOOGLE_FORM_EMAIL_ENTRY_ID }}
+          NEXT_PUBLIC_GOOGLE_FORM_SOURCE_ENTRY_ID: ${{ vars.NEXT_PUBLIC_GOOGLE_FORM_SOURCE_ENTRY_ID }}
         run: npm run build
 
       - name: Deploy to GitHub Pages
