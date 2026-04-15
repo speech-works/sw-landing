@@ -12,7 +12,7 @@ const GOOGLE_FORM_EMAIL_ENTRY_ID =
   process.env.NEXT_PUBLIC_GOOGLE_FORM_EMAIL_ENTRY_ID || "";
 const GOOGLE_FORM_SOURCE_ENTRY_ID =
   process.env.NEXT_PUBLIC_GOOGLE_FORM_SOURCE_ENTRY_ID || "";
-const PANEL_SIGNALS = ["launch drops", "product notes", "early access"];
+const STORAGE_KEY = "speechworks_launch_updates_subscribed";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
@@ -21,29 +21,109 @@ export default function LaunchUpdates() {
   const [company, setCompany] = useState("");
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [feedback, setFeedback] = useState("");
-  const [signalIndex, setSignalIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [isBubbleReady, setIsBubbleReady] = useState(false);
   const hiddenFormRef = useRef<HTMLFormElement>(null);
   const hiddenEmailInputRef = useRef<HTMLInputElement>(null);
   const hiddenSourceInputRef = useRef<HTMLInputElement>(null);
+  const visibleEmailInputRef = useRef<HTMLInputElement>(null);
+  const widgetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) return;
+    setIsHydrated(true);
 
-    const interval = window.setInterval(() => {
-      setSignalIndex((current) => (current + 1) % PANEL_SIGNALS.length);
-    }, 2400);
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const syncViewport = () => {
+      setIsMobileViewport(mediaQuery.matches);
+    };
 
-    return () => window.clearInterval(interval);
+    syncViewport();
+    mediaQuery.addEventListener("change", syncViewport);
+
+    if (window.localStorage.getItem(STORAGE_KEY) === "true") {
+      setIsHidden(true);
+    } else {
+      const bubbleTimer = window.setTimeout(() => {
+        setIsBubbleReady(true);
+      }, 180);
+
+      return () => {
+        mediaQuery.removeEventListener("change", syncViewport);
+        window.clearTimeout(bubbleTimer);
+      };
+    }
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncViewport);
+    };
   }, []);
 
-  const resetFormState = () => {
-    setSubmitState("idle");
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const focusTimer = window.setTimeout(() => {
+      visibleEmailInputRef.current?.focus();
+    }, 180);
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (
+        widgetRef.current &&
+        !widgetRef.current.contains(event.target as Node)
+      ) {
+        setSubmitState((current) => (current === "error" ? "idle" : current));
+        setFeedback("");
+        setIsOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSubmitState((current) => (current === "error" ? "idle" : current));
+        setFeedback("");
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (submitState !== "success") return;
+
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(STORAGE_KEY, "true");
+    }
+
+    const hideTimer = window.setTimeout(() => {
+      setIsOpen(false);
+      setIsHidden(true);
+    }, 1500);
+
+    return () => window.clearTimeout(hideTimer);
+  }, [submitState]);
+
+  const handleOpen = () => {
+    setSubmitState((current) => (current === "error" ? "idle" : current));
     setFeedback("");
-    setEmail("");
-    setCompany("");
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setSubmitState((current) => (current === "error" ? "idle" : current));
+    setFeedback("");
+    setIsOpen(false);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -98,14 +178,16 @@ export default function LaunchUpdates() {
     setCompany("");
   };
 
+  if (!isHydrated || isHidden) {
+    return <div id="updates" className="sr-only" aria-hidden="true" />;
+  }
+
   const isSubmitting = submitState === "submitting";
   const isSuccess = submitState === "success";
 
   return (
-    <section
-      id="updates"
-      className="relative z-10 border-y border-orange-900/10 bg-brand-50 py-16 sm:py-20"
-    >
+    <>
+      <div id="updates" className="sr-only" aria-hidden="true" />
       <iframe
         name={GOOGLE_FORM_TARGET}
         title="Launch updates submission target"
@@ -134,177 +216,197 @@ export default function LaunchUpdates() {
         ) : null}
       </form>
 
-      <div className="pointer-events-none absolute inset-0 bg-grid opacity-40" />
       <style
         dangerouslySetInnerHTML={{
           __html: `
-            .launch-updates-card::before {
+            .launch-widget-bubble::before {
               content: "";
               position: absolute;
               inset: 0;
               background:
-                radial-gradient(circle at 0% 0%, rgba(242, 128, 68, 0.16), transparent 28%),
-                radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.05), transparent 22%);
-              pointer-events: none;
-            }
-
-            .launch-updates-form::before {
-              content: "";
-              position: absolute;
-              inset: 0;
-              background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025));
+                radial-gradient(circle at 18% 28%, rgba(242, 128, 68, 0.24), transparent 34%),
+                linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
               border-radius: inherit;
               pointer-events: none;
             }
 
-            .signal-word {
-              display: inline-block;
-              animation: signal-rise 320ms cubic-bezier(0.22, 1, 0.36, 1);
+            .launch-widget-bubble::after {
+              content: "";
+              position: absolute;
+              left: 3.1rem;
+              bottom: -0.38rem;
+              width: 0.95rem;
+              height: 0.95rem;
+              background: #3b302a;
+              border-right: 1px solid rgba(255,255,255,0.08);
+              border-bottom: 1px solid rgba(255,255,255,0.08);
+              border-radius: 0 0 0.32rem 0;
+              transform: rotate(34deg);
+              pointer-events: none;
             }
 
-            .signal-dot {
-              animation: soft-pulse 1.8s ease-in-out infinite;
+            .launch-widget-panel::before {
+              content: "";
+              position: absolute;
+              inset: 0;
+              background:
+                radial-gradient(circle at 0% 0%, rgba(242, 128, 68, 0.18), transparent 28%),
+                linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015));
+              border-radius: inherit;
+              pointer-events: none;
             }
 
-            .launch-cta {
+            .launch-widget-cta {
               position: relative;
               overflow: hidden;
               isolation: isolate;
             }
 
-            .launch-cta::after {
+            .launch-widget-cta::after {
               content: "";
               position: absolute;
               inset: 0;
               background: linear-gradient(115deg, transparent 24%, rgba(255,255,255,0.24) 48%, transparent 72%);
               transform: translateX(-130%);
-              transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+              transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
               pointer-events: none;
             }
 
-            .launch-cta:hover::after {
+            .launch-widget-cta:hover::after {
               transform: translateX(130%);
-            }
-
-            @keyframes signal-rise {
-              from {
-                opacity: 0;
-                transform: translateY(8px);
-              }
-              to {
-                opacity: 1;
-                transform: translateY(0);
-              }
-            }
-
-            @keyframes soft-pulse {
-              0%, 100% {
-                transform: scale(1);
-                opacity: 0.82;
-              }
-              50% {
-                transform: scale(1.14);
-                opacity: 1;
-              }
             }
           `,
         }}
       />
 
-      <div className="relative mx-auto max-w-6xl px-6 lg:px-12">
-        <div className="launch-updates-card relative overflow-hidden rounded-[2rem] border border-orange-900/10 bg-[linear-gradient(145deg,#43362f_0%,#342925_58%,#2a221f_100%)] text-white shadow-[0_34px_90px_-40px_rgba(63,51,45,0.72)]">
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] [background-size:36px_36px] opacity-[0.16]" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/18 to-transparent" />
+      <div className="pointer-events-none fixed inset-0 z-[90]">
+        <button
+          type="button"
+          aria-hidden={!isOpen}
+          onClick={handleClose}
+          className={`absolute inset-0 transition-opacity duration-300 ${
+            isOpen
+              ? "pointer-events-auto bg-[#110c09]/26 backdrop-blur-[2px] sm:bg-transparent sm:backdrop-blur-0"
+              : "pointer-events-none opacity-0"
+          }`}
+          tabIndex={isOpen ? 0 : -1}
+        />
 
-          <div className="relative grid gap-10 px-6 py-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.9fr)] lg:items-center lg:gap-12 lg:px-10 lg:py-12">
-            <div className="max-w-[36rem]">
-              <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.22em] text-white/46">
-                <span className="h-px w-10 bg-brand/70" />
-                Quiet updates
+        <div ref={widgetRef} className="absolute inset-0">
+          <button
+            type="button"
+            aria-expanded={isOpen}
+            aria-controls="launch-updates-dialog"
+            onClick={handleOpen}
+            className={`launch-widget-bubble pointer-events-auto absolute bottom-4 right-4 overflow-hidden border border-white/10 bg-[#3b302a]/92 text-left text-white shadow-[0_24px_60px_-30px_rgba(18,12,9,0.68)] backdrop-blur-xl transition-[transform,opacity,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-[0_28px_72px_-30px_rgba(18,12,9,0.78)] ${
+              isMobileViewport
+                ? "rounded-[1.5rem]"
+                : "right-0 rounded-[1.8rem] rounded-r-[1.05rem]"
+            } ${
+              isOpen
+                ? "pointer-events-none translate-y-4 opacity-0 sm:translate-x-10 sm:translate-y-0"
+                : isBubbleReady
+                  ? "translate-y-0 opacity-100 sm:translate-x-0"
+                  : "translate-y-6 opacity-0 sm:translate-x-8 sm:translate-y-0"
+            }`}
+          >
+            <div className="relative flex items-center gap-3.5 px-4 py-3 sm:px-4 sm:py-3.5">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[1.25rem] rounded-bl-[0.55rem] border border-white/12 bg-[linear-gradient(180deg,#f58e54_0%,#eb7a3f_100%)] text-[11px] font-black uppercase tracking-[0.16em] text-white shadow-[0_12px_24px_-12px_rgba(242,128,68,0.75)]">
+                SW
               </div>
-
-              <h2 className="mt-5 max-w-[11ch] text-[3rem] font-black leading-[0.9] tracking-tight text-white sm:text-[4.5rem]">
-                Get launch updates
-              </h2>
-
-              <p className="mt-5 max-w-[32ch] text-[15px] leading-7 text-[#f3e4d9]/88 sm:text-[17px] sm:leading-8">
-                Not ready to talk yet? Drop your email and we&apos;ll send the
-                meaningful updates, launch drops, and early-access news.
-              </p>
-
-              <div className="relative mt-7 inline-flex max-w-full items-center gap-3 overflow-hidden whitespace-nowrap rounded-full border border-white/10 bg-white/[0.05] px-4 py-3 text-[9px] font-black uppercase tracking-[0.18em] text-brand-100/82 shadow-[0_0_46px_-30px_rgba(242,128,68,0.55)] sm:text-[10px]">
-                <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-[radial-gradient(circle_at_18%_50%,rgba(242,128,68,0.3),transparent_65%)]" />
-                <span className="signal-dot relative h-3 w-3 shrink-0 rounded-full bg-brand" />
-                <span className="relative shrink-0 text-brand-100/56">
-                  Now watching for
-                </span>
-                <span
-                  key={PANEL_SIGNALS[signalIndex]}
-                  className="signal-word relative shrink-0 text-white"
-                >
-                  {PANEL_SIGNALS[signalIndex]}
-                </span>
+              <div className="min-w-0">
+                <div className="text-[9px] font-black uppercase tracking-[0.18em] text-white/48">
+                  Chat later
+                </div>
+                <div className="mt-1 text-[13px] font-semibold leading-none text-white sm:text-[14px]">
+                  Get launch updates
+                </div>
+              </div>
+              <div className="ml-auto hidden h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:flex">
+                <span className="h-2.5 w-2.5 rounded-full bg-brand" />
               </div>
             </div>
+          </button>
 
-            <div className="launch-updates-form relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_24px_46px_-28px_rgba(0,0,0,0.38)] backdrop-blur-[3px] sm:p-6">
-              <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-brand/70 to-transparent" />
+          <div
+            id="launch-updates-dialog"
+            role="dialog"
+            aria-modal={isMobileViewport}
+            aria-label="Get launch updates"
+            className={`launch-widget-panel pointer-events-auto absolute overflow-hidden border border-white/10 bg-[#221916]/92 text-white shadow-[0_40px_90px_-36px_rgba(18,12,9,0.84)] backdrop-blur-2xl transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              isMobileViewport
+                ? "bottom-4 left-4 right-4 rounded-[1.75rem]"
+                : "bottom-8 right-0 w-[392px] rounded-[1.9rem] rounded-r-none border-r-0"
+            } ${
+              isOpen
+                ? "translate-y-0 opacity-100 blur-0 sm:translate-x-0"
+                : "pointer-events-none translate-y-6 opacity-0 blur-[2px] sm:translate-x-12 sm:translate-y-0"
+            }`}
+          >
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] [background-size:26px_26px] opacity-[0.14]" />
+            <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-brand/75 to-transparent" />
+
+            <div className="relative p-5 sm:p-6">
               {isSuccess ? (
-                <div className="relative space-y-5" aria-live="polite">
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="text-[10px] font-black uppercase tracking-[0.18em] text-white/56">
-                      Captured
-                    </div>
-                    <div className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f4e8df]/78">
-                      Quiet channel
-                    </div>
+                <div className="space-y-4" aria-live="polite">
+                  <div className="text-[10px] font-black uppercase tracking-[0.18em] text-white/54">
+                    You&apos;re in
                   </div>
-
-                  <div className="rounded-[1.4rem] border border-white/10 bg-white/[0.04] p-5">
-                    <div className="text-[10px] font-black uppercase tracking-[0.18em] text-brand-100/70">
-                      You&apos;re in
-                    </div>
-                    <p className="mt-3 max-w-[24ch] text-[15px] leading-7 text-[#f2e1d6]/88">
-                      {feedback || DEFAULT_SUCCESS_MESSAGE}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-[11px] leading-6 text-white/54">
-                    <span className="signal-dot h-2.5 w-2.5 rounded-full bg-brand" />
-                    We&apos;ll only show up when there&apos;s something worth
-                    opening.
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={resetFormState}
-                    className="inline-flex rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f5e8df]/78 transition-colors duration-300 hover:bg-white/[0.09] hover:text-white"
-                  >
-                    Add another email
-                  </button>
+                  <h3 className="text-[2rem] font-black leading-[0.92] tracking-tight text-white">
+                    Thanks.
+                  </h3>
+                  <p className="max-w-[26ch] text-[15px] leading-7 text-[#f2e1d6]/84">
+                    {feedback || DEFAULT_SUCCESS_MESSAGE}
+                  </p>
+                  <p className="text-[12px] leading-6 text-white/48">
+                    This bubble will disappear now so we stay out of your way.
+                  </p>
                 </div>
               ) : (
-                <form className="relative space-y-5" onSubmit={handleSubmit}>
+                <form className="space-y-5" onSubmit={handleSubmit}>
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <div className="text-[10px] font-black uppercase tracking-[0.18em] text-white/56">
+                      <div className="text-[10px] font-black uppercase tracking-[0.18em] text-white/52">
                         Stay in the loop
                       </div>
-                      <p className="mt-3 max-w-[26ch] text-[14px] leading-6 text-[#f3e4d9]/78">
-                        Thoughtful product notes. Nothing noisy.
+                      <h3 className="mt-3 max-w-[12ch] text-[2rem] font-black leading-[0.94] tracking-tight text-white">
+                        Want updates without a call?
+                      </h3>
+                      <p className="mt-3 max-w-[28ch] text-[14px] leading-6 text-[#f2e1d6]/76">
+                        Drop your email. We&apos;ll show up when there&apos;s
+                        real movement, not random noise.
                       </p>
                     </div>
-                    <div className="hidden rounded-full border border-white/10 bg-white/[0.05] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-white/60 sm:block">
-                      Email only
-                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleClose}
+                      className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/58 shadow-lg transition-all duration-300 hover:scale-110 hover:border-[#ffb28a]/25 hover:bg-white/[0.08] hover:text-white"
+                      aria-label="Close launch updates dialog"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="h-4 w-4 transition-all duration-300 group-hover:rotate-90 group-hover:scale-110"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
 
-                  <div className="rounded-[1.4rem] border border-white/10 bg-[#574840]/55 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-                    <label className="block">
-                      <span className="mb-3 block text-[10px] font-black uppercase tracking-[0.16em] text-white/58">
-                        Email
-                      </span>
+                  <label className="block">
+                    <span className="mb-3 block text-[10px] font-black uppercase tracking-[0.16em] text-white/56">
+                      Email
+                    </span>
+                    <div className="rounded-[1.35rem] border border-white/10 bg-[#5a4a42]/60 px-4 py-3.5 transition-all duration-300 focus-within:border-brand/55 focus-within:bg-[#625047]/72 focus-within:shadow-[0_16px_36px_-24px_rgba(242,128,68,0.55)]">
                       <input
+                        ref={visibleEmailInputRef}
                         type="email"
                         autoComplete="email"
                         inputMode="email"
@@ -312,10 +414,10 @@ export default function LaunchUpdates() {
                         onChange={(event) => setEmail(event.target.value)}
                         placeholder="you@example.com"
                         disabled={isSubmitting}
-                        className="w-full bg-transparent text-[1.03rem] text-white outline-none transition-colors duration-300 placeholder:text-brand-100/44 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="w-full bg-transparent text-[1.02rem] text-white outline-none placeholder:text-brand-100/42 disabled:cursor-not-allowed disabled:opacity-60"
                       />
-                    </label>
-                  </div>
+                    </div>
+                  </label>
 
                   <label className="hidden" aria-hidden="true">
                     <span>Company</span>
@@ -328,39 +430,35 @@ export default function LaunchUpdates() {
                     />
                   </label>
 
-                  <div className="space-y-3">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="launch-cta inline-flex min-h-[58px] w-full items-center justify-between rounded-full bg-brand px-6 py-3 text-[10.5px] font-black uppercase tracking-[0.18em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-[0_18px_32px_-18px_rgba(242,128,68,0.58)] disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-80"
-                    >
-                      <span>
-                        {isSubmitting ? "Joining..." : "Keep me posted"}
-                      </span>
-                      <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/16 bg-white/12 text-[1rem]">
-                        ↗
-                      </span>
-                    </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="launch-widget-cta inline-flex min-h-[58px] w-full items-center justify-between rounded-full bg-brand px-5 py-3 text-[10.5px] font-black uppercase tracking-[0.18em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-[0_18px_32px_-18px_rgba(242,128,68,0.58)] disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-80"
+                  >
+                    <span>{isSubmitting ? "Joining..." : "Keep me posted"}</span>
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/16 bg-white/12 text-[1rem]">
+                      ↗
+                    </span>
+                  </button>
 
-                    <div className="flex items-center justify-between gap-4 border-t border-white/8 pt-3 text-[11px] leading-5 text-white/54">
-                      <span>No spam. No pressure.</span>
-                      <span className="text-white/38">Worth opening.</span>
-                    </div>
-                  </div>
-
-                  <div aria-live="polite">
+                  <div aria-live="polite" className="min-h-[18px]">
                     {submitState === "error" && feedback ? (
                       <p className="text-[12px] font-semibold text-[#ffb08a]">
                         {feedback}
                       </p>
                     ) : null}
                   </div>
+
+                  <p className="border-t border-white/8 pt-3 text-[11px] leading-5 text-white/50">
+                    No spam. We never share your data, and we only use your
+                    email for Speechworks updates.
+                  </p>
                 </form>
               )}
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </>
   );
 }
