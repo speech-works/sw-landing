@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { withBasePath } from "@/app/lib/withBasePath";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DEFAULT_SUCCESS_MESSAGE =
@@ -13,6 +14,18 @@ const GOOGLE_FORM_EMAIL_ENTRY_ID =
 const GOOGLE_FORM_SOURCE_ENTRY_ID =
   process.env.NEXT_PUBLIC_GOOGLE_FORM_SOURCE_ENTRY_ID || "";
 const STORAGE_KEY = "speechworks_launch_updates_subscribed";
+const BUBBLE_AVATARS = [
+  {
+    name: "Mayank",
+    src: "/assets/mayank_avatar_animated.gif",
+    objectPosition: "78% center",
+  },
+  {
+    name: "Sanae",
+    src: "/assets/Sanae_avatar_animated.gif",
+    objectPosition: "50% center",
+  },
+];
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
@@ -26,6 +39,7 @@ export default function LaunchUpdates() {
   const [isHydrated, setIsHydrated] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [isBubbleReady, setIsBubbleReady] = useState(false);
+  const [avatarIndex, setAvatarIndex] = useState(0);
   const hiddenFormRef = useRef<HTMLFormElement>(null);
   const hiddenEmailInputRef = useRef<HTMLInputElement>(null);
   const hiddenSourceInputRef = useRef<HTMLInputElement>(null);
@@ -62,6 +76,19 @@ export default function LaunchUpdates() {
       mediaQuery.removeEventListener("change", syncViewport);
     };
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches || isHidden) return;
+
+    const interval = window.setInterval(() => {
+      setAvatarIndex((current) => (current + 1) % BUBBLE_AVATARS.length);
+    }, 5600);
+
+    return () => window.clearInterval(interval);
+  }, [isHidden]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -184,7 +211,6 @@ export default function LaunchUpdates() {
 
   const isSubmitting = submitState === "submitting";
   const isSuccess = submitState === "success";
-
   return (
     <>
       <div id="updates" className="sr-only" aria-hidden="true" />
@@ -245,6 +271,31 @@ export default function LaunchUpdates() {
               pointer-events: none;
             }
 
+            .launch-widget-avatar-wrap {
+              animation: launch-avatar-float 3.8s ease-in-out infinite;
+              will-change: transform;
+            }
+
+            .launch-widget-avatar-layer {
+              position: absolute;
+              inset: 0;
+              opacity: 0;
+              transform: translateX(8%) scale(1.06);
+              transform-origin: center;
+              transition:
+                opacity 560ms cubic-bezier(0.22, 1, 0.36, 1),
+                transform 560ms cubic-bezier(0.22, 1, 0.36, 1),
+                filter 560ms cubic-bezier(0.22, 1, 0.36, 1);
+              filter: saturate(0.9) brightness(0.96);
+              will-change: opacity, transform, filter;
+            }
+
+            .launch-widget-avatar-layer[data-active="true"] {
+              opacity: 1;
+              transform: translateX(0) scale(1);
+              filter: saturate(1) brightness(1);
+            }
+
             .launch-widget-panel::before {
               content: "";
               position: absolute;
@@ -274,6 +325,25 @@ export default function LaunchUpdates() {
 
             .launch-widget-cta:hover::after {
               transform: translateX(130%);
+            }
+
+            @keyframes launch-avatar-float {
+              0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+              }
+              50% {
+                transform: translateY(-2px) rotate(-2deg);
+              }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+              .launch-widget-avatar-wrap {
+                animation: none;
+              }
+
+              .launch-widget-avatar-layer {
+                transition: none;
+              }
             }
           `,
         }}
@@ -311,8 +381,26 @@ export default function LaunchUpdates() {
             }`}
           >
             <div className="relative flex items-center gap-3.5 px-4 py-3 sm:px-4 sm:py-3.5">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[1.25rem] rounded-bl-[0.55rem] border border-white/12 bg-[linear-gradient(180deg,#f58e54_0%,#eb7a3f_100%)] text-[11px] font-black uppercase tracking-[0.16em] text-white shadow-[0_12px_24px_-12px_rgba(242,128,68,0.75)]">
-                SW
+              <div className="launch-widget-avatar-wrap relative h-10 w-10 shrink-0 rounded-[1.25rem] rounded-bl-[0.55rem] border border-white/12 bg-[linear-gradient(180deg,#f58e54_0%,#eb7a3f_100%)] p-[2px] shadow-[0_12px_24px_-12px_rgba(242,128,68,0.75)]">
+                <div className="relative h-full w-full overflow-hidden rounded-[1.12rem] rounded-bl-[0.45rem] bg-[#2f241f]">
+                  {BUBBLE_AVATARS.map((avatar, index) => (
+                    <div
+                      key={avatar.src}
+                      className="launch-widget-avatar-layer"
+                      data-active={avatarIndex === index}
+                      aria-hidden={avatarIndex !== index}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={withBasePath(avatar.src)}
+                        alt=""
+                        className="h-full w-full object-cover"
+                        style={{ objectPosition: avatar.objectPosition }}
+                        draggable={false}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="min-w-0">
                 <div className="text-[9px] font-black uppercase tracking-[0.18em] text-white/48">
