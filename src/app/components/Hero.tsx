@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { withBasePath } from "@/app/lib/withBasePath";
 import React, { useState } from "react";
 import LiveAppMockup from "./LiveAppMockup";
 import { useMockDeviceTime } from "./useMockDeviceTime";
@@ -181,7 +182,7 @@ export default function Hero() {
             aria-hidden="true"
             className="absolute inset-x-0 -top-[2%] z-[1] h-[112%] w-full object-cover object-center opacity-[0.42] saturate-[1.05] contrast-[1.08] brightness-[0.97]"
           >
-            <source src="/assets/videos/group_avatars_vid2_loop.mp4" type="video/mp4" />
+            <source src={withBasePath("/assets/videos/group_avatars_vid2_loop.mp4")} type="video/mp4" />
           </video>
           <div className="absolute inset-0 z-[2] bg-[radial-gradient(circle_at_50%_28%,rgba(242,128,68,0.16),transparent_24%),linear-gradient(180deg,rgba(10,7,5,0.72)_0%,rgba(10,7,5,0.42)_28%,rgba(10,7,5,0.58)_62%,rgba(10,7,5,0.82)_100%)]"></div>
 
@@ -458,7 +459,7 @@ export default function Hero() {
 
                               <div className="absolute inset-x-0 top-[122px] h-[322px] overflow-hidden rounded-[28px] border border-[#eadfce] bg-[#d1c0b0] shadow-[0_20px_36px_rgba(44,27,14,0.15)]">
                                 <Image
-                                  src="/assets/demo-tut-img.png"
+                                  src={withBasePath("/assets/demo-tut-img.png")}
                                   alt="Tutorial lesson preview"
                                   fill
                                   className="object-cover"

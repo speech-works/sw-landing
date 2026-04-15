@@ -220,7 +220,7 @@ function LeftVideoPlayerScreen() {
                                 className="absolute inset-0 bg-cover bg-center"
                                 style={{
                                     backgroundImage:
-                                        "url('/assets/joseph_avatar.jpg')",
+                                        `url('${withBasePath("/assets/joseph_avatar.jpg")}')`,
                                 }}
                             />
                             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.06)_0%,rgba(0,0,0,0.04)_48%,rgba(0,0,0,0.46)_100%)]" />
@@ -907,3 +907,4 @@ export default function RoadmapAppMockup({
         </div>
     );
 }
+import { withBasePath } from "@/app/lib/withBasePath";

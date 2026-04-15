@@ -1,6 +1,7 @@
  "use client";
 
 import Image from "next/image";
+import { withBasePath } from "@/app/lib/withBasePath";
 import React, { useState } from "react";
 import ContactModal from "./ContactModal";
 
@@ -17,7 +18,7 @@ export default function Navbar() {
                   <div className="flex items-center gap-2 md:gap-3">
                       <div className="relative h-7 w-7 overflow-hidden rounded-full md:h-8 md:w-8">
                         <Image
-                          src="/assets/logo.png"
+                          src={withBasePath("/assets/logo.png")}
                           alt="Speechworks logo"
                           fill
                           className="object-cover"

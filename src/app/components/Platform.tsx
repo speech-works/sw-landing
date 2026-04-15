@@ -464,7 +464,7 @@ export default function Platform() {
           preload="auto"
         >
           <source
-            src="/assets/gif/avatars_discussing_loop.mp4"
+            src={withBasePath("/assets/gif/avatars_discussing_loop.mp4")}
             type="video/mp4"
           />
         </video>
@@ -875,3 +875,4 @@ export default function Platform() {
     </section>
   );
 }
+import { withBasePath } from "@/app/lib/withBasePath";

@@ -157,7 +157,7 @@ export default function CTA() {
                        */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/assets/rebel2.png"
+              src={withBasePath("/assets/rebel2.png")}
               alt="Rebel fist"
               className="w-full h-auto max-h-full object-contain origin-bottom select-none"
               draggable={false}
@@ -244,3 +244,4 @@ export default function CTA() {
     </>
   );
 }
+import { withBasePath } from "@/app/lib/withBasePath";

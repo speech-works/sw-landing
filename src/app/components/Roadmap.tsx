@@ -171,7 +171,7 @@ export default function Roadmap() {
                       preload="auto"
                     >
                       <source
-                        src="/assets/gif/forge_tools_loop.mp4"
+                        src={withBasePath("/assets/gif/forge_tools_loop.mp4")}
                         type="video/mp4"
                       />
                     </video>
@@ -356,7 +356,7 @@ export default function Roadmap() {
                     preload="auto"
                   >
                     <source
-                      src="/assets/gif/community_together_loop.mp4"
+                      src={withBasePath("/assets/gif/community_together_loop.mp4")}
                       type="video/mp4"
                     />
                   </video>
@@ -453,7 +453,7 @@ export default function Roadmap() {
                       playsInline
                       preload="auto"
                     >
-                      <source src="/assets/gif/bridge_gap_loop.mp4" type="video/mp4" />
+                      <source src={withBasePath("/assets/gif/bridge_gap_loop.mp4")} type="video/mp4" />
                     </video>
                   </div>
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_24%),linear-gradient(135deg,rgba(255,255,255,0.04),transparent_38%),linear-gradient(180deg,rgba(6,95,70,0.08)_0%,rgba(6,95,70,0.02)_100%)]" />
@@ -532,3 +532,4 @@ export default function Roadmap() {
     </>
   );
 }
+import { withBasePath } from "@/app/lib/withBasePath";

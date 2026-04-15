@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { withBasePath } from "@/app/lib/withBasePath";
 import React, { useState } from "react";
 import ContactModal from "./ContactModal";
 
@@ -28,7 +29,7 @@ export default function Footer() {
             preload="auto"
           >
             <source
-              src="/assets/gif/avatars_discussing_loop.mp4"
+              src={withBasePath("/assets/gif/avatars_discussing_loop.mp4")}
               type="video/mp4"
             />
           </video>
@@ -41,7 +42,7 @@ export default function Footer() {
               <div className="flex items-center gap-3 mb-4 md:mb-6">
                 <div className="relative h-8 w-8">
                   <Image
-                    src="/assets/logo.png"
+                    src={withBasePath("/assets/logo.png")}
                     alt="Speechworks logo"
                     fill
                     className="object-cover brightness-0 invert"
