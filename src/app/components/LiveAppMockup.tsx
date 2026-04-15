@@ -307,8 +307,12 @@ const AnimatedTherapistFace = () => (
 
 export default function LiveAppMockup({
   disableVerticalPan = false,
+  compact = false,
+  hideStatusBar = false,
 }: {
   disableVerticalPan?: boolean;
+  compact?: boolean;
+  hideStatusBar?: boolean;
 }) {
   const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState(new Date());
@@ -336,57 +340,64 @@ export default function LiveAppMockup({
   return (
     <div className="w-full h-full bg-[#f9fafb] text-slate-800 flex flex-col font-sans relative select-none">
       {/* Top Status Bar Mock - Dynamic & Apple-fied */}
-      <div className="w-full pt-6 pb-3 px-6 flex justify-between items-center text-[12px] font-bold text-slate-900 bg-[#f9fafb] z-40 shrink-0 absolute top-0 left-0 right-0">
-        <span className="font-bold tracking-tight">{mounted ? formatTime(time) : "09:41"}</span>
-        <div className="flex gap-1.5 items-center">
-          {/* Signal Icon (4 bars) */}
-          <svg
-            className="w-[17px] h-[10px]"
-            viewBox="0 0 17 10"
-            fill="currentColor"
-          >
-            <rect x="0" y="7" width="2.5" height="3" rx="0.5" />
-            <rect x="4" y="5" width="2.5" height="5" rx="0.5" />
-            <rect x="8" y="2.5" width="2.5" height="7.5" rx="0.5" />
-            <rect x="12" y="0" width="2.5" height="10" rx="0.5" />
-          </svg>
-          {/* Wi-Fi Icon */}
-          <svg
-            className="w-[15px] h-[11px]"
-            viewBox="0 0 15 11"
-            fill="currentColor"
-          >
-            <path d="M7.5 11C8.32843 11 9 10.3284 9 9.5C9 8.67157 8.32843 8 7.5 8C6.67157 8 6 8.67157 6 9.5C6 10.3284 6.67157 11 7.5 11Z" />
-            <path
-              d="M12.11 6.39C10.884 5.16398 9.23199 4.4754 7.5 4.4754C5.76801 4.4754 4.11602 5.16398 2.89 6.39"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-            />
-            <path
-              d="M14.61 3.89C12.7239 2.00392 10.166 0.945312 7.5 0.945312C4.83401 0.945312 2.27602 2.00392 0.39 3.89"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-            />
-          </svg>
-          {/* Battery Icon */}
-          <div className="flex items-center gap-0.5 ml-0.5">
-            <div className="w-[20px] h-[10px] rounded-[2.5px] border-[1px] border-black/80 relative p-[1px]">
-              <div className="h-full bg-black/90 rounded-[1px] w-[85%]"></div>
+      {!hideStatusBar && (
+        <div
+          className={`w-full flex justify-between items-center font-bold text-slate-900 bg-[#f9fafb] z-40 shrink-0 absolute top-0 left-0 right-0 ${
+            compact ? "pt-7 pb-2 px-5 text-[11px]" : "pt-6 pb-3 px-6 text-[12px]"
+          }`}
+        >
+          <span className="font-bold tracking-tight">{mounted ? formatTime(time) : "09:41"}</span>
+          <div className={`flex items-center ${compact ? "gap-1" : "gap-1.5"}`}>
+            <svg
+              className={compact ? "w-[15px] h-[9px]" : "w-[17px] h-[10px]"}
+              viewBox="0 0 17 10"
+              fill="currentColor"
+            >
+              <rect x="0" y="7" width="2.5" height="3" rx="0.5" />
+              <rect x="4" y="5" width="2.5" height="5" rx="0.5" />
+              <rect x="8" y="2.5" width="2.5" height="7.5" rx="0.5" />
+              <rect x="12" y="0" width="2.5" height="10" rx="0.5" />
+            </svg>
+            <svg
+              className={compact ? "w-[13px] h-[10px]" : "w-[15px] h-[11px]"}
+              viewBox="0 0 15 11"
+              fill="currentColor"
+            >
+              <path d="M7.5 11C8.32843 11 9 10.3284 9 9.5C9 8.67157 8.32843 8 7.5 8C6.67157 8 6 8.67157 6 9.5C6 10.3284 6.67157 11 7.5 11Z" />
+              <path
+                d="M12.11 6.39C10.884 5.16398 9.23199 4.4754 7.5 4.4754C5.76801 4.4754 4.11602 5.16398 2.89 6.39"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M14.61 3.89C12.7239 2.00392 10.166 0.945312 7.5 0.945312C4.83401 0.945312 2.27602 2.00392 0.39 3.89"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+              />
+            </svg>
+            <div className={`flex items-center gap-0.5 ${compact ? "ml-0" : "ml-0.5"}`}>
+              <div className={`${compact ? "w-[18px] h-[9px]" : "w-[20px] h-[10px]"} rounded-[2.5px] border-[1px] border-black/80 relative p-[1px]`}>
+                <div className="h-full bg-black/90 rounded-[1px] w-[85%]"></div>
+              </div>
+              <div className={`${compact ? "w-[1px] h-[3.5px]" : "w-[1.5px] h-[4px]"} bg-black/40 rounded-r-full`}></div>
             </div>
-            <div className="w-[1.5px] h-[4px] bg-black/40 rounded-r-full"></div>
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="flex-1 overflow-hidden relative pt-20 mask-fade-edges rounded-b-[inherit] isolate z-0">
+      <div className={`flex-1 overflow-hidden relative ${compact ? (hideStatusBar ? "pt-[4.7rem]" : "pt-[4.5rem]") : "pt-20"} mask-fade-edges rounded-b-[inherit] isolate z-0`}>
         {/* Animated Scroll Wrapper - Increased offset for spacious top UI */}
         <div
-          className={`w-full flex flex-col gap-3 px-3 absolute inset-0 ${mounted && !disableVerticalPan ? "animate-app-pan" : ""}`}
-          style={{ top: 52 }}
+          className={`w-full flex flex-col absolute inset-0 ${compact ? "gap-2.5 px-2.5" : "gap-3 px-3"} ${mounted && !disableVerticalPan ? "animate-app-pan" : ""}`}
+          style={{
+            top: compact ? (hideStatusBar ? 44 : 44) : 52,
+            transform: compact ? "scale(0.92)" : undefined,
+            transformOrigin: "top center",
+          }}
         >
           {/* Header */}
           <div className="flex justify-between items-start pt-1 px-1">
@@ -626,13 +637,13 @@ export default function LiveAppMockup({
         </div>
       </div>
 
-      <div className="absolute bottom-[20px] left-4 right-4 z-40 flex justify-center pointer-events-none">
-        <div className="bg-white rounded-[28px] h-[54px] p-1.5 flex items-center shadow-[0_8px_20px_rgba(100,116,139,0.12)] border border-slate-50 pointer-events-auto w-full justify-between">
+      <div className={`absolute ${compact ? "bottom-[15px] left-3.5 right-3.5" : "bottom-[20px] left-4 right-4"} z-40 flex justify-center pointer-events-none`}>
+        <div className={`bg-white ${compact ? "rounded-[23px] h-[48px] px-1.5 py-1" : "rounded-[28px] h-[54px] p-1.5"} flex items-center shadow-[0_8px_20px_rgba(100,116,139,0.12)] border border-slate-50 pointer-events-auto w-full justify-between`}>
           {/* Active Home Tab */}
           <div className="flex-[2.2] flex justify-center items-center h-full">
-            <div className="flex items-center justify-center h-[38px] rounded-full bg-[#F97316] px-4 gap-1.5 w-full">
-              <Home className="w-[18px] h-[18px] text-white" fill="white" />
-              <span className="text-[12px] font-bold text-white tracking-tight">
+            <div className={`flex items-center justify-center ${compact ? "h-[30px] px-2.5 gap-1" : "h-[38px] px-4 gap-1.5"} rounded-full bg-[#F97316] w-full`}>
+              <Home className={`${compact ? "w-[13px] h-[13px]" : "w-[18px] h-[18px]"} text-white`} fill="white" />
+              <span className={`${compact ? "text-[9px]" : "text-[12px]"} font-bold text-white tracking-tight`}>
                 Home
               </span>
             </div>
@@ -640,20 +651,20 @@ export default function LiveAppMockup({
 
           {/* Inactive Tabs */}
           <div className="flex-[1] flex justify-center items-center h-full">
-            <div className="w-[40px] h-[40px] flex items-center justify-center">
-              <LayoutGrid className="w-[18px] h-[18px] text-[#94A3B8]" />
+            <div className={`${compact ? "w-[30px] h-[30px]" : "w-[40px] h-[40px]"} flex items-center justify-center`}>
+              <LayoutGrid className={`${compact ? "w-[13px] h-[13px]" : "w-[18px] h-[18px]"} text-[#94A3B8]`} />
             </div>
           </div>
 
           <div className="flex-[1] flex justify-center items-center h-full">
-            <div className="w-[40px] h-[40px] flex items-center justify-center">
-              <Users className="w-[18px] h-[18px] text-[#94A3B8]" />
+            <div className={`${compact ? "w-[30px] h-[30px]" : "w-[40px] h-[40px]"} flex items-center justify-center`}>
+              <Users className={`${compact ? "w-[13px] h-[13px]" : "w-[18px] h-[18px]"} text-[#94A3B8]`} />
             </div>
           </div>
 
           <div className="flex-[1] flex justify-center items-center h-full">
-            <div className="w-[40px] h-[40px] flex items-center justify-center">
-              <Settings className="w-[18px] h-[18px] text-[#94A3B8]" />
+            <div className={`${compact ? "w-[30px] h-[30px]" : "w-[40px] h-[40px]"} flex items-center justify-center`}>
+              <Settings className={`${compact ? "w-[13px] h-[13px]" : "w-[18px] h-[18px]"} text-[#94A3B8]`} />
             </div>
           </div>
         </div>

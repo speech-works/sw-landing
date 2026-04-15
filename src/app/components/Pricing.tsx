@@ -89,6 +89,7 @@ type PricingTier = (typeof pricingTiers)[number];
 
 export default function Pricing() {
   const [activeCard, setActiveCard] = useState(1);
+  const [mobileCard, setMobileCard] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [inviteVariant, setInviteVariant] = useState<"default" | "premium">(
@@ -96,6 +97,8 @@ export default function Pricing() {
   );
   const isHoverLocked = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const mobileTouchStartXRef = useRef<number | null>(null);
+  const mobileTouchCurrentXRef = useRef<number | null>(null);
 
   // Track mouse coordinates for the 3D 'Magnetic' Tilt effect
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -154,14 +157,58 @@ export default function Pricing() {
     setIsInviteModalOpen(true);
   };
 
-  const renderCard = (tier: PricingTier, pos: number = 0) => {
+  const handleMobileCarouselTouchStart = (
+    event: React.TouchEvent<HTMLDivElement>
+  ) => {
+    mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
+    mobileTouchCurrentXRef.current = null;
+  };
+
+  const handleMobileCarouselTouchMove = (
+    event: React.TouchEvent<HTMLDivElement>
+  ) => {
+    mobileTouchCurrentXRef.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleMobileCarouselTouchEnd = () => {
+    if (
+      mobileTouchStartXRef.current === null ||
+      mobileTouchCurrentXRef.current === null
+    ) {
+      mobileTouchStartXRef.current = null;
+      mobileTouchCurrentXRef.current = null;
+      return;
+    }
+
+    const swipeDistance =
+      mobileTouchStartXRef.current - mobileTouchCurrentXRef.current;
+
+    if (Math.abs(swipeDistance) > 40) {
+      if (swipeDistance > 0) {
+        setMobileCard((current) => (current + 1) % pricingTiers.length);
+      } else {
+        setMobileCard(
+          (current) => (current - 1 + pricingTiers.length) % pricingTiers.length
+        );
+      }
+    }
+
+    mobileTouchStartXRef.current = null;
+    mobileTouchCurrentXRef.current = null;
+  };
+
+  const renderCard = (
+    tier: PricingTier,
+    pos: number = 0,
+    compact: boolean = false
+  ) => {
     const isActive = pos === 0;
     const isDark = tier.theme === "dark";
 
     return (
       <div
         key={`${tier.id}-${activeCard}`}
-        className={`relative rounded-[2.8rem] transition-all duration-500 flex flex-col pointer-events-auto antialiased
+        className={`relative ${compact ? "rounded-[2rem]" : "rounded-[2.8rem]"} transition-all duration-500 flex flex-col pointer-events-auto antialiased
           ${
             isDark
               ? "bg-[#1C1A19] border border-white/[0.06] text-white"
@@ -170,47 +217,59 @@ export default function Pricing() {
         style={{
           backfaceVisibility: "hidden",
           WebkitFontSmoothing: "antialiased",
-          boxShadow: isActive
-            ? isDark
-              ? "0 30px 60px -15px rgba(0,0,0,0.8)"
-              : "0 30px 60px -15px rgba(63, 51, 45, 0.12)"
-            : "0 10px 20px -5px rgba(0,0,0,0.05)",
+          boxShadow: compact
+            ? "none"
+            : isActive
+              ? isDark
+                ? "0 30px 60px -15px rgba(0,0,0,0.8)"
+                : "0 30px 60px -15px rgba(63, 51, 45, 0.12)"
+              : "0 10px 20px -5px rgba(0,0,0,0.05)",
           minHeight: "100%",
         }}
       >
         {/* Overflowing Right Badge */}
         {(tier.isPopular || tier.isAnnual) && (
           <div
-            className={`absolute -top-3 -right-3 lg:-top-4 lg:-right-4 px-5 py-2 rounded-full text-[9px] lg:text-[10px] font-black tracking-[0.2em] z-50 uppercase shadow-xl whitespace-nowrap
+            className={`absolute ${
+              compact ? "-top-2 -right-2 px-4 py-1.5 text-[8px]" : "-top-3 -right-3 lg:-top-4 lg:-right-4 px-5 py-2 text-[9px] lg:text-[10px]"
+            } rounded-full font-black tracking-[0.2em] z-50 uppercase shadow-xl whitespace-nowrap
             ${isDark ? "bg-brand text-white" : "bg-[#3F332D] text-white"}`}
           >
             {tier.isPopular ? "Most Popular" : "Annual"}
           </div>
         )}
 
-        <div className="pt-14 pb-10 px-8 md:px-12 flex flex-col flex-1 relative z-20">
+        <div
+          className={`flex flex-col flex-1 relative z-20 ${
+              compact
+                ? "pt-9 pb-7 px-5.5"
+                : "pt-14 pb-10 px-8 md:px-12"
+          }`}
+        >
           <h3
-            className={`text-2xl md:text-3xl font-black mb-1.5 tracking-tight`}
+            className={`${compact ? "text-[1.6rem]" : "text-2xl md:text-3xl"} font-black mb-1.5 tracking-tight`}
           >
             {tier.title}
           </h3>
           <p
-            className={`text-sm opacity-60 font-medium mb-10 leading-relaxed max-w-[90%]`}
+            className={`${compact ? "text-[12px] mb-6" : "text-sm mb-10"} opacity-60 font-medium leading-relaxed max-w-[90%]`}
           >
             {tier.subtitle}
           </p>
 
-          <div className="flex flex-col mb-10 mt-auto shrink-0">
+          <div className={`flex flex-col ${compact ? "mb-6" : "mb-10"} mt-auto shrink-0`}>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-6xl md:text-7xl font-black tracking-tightest">
+              <span
+                className={`${compact ? "text-[3rem]" : "text-6xl md:text-7xl"} font-black tracking-tightest`}
+              >
                 {tier.price}
               </span>
-              <span className="text-base font-bold opacity-40">
+              <span className={`${compact ? "text-sm" : "text-base"} font-bold opacity-40`}>
                 {tier.billingStr}
               </span>
             </div>
             {tier.billingSub && (
-              <span className="text-[10px] font-black text-brand mt-2 uppercase tracking-[0.25em]">
+              <span className={`text-[10px] font-black text-brand ${compact ? "mt-1.5" : "mt-2"} uppercase tracking-[0.25em]`}>
                 {tier.billingSub}
               </span>
             )}
@@ -220,7 +279,9 @@ export default function Pricing() {
           <button
             type="button"
             onClick={() => handleTierClick(tier.id)}
-            className={`w-full py-4 md:py-5 px-8 rounded-[1.25rem] font-black tracking-[0.15em] mb-12 transition-all duration-300 text-[10px] md:text-xs uppercase shrink-0 flex items-center justify-center gap-3 group/btn active:scale-[0.97] border-2
+            className={`w-full ${
+              compact ? "py-3 px-5 rounded-[0.95rem] mb-7 text-[8.5px]" : "py-4 md:py-5 px-8 rounded-[1.25rem] mb-12 text-[10px] md:text-xs"
+            } font-black tracking-[0.15em] transition-all duration-300 uppercase shrink-0 flex items-center justify-center gap-3 group/btn active:scale-[0.97] border-2
             ${
               isDark
                 ? "bg-brand border-brand text-white hover:bg-transparent hover:text-brand"
@@ -230,7 +291,7 @@ export default function Pricing() {
             <span>{tier.buttonLabel}</span>
           </button>
 
-          <div className="flex flex-col gap-5 text-[13px] font-bold tracking-tight">
+          <div className={`flex flex-col ${compact ? "gap-3.5 text-[11.5px]" : "gap-5 text-[13px]"} font-bold tracking-tight`}>
             {tier.features.map((feat: string, idx: number) => {
               const isHighlight =
                 feat.includes("Everything in") || feat.includes("Save with");
@@ -242,11 +303,11 @@ export default function Pricing() {
                   style={{ transitionDelay: `${idx * 100}ms` }}
                 >
                   <div
-                    className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5
+                    className={`${compact ? "w-4.5 h-4.5 rounded-[0.4rem]" : "w-5 h-5 rounded-md"} flex items-center justify-center shrink-0 mt-0.5
                     ${isHighlight ? "bg-brand text-white" : "bg-brand/10 text-brand"}`}
                   >
                     <CheckIcon
-                      className="w-3.5 h-3.5"
+                      className={compact ? "w-3 h-3" : "w-3.5 h-3.5"}
                       active={isHighlight && isActive}
                     />
                   </div>
@@ -275,7 +336,7 @@ export default function Pricing() {
     <>
       <section
         id="pricing"
-        className="py-24 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden"
+        className="pt-12 pb-24 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden"
       >
         <style
           dangerouslySetInnerHTML={{
@@ -300,7 +361,7 @@ export default function Pricing() {
 
         <div className="max-w-7xl mx-auto px-6 relative w-full flex flex-col items-center">
           {/* Designer Header */}
-          <div className="text-center mb-24 reveal active flex flex-col items-center">
+          <div className="text-center mb-14 md:mb-24 reveal active flex flex-col items-center">
             <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-black uppercase tracking-[0.25em] mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
               The Movement
@@ -316,12 +377,61 @@ export default function Pricing() {
           </div>
 
           {/* Mobile View */}
-          <div className="flex lg:hidden flex-col gap-10 w-full max-w-md mx-auto">
-            {pricingTiers.map((tier, i) => (
-              <div key={`m-${i}`} className="w-full h-auto min-h-[600px]">
-                {renderCard(tier)}
+          <div
+            className="lg:hidden w-full max-w-sm mx-auto"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Pricing tiers"
+            onTouchStart={handleMobileCarouselTouchStart}
+            onTouchMove={handleMobileCarouselTouchMove}
+            onTouchEnd={handleMobileCarouselTouchEnd}
+          >
+            <div className="overflow-x-hidden overflow-y-visible px-5 pt-4 pb-8">
+              <div
+                className="flex will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                style={{
+                  width: `${pricingTiers.length * 100}%`,
+                  transform: `translate3d(-${mobileCard * (100 / pricingTiers.length)}%, 0, 0)`,
+                }}
+              >
+                {pricingTiers.map((tier, i) => (
+                  <div
+                    key={`m-${i}`}
+                    className="shrink-0"
+                    style={{ width: `${100 / pricingTiers.length}%` }}
+                  >
+                    <div className="mx-auto w-full max-w-[19.75rem] min-h-[478px]">
+                      {renderCard(tier, mobileCard === i ? 0 : 1, true)}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div className="mt-2 flex items-center justify-center gap-2.5">
+              {pricingTiers.map((tier, index) => {
+                const isActive = mobileCard === index;
+
+                return (
+                  <button
+                    key={`pricing-dot-${tier.id}`}
+                    type="button"
+                    onClick={() => setMobileCard(index)}
+                    className="flex h-7 items-center justify-center"
+                    aria-label={`Show ${tier.title} tier`}
+                    aria-pressed={isActive}
+                  >
+                    <span
+                      className={`block h-2.5 rounded-full transition-all duration-300 ${
+                        isActive
+                          ? "w-8 bg-app-text shadow-[0_0_18px_rgba(63,51,45,0.18)]"
+                          : "w-2.5 bg-black/18"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Desktop Interactive Stages */}

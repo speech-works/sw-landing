@@ -187,6 +187,19 @@ export default function InviteOnlyModal({
     return () => window.clearTimeout(timeout);
   }, [isOpen, step]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
   const isValid = useMemo(() => {
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
     return form.name.trim().length > 1 && emailOk;
@@ -269,7 +282,7 @@ export default function InviteOnlyModal({
 
   return (
     <div
-      className={`fixed inset-0 z-[120] flex items-center justify-center p-4 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[120] flex items-start justify-center overflow-y-auto p-4 sm:items-center sm:p-6 transition-opacity duration-300 ${
         isOpen ? "opacity-100" : "opacity-0"
       }`}
       role="dialog"
@@ -285,7 +298,7 @@ export default function InviteOnlyModal({
         ref={modalRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`relative w-full max-w-[540px] overflow-hidden rounded-[2rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] transition-opacity duration-500 ${
+        className={`relative mt-12 w-full max-w-[540px] max-h-[calc(100dvh-2rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-[2rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] transition-opacity duration-500 sm:mt-0 sm:max-h-[min(820px,calc(100dvh-3rem))] ${
           isOpen ? "opacity-100" : "opacity-0"
         }`}
         style={{ willChange: "transform" }}

@@ -68,7 +68,20 @@
 :root {
   --background: #FFFAF5;
   --foreground: #3F332D;
+  --nav-height: 96px;
   scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --nav-height: 88px;
+  }
+}
+
+html {
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -76,8 +89,19 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  min-height: 100dvh;
+  max-width: 100%;
+  overflow-x: clip;
   width: 100%;
+}
+
+main {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+section[id] {
+  scroll-margin-top: var(--nav-height);
 }
 
 /* Custom Scrollbar */
@@ -194,4 +218,36 @@ body {
 .magnetic-sticker {
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   will-change: transform;
+}
+
+html.touch-ui .magnetic-btn,
+html.touch-ui .magnetic-sticker,
+html.touch-ui .tilt-card,
+html.touch-ui .tilt-inner {
+  transform: none !important;
+}
+
+html.touch-ui .glow-card::before,
+html.touch-ui .stage-grid-glow {
+  opacity: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
