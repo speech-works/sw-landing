@@ -66,7 +66,7 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed w-full z-50 transition-all duration-500 py-2 ${
-          isScrolled ? "md:py-4 shadow-sm" : "md:py-6"
+          isScrolled ? "md:py-4" : "md:py-6"
         }`}
         id="navbar"
       >
