@@ -2,10 +2,32 @@ import { withBasePath } from "@/app/lib/withBasePath";
 import { useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
 
+function RoadmapMobileChevron({
+  direction,
+}: {
+  direction: "left" | "right";
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.25"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
+      <path d={direction === "left" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6"} />
+    </svg>
+  );
+}
+
 const ROADMAP_PHASES = [
   {
     id: 1,
     themeClass: "text-brand",
+    accentBarClass: "bg-brand",
     stageGradient: "from-[#F97316] to-[#EA580C]",
     stageGlow: "shadow-[0_28px_70px_-18px_rgba(234,88,12,0.28)]",
     kicker: "We Built",
@@ -19,6 +41,7 @@ const ROADMAP_PHASES = [
   {
     id: 2,
     themeClass: "text-purple-500",
+    accentBarClass: "bg-purple-500",
     stageGradient: "from-purple-500 to-purple-800",
     stageGlow: "shadow-[0_28px_70px_-18px_rgba(107,33,168,0.28)]",
     kicker: "We Are Building",
@@ -32,6 +55,7 @@ const ROADMAP_PHASES = [
   {
     id: 3,
     themeClass: "text-emerald-500",
+    accentBarClass: "bg-emerald-500",
     stageGradient: "from-emerald-500 to-emerald-800",
     stageGlow: "shadow-[0_28px_70px_-18px_rgba(5,150,105,0.28)]",
     kicker: "We Will Build",
@@ -54,8 +78,6 @@ export default function Roadmap() {
     null
   );
   const sectionRef = useRef<HTMLElement>(null);
-  const mobileTouchStartXRef = useRef<number | null>(null);
-  const mobileTouchCurrentXRef = useRef<number | null>(null);
 
   // Navigation Themes
   const themes: Record<number, string> = {
@@ -97,44 +119,14 @@ export default function Roadmap() {
       );
   }, []);
 
-  const handleMobileCarouselTouchStart = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
-    mobileTouchCurrentXRef.current = null;
+  const showPreviousPhase = () => {
+    setActivePhase((currentPhase) =>
+      currentPhase === 1 ? ROADMAP_PHASES.length : currentPhase - 1
+    );
   };
 
-  const handleMobileCarouselTouchMove = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    mobileTouchCurrentXRef.current = event.touches[0]?.clientX ?? null;
-  };
-
-  const handleMobileCarouselTouchEnd = () => {
-    if (
-      mobileTouchStartXRef.current === null ||
-      mobileTouchCurrentXRef.current === null
-    ) {
-      mobileTouchStartXRef.current = null;
-      mobileTouchCurrentXRef.current = null;
-      return;
-    }
-
-    const swipeDistance =
-      mobileTouchStartXRef.current - mobileTouchCurrentXRef.current;
-
-    if (Math.abs(swipeDistance) > 40) {
-      if (swipeDistance > 0) {
-        setActivePhase((currentPhase) => (currentPhase % ROADMAP_PHASES.length) + 1);
-      } else {
-        setActivePhase((currentPhase) =>
-          currentPhase === 1 ? ROADMAP_PHASES.length : currentPhase - 1
-        );
-      }
-    }
-
-    mobileTouchStartXRef.current = null;
-    mobileTouchCurrentXRef.current = null;
+  const showNextPhase = () => {
+    setActivePhase((currentPhase) => (currentPhase % ROADMAP_PHASES.length) + 1);
   };
 
   const getMobileStackStyle = (phase: number) => {
@@ -176,7 +168,7 @@ export default function Roadmap() {
       <section
         id="roadmap"
         ref={sectionRef}
-        className="pt-12 pb-8 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden font-sans select-none"
+        className="pt-8 pb-8 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden font-sans select-none"
         style={
           {
             "--mouse-x": `${mousePos.x * 100}%`,
@@ -197,16 +189,14 @@ export default function Roadmap() {
             </h3>
           </div>
 
-          <div className="lg:hidden reveal reveal-delay-1 active">
-            <div
-              className="overflow-hidden"
-              role="region"
-              aria-roledescription="carousel"
-              aria-label="Speechworks roadmap phases"
-              onTouchStart={handleMobileCarouselTouchStart}
-              onTouchMove={handleMobileCarouselTouchMove}
-              onTouchEnd={handleMobileCarouselTouchEnd}
-            >
+          <div
+            className="relative lg:hidden reveal reveal-delay-1 active"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Speechworks roadmap phases"
+            style={{ touchAction: "pan-y" }}
+          >
+            <div className="overflow-hidden pt-2 sm:pt-3">
               <div
                 className="flex will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{
@@ -217,41 +207,33 @@ export default function Roadmap() {
                 {ROADMAP_PHASES.map((phase) => (
                   <div
                     key={phase.id}
-                    className="shrink-0"
+                    className="shrink-0 py-1.5 sm:py-2"
                     style={{ width: `${100 / ROADMAP_PHASES.length}%` }}
                   >
-                    <div className="px-[1px]">
-                      <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-black/6 bg-white shadow-[0_22px_54px_rgba(63,51,45,0.08)]">
-                        <div className="min-h-[282px] border-b border-black/6 px-5 py-5 sm:min-h-[258px]">
+                    <div className="px-[2px]">
+                      <div className="flex h-full flex-col gap-6">
+                        <div className="relative pl-4 sm:pl-5">
                           <div
-                            className={`text-[10px] font-black uppercase tracking-[0.2em] ${phase.themeClass}`}
-                          >
-                            0{phase.id} / {phase.kicker}
-                          </div>
-                          <div className="mt-2 flex items-center gap-2">
+                            className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${phase.accentBarClass}`}
+                          />
+                          <div className="mb-3 flex items-center gap-2">
                             <span
-                              className={`inline-flex h-2.5 w-2.5 rounded-full ${
-                                phase.id === 1
-                                  ? "bg-brand"
-                                  : phase.id === 2
-                                  ? "bg-purple-500"
-                                  : "bg-emerald-500"
-                              }`}
+                              className={`inline-flex h-2.5 w-2.5 rounded-full ${phase.accentBarClass}`}
                             />
                             <span className="text-[10px] font-black uppercase tracking-[0.18em] text-app-muted">
                               {phase.status}
                             </span>
                           </div>
-                          <h4 className="mt-3 text-[2rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text">
+                          <h4 className="text-[1.95rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text sm:text-[2rem]">
                             {phase.title}
                           </h4>
-                          <p className="mt-3 max-w-[34ch] text-sm leading-6 text-app-muted">
+                          <p className="mt-2.5 max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
                             {phase.description}
                           </p>
                         </div>
 
                         <div
-                          className={`relative h-[360px] overflow-hidden bg-gradient-to-br ${phase.stageGradient} ${phase.stageGlow}`}
+                          className={`relative h-[360px] overflow-hidden rounded-[2rem] bg-gradient-to-br ${phase.stageGradient}`}
                         >
                           <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.18),transparent_22%),linear-gradient(180deg,rgba(255,255,255,0.06),transparent_58%)]" />
                           <div className="absolute inset-0 opacity-[0.08] bg-grid" />
@@ -316,6 +298,26 @@ export default function Roadmap() {
                               </div>
                             </div>
                           )}
+
+                          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-between px-3 sm:px-4">
+                            <button
+                              type="button"
+                              onClick={showPreviousPhase}
+                              className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white/94 text-app-text shadow-[0_18px_32px_rgba(63,51,45,0.14)] backdrop-blur-md transition-all duration-300 hover:scale-[1.04] hover:bg-white"
+                              aria-label="Show previous roadmap phase"
+                            >
+                              <RoadmapMobileChevron direction="left" />
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={showNextPhase}
+                              className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white/94 text-app-text shadow-[0_18px_32px_rgba(63,51,45,0.14)] backdrop-blur-md transition-all duration-300 hover:scale-[1.04] hover:bg-white"
+                              aria-label="Show next roadmap phase"
+                            >
+                              <RoadmapMobileChevron direction="right" />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -323,30 +325,31 @@ export default function Roadmap() {
                 ))}
               </div>
 
-              <div className="mt-4 flex items-center justify-center gap-2.5">
-                {ROADMAP_PHASES.map((phase) => {
-                  const isActive = activePhase === phase.id;
+            </div>
 
-                  return (
-                    <button
-                      key={phase.id}
-                      type="button"
-                      onClick={() => setActivePhase(phase.id)}
-                      className="flex h-7 items-center justify-center"
-                      aria-label={`Show roadmap phase ${phase.id}`}
-                      aria-pressed={isActive}
-                    >
-                      <span
-                        className={`block h-2.5 rounded-full transition-all duration-300 ${
-                          isActive
-                            ? "w-8 bg-app-text shadow-[0_0_18px_rgba(63,51,45,0.18)]"
-                            : "w-2.5 bg-black/18"
-                        }`}
-                      />
-                    </button>
-                  );
-                })}
-              </div>
+            <div className="mt-4 flex items-center justify-center gap-2.5">
+              {ROADMAP_PHASES.map((phase) => {
+                const isActive = activePhase === phase.id;
+
+                return (
+                  <button
+                    key={phase.id}
+                    type="button"
+                    onClick={() => setActivePhase(phase.id)}
+                    className="flex h-7 items-center justify-center"
+                    aria-label={`Show roadmap phase ${phase.id}`}
+                    aria-pressed={isActive}
+                  >
+                    <span
+                      className={`block h-2.5 rounded-full transition-all duration-300 ${
+                        isActive
+                          ? "w-8 bg-app-text shadow-[0_0_18px_rgba(63,51,45,0.18)]"
+                          : "w-2.5 bg-black/18"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
             </div>
           </div>
 

@@ -543,9 +543,11 @@ function StaminaScreenUI({ timeStr }: { timeStr: string }) {
 function PhoneShell({
   mousePos,
   timeStr,
+  softDeviceShadow = false,
 }: {
   mousePos: { x: number; y: number };
   timeStr: string;
+  softDeviceShadow?: boolean;
 }) {
   return (
     <div
@@ -553,7 +555,11 @@ function PhoneShell({
       style={{ transformStyle: "preserve-3d" }}
     >
       <div
-        className="absolute inset-0 rounded-[3.5rem] bg-[#0F1115] shadow-[40px_80px_100px_rgba(0,0,0,0.6)]"
+        className={`absolute inset-0 rounded-[3.5rem] bg-[#0F1115] ${
+          softDeviceShadow
+            ? "shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
+            : "shadow-[40px_80px_100px_rgba(0,0,0,0.6)]"
+        }`}
         style={{ transform: "translateZ(-12px)" }}
       />
 
@@ -619,16 +625,22 @@ export default function StaminaAppMockup({
   animKey,
   isSectionHovered,
   externalMousePos,
+  disableTouchPause = false,
+  softDeviceShadow = false,
 }: {
   animKey: number;
   isSectionHovered?: boolean;
   externalMousePos?: { x: number; y: number };
+  disableTouchPause?: boolean;
+  softDeviceShadow?: boolean;
 }) {
   const isHovered = isSectionHovered || false;
   const [hasCarouselTouchInteracted, setHasCarouselTouchInteracted] =
     useState(false);
   const mousePos = externalMousePos || { x: 0, y: 0 };
   const timeStr = useMockDeviceTime("20:22");
+  const shouldAnimateCarousel =
+    disableTouchPause || !hasCarouselTouchInteracted;
 
   const compositionTransform = `translateY(${
     isHovered ? "-6px" : "0px"
@@ -648,7 +660,13 @@ export default function StaminaAppMockup({
           transform: compositionTransform,
         }}
       >
-        <div className="absolute left-1/2 bottom-5 h-[46px] w-[340px] -translate-x-1/2 rounded-full bg-black/20 blur-[30px] md:w-[392px]" />
+        <div
+          className={`absolute left-1/2 bottom-5 -translate-x-1/2 rounded-full ${
+            softDeviceShadow
+              ? "h-[22px] w-[250px] bg-black/8 blur-[18px] md:w-[280px]"
+              : "h-[46px] w-[340px] bg-black/20 blur-[30px] md:w-[392px]"
+          }`}
+        />
 
         <div
           className="absolute left-1/2 top-0 z-10 transition-transform duration-700 ease-out"
@@ -660,13 +678,21 @@ export default function StaminaAppMockup({
           }}
         >
           <div className="origin-center scale-[0.82] md:scale-[0.9]">
-            <PhoneShell mousePos={mousePos} timeStr={timeStr} />
+            <PhoneShell
+              mousePos={mousePos}
+              timeStr={timeStr}
+              softDeviceShadow={softDeviceShadow}
+            />
           </div>
         </div>
 
         <div
           className="absolute left-1/2 top-[108px] z-30 h-[232px] w-[344px] -translate-x-1/2 transition-transform duration-700 ease-out md:top-[124px] md:h-[248px] md:w-[418px]"
-          onTouchStartCapture={() => setHasCarouselTouchInteracted(true)}
+          onTouchStartCapture={
+            disableTouchPause
+              ? undefined
+              : () => setHasCarouselTouchInteracted(true)
+          }
           style={{
             transformStyle: "preserve-3d",
             transform: `translate3d(0, ${isHovered ? "-4px" : "0px"}, 0)`,
@@ -677,9 +703,9 @@ export default function StaminaAppMockup({
             style={
               {
                 transformStyle: "preserve-3d",
-                animation: hasCarouselTouchInteracted
-                  ? "none"
-                  : `stamina-carousel-plane ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`,
+                animation: shouldAnimateCarousel
+                  ? `stamina-carousel-plane ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`
+                  : "none",
                 "--stamina-slide-shift": "224px",
               } as React.CSSProperties
             }
@@ -687,17 +713,17 @@ export default function StaminaAppMockup({
             <div
               className="flex items-start gap-4 px-1 will-change-transform"
               style={{
-                animation: hasCarouselTouchInteracted
-                  ? "none"
-                  : `stamina-carousel-track ${STAMINA_CAROUSEL_DURATION} cubic-bezier(0.65, 0, 0.35, 1) infinite`,
+                animation: shouldAnimateCarousel
+                  ? `stamina-carousel-track ${STAMINA_CAROUSEL_DURATION} cubic-bezier(0.65, 0, 0.35, 1) infinite`
+                  : "none",
               }}
             >
               <div
                 className="rounded-[24px]"
                 style={{
-                  animation: hasCarouselTouchInteracted
-                    ? "none"
-                    : `stamina-carousel-card ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`,
+                  animation: shouldAnimateCarousel
+                    ? `stamina-carousel-card ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`
+                    : "none",
                 }}
               >
                 <DailyProgressFloatingCard />
@@ -705,9 +731,9 @@ export default function StaminaAppMockup({
               <div
                 className="rounded-[24px]"
                 style={{
-                  animation: hasCarouselTouchInteracted
-                    ? "none"
-                    : `stamina-carousel-card ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`,
+                  animation: shouldAnimateCarousel
+                    ? `stamina-carousel-card ${STAMINA_CAROUSEL_DURATION} ease-in-out infinite`
+                    : "none",
                 }}
               >
                 <LowStaminaFloatingCard />

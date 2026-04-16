@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { withBasePath } from "@/app/lib/withBasePath";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import LiveAppMockup from "./LiveAppMockup";
+import MobileCarouselControls from "./MobileCarouselControls";
 import { useMockDeviceTime } from "./useMockDeviceTime";
 
 const HERO_FAN_SCREEN_KEYFRAMES = `
@@ -130,12 +131,8 @@ export default function Hero() {
   const [activePhone, setActivePhone] = useState<HeroPhoneId>("center");
   const [hoveredPhone, setHoveredPhone] = useState<HeroPhoneId | null>(null);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
-  const [hasMobileCarouselInteracted, setHasMobileCarouselInteracted] =
-    useState(false);
   const activeHeroPhone = HERO_PHONE_COPY[activePhone];
   const activePhoneIndex = Math.max(0, HERO_PHONE_IDS.indexOf(activePhone));
-  const mobileTouchStartXRef = useRef<number | null>(null);
-  const mobileTouchCurrentXRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -154,7 +151,7 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    if (isMobileViewport && hasMobileCarouselInteracted) return;
+    if (isMobileViewport) return;
 
     const intervalId = window.setInterval(() => {
       setActivePhone((currentPhone) => {
@@ -164,13 +161,7 @@ export default function Hero() {
     }, 4200);
 
     return () => window.clearInterval(intervalId);
-  }, [hasMobileCarouselInteracted, isMobileViewport]);
-
-  const stopMobileCarouselAutoplay = () => {
-    if (isMobileViewport) {
-      setHasMobileCarouselInteracted(true);
-    }
-  };
+  }, [isMobileViewport]);
 
   const getPhoneStyle = (phoneId: HeroPhoneId) => {
     const slot = HERO_PHONE_SLOT_BY_ACTIVE[activePhone][phoneId];
@@ -203,50 +194,18 @@ export default function Hero() {
       }
     };
 
-  const handleMobileCarouselTouchStart = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    stopMobileCarouselAutoplay();
-    mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
-    mobileTouchCurrentXRef.current = null;
+  const showPreviousPhone = () => {
+    setActivePhone(
+      HERO_PHONE_IDS[
+        (activePhoneIndex - 1 + HERO_PHONE_IDS.length) % HERO_PHONE_IDS.length
+      ]
+    );
   };
 
-  const handleMobileCarouselTouchMove = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    mobileTouchCurrentXRef.current = event.touches[0]?.clientX ?? null;
-  };
-
-  const handleMobileCarouselTouchEnd = () => {
-    if (
-      mobileTouchStartXRef.current === null ||
-      mobileTouchCurrentXRef.current === null
-    ) {
-      mobileTouchStartXRef.current = null;
-      mobileTouchCurrentXRef.current = null;
-      return;
-    }
-
-    const swipeDistance =
-      mobileTouchStartXRef.current - mobileTouchCurrentXRef.current;
-
-    if (Math.abs(swipeDistance) > 40) {
-      if (swipeDistance > 0) {
-        setActivePhone(
-          HERO_PHONE_IDS[(activePhoneIndex + 1) % HERO_PHONE_IDS.length]
-        );
-      } else {
-        setActivePhone(
-          HERO_PHONE_IDS[
-            (activePhoneIndex - 1 + HERO_PHONE_IDS.length) %
-              HERO_PHONE_IDS.length
-          ]
-        );
-      }
-    }
-
-    mobileTouchStartXRef.current = null;
-    mobileTouchCurrentXRef.current = null;
+  const showNextPhone = () => {
+    setActivePhone(
+      HERO_PHONE_IDS[(activePhoneIndex + 1) % HERO_PHONE_IDS.length]
+    );
   };
 
   return (
@@ -379,17 +338,14 @@ export default function Hero() {
                 </a>
               </div>
 
-              <div className="mt-10 lg:hidden reveal reveal-delay-3 active min-w-0">
+              <div className="relative mt-10 lg:hidden reveal reveal-delay-3 active min-w-0">
                 <div className="mx-auto w-full max-w-[286px]">
                   <div
                     className="relative rounded-[2.75rem] bg-gradient-to-tr from-[#1a1a1a] via-[#353535] to-[#262626] p-[4px] shadow-[0_32px_56px_rgba(0,0,0,0.34)]"
                     role="region"
                     aria-roledescription="carousel"
                     aria-label="Speechworks mobile showcase"
-                    onTouchStartCapture={stopMobileCarouselAutoplay}
-                    onTouchStart={handleMobileCarouselTouchStart}
-                    onTouchMove={handleMobileCarouselTouchMove}
-                    onTouchEnd={handleMobileCarouselTouchEnd}
+                    style={{ touchAction: "pan-y" }}
                   >
                     <div className="absolute left-[-4px] top-[102px] h-10 w-[7px] rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] shadow-[1px_0_3px_rgba(0,0,0,0.5)]" />
                     <div className="absolute left-[-4px] top-[165px] h-16 w-[7px] rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] shadow-[1px_0_3px_rgba(0,0,0,0.5)]" />
@@ -429,7 +385,7 @@ export default function Hero() {
                       )}
 
                       <div
-                        className="flex h-[496px] will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                        className="flex h-[496px] select-none will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         style={{
                           width: `${HERO_PHONE_IDS.length * 100}%`,
                           transform: `translate3d(-${activePhoneIndex * (100 / HERO_PHONE_IDS.length)}%, 0, 0)`,
@@ -591,33 +547,17 @@ export default function Hero() {
                     </div>
                   </div>
 
-                  <div className="mt-4 flex items-center justify-center gap-2.5">
-                    {HERO_PHONE_IDS.map((phoneId) => {
-                      const isActive = phoneId === activePhone;
-
-                      return (
-                        <button
-                          key={phoneId}
-                          type="button"
-                          onClick={() => {
-                            stopMobileCarouselAutoplay();
-                            setActivePhone(phoneId);
-                          }}
-                          className="flex h-7 items-center justify-center"
-                          aria-label={`Show ${HERO_PHONE_COPY[phoneId].tab} slide`}
-                          aria-pressed={isActive}
-                        >
-                          <span
-                            className={`block h-2.5 rounded-full transition-all duration-300 ${
-                              isActive
-                                ? "w-8 bg-brand shadow-[0_0_18px_rgba(242,128,68,0.5)]"
-                                : "w-2.5 bg-white/24"
-                            }`}
-                          />
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <MobileCarouselControls
+                    currentIndex={activePhoneIndex}
+                    count={HERO_PHONE_IDS.length}
+                    onPrevious={showPreviousPhone}
+                    onNext={showNextPhone}
+                    onSelect={(index) => setActivePhone(HERO_PHONE_IDS[index])}
+                    getItemLabel={(index) =>
+                      HERO_PHONE_COPY[HERO_PHONE_IDS[index]].tab
+                    }
+                    tone="dark"
+                  />
 
                 </div>
               </div>

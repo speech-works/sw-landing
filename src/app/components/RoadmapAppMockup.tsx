@@ -290,8 +290,9 @@ function LeftVideoPlayerScreen() {
 function CenterPackRecommendationScreen() {
     return (
         <>
-            <div className="absolute inset-0 overflow-hidden bg-[#F8F2E8]">
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,#fbf7f1_0%,#f5ead9_100%)]" />
+            <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(135deg,#FF8080_0%,#FF9040_100%)]">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_14%,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0.06)_22%,rgba(255,255,255,0)_42%)]" />
+                <div className="absolute inset-0 bg-black/34" />
 
                 <div className="absolute left-1/2 top-0 h-[680px] w-[320px] origin-top -translate-x-1/2 scale-[0.7125] md:scale-[0.775]">
                     <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(135deg,#FF8080_0%,#FF9040_100%)] shadow-[0_8px_24px_rgba(0,0,0,0.14)]">
@@ -748,6 +749,7 @@ function BlankPhoneMockup({
     screenDepth = 10,
     useBareScreenSurface = false,
     flattenHardwareLayers = false,
+    softDeviceShadow = false,
 }: {
     className?: string;
     style: CSSProperties;
@@ -756,6 +758,7 @@ function BlankPhoneMockup({
     screenDepth?: number;
     useBareScreenSurface?: boolean;
     flattenHardwareLayers?: boolean;
+    softDeviceShadow?: boolean;
 }) {
     return (
         <div
@@ -768,7 +771,11 @@ function BlankPhoneMockup({
             }}
         >
             <div
-                className="absolute inset-0 rounded-[3.5rem] bg-[#0F1115] shadow-[40px_80px_100px_rgba(0,0,0,0.6)]"
+                className={`absolute inset-0 rounded-[3.5rem] bg-[#0F1115] ${
+                    softDeviceShadow
+                        ? "shadow-[0_16px_28px_rgba(0,0,0,0.18)]"
+                        : "shadow-[40px_80px_100px_rgba(0,0,0,0.6)]"
+                }`}
                 style={{
                     transform: flattenHardwareLayers
                         ? "translateZ(0px)"
@@ -848,10 +855,16 @@ export default function RoadmapAppMockup({
     animKey,
     isSectionHovered = false,
     externalMousePos = { x: 0, y: 0 },
+    softDeviceShadow = false,
+    compactVerticalPadding = false,
+    compactCarouselLayout = false,
 }: {
     animKey: number;
     isSectionHovered?: boolean;
     externalMousePos?: { x: number; y: number };
+    softDeviceShadow?: boolean;
+    compactVerticalPadding?: boolean;
+    compactCarouselLayout?: boolean;
 }) {
     const timeStr = useMockDeviceTime("23:05");
     const rotateX = 18 - externalMousePos.y * 10;
@@ -863,37 +876,53 @@ export default function RoadmapAppMockup({
     const activeScale = isSectionHovered ? hoverScale : idleScale;
     const mirroredRotateY = -rotateY;
     const mirroredRotateZ = -rotateZ;
+    const canvasClassName = compactCarouselLayout
+        ? "relative -translate-x-[56px] -translate-y-[16px] h-[420px] w-[520px] md:-translate-x-[148px] md:h-[560px] md:w-[712px]"
+        : "relative -translate-x-[118px] h-[520px] w-[650px] md:-translate-x-[148px] md:h-[560px] md:w-[712px]";
+    const leftPhoneClassName = compactCarouselLayout
+        ? "left-0 top-[6px] z-10 md:left-[16px] md:top-[8px]"
+        : "left-[6px] top-[10px] z-10 md:left-[16px] md:top-[8px]";
+    const centerPhoneClassName = compactCarouselLayout
+        ? "left-[174px] top-[14px] z-20 md:left-[242px] md:top-[20px]"
+        : "left-[218px] top-[18px] z-20 md:left-[242px] md:top-[20px]";
+    const rightPhoneClassName = compactCarouselLayout
+        ? "left-[332px] -top-[6px] z-10 md:left-[448px] md:top-[2px]"
+        : "left-[412px] top-0 z-10 md:left-[448px] md:top-[2px]";
 
     return (
         <div
-            className="relative flex h-full w-full select-none items-center justify-center p-4 md:p-8"
+            className={`relative flex h-full w-full select-none items-center justify-center ${
+                compactVerticalPadding ? "px-4 py-0 md:p-8" : "p-4 md:p-8"
+            }`}
             style={{ perspective: "2000px" }}
         >
             <div
                 key={animKey}
-                className="relative -translate-x-[118px] h-[520px] w-[650px] md:-translate-x-[148px] md:h-[560px] md:w-[712px]"
+                className={canvasClassName}
                 style={{ transformStyle: "preserve-3d" }}
             >
                 <BlankPhoneMockup
-                    className="left-[6px] top-[10px] z-10 md:left-[16px] md:top-[8px]"
+                    className={leftPhoneClassName}
                     style={{
                         transform: `rotateX(${rotateX}deg) rotateY(${mirroredRotateY}deg) rotateZ(${mirroredRotateZ}deg) scale(${activeScale})`,
                     }}
                     timeStr={timeStr}
+                    softDeviceShadow={softDeviceShadow}
                     screenContent={<LeftVideoPlayerScreen />}
                 />
 
                 <BlankPhoneMockup
-                    className="left-[218px] top-[18px] z-20 md:left-[242px] md:top-[20px]"
+                    className={centerPhoneClassName}
                     style={{
                         transform: `rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${activeScale})`,
                     }}
                     timeStr={timeStr}
+                    softDeviceShadow={softDeviceShadow}
                     screenContent={<CenterPackRecommendationScreen />}
                 />
 
                 <BlankPhoneMockup
-                    className="left-[412px] top-0 z-10 md:left-[448px] md:top-[2px]"
+                    className={rightPhoneClassName}
                     style={{
                         transform: `rotateZ(${rotateZ}deg) scale(${activeScale})`,
                     }}
@@ -901,6 +930,7 @@ export default function RoadmapAppMockup({
                     screenDepth={0}
                     useBareScreenSurface={true}
                     flattenHardwareLayers={true}
+                    softDeviceShadow={softDeviceShadow}
                     screenContent={<RightReflectionScreen />}
                 />
             </div>

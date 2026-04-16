@@ -124,6 +124,27 @@ function useAnimKey(activeIndex: number) {
   return key;
 }
 
+function MobilePlatformChevron({
+  direction,
+}: {
+  direction: "left" | "right";
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.25"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
+      <path d={direction === "left" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6"} />
+    </svg>
+  );
+}
+
 /* ─────────────────────────────────────────────
    FEATURES DATA
 ───────────────────────────────────────────── */
@@ -132,7 +153,10 @@ const features = [
     id: "progress",
     shortTitle: "Growth Profile",
     title: "Pro-Level Progress Tracking",
+    mobileTitle: "Progress Tracking",
     desc: "A 5-axis Radar Chart tracking Mastery, Ease, Courage, Confidence, and Social Participation. Leveling up isn't just a number—it's an expansion of capability. See your growth not as a fluency score, but as a resilience map.",
+    mobileDesc:
+      "Track mastery across five real-world dimensions. See growth as resilience, not just fluency.",
     tagIcon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +202,7 @@ const features = [
       isHovered?: boolean,
       mousePos?: { x: number; y: number }
     ) => (
-      <div className="md:translate-x-20 lg:translate-x-28 transition-transform duration-700">
+      <div className="md:translate-x-14 lg:translate-x-16 md:-translate-y-4 lg:-translate-y-6 transition-transform duration-700">
         <ProgressAppMockup
           radarChart={<RadarUI animKey={animKey} isFloating={true} />}
           isSectionHovered={isHovered}
@@ -191,7 +215,10 @@ const features = [
     id: "adversarial",
     shortTitle: "Adversarial AI",
     title: "The Pressure Test",
+    mobileTitle: "Pressure Test",
     desc: 'Most tools are too "polite." Our AI mimics the friction of real life. It will rush you, misinterpret your silence, and challenge your composure.',
+    mobileDesc:
+      "Train against AI that rushes, interrupts, and pressures you like real life.",
     tagIcon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -248,7 +275,7 @@ const features = [
       isHovered?: boolean,
       mousePos?: { x: number; y: number }
     ) => (
-      <div className="md:translate-x-20 lg:translate-x-28 transition-transform duration-700">
+      <div className="md:translate-x-14 lg:translate-x-16 md:-translate-y-4 lg:-translate-y-6 transition-transform duration-700">
         <AdversarialAppMockup
           animKey={animKey}
           isSectionHovered={isHovered}
@@ -261,7 +288,10 @@ const features = [
     id: "stamina",
     shortTitle: "Biological Stamina",
     title: "Sustainable Training",
+    mobileTitle: "Sustainable Training",
     desc: "We treat speech mastery like an elite sport. Stamina Guardrails prevent burnout and ensure you only practice at your peak.",
+    mobileDesc:
+      "Practice like an athlete. Stamina Guardrails help you stop before burnout.",
     tagIcon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -322,7 +352,10 @@ const features = [
     id: "roadmap",
     shortTitle: "Clinical Packs",
     title: "Your 0-to-100 Roadmap",
+    mobileTitle: "Your Roadmap",
     desc: 'Expert-designed curriculums that follow a strict Clinical Arc. No more guesswork. Our Recommendation Engine audits your unique speech profile and presents the exact "Pack" you need right now.',
+    mobileDesc:
+      "A clear path from foundations to harder speaking moments, without the guesswork.",
     tagIcon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -372,7 +405,7 @@ const features = [
       isHovered?: boolean,
       mousePos?: { x: number; y: number }
     ) => (
-      <div className="md:translate-x-20 lg:translate-x-28 transition-transform duration-700">
+      <div className="md:translate-x-14 lg:translate-x-16 md:-translate-y-4 lg:-translate-y-6 transition-transform duration-700">
         <RoadmapAppMockup
           animKey={animKey}
           isSectionHovered={isHovered}
@@ -393,11 +426,11 @@ export default function Platform() {
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
-  const [hasMobileCarouselInteracted, setHasMobileCarouselInteracted] =
-    useState(false);
+  const [mobileCarouselHeight, setMobileCarouselHeight] = useState<
+    number | null
+  >(null);
+  const mobileSlideRefs = useRef<Array<HTMLDivElement | null>>([]);
   const animKey = useAnimKey(activeIndex);
-  const mobileTouchStartXRef = useRef<number | null>(null);
-  const mobileTouchCurrentXRef = useRef<number | null>(null);
 
   const DURATION = 6000;
   const UPDATE_INTERVAL = 50;
@@ -435,69 +468,72 @@ export default function Platform() {
     }
   }, [progress, isMobileViewport]);
 
-  useEffect(() => {
-    if (!isMobileViewport || hasMobileCarouselInteracted) return;
-
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % features.length);
-    }, DURATION);
-
-    return () => {
-      window.clearInterval(timer);
-    };
-  }, [DURATION, hasMobileCarouselInteracted, isMobileViewport]);
-
   const handleFeatureClick = useCallback((index: number) => {
     setActiveIndex(index);
     setProgress(0);
   }, []);
 
-  const stopMobileCarouselAutoplay = useCallback(() => {
-    if (isMobileViewport) {
-      setHasMobileCarouselInteracted(true);
-    }
-  }, [isMobileViewport]);
+  const showPreviousFeature = useCallback(() => {
+    handleFeatureClick((activeIndex - 1 + features.length) % features.length);
+  }, [activeIndex, handleFeatureClick]);
 
-  const handleMobileCarouselTouchStart = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    stopMobileCarouselAutoplay();
-    mobileTouchStartXRef.current = event.touches[0]?.clientX ?? null;
-    mobileTouchCurrentXRef.current = null;
-  };
+  const showNextFeature = useCallback(() => {
+    handleFeatureClick((activeIndex + 1) % features.length);
+  }, [activeIndex, handleFeatureClick]);
 
-  const handleMobileCarouselTouchMove = (
-    event: React.TouchEvent<HTMLDivElement>
-  ) => {
-    mobileTouchCurrentXRef.current = event.touches[0]?.clientX ?? null;
-  };
-
-  const handleMobileCarouselTouchEnd = () => {
-    if (
-      mobileTouchStartXRef.current === null ||
-      mobileTouchCurrentXRef.current === null
-    ) {
-      mobileTouchStartXRef.current = null;
-      mobileTouchCurrentXRef.current = null;
+  const syncMobileCarouselHeight = useCallback(() => {
+    if (!isMobileViewport) {
+      setMobileCarouselHeight(null);
       return;
     }
 
-    const swipeDistance =
-      mobileTouchStartXRef.current - mobileTouchCurrentXRef.current;
+    const nextHeight = mobileSlideRefs.current.reduce((maxHeight, slide) => {
+      if (!slide) return maxHeight;
 
-    if (Math.abs(swipeDistance) > 40) {
-      if (swipeDistance > 0) {
-        handleFeatureClick((activeIndex + 1) % features.length);
-      } else {
-        handleFeatureClick(
-          (activeIndex - 1 + features.length) % features.length
-        );
+      return Math.max(
+        maxHeight,
+        Math.ceil(slide.getBoundingClientRect().height)
+      );
+    }, 0);
+
+    if (!nextHeight) return;
+
+    setMobileCarouselHeight((current) =>
+      current === nextHeight ? current : nextHeight
+    );
+  }, [isMobileViewport]);
+
+  useEffect(() => {
+    syncMobileCarouselHeight();
+  }, [syncMobileCarouselHeight, animKey]);
+
+  useEffect(() => {
+    if (!isMobileViewport) return;
+
+    const handleResize = () => {
+      syncMobileCarouselHeight();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(() => {
+            syncMobileCarouselHeight();
+          });
+
+    mobileSlideRefs.current.forEach((slide) => {
+      if (slide) {
+        resizeObserver?.observe(slide);
       }
-    }
+    });
 
-    mobileTouchStartXRef.current = null;
-    mobileTouchCurrentXRef.current = null;
-  };
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      resizeObserver?.disconnect();
+    };
+  }, [isMobileViewport, syncMobileCarouselHeight]);
 
   const [isHoveredStage, setIsHoveredStage] = useState(false);
   const [stageMousePos, setStageMousePos] = useState({ x: 0, y: 0 });
@@ -530,33 +566,56 @@ export default function Platform() {
       externalMousePos: { x: 0, y: 0 },
     };
 
+    const renderMobileMockupShell = (
+      scaleClass: string,
+      child: React.ReactNode
+    ) => (
+      <div className="pointer-events-none relative flex h-full items-center justify-center overflow-visible select-none touch-none">
+        <div className={`relative overflow-visible origin-center ${scaleClass}`}>
+          {child}
+        </div>
+      </div>
+    );
+
     switch (featureId) {
       case "progress":
-        return (
-          <div className="flex h-full items-center justify-center scale-[0.72] sm:scale-[0.82]">
-            <ProgressAppMockup
-              radarChart={<RadarUI animKey={mobileAnimKey} isFloating={true} />}
-              {...baseProps}
-            />
-          </div>
+        return renderMobileMockupShell(
+          "scale-[0.48] sm:scale-[0.58]",
+          <ProgressAppMockup
+            radarChart={<RadarUI animKey={mobileAnimKey} isFloating={true} />}
+            softDeviceShadow={true}
+            {...baseProps}
+          />
         );
       case "adversarial":
-        return (
-          <div className="flex h-full items-center justify-center scale-[0.72] sm:scale-[0.82]">
-            <AdversarialAppMockup animKey={mobileAnimKey} {...baseProps} />
-          </div>
+        return renderMobileMockupShell(
+          "scale-[0.48] sm:scale-[0.58]",
+          <AdversarialAppMockup
+            animKey={mobileAnimKey}
+            softDeviceShadow={true}
+            {...baseProps}
+          />
         );
       case "stamina":
-        return (
-          <div className="flex h-full items-center justify-center scale-[0.72] sm:scale-[0.8]">
-            <StaminaAppMockup animKey={mobileAnimKey} {...baseProps} />
-          </div>
+        return renderMobileMockupShell(
+          "scale-[0.5] sm:scale-[0.6]",
+          <StaminaAppMockup
+            animKey={mobileAnimKey}
+            disableTouchPause={true}
+            softDeviceShadow={true}
+            {...baseProps}
+          />
         );
       case "roadmap":
-        return (
-          <div className="flex h-full items-center justify-center scale-[0.54] sm:scale-[0.6]">
-            <RoadmapAppMockup animKey={mobileAnimKey} {...baseProps} />
-          </div>
+        return renderMobileMockupShell(
+          "scale-[0.63] sm:scale-[0.7]",
+          <RoadmapAppMockup
+            animKey={mobileAnimKey}
+            compactVerticalPadding={true}
+            compactCarouselLayout={true}
+            softDeviceShadow={true}
+            {...baseProps}
+          />
         );
       default:
         return null;
@@ -566,7 +625,7 @@ export default function Platform() {
   return (
     <section
       id="platform"
-      className="pt-10 pb-10 md:py-32 bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
+      className="pt-8 pb-0 sm:pt-8 sm:pb-0 md:pt-32 md:pb-36 bg-white md:bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
       onMouseMove={handleMouseMove}
       style={
         {
@@ -578,7 +637,7 @@ export default function Platform() {
       }
     >
       {/* ── Awwwards X-Ray hover background ── */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-white">
+      <div className="absolute inset-0 pointer-events-none z-0 hidden overflow-hidden bg-white md:block">
         {/* <video
           className="absolute inset-0 h-full w-full object-cover object-center opacity-[0.8] mix-blend-multiply"
           autoPlay
@@ -706,32 +765,44 @@ export default function Platform() {
       </div>
 
       {/* ── Main content ── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10 space-y-12 sm:space-y-12 md:space-y-0">
         {/* Section heading */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 text-center md:text-left">
+        <div className="mb-12 flex flex-col text-center md:mb-16 md:flex-row md:items-end md:justify-between md:text-left">
           <div className="max-w-2xl mx-auto md:mx-0">
-            <h2
-              className="text-brand font-bold tracking-[0.2em] uppercase text-[10px] md:text-xs mb-3 md:mb-4"
-              style={{
-                animation: "platform-fadeSlideDown 0.6s ease 0.1s both",
-              }}
-            >
-              Professional Speech Academy
-            </h2>
-            <h3
-              className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter leading-none text-app-text"
-              style={{
-                animation:
-                  "platform-headingReveal 0.8s cubic-bezier(0.23,1,0.32,1) 0.2s both",
-              }}
-            >
-              POWERED BY
-              <br />
-              ADVERSARIAL AI.
-            </h3>
+            <div className="md:hidden">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-black/5 bg-white px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest text-app-text shadow-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand animate-pulse"></span>
+                Professional Speech Academy
+              </div>
+              <h3 className="text-4xl font-black tracking-tighter leading-[0.95] text-app-text sm:text-5xl">
+                ADVERSARIAL AI.
+              </h3>
+            </div>
+
+            <div className="hidden md:block">
+              <h2
+                className="mb-2 text-[9px] font-bold uppercase tracking-[0.16em] text-brand sm:text-[10px] md:mb-4 md:text-xs"
+                style={{
+                  animation: "platform-fadeSlideDown 0.6s ease 0.1s both",
+                }}
+              >
+                Professional Speech Academy
+              </h2>
+              <h3
+                className="text-[2rem] font-black tracking-tighter leading-[0.92] text-app-text sm:text-4xl md:text-5xl"
+                style={{
+                  animation:
+                    "platform-headingReveal 0.8s cubic-bezier(0.23,1,0.32,1) 0.2s both",
+                }}
+              >
+                POWERED BY
+                <br />
+                ADVERSARIAL AI.
+              </h3>
+            </div>
           </div>
           <p
-            className="text-app-muted font-medium mt-4 md:mt-0 max-w-xs mx-auto md:mx-0 md:text-right text-sm md:text-base"
+            className="hidden md:block text-app-muted font-medium mt-4 md:mt-0 max-w-xs mx-auto md:mx-0 md:text-right text-sm md:text-base"
             style={{ animation: "platform-fadeSlideUp 0.6s ease 0.4s both" }}
           >
             A clinical-grade foundation designed to analyze, challenge, and
@@ -740,125 +811,120 @@ export default function Platform() {
         </div>
 
         <div
-          className="lg:hidden"
+          className="relative lg:hidden"
           role="region"
           aria-roledescription="carousel"
           aria-label="Speechworks platform features"
-          onTouchStartCapture={stopMobileCarouselAutoplay}
-          onTouchStart={handleMobileCarouselTouchStart}
-          onTouchMove={handleMobileCarouselTouchMove}
-          onTouchEnd={handleMobileCarouselTouchEnd}
+          style={{ touchAction: "pan-y" }}
         >
-          <div className="overflow-hidden">
+          <div className="overflow-hidden pt-2 pb-0 sm:pt-3 sm:pb-0">
             <div
-              className="flex will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-              style={{
-                width: `${features.length * 100}%`,
-                transform: `translate3d(-${activeIndex * (100 / features.length)}%, 0, 0)`,
-              }}
+              className="transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={
+                mobileCarouselHeight
+                  ? { height: `${mobileCarouselHeight}px` }
+                  : undefined
+              }
             >
-              {features.map((feature, index) => {
-                const mobileChipClasses =
-                  feature.id === "roadmap"
-                    ? "border-brand/15 bg-brand/10 text-brand"
-                    : feature.id === "adversarial"
-                    ? "border-purple-200 bg-white text-purple-500"
-                    : feature.id === "stamina"
-                    ? "border-emerald-200 bg-white text-emerald-500"
-                    : "border-orange-100 bg-white text-brand";
+              <div
+                className="flex h-full items-start will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                style={{
+                  width: `${features.length * 100}%`,
+                  transform: `translate3d(-${activeIndex * (100 / features.length)}%, 0, 0)`,
+                }}
+              >
+                {features.map((feature, index) => {
+                  const mobileStageHeight =
+                    feature.id === "roadmap"
+                      ? "h-[268px] sm:h-[296px]"
+                      : feature.id === "stamina"
+                      ? "h-[280px] sm:h-[308px]"
+                      : "h-[286px] sm:h-[316px]";
+                  const mobileStageOverflow =
+                    feature.id === "roadmap"
+                      ? "overflow-hidden"
+                      : "overflow-visible";
 
-                const mobileStageHeight =
-                  feature.id === "roadmap"
-                    ? "h-[310px] sm:h-[340px]"
-                    : feature.id === "stamina"
-                    ? "h-[300px] sm:h-[330px]"
-                    : "h-[320px] sm:h-[350px]";
-
-                return (
-                  <div
-                    key={`mobile-${feature.id}`}
-                    className="shrink-0"
-                    style={{ width: `${100 / features.length}%` }}
-                  >
-                    <article className="mx-[1px] flex h-full flex-col overflow-hidden rounded-[2rem] border border-black/6 bg-white shadow-[0_18px_44px_rgba(63,51,45,0.08)]">
-                      <div className="relative flex min-h-[272px] flex-col px-5 py-5 sm:min-h-[248px]">
-                        <div
-                          className={`absolute bottom-5 left-0 top-5 w-1 rounded-r-full ${feature.activeBar}`}
-                        />
-                        <div
-                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] shadow-sm ${mobileChipClasses}`}
-                        >
-                          {feature.tagIcon}
-                          {feature.shortTitle}
+                  return (
+                    <div
+                      key={`mobile-${feature.id}`}
+                      ref={(node) => {
+                        mobileSlideRefs.current[index] = node;
+                      }}
+                      className="shrink-0 h-full px-[2px]"
+                      style={{ width: `${100 / features.length}%` }}
+                    >
+                      <div className="flex h-full flex-col justify-center gap-6">
+                        <div className="relative pl-4 sm:pl-5">
+                          <div
+                            className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${feature.activeBar}`}
+                          />
+                          <h4 className="text-[1.6rem] font-black leading-[0.95] tracking-[-0.05em] text-app-text sm:text-[1.75rem] sm:leading-[0.95]">
+                            {feature.mobileTitle ?? feature.title}
+                          </h4>
+                          <p className="mt-2.5 max-w-[31ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
+                            {feature.mobileDesc ?? feature.desc}
+                          </p>
                         </div>
-                        <h4 className="mt-4 text-[2rem] font-black leading-[0.96] tracking-[-0.05em] text-app-text">
-                          {feature.title}
-                        </h4>
-                        <p className="mt-3 text-sm leading-6 text-app-muted">
-                          {feature.desc}
-                        </p>
-                      </div>
 
-                      <div
-                        className={`relative overflow-hidden border-t border-black/6 ${mobileStageHeight} ${
-                          feature.id === "roadmap"
-                            ? "bg-gradient-to-br from-brand to-[#D9692E]"
-                            : `bg-gradient-to-br ${feature.bgGradient}`
-                        } mt-auto`}
-                      >
-                        <div className="absolute inset-0 opacity-[0.08] bg-grid" />
                         <div
-                          className={`absolute inset-0 flex items-center justify-center ${
-                            feature.id === "roadmap"
-                              ? "text-white/12"
-                              : feature.iconColor
-                          }`}
+                          className={`relative ${mobileStageHeight} ${mobileStageOverflow} rounded-[2rem]`}
                         >
-                          <div className="h-[78%] w-[78%] opacity-[0.12]">
-                            {feature.bgIcon}
+                          <div
+                            className={`absolute inset-0 overflow-hidden rounded-[2rem] ${
+                              feature.id === "roadmap"
+                                ? "bg-gradient-to-br from-brand to-[#D9692E]"
+                                : `bg-gradient-to-br ${feature.bgGradient}`
+                            }`}
+                          >
+                            <div className="absolute inset-0 opacity-[0.08] bg-grid" />
+                            <div
+                              className={`absolute inset-0 flex items-center justify-center ${
+                                feature.id === "roadmap"
+                                  ? "text-white/12"
+                                  : feature.iconColor
+                              }`}
+                            >
+                              <div className="h-[78%] w-[78%] opacity-[0.12]">
+                                {feature.bgIcon}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="absolute inset-0 z-10 overflow-visible">
+                            {renderMobileFeatureUI(
+                              feature.id,
+                              index,
+                              activeIndex === index ? animKey : index + 1
+                            )}
+                          </div>
+
+                          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-between px-3 sm:px-4">
+                            <button
+                              type="button"
+                              onClick={showPreviousFeature}
+                              className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white/94 text-app-text shadow-[0_18px_32px_rgba(63,51,45,0.14)] backdrop-blur-md transition-all duration-300 hover:scale-[1.04] hover:bg-white"
+                              aria-label="Show previous feature"
+                            >
+                              <MobilePlatformChevron direction="left" />
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={showNextFeature}
+                              className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white/94 text-app-text shadow-[0_18px_32px_rgba(63,51,45,0.14)] backdrop-blur-md transition-all duration-300 hover:scale-[1.04] hover:bg-white"
+                              aria-label="Show next feature"
+                            >
+                              <MobilePlatformChevron direction="right" />
+                            </button>
                           </div>
                         </div>
-                        <div className="absolute inset-0">
-                          {renderMobileFeatureUI(
-                            feature.id,
-                            index,
-                            activeIndex === index ? animKey : index + 1
-                          )}
-                        </div>
                       </div>
-                    </article>
-                  </div>
-                );
-              })}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-
-          <div className="mt-4 flex items-center justify-center gap-2.5">
-            {features.map((feature, index) => {
-              const isActive = activeIndex === index;
-
-              return (
-                <button
-                  key={`mobile-dot-${feature.id}`}
-                  type="button"
-                  onClick={() => {
-                    stopMobileCarouselAutoplay();
-                    handleFeatureClick(index);
-                  }}
-                  className="flex h-7 items-center justify-center"
-                  aria-label={`Show ${feature.shortTitle} slide`}
-                  aria-pressed={isActive}
-                >
-                  <span
-                    className={`block h-2.5 rounded-full transition-all duration-300 ${
-                      isActive
-                        ? "w-8 bg-app-text shadow-[0_0_18px_rgba(63,51,45,0.18)]"
-                        : "w-2.5 bg-black/18"
-                    }`}
-                  />
-                </button>
-              );
-            })}
           </div>
         </div>
 
@@ -1119,6 +1185,7 @@ export default function Platform() {
           </div>
         </div>
       </div>
+
     </section>
   );
 }
