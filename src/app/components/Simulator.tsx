@@ -188,14 +188,26 @@ export default function Simulator() {
         />
 
         <div className="max-w-7xl mx-auto px-6 w-full flex flex-col items-center">
-          <div className="text-center mb-2 md:mb-8 reveal active">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-black/5 text-app-text text-[9px] font-black uppercase tracking-[0.2em] mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
-              The Adversarial Simulator
+          <div className="mb-12 w-full text-center reveal active md:mb-8">
+            <div className="md:hidden">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-black/5 bg-white px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest text-app-text shadow-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand animate-pulse"></span>
+                The Adversarial Simulator
+              </div>
+              <h3 className="text-4xl font-black tracking-tighter leading-[0.95] text-app-text sm:text-5xl">
+                SIMULATE THE MOMENT.
+              </h3>
             </div>
-            <h3 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-none text-app-text">
-              SIMULATE THE MOMENT.
-            </h3>
+
+            <div className="hidden md:block">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-black/5 bg-white px-3 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-app-text">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
+                The Adversarial Simulator
+              </div>
+              <h3 className="text-3xl font-black tracking-tighter leading-none text-app-text md:text-5xl lg:text-6xl">
+                SIMULATE THE MOMENT.
+              </h3>
+            </div>
           </div>
 
           <div className="w-full max-w-6xl flex flex-col items-center gap-4 md:gap-6">

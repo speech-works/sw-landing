@@ -767,30 +767,39 @@ export default function Platform() {
       {/* ── Main content ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10 space-y-12 sm:space-y-12 md:space-y-0">
         {/* Section heading */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between md:mb-16 text-center md:text-left">
+        <div className="mb-12 flex flex-col text-center md:mb-16 md:flex-row md:items-end md:justify-between md:text-left">
           <div className="max-w-2xl mx-auto md:mx-0">
-            <h2
-              className="text-brand font-bold tracking-[0.16em] uppercase text-[9px] sm:text-[10px] md:text-xs mb-2 md:mb-4"
-              style={{
-                animation: "platform-fadeSlideDown 0.6s ease 0.1s both",
-              }}
-            >
-              Professional Speech Academy
-            </h2>
-            <h3
-              className="text-[2rem] sm:text-4xl md:text-5xl font-black tracking-tighter leading-[0.92] text-app-text"
-              style={{
-                animation:
-                  "platform-headingReveal 0.8s cubic-bezier(0.23,1,0.32,1) 0.2s both",
-              }}
-            >
-              <span className="md:hidden">ADVERSARIAL AI.</span>
-              <span className="hidden md:inline">
+            <div className="md:hidden">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-black/5 bg-white px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest text-app-text shadow-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand animate-pulse"></span>
+                Professional Speech Academy
+              </div>
+              <h3 className="text-4xl font-black tracking-tighter leading-[0.95] text-app-text sm:text-5xl">
+                ADVERSARIAL AI.
+              </h3>
+            </div>
+
+            <div className="hidden md:block">
+              <h2
+                className="mb-2 text-[9px] font-bold uppercase tracking-[0.16em] text-brand sm:text-[10px] md:mb-4 md:text-xs"
+                style={{
+                  animation: "platform-fadeSlideDown 0.6s ease 0.1s both",
+                }}
+              >
+                Professional Speech Academy
+              </h2>
+              <h3
+                className="text-[2rem] font-black tracking-tighter leading-[0.92] text-app-text sm:text-4xl md:text-5xl"
+                style={{
+                  animation:
+                    "platform-headingReveal 0.8s cubic-bezier(0.23,1,0.32,1) 0.2s both",
+                }}
+              >
                 POWERED BY
                 <br />
                 ADVERSARIAL AI.
-              </span>
-            </h3>
+              </h3>
+            </div>
           </div>
           <p
             className="hidden md:block text-app-muted font-medium mt-4 md:mt-0 max-w-xs mx-auto md:mx-0 md:text-right text-sm md:text-base"
