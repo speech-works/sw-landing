@@ -71,7 +71,7 @@ export default function Navbar() {
         id="navbar"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="flex justify-between items-center backdrop-blur-2xl bg-white/90 border border-orange-900/10 rounded-full px-4 md:px-6 py-2.5 md:py-3 shadow-lg">
+          <div className="mobile-fixed-glass flex justify-between items-center backdrop-blur-2xl bg-white/90 border border-orange-900/10 rounded-full px-4 md:px-6 py-2.5 md:py-3 shadow-lg">
             <div className="flex items-center gap-2 md:gap-3">
                 <div className="relative h-7 w-7 overflow-hidden rounded-full md:h-8 md:w-8">
                   <Image
@@ -174,7 +174,7 @@ export default function Navbar() {
                 : "pointer-events-none max-h-0 opacity-0 -translate-y-2 pt-0"
             }`}
           >
-            <div className="mx-3 rounded-[1.75rem] border border-orange-900/10 bg-white/92 px-4 py-3 shadow-lg backdrop-blur-2xl">
+            <div className="mobile-fixed-glass mx-3 rounded-[1.75rem] border border-orange-900/10 bg-white/92 px-4 py-3 shadow-lg backdrop-blur-2xl">
               <div className="grid gap-2">
                 <a
                   href="#roadmap"

@@ -285,7 +285,7 @@ export default function Team({
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
           <div className="reveal max-w-3xl">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-orange-900/10 bg-white/85 px-4 py-2 shadow-sm backdrop-blur-xl">
+            <div className="mobile-section-glass mb-4 inline-flex items-center gap-2 rounded-full border border-orange-900/10 bg-white/85 px-4 py-2 shadow-sm backdrop-blur-xl">
               <span className="h-2 w-2 rounded-full bg-brand" />
               <span className="text-[10px] font-black uppercase tracking-[0.22em] text-app-text">
                 Meet The Team
@@ -384,7 +384,7 @@ export default function Team({
                           }`}
                         >
                           <div
-                            className={`pointer-events-none absolute rounded-full blur-2xl transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                            className={`mobile-soft-glow pointer-events-none absolute rounded-full blur-2xl transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                               isActive
                                 ? "-inset-x-3 top-3 h-16 bg-brand/26"
                                 : "-inset-1 top-2 h-14 bg-white/8"
@@ -429,7 +429,7 @@ export default function Team({
                               }`}
                             >
                               <div
-                                className={`relative overflow-hidden rounded-[1.7rem] border backdrop-blur-xl transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                                className={`mobile-section-glass relative overflow-hidden rounded-[1.7rem] border backdrop-blur-xl transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                   isActive
                                     ? "border-white/10 bg-white/10 px-4 py-3 text-white shadow-[0_24px_50px_-28px_rgba(0,0,0,0.9)]"
                                     : "border-transparent bg-transparent px-0 py-0 text-white/82 shadow-none"

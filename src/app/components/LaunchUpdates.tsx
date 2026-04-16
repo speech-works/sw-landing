@@ -333,7 +333,7 @@ export default function LaunchUpdates() {
           type="button"
           aria-hidden={!isOpen}
           onClick={handleClose}
-          className={`absolute inset-0 ${
+          className={`mobile-fixed-glass absolute inset-0 ${
             isMobileViewport ? "" : "transition-opacity duration-300 "
           }${
             isOpen
@@ -349,7 +349,7 @@ export default function LaunchUpdates() {
             aria-expanded={isOpen}
             aria-controls="launch-updates-dialog"
             onClick={handleOpen}
-            className={`launch-widget-bubble pointer-events-auto absolute bottom-4 right-4 overflow-hidden border border-white/10 bg-[#3b302a]/92 text-left text-white shadow-[0_24px_60px_-30px_rgba(18,12,9,0.68)] backdrop-blur-xl ${
+            className={`launch-widget-bubble mobile-fixed-glass pointer-events-auto absolute bottom-4 right-4 overflow-hidden border border-white/10 bg-[#3b302a]/92 text-left text-white shadow-[0_24px_60px_-30px_rgba(18,12,9,0.68)] backdrop-blur-xl ${
               isMobileViewport
                 ? ""
                 : "transition-[transform,opacity,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-[0_28px_72px_-30px_rgba(18,12,9,0.78)] "
@@ -414,7 +414,7 @@ export default function LaunchUpdates() {
             role="dialog"
             aria-modal={isMobileViewport}
             aria-label="Get launch updates"
-            className={`launch-widget-panel pointer-events-auto absolute overflow-hidden border border-white/10 bg-[#221916]/92 text-white shadow-[0_40px_90px_-36px_rgba(18,12,9,0.84)] backdrop-blur-2xl ${
+            className={`launch-widget-panel mobile-fixed-glass pointer-events-auto absolute overflow-hidden border border-white/10 bg-[#221916]/92 text-white shadow-[0_40px_90px_-36px_rgba(18,12,9,0.84)] backdrop-blur-2xl ${
               isMobileViewport
                 ? ""
                 : "transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] "

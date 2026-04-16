@@ -463,7 +463,7 @@ export default function Simulator() {
                     1
                   )}`}
                 >
-                  <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-brand/10 blur-[120px] rounded-full pointer-events-none"></div>
+                  <div className="mobile-soft-glow absolute -top-40 -right-40 w-[600px] h-[600px] bg-brand/10 blur-[120px] rounded-full pointer-events-none"></div>
 
                   <div className="sim-stage-copy relative z-10 max-w-full md:max-w-[50%] animate-glitch pointer-events-auto">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand-100 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
@@ -490,7 +490,7 @@ export default function Simulator() {
                         }}
                       ></div>
 
-                      <div className="tilt-inner bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
+                      <div className="tilt-inner mobile-section-glass bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
                         {/*  Massive 3D Watermark  */}
                         <CoffeeIcon className="absolute -right-2 -bottom-6 w-36 h-36 text-brand opacity-[0.03] card-watermark pointer-events-none" />
 
@@ -533,7 +533,7 @@ export default function Simulator() {
                     2
                   )}`}
                 >
-                  <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+                  <div className="mobile-soft-glow absolute -top-40 -right-40 w-[600px] h-[600px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none"></div>
                   <div className="sim-stage-copy relative z-10 max-w-full md:max-w-[50%] pointer-events-auto">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-200 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
                       <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping"></span>{" "}
@@ -558,7 +558,7 @@ export default function Simulator() {
                         }}
                       ></div>
 
-                      <div className="tilt-inner bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
+                      <div className="tilt-inner mobile-section-glass bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
                         {/*  Massive 3D Watermark  */}
                         <PhoneCallIcon className="absolute -right-2 -bottom-6 w-36 h-36 text-purple-500 opacity-[0.03] card-watermark pointer-events-none" />
 
@@ -601,7 +601,7 @@ export default function Simulator() {
                     3
                   )}`}
                 >
-                  <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+                  <div className="mobile-soft-glow absolute -top-40 -right-40 w-[600px] h-[600px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"></div>
                   <div className="sim-stage-copy relative z-10 max-w-full md:max-w-[50%] pointer-events-auto">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-200 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>{" "}
@@ -625,7 +625,7 @@ export default function Simulator() {
                         }}
                       ></div>
 
-                      <div className="tilt-inner bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
+                      <div className="tilt-inner mobile-section-glass bg-[#121212]/95 backdrop-blur-2xl rounded-[23px] p-6 absolute inset-[1px] flex flex-col justify-between overflow-hidden z-10">
                         {/*  Massive 3D Watermark  */}
                         <BriefcaseIcon className="absolute -right-2 -bottom-6 w-36 h-36 text-emerald-500 opacity-[0.03] card-watermark pointer-events-none" />
 

@@ -224,6 +224,57 @@ section[id] {
   .mobile-paint-stable {
     content-visibility: visible;
     contain-intrinsic-size: auto;
+    isolation: isolate;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .mobile-paint-stable .mobile-section-glass,
+  .mobile-fixed-glass {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .mobile-paint-stable .reveal,
+  .mobile-paint-stable .reveal.active {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .mobile-paint-stable .reveal-delay-1,
+  .mobile-paint-stable .reveal-delay-2,
+  .mobile-paint-stable .reveal-delay-3 {
+    transition-delay: 0s !important;
+  }
+
+  .mobile-paint-stable .stage-grid-glow {
+    display: none !important;
+  }
+
+  .mobile-paint-stable .mobile-soft-glow {
+    display: none !important;
+  }
+
+  .mobile-paint-stable .animate-glitch,
+  .mobile-paint-stable .animate-pulse,
+  .mobile-paint-stable .animate-ping,
+  .mobile-paint-stable .team-story-reveal,
+  .mobile-paint-stable .team-selector-float,
+  .mobile-paint-stable .team-selector-orbit,
+  .mobile-paint-stable .team-selector-pulse,
+  .mobile-paint-stable .team-selector-sheen {
+    animation: none !important;
+  }
+
+  .mobile-paint-stable .sim-stage-view,
+  .mobile-paint-stable .tilt-card,
+  .mobile-paint-stable .tilt-inner,
+  .mobile-paint-stable .tilt-floating-element,
+  .mobile-paint-stable .card-watermark,
+  .mobile-paint-stable .team-story-reveal {
+    transition: none !important;
   }
 }
 

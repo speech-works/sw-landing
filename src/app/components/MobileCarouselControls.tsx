@@ -63,7 +63,7 @@ export default function MobileCarouselControls({
   const inactiveDotClasses = isDark ? "bg-white/20" : "bg-black/16";
   const dots = showDots ? (
     <div
-      className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 backdrop-blur-md ${dotsShellClasses}`}
+      className={`mobile-section-glass inline-flex items-center gap-2 rounded-full border px-3 py-2 backdrop-blur-md ${dotsShellClasses}`}
     >
       {Array.from({ length: count }, (_, index) => {
         const isActive = index === currentIndex;
@@ -99,7 +99,7 @@ export default function MobileCarouselControls({
         <button
           type="button"
           onClick={onPrevious}
-          className={`flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-all duration-300 hover:scale-[1.04] ${buttonClasses}`}
+          className={`mobile-section-glass flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-all duration-300 hover:scale-[1.04] ${buttonClasses}`}
           aria-label="Show previous slide"
         >
           <Chevron direction="left" className="h-4.5 w-4.5" />
@@ -110,7 +110,7 @@ export default function MobileCarouselControls({
         <button
           type="button"
           onClick={onNext}
-          className={`flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-all duration-300 hover:scale-[1.04] ${buttonClasses}`}
+          className={`mobile-section-glass flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-all duration-300 hover:scale-[1.04] ${buttonClasses}`}
           aria-label="Show next slide"
         >
           <Chevron direction="right" className="h-4.5 w-4.5" />
@@ -129,7 +129,7 @@ export default function MobileCarouselControls({
         <button
           type="button"
           onClick={onPrevious}
-          className={`pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-all duration-300 hover:scale-[1.04] sm:-translate-x-2 ${buttonClasses}`}
+          className={`mobile-section-glass pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-all duration-300 hover:scale-[1.04] sm:-translate-x-2 ${buttonClasses}`}
           aria-label="Show previous slide"
         >
           <Chevron direction="left" className="h-4.5 w-4.5" />
@@ -138,7 +138,7 @@ export default function MobileCarouselControls({
         <button
           type="button"
           onClick={onNext}
-          className={`pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-all duration-300 hover:scale-[1.04] sm:translate-x-2 ${buttonClasses}`}
+          className={`mobile-section-glass pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-all duration-300 hover:scale-[1.04] sm:translate-x-2 ${buttonClasses}`}
           aria-label="Show next slide"
         >
           <Chevron direction="right" className="h-4.5 w-4.5" />
