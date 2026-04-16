@@ -216,12 +216,7 @@ export default function Roadmap() {
                           <div
                             className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${phase.accentBarClass}`}
                           />
-                          <div
-                            className={`text-[10px] font-black uppercase tracking-[0.2em] ${phase.themeClass}`}
-                          >
-                            0{phase.id} / {phase.kicker}
-                          </div>
-                          <div className="mt-2 flex items-center gap-2">
+                          <div className="mb-3 flex items-center gap-2">
                             <span
                               className={`inline-flex h-2.5 w-2.5 rounded-full ${phase.accentBarClass}`}
                             />
@@ -229,7 +224,7 @@ export default function Roadmap() {
                               {phase.status}
                             </span>
                           </div>
-                          <h4 className="mt-3 text-[1.95rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text sm:text-[2rem]">
+                          <h4 className="text-[1.95rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text sm:text-[2rem]">
                             {phase.title}
                           </h4>
                           <p className="mt-2.5 max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
