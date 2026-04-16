@@ -625,7 +625,7 @@ export default function Platform() {
   return (
     <section
       id="platform"
-      className="pt-8 pb-0 sm:pt-8 sm:pb-0 md:pt-32 md:pb-36 bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
+      className="pt-8 pb-0 sm:pt-8 sm:pb-0 md:pt-32 md:pb-36 bg-white md:bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
       onMouseMove={handleMouseMove}
       style={
         {
@@ -637,7 +637,7 @@ export default function Platform() {
       }
     >
       {/* ── Awwwards X-Ray hover background ── */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-white">
+      <div className="absolute inset-0 pointer-events-none z-0 hidden overflow-hidden bg-white md:block">
         {/* <video
           className="absolute inset-0 h-full w-full object-cover object-center opacity-[0.8] mix-blend-multiply"
           autoPlay

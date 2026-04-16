@@ -290,8 +290,9 @@ function LeftVideoPlayerScreen() {
 function CenterPackRecommendationScreen() {
     return (
         <>
-            <div className="absolute inset-0 overflow-hidden bg-[#F8F2E8]">
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,#fbf7f1_0%,#f5ead9_100%)]" />
+            <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(135deg,#FF8080_0%,#FF9040_100%)]">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_14%,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0.06)_22%,rgba(255,255,255,0)_42%)]" />
+                <div className="absolute inset-0 bg-black/34" />
 
                 <div className="absolute left-1/2 top-0 h-[680px] w-[320px] origin-top -translate-x-1/2 scale-[0.7125] md:scale-[0.775]">
                     <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(135deg,#FF8080_0%,#FF9040_100%)] shadow-[0_8px_24px_rgba(0,0,0,0.14)]">
