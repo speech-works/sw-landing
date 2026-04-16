@@ -342,18 +342,22 @@ const moods = [
   { name: "Sad", face: <SadFace />, color: "#3B82F6", bg: "#EFF6FF" },
 ];
 
-export default function MoodCarousel() {
+export default function MoodCarousel({
+  autoRotate = true,
+}: {
+  autoRotate?: boolean;
+}) {
   const [index, setIndex] = useState(0);
   const [hasTouchInteracted, setHasTouchInteracted] = useState(false);
 
   useEffect(() => {
-    if (hasTouchInteracted) return;
+    if (!autoRotate || hasTouchInteracted) return;
 
     const timer = setInterval(() => {
       setIndex((i) => (i + 1) % moods.length);
     }, 4500);
     return () => clearInterval(timer);
-  }, [hasTouchInteracted]);
+  }, [autoRotate, hasTouchInteracted]);
 
   return (
     <div

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MobileCarouselControls from "./MobileCarouselControls";
 
 declare global {
@@ -59,6 +59,7 @@ const BriefcaseIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
 
 export default function Simulator() {
   const [activeSimulator, setActiveSimulator] = useState(1);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     window.activateSimulator = (index: number) => {
@@ -67,6 +68,118 @@ export default function Simulator() {
 
     return () => {
       window.activateSimulator = undefined;
+    };
+  }, []);
+
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return;
+
+    const hasFinePointer = window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    ).matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (!hasFinePointer || prefersReducedMotion) {
+      return;
+    }
+
+    const cleanups: Array<() => void> = [];
+    const addListener = (
+      target: EventTarget,
+      eventName: string,
+      handler: EventListenerOrEventListenerObject
+    ) => {
+      target.addEventListener(eventName, handler);
+      cleanups.push(() => target.removeEventListener(eventName, handler));
+    };
+
+    root.querySelectorAll<HTMLElement>(".magnetic-btn").forEach((button) => {
+      const handleMove = (event: Event) => {
+        const e = event as MouseEvent;
+        const rect = button.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) * 0.4;
+        const y = (e.clientY - rect.top - rect.height / 2) * 0.4;
+        button.style.transform = `translate(${x}px, ${y}px)`;
+      };
+
+      const handleLeave = () => {
+        button.style.transform = "translate(0px, 0px)";
+      };
+
+      addListener(button, "mousemove", handleMove);
+      addListener(button, "mouseleave", handleLeave);
+    });
+
+    const stage = root.querySelector<HTMLElement>("#simulator-stage");
+    if (stage) {
+      const handleStageMove = (event: Event) => {
+        const e = event as MouseEvent;
+        const rect = stage.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        stage.style.setProperty("--stage-mouse-x", `${x}px`);
+        stage.style.setProperty("--stage-mouse-y", `${y}px`);
+      };
+
+      addListener(stage, "mousemove", handleStageMove);
+    }
+
+    root.querySelectorAll<HTMLElement>(".tilt-card").forEach((card) => {
+      const handleMove = (event: Event) => {
+        const e = event as MouseEvent;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -12;
+        const rotateY = ((x - centerX) / centerX) * 12;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        card.style.setProperty("--card-mouse-x", `${x}px`);
+        card.style.setProperty("--card-mouse-y", `${y}px`);
+      };
+
+      const handleLeave = () => {
+        card.style.transform =
+          "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+      };
+
+      addListener(card, "mousemove", handleMove);
+      addListener(card, "mouseleave", handleLeave);
+    });
+
+    root
+      .querySelectorAll<HTMLElement>(".magnetic-sticker")
+      .forEach((sticker) => {
+        const handleMove = (event: Event) => {
+          const e = event as MouseEvent;
+          const rect = sticker.getBoundingClientRect();
+          const x = (e.clientX - rect.left - rect.width / 2) * 0.08;
+          const y = (e.clientY - rect.top - rect.height / 2) * 0.08;
+          const rotateX =
+            ((e.clientY - rect.top - rect.height / 2) / (rect.height / 2)) *
+            -5;
+          const rotateY =
+            ((e.clientX - rect.left - rect.width / 2) / (rect.width / 2)) * 5;
+
+          sticker.style.transform = `perspective(1000px) translate(${x}px, ${y}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        };
+
+        const handleLeave = () => {
+          sticker.style.transform =
+            "perspective(1000px) translate(0px, 0px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+        };
+
+        addListener(sticker, "mousemove", handleMove);
+        addListener(sticker, "mouseleave", handleLeave);
+      });
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
     };
   }, []);
 
@@ -85,7 +198,10 @@ export default function Simulator() {
 
   return (
     <>
-      <section className="mobile-content-auto relative z-10 bg-[#FFFAF5] overflow-hidden flex flex-col justify-start md:justify-center min-h-0 md:min-h-screen pt-8 pb-8 md:py-12">
+      <section
+        ref={sectionRef}
+        className="mobile-content-auto relative z-10 bg-[#FFFAF5] overflow-hidden flex flex-col justify-start md:justify-center min-h-0 md:min-h-screen pt-8 pb-8 md:py-12"
+      >
         {/*  EXPERIMENTAL STYLES ONLY FOR THIS SECTION  */}
         <style
           dangerouslySetInnerHTML={{

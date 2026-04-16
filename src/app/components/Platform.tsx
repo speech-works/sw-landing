@@ -6,6 +6,7 @@ import StaminaAppMockup from "./StaminaAppMockup";
 import RoadmapAppMockup from "./RoadmapAppMockup";
 import RadarUI from "./RadarUI";
 import { useIsMobileViewport } from "./useIsMobileViewport";
+import { useElementInView } from "./useElementInView";
 
 /* ─────────────────────────────────────────────
    GLOBAL KEYFRAME STYLES
@@ -429,9 +430,16 @@ export default function Platform() {
   const [mobileCarouselHeight, setMobileCarouselHeight] = useState<
     number | null
   >(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const mobileSlideRefs = useRef<Array<HTMLDivElement | null>>([]);
   const animKey = useAnimKey(activeIndex);
   const isMobileViewport = useIsMobileViewport();
+  const isSectionInView = useElementInView(sectionRef, {
+    disabled: !isMobileViewport,
+    rootMargin: "180px 0px",
+    threshold: 0.1,
+  });
+  const isMobileAnimationActive = !isMobileViewport || isSectionInView;
 
   const DURATION = 6000;
   const UPDATE_INTERVAL = 50;
@@ -550,6 +558,9 @@ export default function Platform() {
     const baseProps = {
       isSectionHovered: false,
       externalMousePos: { x: 0, y: 0 },
+      liteMode: isMobileViewport,
+      isAnimationActive: isMobileAnimationActive,
+      syncTime: !isMobileViewport,
     };
 
     const renderMobileMockupShell = (
@@ -611,6 +622,7 @@ export default function Platform() {
   return (
     <section
       id="platform"
+      ref={sectionRef}
       className="mobile-content-auto pt-8 pb-0 sm:pt-8 sm:pb-0 md:pt-32 md:pb-36 bg-white md:bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
       onMouseMove={handleMouseMove}
       style={

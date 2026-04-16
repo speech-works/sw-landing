@@ -88,7 +88,11 @@ const pricingTiers = [
 
 type PricingTier = (typeof pricingTiers)[number];
 
-export default function Pricing() {
+export default function Pricing({
+  sectionId = "pricing",
+}: {
+  sectionId?: string;
+}) {
   const [activeCard, setActiveCard] = useState(1);
   const [mobileCard, setMobileCard] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -344,7 +348,7 @@ export default function Pricing() {
   return (
     <>
       <section
-        id="pricing"
+        id={sectionId}
         className="mobile-content-auto pt-8 pb-8 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden"
       >
         <style

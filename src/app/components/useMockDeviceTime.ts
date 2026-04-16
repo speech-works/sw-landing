@@ -10,17 +10,34 @@ function formatDeviceTime(date: Date) {
   });
 }
 
-export function useMockDeviceTime(fallback = "09:41") {
-  const [mounted, setMounted] = useState(false);
-  const [time, setTime] = useState(() => new Date());
+type UseMockDeviceTimeOptions = {
+  enabled?: boolean;
+  syncIntervalMs?: number;
+};
+
+export function useMockDeviceTime(
+  fallback = "09:41",
+  { enabled = true, syncIntervalMs = 10000 }: UseMockDeviceTimeOptions = {}
+) {
+  const [timeLabel, setTimeLabel] = useState(fallback);
 
   useEffect(() => {
-    setMounted(true);
-    const syncTime = () => setTime(new Date());
-    syncTime();
-    const timer = setInterval(syncTime, 10000);
-    return () => clearInterval(timer);
-  }, []);
+    if (!enabled) {
+      setTimeLabel(fallback);
+      return;
+    }
 
-  return mounted ? formatDeviceTime(time) : fallback;
+    const setTime = (date: Date) => {
+      setTimeLabel(formatDeviceTime(date));
+    };
+
+    setTime(new Date());
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, syncIntervalMs);
+
+    return () => clearInterval(timer);
+  }, [enabled, fallback, syncIntervalMs]);
+
+  return timeLabel;
 }

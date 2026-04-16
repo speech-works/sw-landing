@@ -126,15 +126,26 @@ function FeatureBubbles({ isHovered, tiltTransform }: { isHovered: boolean, tilt
 // ──────────────────────────────────────────────────────────────────────────
 // ADVERSARIAL CHAT INTERNAL UI
 // ──────────────────────────────────────────────────────────────────────────
-function AdversarialChatUI({ animKey }: { animKey: number }) {
+function AdversarialChatUI({
+    animKey,
+    animateSequence = true,
+}: {
+    animKey: number;
+    animateSequence?: boolean;
+}) {
   const [phase, setPhase] = useState<"waiter" | "thinking" | "suggestion">("waiter");
 
   useEffect(() => {
+    if (!animateSequence) {
+      setPhase("suggestion");
+      return;
+    }
+
     setPhase("waiter");
     const t1 = setTimeout(() => setPhase("thinking"),    700);
     const t2 = setTimeout(() => setPhase("suggestion"), 2400);
     return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, [animKey]);
+  }, [animKey, animateSequence]);
 
   const aiAvatar = (full?: boolean) => (
     <div
@@ -221,18 +232,24 @@ function AdversarialChatUI({ animKey }: { animKey: number }) {
 // ──────────────────────────────────────────────────────────────────────────
 // INTERNAL CARD STACK COMPONENT
 // ──────────────────────────────────────────────────────────────────────────
-function CardStack({ isSectionHovered }: { isSectionHovered: boolean }) {
+function CardStack({
+    isSectionHovered,
+    autoRotate = true,
+}: {
+    isSectionHovered: boolean;
+    autoRotate?: boolean;
+}) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [hasTouchInteracted, setHasTouchInteracted] = useState(false);
 
     useEffect(() => {
-        if (hasTouchInteracted) return;
+        if (!autoRotate || hasTouchInteracted) return;
 
         const interval = setInterval(() => {
             setActiveIndex((current) => (current + 1) % 3);
         }, 3200);
         return () => clearInterval(interval);
-    }, [hasTouchInteracted]);
+    }, [autoRotate, hasTouchInteracted]);
 
     const cards = [
         {
@@ -314,13 +331,20 @@ export default function AdversarialAppMockup({
     isSectionHovered = false,
     externalMousePos = { x: 0, y: 0 },
     softDeviceShadow = false,
+    liteMode = false,
+    isAnimationActive = true,
+    syncTime = true,
 }: { 
     animKey: number,
     isSectionHovered?: boolean,
     externalMousePos?: { x: number, y: number },
     softDeviceShadow?: boolean,
+    liteMode?: boolean,
+    isAnimationActive?: boolean,
+    syncTime?: boolean,
 }) {
-    const timeStr = useMockDeviceTime("09:41");
+    const timeStr = useMockDeviceTime("09:41", { enabled: syncTime });
+    const shouldAnimate = isAnimationActive && !liteMode;
 
     // OPPOSITE TILT
     const rotateX = (18 - (externalMousePos.y * 11)); 
@@ -405,20 +429,26 @@ export default function AdversarialAppMockup({
                         </div>
 
                         {/* Dynamic Island */}
-                        <div className="absolute top-[10px] left-1/2 -translate-x-1/2 w-[84px] h-[25px] bg-black rounded-[14px] flex items-center justify-center overflow-hidden">
-                             <div className="absolute inset-0 bg-red-500/10 animate-pulse-island" />
+                    <div className="absolute top-[10px] left-1/2 -translate-x-1/2 w-[84px] h-[25px] bg-black rounded-[14px] flex items-center justify-center overflow-hidden">
+                             <div className={`absolute inset-0 bg-red-500/10 ${shouldAnimate ? "animate-pulse-island" : ""}`} />
                              <div className="flex items-center gap-[2px] opacity-40">
                                  {[1,0.6,1.2,0.8].map((h, i) => (
-                                     <div key={i} className={`w-[2px] bg-red-400 rounded-full animate-island-wave`} style={{ height: `${h * 4}px`, animationDelay: `${i * 0.1}s` }} />
+                                     <div key={i} className={`w-[2px] bg-red-400 rounded-full ${shouldAnimate ? "animate-island-wave" : ""}`} style={{ height: `${h * 4}px`, animationDelay: `${i * 0.1}s` }} />
                                  ))}
                              </div>
                         </div>
                     </div>
 
-                    <AdversarialChatUI animKey={animKey} />
+                    <AdversarialChatUI
+                      animKey={animKey}
+                      animateSequence={shouldAnimate}
+                    />
 
                     {/* ── INTERNAL CARD STACK ── */}
-                    <CardStack isSectionHovered={isSectionHovered} />
+                    <CardStack
+                      isSectionHovered={isSectionHovered}
+                      autoRotate={shouldAnimate}
+                    />
 
                     {/* Laser Sweep */}
                     <div 
@@ -432,7 +462,12 @@ export default function AdversarialAppMockup({
             </div>
 
             {/* ── FEATURE BUBBLES (STABILIZED) ── */}
-            <FeatureBubbles isHovered={isSectionHovered} tiltTransform={tiltTransform} />
+            {!liteMode && (
+              <FeatureBubbles
+                isHovered={isSectionHovered}
+                tiltTransform={tiltTransform}
+              />
+            )}
 
             <style>{`
                 @keyframes pulse-island {

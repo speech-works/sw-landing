@@ -209,15 +209,22 @@ const cards = [
 // -------------------------------------------------------
 // MAIN COMPONENT
 // -------------------------------------------------------
-export default function CognitiveAppMockup() {
+export default function CognitiveAppMockup({
+  animateContent = true,
+  syncTime = true,
+}: {
+  animateContent?: boolean;
+  syncTime?: boolean;
+}) {
   const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     setMounted(true);
+    if (!syncTime) return;
     const t = setInterval(() => setTime(new Date()), 10000);
     return () => clearInterval(t);
-  }, []);
+  }, [syncTime]);
 
   const fmt = (d: Date) => {
     const hours = d.getHours().toString().padStart(2, "0");
@@ -226,7 +233,12 @@ export default function CognitiveAppMockup() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col font-sans select-none overflow-hidden relative" style={{ background: "linear-gradient(180deg, #FAF5FF 0%, #FFF 40%, #FFF 100%)" }}>
+    <div
+      className={`w-full h-full flex flex-col font-sans select-none overflow-hidden relative ${
+        animateContent ? "" : "cognitive-static"
+      }`}
+      style={{ background: "linear-gradient(180deg, #FAF5FF 0%, #FFF 40%, #FFF 100%)" }}
+    >
 
       {/* ── Status Bar ── */}
       <div
@@ -279,7 +291,13 @@ export default function CognitiveAppMockup() {
       {/* ── Scrollable Content ── */}
       <div className="flex-1 overflow-hidden relative">
         <div
-          className={`absolute left-0 right-0 flex flex-col ${mounted ? "animate-cognitive-pan" : "opacity-0"}`}
+          className={`absolute left-0 right-0 flex flex-col ${
+            mounted
+              ? animateContent
+                ? "animate-cognitive-pan"
+                : "opacity-100"
+              : "opacity-0"
+          }`}
           style={{ top: 54 + 52 + 12, padding: "0 14px", gap: 10 }}
         >
           {/* Subtitle */}
@@ -467,6 +485,10 @@ export default function CognitiveAppMockup() {
           to   { transform: rotate(360deg); }
         }
         .animate-rew-spiral { animation: rew-spiral 3s linear infinite; }
+
+        .cognitive-static [class*="animate-"] {
+          animation: none !important;
+        }
       `}</style>
     </div>
   );

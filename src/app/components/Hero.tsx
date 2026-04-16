@@ -128,10 +128,10 @@ const HERO_PHONE_COPY: Record<
 };
 
 export default function Hero() {
-  const timeStr = useMockDeviceTime("09:41");
   const [activePhone, setActivePhone] = useState<HeroPhoneId>("center");
   const [hoveredPhone, setHoveredPhone] = useState<HeroPhoneId | null>(null);
   const isMobileViewport = useIsMobileViewport();
+  const timeStr = useMockDeviceTime("09:41", { enabled: !isMobileViewport });
   const activeHeroPhone = HERO_PHONE_COPY[activePhone];
   const activePhoneIndex = Math.max(0, HERO_PHONE_IDS.indexOf(activePhone));
   const visibleHeroPhoneIds = isMobileViewport ? [activePhone] : HERO_PHONE_IDS;
@@ -451,7 +451,13 @@ export default function Hero() {
 
                             {phoneId === "center" && (
                               <div className="h-full overflow-hidden bg-[#f9fafb]">
-                                <LiveAppMockup disableVerticalPan compact hideStatusBar />
+                                <LiveAppMockup
+                                  disableVerticalPan
+                                  compact
+                                  hideStatusBar
+                                  isAnimationActive={!isMobileViewport}
+                                  syncTime={!isMobileViewport}
+                                />
                               </div>
                             )}
 

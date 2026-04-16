@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from "next/dynamic";
 import React, {useEffect} from 'react';
 import Navbar from './components/Navbar';
 import AmbientBackgrounds from './components/AmbientBackgrounds';
@@ -7,12 +8,45 @@ import Hero from './components/Hero';
 import MarqueeDivider from './components/MarqueeDivider';
 import Roadmap from './components/Roadmap';
 import Platform from './components/Platform';
-import Simulator from './components/Simulator';
-import Team from './components/Team';
-import CTA from './components/CTA';
-import Footer from './components/Footer';
-import Pricing from './components/Pricing';
-import LaunchUpdates from './components/LaunchUpdates';
+import MobileDeferredSection from "./components/MobileDeferredSection";
+
+const SimulatorSection = dynamic(() => import("./components/Simulator"), {
+  loading: () => (
+    <div aria-hidden="true" className="mobile-content-auto min-h-[860px]" />
+  ),
+});
+const TeamSection = dynamic<{ sectionId?: string }>(
+  () => import("./components/Team"),
+  {
+    loading: () => (
+      <div aria-hidden="true" className="mobile-content-auto min-h-[1120px]" />
+    ),
+  }
+);
+const PricingSection = dynamic<{ sectionId?: string }>(
+  () => import("./components/Pricing"),
+  {
+    loading: () => (
+      <div aria-hidden="true" className="mobile-content-auto min-h-[980px]" />
+    ),
+  }
+);
+const CTASection = dynamic<{ sectionId?: string }>(() => import("./components/CTA"), {
+  loading: () => (
+    <div aria-hidden="true" className="mobile-content-auto min-h-[760px]" />
+  ),
+});
+const LaunchUpdatesSection = dynamic(
+  () => import("./components/LaunchUpdates"),
+  {
+    loading: () => <div aria-hidden="true" className="h-0" />,
+  }
+);
+const FooterSection = dynamic(() => import("./components/Footer"), {
+  loading: () => (
+    <div aria-hidden="true" className="mobile-content-auto min-h-[640px]" />
+  ),
+});
 
 declare global {
   interface Window {
@@ -195,32 +229,60 @@ export default function Home() {
     }
 
     // Scroll Reveal Animation
-    const revealElements = document.querySelectorAll(".reveal");
-    if (prefersReducedMotion) {
-      revealElements.forEach((element) => element.classList.add("active"));
-    } else {
-      const observer = new IntersectionObserver(
-        (entries, revealObserver) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("active");
-              revealObserver.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          root: null,
-          rootMargin: "0px",
-          threshold: 0.15,
-        }
-      );
+    const observedRevealElements = new Set<Element>();
+    const revealObserver = prefersReducedMotion
+      ? null
+      : new IntersectionObserver(
+          (entries, activeRevealObserver) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+                activeRevealObserver.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.15,
+          }
+        );
 
-      revealElements.forEach((element) => {
-        observer.observe(element);
+    const registerRevealElement = (element: Element) => {
+      if (observedRevealElements.has(element)) return;
+      observedRevealElements.add(element);
+
+      if (prefersReducedMotion) {
+        element.classList.add("active");
+        return;
+      }
+
+      revealObserver?.observe(element);
+    };
+
+    document.querySelectorAll(".reveal").forEach(registerRevealElement);
+
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (!(node instanceof Element)) return;
+
+          if (node.classList.contains("reveal")) {
+            registerRevealElement(node);
+          }
+
+          node.querySelectorAll(".reveal").forEach(registerRevealElement);
+        });
       });
+    });
 
-      cleanups.push(() => observer.disconnect());
-    }
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    cleanups.push(() => mutationObserver.disconnect());
+    cleanups.push(() => revealObserver?.disconnect());
 
     // Interactive Roadmap Logic
     function switchRoadmap(phase: number) {
@@ -291,12 +353,33 @@ export default function Home() {
       <MarqueeDivider />
       <Roadmap />
       <Platform />
-      <Simulator />
-      <Team />
-      <Pricing />
-      <CTA />
-      <LaunchUpdates />
-      <Footer />
+      <MobileDeferredSection placeholderClassName="mobile-content-auto min-h-[860px]">
+        <SimulatorSection />
+      </MobileDeferredSection>
+      <MobileDeferredSection
+        wrapperId="team"
+        placeholderClassName="mobile-content-auto min-h-[1120px]"
+      >
+        <TeamSection sectionId={undefined} />
+      </MobileDeferredSection>
+      <MobileDeferredSection
+        wrapperId="pricing"
+        placeholderClassName="mobile-content-auto min-h-[980px]"
+      >
+        <PricingSection sectionId={undefined} />
+      </MobileDeferredSection>
+      <MobileDeferredSection
+        wrapperId="download"
+        placeholderClassName="mobile-content-auto min-h-[760px]"
+      >
+        <CTASection sectionId={undefined} />
+      </MobileDeferredSection>
+      <MobileDeferredSection placeholderClassName="h-0">
+        <LaunchUpdatesSection />
+      </MobileDeferredSection>
+      <MobileDeferredSection placeholderClassName="mobile-content-auto min-h-[640px]">
+        <FooterSection />
+      </MobileDeferredSection>
     </main>
   );
 }

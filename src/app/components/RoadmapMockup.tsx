@@ -9,12 +9,16 @@ interface RoadmapMockupProps {
   status: "live" | "building" | "future";
   comingSoon?: boolean;
   isBlank?: boolean;
+  animateContent?: boolean;
+  syncTime?: boolean;
 }
 
 export default function RoadmapMockup({
   phase,
   comingSoon = false,
   isBlank,
+  animateContent = true,
+  syncTime = true,
 }: RoadmapMockupProps) {
   const themes = {
     1: { from: "from-[#F97316]", to: "to-[#EA580C]", accent: "#F97316" },
@@ -64,11 +68,20 @@ export default function RoadmapMockup({
                 </div>
               </div>
             ) : phase === 1 ? (
-              <ExploreAppMockup />
+              <ExploreAppMockup
+                animateContent={animateContent}
+                syncTime={syncTime}
+              />
             ) : phase === 2 ? (
-              <CognitiveAppMockup />
+              <CognitiveAppMockup
+                animateContent={animateContent}
+                syncTime={syncTime}
+              />
             ) : phase === 3 ? (
-              <BreathingAppMockup showSheet={!comingSoon} />
+              <BreathingAppMockup
+                showSheet={!comingSoon}
+                animateContent={animateContent}
+              />
             ) : (
               /* Placeholder for Phase 2/3 */
               <div className="absolute inset-0 flex flex-col pt-16 px-4 bg-[#f9fafb]">

@@ -309,10 +309,14 @@ export default function LiveAppMockup({
   disableVerticalPan = false,
   compact = false,
   hideStatusBar = false,
+  isAnimationActive = true,
+  syncTime = true,
 }: {
   disableVerticalPan?: boolean;
   compact?: boolean;
   hideStatusBar?: boolean;
+  isAnimationActive?: boolean;
+  syncTime?: boolean;
 }) {
   const [mounted, setMounted] = useState(false);
   const [hasCarouselTouchInteracted, setHasCarouselTouchInteracted] =
@@ -321,9 +325,10 @@ export default function LiveAppMockup({
 
   useEffect(() => {
     setMounted(true);
+    if (!syncTime) return;
     const timer = setInterval(() => setTime(new Date()), 10000);
     return () => clearInterval(timer);
-  }, []);
+  }, [syncTime]);
 
   const formatTime = (d: Date) => {
     const hours = d.getHours().toString().padStart(2, "0");
@@ -348,7 +353,9 @@ export default function LiveAppMockup({
             compact ? "pt-7 pb-2 px-5 text-[11px]" : "pt-6 pb-3 px-6 text-[12px]"
           }`}
         >
-          <span className="font-bold tracking-tight">{mounted ? formatTime(time) : "09:41"}</span>
+          <span className="font-bold tracking-tight">
+            {mounted ? formatTime(time) : "09:41"}
+          </span>
           <div className={`flex items-center ${compact ? "gap-1" : "gap-1.5"}`}>
             <svg
               className={compact ? "w-[15px] h-[9px]" : "w-[17px] h-[10px]"}
@@ -394,7 +401,11 @@ export default function LiveAppMockup({
       <div className={`flex-1 overflow-hidden relative ${compact ? (hideStatusBar ? "pt-[4.7rem]" : "pt-[4.5rem]") : "pt-20"} mask-fade-edges rounded-b-[inherit] isolate z-0`}>
         {/* Animated Scroll Wrapper - Increased offset for spacious top UI */}
         <div
-          className={`w-full flex flex-col absolute inset-0 ${compact ? "gap-2.5 px-2.5" : "gap-3 px-3"} ${mounted && !disableVerticalPan ? "animate-app-pan" : ""}`}
+          className={`w-full flex flex-col absolute inset-0 ${compact ? "gap-2.5 px-2.5" : "gap-3 px-3"} ${
+            mounted && !disableVerticalPan && isAnimationActive
+              ? "animate-app-pan"
+              : ""
+          }`}
           style={{
             top: compact ? (hideStatusBar ? 44 : 44) : 52,
             transform: compact ? "scale(0.92)" : undefined,
@@ -419,7 +430,7 @@ export default function LiveAppMockup({
           >
             <div
               className={`flex gap-3 w-full h-full ${
-                mounted && !hasCarouselTouchInteracted
+                mounted && isAnimationActive && !hasCarouselTouchInteracted
                   ? "animate-carousel-peek"
                   : ""
               }`}

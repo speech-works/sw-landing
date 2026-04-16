@@ -221,8 +221,12 @@ const Achievements = () => (
 // MAIN COMPONENT
 // -------------------------------------------------------
 
-export default function ProgressReportUI() {
-    return (
+export default function ProgressReportUI({
+  animateScroll = true,
+}: {
+  animateScroll?: boolean;
+}) {
+  return (
         <div className="flex-1 w-full bg-[#FCF9F7] flex flex-col overflow-hidden relative">
 
             {/* Translucent Header - Pinned to absolute top edge */}
@@ -239,7 +243,11 @@ export default function ProgressReportUI() {
                 {/* Scroll Margin (Sticks cards close to header) */}
                 <div className="h-[86px] shrink-0" />
 
-                <div className="flex flex-col gap-[16px] pb-40 animate-yoyo-scroll pt-2">
+                <div
+                  className={`flex flex-col gap-[16px] pb-40 pt-2 ${
+                    animateScroll ? "animate-yoyo-scroll" : ""
+                  }`}
+                >
                     <DetailedWeeklySummary />
                     <DPSummary />
                     <Achievements />

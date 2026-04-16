@@ -2,6 +2,7 @@ import { withBasePath } from "@/app/lib/withBasePath";
 import { useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
 import { useIsMobileViewport } from "./useIsMobileViewport";
+import { useElementInView } from "./useElementInView";
 
 function RoadmapMobileChevron({
   direction,
@@ -80,6 +81,12 @@ export default function Roadmap() {
   );
   const sectionRef = useRef<HTMLElement>(null);
   const isMobileViewport = useIsMobileViewport();
+  const isSectionInView = useElementInView(sectionRef, {
+    disabled: !isMobileViewport,
+    rootMargin: "180px 0px",
+    threshold: 0.1,
+  });
+  const animateMobileMockups = !isMobileViewport && isSectionInView;
   const visibleMobilePhases = isMobileViewport
     ? [ROADMAP_PHASES[activePhase - 1]]
     : ROADMAP_PHASES;
@@ -281,6 +288,8 @@ export default function Roadmap() {
                                               ? "building"
                                               : "future"
                                           }
+                                          animateContent={animateMobileMockups}
+                                          syncTime={!isMobileViewport}
                                         />
                                       </div>
                                     </button>
@@ -301,6 +310,8 @@ export default function Roadmap() {
                                     phase.id === 2 ? "building" : "future"
                                   }
                                   comingSoon={phase.comingSoon}
+                                  animateContent={animateMobileMockups}
+                                  syncTime={!isMobileViewport}
                                 />
                               </div>
                             </div>

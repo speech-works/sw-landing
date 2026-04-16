@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useIsMobileViewport } from "./useIsMobileViewport";
 
 interface InviteOnlyModalProps {
   isOpen: boolean;
@@ -50,6 +51,7 @@ export default function InviteOnlyModal({
   onClose,
   variant = "default",
 }: InviteOnlyModalProps) {
+  const isMobileViewport = useIsMobileViewport();
   const [isRendered, setIsRendered] = useState(false);
   const [step, setStep] = useState<InviteStep>("pitch");
   const [form, setForm] = useState<InviteFormState>(INITIAL_FORM);
@@ -105,13 +107,27 @@ export default function InviteOnlyModal({
       };
     } else {
       document.body.style.overflow = "";
+      if (isMobileViewport) {
+        setIsRendered(false);
+        if (modalRef.current) {
+          modalRef.current.style.transform = "";
+        }
+        return;
+      }
       const timeout = window.setTimeout(() => setIsRendered(false), 240);
       return () => window.clearTimeout(timeout);
     }
-  }, [isOpen]);
+  }, [isMobileViewport, isOpen]);
 
   useEffect(() => {
+    const modalNode = modalRef.current;
     if (!isOpen) return;
+    if (isMobileViewport) {
+      if (modalNode) {
+        modalNode.style.transform = "none";
+      }
+      return;
+    }
 
     const tension = 0.09;
     const friction = 0.78;
@@ -151,11 +167,14 @@ export default function InviteOnlyModal({
 
     return () => {
       if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
+      if (modalNode) {
+        modalNode.style.transform = "";
+      }
     };
-  }, [isOpen]);
+  }, [isMobileViewport, isOpen]);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (!modalRef.current) return;
+    if (!modalRef.current || isMobileViewport) return;
 
     const rect = modalRef.current.getBoundingClientRect();
     const offsetX = event.clientX - rect.left;
@@ -171,6 +190,7 @@ export default function InviteOnlyModal({
   };
 
   const handleMouseLeave = () => {
+    if (isMobileViewport) return;
     targets.current.x = 0;
     targets.current.y = 0;
     targets.current.rotateX = 0;
@@ -182,10 +202,10 @@ export default function InviteOnlyModal({
     if (!isOpen || step !== "details") return;
     const timeout = window.setTimeout(
       () => firstInputRef.current?.focus(),
-      220
+      isMobileViewport ? 0 : 220
     );
     return () => window.clearTimeout(timeout);
-  }, [isOpen, step]);
+  }, [isMobileViewport, isOpen, step]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -279,10 +299,18 @@ export default function InviteOnlyModal({
   const ctaLabel = isPremiumVariant
     ? "See if I qualify"
     : "Claim a premium spot";
+  const getFadeUpStyle = (delay = 0) =>
+    isMobileViewport
+      ? undefined
+      : {
+          animation: `invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) ${delay}ms both`,
+        };
 
   return (
     <div
-      className={`fixed inset-0 z-[120] flex items-center justify-center overflow-hidden p-3 sm:p-6 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[120] flex items-center justify-center overflow-hidden p-3 sm:p-6 ${
+        isMobileViewport ? "" : "transition-opacity duration-300 "
+      }${
         isOpen ? "opacity-100" : "opacity-0"
       }`}
       role="dialog"
@@ -298,10 +326,12 @@ export default function InviteOnlyModal({
         ref={modalRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`relative w-full max-w-[480px] max-h-[calc(100dvh-1.25rem)] overflow-hidden rounded-[1.7rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] transition-opacity duration-500 sm:max-w-[540px] sm:max-h-[min(820px,calc(100dvh-3rem))] sm:overflow-x-hidden sm:overflow-y-auto sm:overscroll-contain sm:rounded-[2rem] ${
+        className={`relative w-full max-w-[480px] max-h-[calc(100dvh-1.25rem)] overflow-hidden rounded-[1.7rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] ${
+          isMobileViewport ? "" : "transition-opacity duration-500 "
+        }sm:max-w-[540px] sm:max-h-[min(820px,calc(100dvh-3rem))] sm:overflow-x-hidden sm:overflow-y-auto sm:overscroll-contain sm:rounded-[2rem] ${
           isOpen ? "opacity-100" : "opacity-0"
         }`}
-        style={{ willChange: "transform" }}
+        style={{ willChange: isMobileViewport ? "auto" : "transform" }}
       >
         <style>{`
           @keyframes invite-fade-up {
@@ -320,7 +350,11 @@ export default function InviteOnlyModal({
 
         <button
           onClick={onClose}
-          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-all duration-300 hover:scale-110 hover:rotate-90 hover:border-[#ffb28a]/25 hover:bg-white/10 hover:text-white sm:right-4 sm:top-4 sm:h-10 sm:w-10"
+          className={`absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 ${
+            isMobileViewport
+              ? ""
+              : "transition-all duration-300 hover:scale-110 hover:rotate-90 hover:border-[#ffb28a]/25 hover:bg-white/10 hover:text-white "
+          }sm:right-4 sm:top-4 sm:h-10 sm:w-10`}
           aria-label="Close invite modal"
         >
           <svg
@@ -362,13 +396,14 @@ export default function InviteOnlyModal({
               <>
                 <div
                   className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-[#ffb28a]/25 bg-[#ffb28a]/10 px-3 py-1.5 text-[8.5px] font-black uppercase tracking-[0.16em] text-[#ffd6bf] sm:mb-3 sm:text-[9px]"
-                  style={{
-                    animation:
-                      "invite-fade-up 460ms cubic-bezier(0.22,1,0.36,1) both",
-                  }}
+                  style={getFadeUpStyle()}
                 >
                   <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff8b55] opacity-75" />
+                    <span
+                      className={`absolute inline-flex h-full w-full rounded-full bg-[#ff8b55] opacity-75 ${
+                        isMobileViewport ? "" : "animate-ping"
+                      }`}
+                    />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-[#ff8b55]" />
                   </span>
                   {badgeCopy}
@@ -377,30 +412,21 @@ export default function InviteOnlyModal({
                 <h2
                   id="invite-only-title"
                   className="max-w-[10ch] text-[1.72rem] font-black leading-[0.92] tracking-[-0.055em] text-white sm:text-[1.9rem] md:text-[2.4rem]"
-                  style={{
-                    animation:
-                      "invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) 60ms both",
-                  }}
+                  style={getFadeUpStyle(60)}
                 >
                   {titleCopy}
                 </h2>
 
                 <p
                   className="mt-2.5 max-w-[38ch] text-[13px] leading-[1.72] text-white/72 sm:mt-3 sm:text-[14px] sm:leading-6 md:text-[15px]"
-                  style={{
-                    animation:
-                      "invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) 120ms both",
-                  }}
+                  style={getFadeUpStyle(120)}
                 >
                   {bodyCopy}
                 </p>
 
                 <div
                   className="mt-4 rounded-[1.05rem] border border-[#ffb28a]/12 bg-[#ffb28a]/6 px-3.5 py-3 sm:mt-5 sm:rounded-[1.15rem] sm:px-4"
-                  style={{
-                    animation:
-                      "invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) 220ms both",
-                  }}
+                  style={getFadeUpStyle(220)}
                 >
                   <div className="text-[10px] font-black uppercase tracking-[0.18em] text-[#ffb28a]">
                     {reasonTitle}
@@ -412,15 +438,16 @@ export default function InviteOnlyModal({
 
                 <div
                   className="mt-4 sm:mt-5"
-                  style={{
-                    animation:
-                      "invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) 320ms both",
-                  }}
+                  style={getFadeUpStyle(320)}
                 >
                   <button
                     type="button"
                     onClick={() => setStep("details")}
-                    className="inline-flex min-h-[50px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[10.5px] font-black uppercase tracking-[0.16em] text-white transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 sm:min-h-[54px] sm:text-[11px]"
+                    className={`inline-flex min-h-[50px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[10.5px] font-black uppercase tracking-[0.16em] text-white ${
+                      isMobileViewport
+                        ? ""
+                        : "transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 "
+                    }sm:min-h-[54px] sm:text-[11px]`}
                   >
                     {ctaLabel}
                   </button>
@@ -444,7 +471,11 @@ export default function InviteOnlyModal({
                   <button
                     type="button"
                     onClick={() => setStep("pitch")}
-                    className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.12em] text-white/70 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:text-white sm:px-3 sm:py-2 sm:text-[10px]"
+                    className={`rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.12em] text-white/70 ${
+                      isMobileViewport
+                        ? ""
+                        : "transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:text-white "
+                    }sm:px-3 sm:py-2 sm:text-[10px]`}
                   >
                     Back
                   </button>
@@ -545,7 +576,11 @@ export default function InviteOnlyModal({
                   <button
                     type="button"
                     onClick={openDraftedEmail}
-                    className="inline-flex min-h-[46px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] text-white transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 sm:min-h-[54px] sm:px-6 sm:py-3 sm:text-[11px] sm:tracking-[0.16em]"
+                    className={`inline-flex min-h-[46px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] text-white ${
+                      isMobileViewport
+                        ? ""
+                        : "transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 "
+                    }sm:min-h-[54px] sm:px-6 sm:py-3 sm:text-[11px] sm:tracking-[0.16em]`}
                   >
                     Be a rebel
                   </button>

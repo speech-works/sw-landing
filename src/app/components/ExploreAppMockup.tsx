@@ -198,15 +198,22 @@ const JumpInCard = ({ subtitle, title, badge, from, to, shadow, face }: JumpInCa
 // -------------------------------------------------------
 // MAIN COMPONENT
 // -------------------------------------------------------
-export default function ExploreAppMockup() {
+export default function ExploreAppMockup({
+  animateContent = true,
+  syncTime = true,
+}: {
+  animateContent?: boolean;
+  syncTime?: boolean;
+}) {
   const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     setMounted(true);
+    if (!syncTime) return;
     const timer = setInterval(() => setTime(new Date()), 10000);
     return () => clearInterval(timer);
-  }, []);
+  }, [syncTime]);
 
   const fmt = (d: Date) => {
     const hours = d.getHours().toString().padStart(2, '0');
@@ -227,7 +234,11 @@ export default function ExploreAppMockup() {
   const FIXED_TOP = STATUS_H + HEADER_H;
 
   return (
-    <div className="w-full h-full bg-[#FCF8F5] flex flex-col font-sans relative select-none overflow-hidden">
+    <div
+      className={`w-full h-full bg-[#FCF8F5] flex flex-col font-sans relative select-none overflow-hidden ${
+        animateContent ? "" : "explore-static"
+      }`}
+    >
 
       {/* ── Fixed Status Bar ─────────────────────────────── */}
       <div
@@ -285,7 +296,13 @@ export default function ExploreAppMockup() {
       {/* ── Scrollable Content (pans under the fixed header) */}
       <div className="flex-1 overflow-hidden relative">
         <div
-          className={`absolute left-0 right-0 flex flex-col ${mounted ? "animate-app-pan" : "opacity-0"}`}
+          className={`absolute left-0 right-0 flex flex-col ${
+            mounted
+              ? animateContent
+                ? "animate-app-pan"
+                : "opacity-100"
+              : "opacity-0"
+          }`}
           style={{ top: FIXED_TOP + 16, gap: 16, padding: "0 16px" }}
         >
 
@@ -418,6 +435,10 @@ export default function ExploreAppMockup() {
         }
         .animate-warrior-knot-upper { animation: warrior-knot-upper 1.2s ease-in-out infinite; }
         .animate-warrior-knot-lower { animation: warrior-knot-lower 1.2s ease-in-out infinite; }
+
+        .explore-static [class*="animate-"] {
+          animation: none !important;
+        }
       `}</style>
     </div>
   );

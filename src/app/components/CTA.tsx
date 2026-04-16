@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import InviteOnlyModal from "./InviteOnlyModal";
 
-export default function CTA() {
+export default function CTA({
+  sectionId = "download",
+}: {
+  sectionId?: string;
+}) {
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
 
   return (
     <>
       <section
-        id="download"
+        id={sectionId}
         className="mobile-content-auto py-8 md:py-32 relative z-10 bg-white group/cta"
       >
         <div className="absolute inset-0 bg-brand-50/50 z-0 pointer-events-none"></div>

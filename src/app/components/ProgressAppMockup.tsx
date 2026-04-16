@@ -21,11 +21,11 @@ const SignalIcon = ({ color = "#1E293B" }) => (
 // AMBIENT PARTICLES
 // -------------------------------------------------------
 
-const AmbientParticles = () => {
+const AmbientParticles = ({ enabled = true }: { enabled?: boolean }) => {
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
 
-    if (!mounted) return null;
+    if (!enabled || !mounted) return null;
 
     return (
         <div className="absolute inset-0 pointer-events-none overflow-visible">
@@ -55,14 +55,21 @@ export default function ProgressAppMockup({
     isSectionHovered = false,
     externalMousePos = { x: 0, y: 0 },
     softDeviceShadow = false,
+    liteMode = false,
+    isAnimationActive = true,
+    syncTime = true,
 }: { 
     radarChart?: React.ReactNode,
     isSectionHovered?: boolean,
     externalMousePos?: { x: number, y: number },
     softDeviceShadow?: boolean,
+    liteMode?: boolean,
+    isAnimationActive?: boolean,
+    syncTime?: boolean,
 }) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const timeStr = useMockDeviceTime("23:05");
+    const timeStr = useMockDeviceTime("23:05", { enabled: syncTime });
+    const shouldAnimate = isAnimationActive && !liteMode;
 
     // COMBINE LOCAL TILT WITH GLOBAL STAGE TILT
     // We use externalMousePos which is stable (-1 to 1)
@@ -81,8 +88,8 @@ export default function ProgressAppMockup({
                 className="absolute inset-0 pointer-events-none transition-transform duration-1000 ease-out"
                 style={{ transform: `translateX(${externalMousePos.x * 30}px) translateY(${externalMousePos.y * 30}px) translateZ(-100px)` }}
             >
-                <div className="absolute top-1/4 left-1/4 w-[250px] h-[250px] rounded-full bg-brand/5 blur-[100px] animate-pulse" />
-                <div className="absolute bottom-1/4 right-1/4 w-[200px] h-[200px] rounded-full bg-purple-500/5 blur-[80px] animate-pulse" style={{ animationDelay: '1s' }} />
+                <div className={`absolute top-1/4 left-1/4 w-[250px] h-[250px] rounded-full bg-brand/5 blur-[100px] ${shouldAnimate ? "animate-pulse" : ""}`} />
+                <div className={`absolute bottom-1/4 right-1/4 w-[200px] h-[200px] rounded-full bg-purple-500/5 blur-[80px] ${shouldAnimate ? "animate-pulse" : ""}`} style={{ animationDelay: '1s' }} />
             </div>
 
             {/* 3D Wrapper */}
@@ -93,7 +100,7 @@ export default function ProgressAppMockup({
                     transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${isSectionHovered ? 1.05 : 0.95})`
                 }}
             >
-                <AmbientParticles />
+                <AmbientParticles enabled={shouldAnimate} />
                 
                 {/* ── UNIFIED HI-FI CHASSIS (Space Black Titanium) ── */}
                 {/* 1. Main Hardware Body (Unified Material) */}
@@ -155,7 +162,7 @@ export default function ProgressAppMockup({
                     />
 
                     {/* App Content */}
-                    <ProgressReportUI />
+                    <ProgressReportUI animateScroll={shouldAnimate} />
 
                     {/* Status Bar & Dynamic Island (Pinned) */}
                     <div className="absolute top-0 inset-x-0 h-14 pointer-events-none z-[160]">
@@ -170,10 +177,10 @@ export default function ProgressAppMockup({
                         </div>
 
                         <div className="absolute top-[10px] left-1/2 -translate-x-1/2 w-[84px] h-[25px] bg-black rounded-[14px] flex items-center justify-center overflow-hidden">
-                             <div className="absolute inset-0 bg-blue-500/10 animate-pulse-island" />
+                             <div className={`absolute inset-0 bg-blue-500/10 ${shouldAnimate ? "animate-pulse-island" : ""}`} />
                              <div className="flex items-center gap-[2px] opacity-40">
                                  {[1,0.6,1.2,0.8].map((h, i) => (
-                                     <div key={i} className="w-[2px] bg-blue-400 rounded-full animate-island-wave" style={{ height: `${h * 4}px`, animationDelay: `${i * 0.1}s` }} />
+                                     <div key={i} className={`w-[2px] bg-blue-400 rounded-full ${shouldAnimate ? "animate-island-wave" : ""}`} style={{ height: `${h * 4}px`, animationDelay: `${i * 0.1}s` }} />
                                  ))}
                              </div>
                         </div>
@@ -192,7 +199,7 @@ export default function ProgressAppMockup({
                     }}
                 >
                     <div className="w-full h-full shadow-[0_25px_50px_rgba(0,0,0,0.15)] rounded-2xl transition-transform duration-500 group-hover/mood:scale-105">
-                        <MoodCarousel />
+                        <MoodCarousel autoRotate={shouldAnimate} />
                     </div>
                 </div>
 

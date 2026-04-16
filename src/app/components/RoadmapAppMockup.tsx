@@ -287,7 +287,11 @@ function LeftVideoPlayerScreen() {
     );
 }
 
-function CenterPackRecommendationScreen() {
+function CenterPackRecommendationScreen({
+    animateContent = true,
+}: {
+    animateContent?: boolean;
+}) {
     return (
         <>
             <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(135deg,#FF8080_0%,#FF9040_100%)]">
@@ -357,7 +361,7 @@ function CenterPackRecommendationScreen() {
                                     </div>
                                 </div>
 
-                                <div className="clinical-pack-trigger border-t border-[#F3DFC8] bg-[linear-gradient(180deg,#FFF1D9_0%,#FEE8C4_100%)] px-6 py-5">
+                                <div className={`${animateContent ? "clinical-pack-trigger" : ""} border-t border-[#F3DFC8] bg-[linear-gradient(180deg,#FFF1D9_0%,#FEE8C4_100%)] px-6 py-5`}>
                                     <div className="mx-auto flex w-fit items-center gap-2 rounded-full bg-white/55 px-5 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
                                         <PlayIcon className="h-5 w-5" />
                                         <span className="text-[16px] font-extrabold tracking-[0.5px] text-[#EA580C]">
@@ -371,7 +375,9 @@ function CenterPackRecommendationScreen() {
 
                     <div className="absolute inset-0 bg-black/34" />
 
-                    <div className="clinical-pack-sheet absolute inset-x-0 bottom-0 z-20 overflow-hidden rounded-t-[32px] bg-[linear-gradient(180deg,#FFFCF9_0%,#FFF7ED_100%)] shadow-[0_-10px_24px_rgba(0,0,0,0.22)]">
+                    <div className={`absolute inset-x-0 bottom-0 z-20 overflow-hidden rounded-t-[32px] bg-[linear-gradient(180deg,#FFFCF9_0%,#FFF7ED_100%)] shadow-[0_-10px_24px_rgba(0,0,0,0.22)] ${
+                        animateContent ? "clinical-pack-sheet" : "translate-y-0 opacity-100"
+                    }`}>
                         <div className="absolute right-[-38px] top-[-22px] opacity-25">
                             <BoltIcon
                                 color="#FFDABF"
@@ -519,7 +525,11 @@ function ReflectionLikertRow({
     );
 }
 
-function RightReflectionScreen() {
+function RightReflectionScreen({
+    animateContent = true,
+}: {
+    animateContent?: boolean;
+}) {
     return (
         <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(180deg,#A7644D_0%,#B56E52_42%,#C47A58_100%)]">
             <div className="absolute -right-10 -top-8 h-[150px] w-[150px] rounded-full bg-white/10 blur-md" />
@@ -595,7 +605,7 @@ function RightReflectionScreen() {
                         </div>
                     </div>
 
-                    <div className="reflection-complete-trigger absolute inset-x-[4px] bottom-[12px] z-10">
+                    <div className={`${animateContent ? "reflection-complete-trigger" : ""} absolute inset-x-[4px] bottom-[12px] z-10`}>
                         <div className="overflow-hidden rounded-[14px] shadow-[0_16px_28px_rgba(249,115,22,0.22)]">
                             <div className="flex items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(90deg,#FF9C4A_0%,#F97316_100%)] px-4 py-[13px]">
                                 <CheckIcon className="h-4.5 w-4.5" />
@@ -607,9 +617,15 @@ function RightReflectionScreen() {
                     </div>
                 </div>
 
-                <div className="reflection-breakthrough-overlay absolute inset-0 z-20 bg-[#0F172A]/38" />
+                <div className={`absolute inset-0 z-20 bg-[#0F172A]/38 ${
+                    animateContent ? "reflection-breakthrough-overlay" : "opacity-100"
+                }`} />
 
-                <div className="reflection-breakthrough-modal absolute inset-x-[24px] top-[90px] z-30 overflow-hidden rounded-[22px] bg-white px-5 pb-5 pt-6 text-center shadow-[0_18px_42px_rgba(15,23,42,0.28)]">
+                <div className={`absolute inset-x-[24px] top-[90px] z-30 overflow-hidden rounded-[22px] bg-white px-5 pb-5 pt-6 text-center shadow-[0_18px_42px_rgba(15,23,42,0.28)] ${
+                    animateContent
+                        ? "reflection-breakthrough-modal"
+                        : "opacity-100 translate-y-0 scale-100"
+                }`}>
                     <button
                         type="button"
                         className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full"
@@ -858,6 +874,9 @@ export default function RoadmapAppMockup({
     softDeviceShadow = false,
     compactVerticalPadding = false,
     compactCarouselLayout = false,
+    liteMode = false,
+    isAnimationActive = true,
+    syncTime = true,
 }: {
     animKey: number;
     isSectionHovered?: boolean;
@@ -865,8 +884,12 @@ export default function RoadmapAppMockup({
     softDeviceShadow?: boolean;
     compactVerticalPadding?: boolean;
     compactCarouselLayout?: boolean;
+    liteMode?: boolean;
+    isAnimationActive?: boolean;
+    syncTime?: boolean;
 }) {
-    const timeStr = useMockDeviceTime("23:05");
+    const timeStr = useMockDeviceTime("23:05", { enabled: syncTime });
+    const shouldAnimate = isAnimationActive && !liteMode;
     const rotateX = 18 - externalMousePos.y * 10;
     const rotateY = -26 + externalMousePos.x * 12;
     const rotateZ = 6 + externalMousePos.x * 3;
@@ -918,7 +941,11 @@ export default function RoadmapAppMockup({
                     }}
                     timeStr={timeStr}
                     softDeviceShadow={softDeviceShadow}
-                    screenContent={<CenterPackRecommendationScreen />}
+                    screenContent={
+                        <CenterPackRecommendationScreen
+                            animateContent={shouldAnimate}
+                        />
+                    }
                 />
 
                 <BlankPhoneMockup
@@ -931,7 +958,11 @@ export default function RoadmapAppMockup({
                     useBareScreenSurface={true}
                     flattenHardwareLayers={true}
                     softDeviceShadow={softDeviceShadow}
-                    screenContent={<RightReflectionScreen />}
+                    screenContent={
+                        <RightReflectionScreen
+                            animateContent={shouldAnimate}
+                        />
+                    }
                 />
             </div>
         </div>

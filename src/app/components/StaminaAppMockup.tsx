@@ -75,7 +75,11 @@ const STAMINA_SCROLL_KEYFRAMES = `
 }
 `;
 
-function DailyProgressFloatingCard() {
+function DailyProgressFloatingCard({
+  animate = true,
+}: {
+  animate?: boolean;
+}) {
   const freeActivityPercent =
     (FREE_ACTIVITY_CURRENT / FREE_ACTIVITY_TOTAL) * 100;
   const xpPercent = (XP_CURRENT / XP_TOTAL) * 100;
@@ -116,7 +120,9 @@ function DailyProgressFloatingCard() {
               style={{
                 width: `calc(${ENERGY_PERCENT}% + 16px)`,
                 transformOrigin: "left center",
-                animation: "stamina-energy-reach 1.9s ease-in-out infinite",
+                animation: animate
+                  ? "stamina-energy-reach 1.9s ease-in-out infinite"
+                  : "none",
                 willChange: "transform, opacity",
               }}
             />
@@ -128,7 +134,9 @@ function DailyProgressFloatingCard() {
                 className="absolute inset-0 rounded-full bg-gradient-to-r from-[#ff7a1a] via-[#ff8d26] to-[#f97316]"
                 style={{
                   transformOrigin: "left center",
-                  animation: "stamina-energy-pulse 1.9s ease-in-out infinite",
+                  animation: animate
+                    ? "stamina-energy-pulse 1.9s ease-in-out infinite"
+                    : "none",
                   willChange: "transform, opacity, box-shadow",
                 }}
               />
@@ -136,14 +144,18 @@ function DailyProgressFloatingCard() {
                 className="absolute inset-y-0 -right-[3px] w-[12px] rounded-full bg-[#fb923c]/55 blur-[3px]"
                 style={{
                   transformOrigin: "left center",
-                  animation: "stamina-energy-reach 1.9s ease-in-out infinite",
+                  animation: animate
+                    ? "stamina-energy-reach 1.9s ease-in-out infinite"
+                    : "none",
                   willChange: "transform, opacity",
                 }}
               />
               <div
                 className="absolute inset-y-0 left-[-22%] w-[40%] rounded-full bg-white/50 blur-[1.5px]"
                 style={{
-                  animation: "stamina-energy-glint 2.8s linear infinite",
+                  animation: animate
+                    ? "stamina-energy-glint 2.8s linear infinite"
+                    : "none",
                   willChange: "transform, opacity",
                 }}
               />
@@ -627,20 +639,28 @@ export default function StaminaAppMockup({
   externalMousePos,
   disableTouchPause = false,
   softDeviceShadow = false,
+  liteMode = false,
+  isAnimationActive = true,
+  syncTime = true,
 }: {
   animKey: number;
   isSectionHovered?: boolean;
   externalMousePos?: { x: number; y: number };
   disableTouchPause?: boolean;
   softDeviceShadow?: boolean;
+  liteMode?: boolean;
+  isAnimationActive?: boolean;
+  syncTime?: boolean;
 }) {
   const isHovered = isSectionHovered || false;
   const [hasCarouselTouchInteracted, setHasCarouselTouchInteracted] =
     useState(false);
   const mousePos = externalMousePos || { x: 0, y: 0 };
-  const timeStr = useMockDeviceTime("20:22");
+  const timeStr = useMockDeviceTime("20:22", { enabled: syncTime });
   const shouldAnimateCarousel =
-    disableTouchPause || !hasCarouselTouchInteracted;
+    isAnimationActive &&
+    !liteMode &&
+    (disableTouchPause || !hasCarouselTouchInteracted);
 
   const compositionTransform = `translateY(${
     isHovered ? "-6px" : "0px"
@@ -726,7 +746,7 @@ export default function StaminaAppMockup({
                     : "none",
                 }}
               >
-                <DailyProgressFloatingCard />
+                <DailyProgressFloatingCard animate={shouldAnimateCarousel} />
               </div>
               <div
                 className="rounded-[24px]"

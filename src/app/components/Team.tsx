@@ -194,7 +194,11 @@ const defaultTeamMemberIndex = Math.max(
   0
 );
 
-export default function Team() {
+export default function Team({
+  sectionId = "team",
+}: {
+  sectionId?: string;
+}) {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [activeMemberIndex, setActiveMemberIndex] = useState(
     defaultTeamMemberIndex
@@ -269,7 +273,7 @@ export default function Team() {
     <>
       <style>{TEAM_STAGE_KEYFRAMES}</style>
       <section
-        id="team"
+        id={sectionId}
         className="mobile-content-auto relative z-10 overflow-hidden bg-[linear-gradient(180deg,#fffdf9_0%,#fff7f0_45%,#fffdf9_100%)] py-8 md:py-28"
       >
         <div className="pointer-events-none absolute inset-0">

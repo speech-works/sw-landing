@@ -5,7 +5,11 @@ import React from "react";
 // FACES — ported from sw-faces/ in the mobile repo
 // -------------------------------------------------------
 
-const GuidedBreathingFace = () => (
+const GuidedBreathingFace = ({
+  animateContent = true,
+}: {
+  animateContent?: boolean;
+}) => (
   <div className="w-full h-full rounded-full overflow-hidden">
     <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
       <defs>
@@ -30,12 +34,12 @@ const GuidedBreathingFace = () => (
       <path fill="#0F172A" opacity="0.8" d="M0 48 V40 Q12 42, 24 41 Q36 40, 48 38 V48 H0 Z" />
       <path fill="#000" opacity="0.15" transform="translate(4,4)" d="M8.075 10.075c0-2.767 33.199-2.767 33.199 0 2.767 0 2.767 38.736 0 38.736 0 2.766-33.2 2.766-33.2 0-2.766 0-2.766-38.736 0-38.736" />
       <path fill="#FFCCBC" d="M8.075 10.075c0-2.767 33.199-2.767 33.199 0 2.767 0 2.767 38.736 0 38.736 0 2.766-33.2 2.766-33.2 0-2.766 0-2.766-38.736 0-38.736" />
-      <g className="animate-gb-eyes">
+      <g className={animateContent ? "animate-gb-eyes" : ""}>
         <path stroke="#000" strokeWidth="2.5" strokeLinecap="round" d="M14 24 Q18 23, 22 24" fill="none" />
         <path stroke="#000" strokeWidth="2.5" strokeLinecap="round" d="M26 24 Q30 23, 34 24" fill="none" />
       </g>
       {/* Breath streams — animated fade in/out */}
-      <g className="animate-gb-breath">
+      <g className={animateContent ? "animate-gb-breath" : ""}>
         <path d="M24 38 C24 40, 24 43, 22 45" stroke="#90A4AE" strokeWidth="2" strokeLinecap="round" fill="none" />
         <path d="M21 38 C20 40, 18 43, 16 44" stroke="#90A4AE" strokeWidth="2" strokeLinecap="round" fill="none" />
         <path d="M27 38 C28 40, 30 43, 32 44" stroke="#90A4AE" strokeWidth="2" strokeLinecap="round" fill="none" />
@@ -66,7 +70,13 @@ const XIcon = () => (
 // MAIN COMPONENT
 // -------------------------------------------------------
 
-export default function BreathingAppMockup({ showSheet = true }: { showSheet?: boolean }) {
+export default function BreathingAppMockup({
+  showSheet = true,
+  animateContent = true,
+}: {
+  showSheet?: boolean;
+  animateContent?: boolean;
+}) {
   return (
     <div className="w-full h-full flex flex-col font-sans select-none overflow-hidden relative" style={{ background: "linear-gradient(135deg, #000000 0%, #020617 50%, #0F172A 100%)" }}>
       
@@ -95,11 +105,11 @@ export default function BreathingAppMockup({ showSheet = true }: { showSheet?: b
         {/* Breathing Halo Centerpiece - Shifted up for visibility above sheet */}
         <div className="relative w-48 h-48 flex items-center justify-center mt-4 mb-20 scale-110 translate-y-[-40px]">
           {/* Outer Ring */}
-          <div className="absolute inset-0 rounded-full border border-white/5 opacity-20 animate-pulse" />
+          <div className={`absolute inset-0 rounded-full border border-white/5 opacity-20 ${animateContent ? "animate-pulse" : ""}`} />
           
           {/* Animated Halo Wrapper */}
           <div className="w-32 h-32 relative">
-             <GuidedBreathingFace />
+             <GuidedBreathingFace animateContent={animateContent} />
           </div>
         </div>
       </div>
@@ -118,7 +128,7 @@ export default function BreathingAppMockup({ showSheet = true }: { showSheet?: b
           <div className="absolute inset-0 bg-black/50" />
 
           {/* The Sheet */}
-          <div className="relative bg-gradient-to-b from-[#EFF6FF] to-[#DBEAFE] rounded-t-[2.5rem] p-8 pb-12 shadow-2xl animate-sheet-slide-up">
+          <div className={`relative bg-gradient-to-b from-[#EFF6FF] to-[#DBEAFE] rounded-t-[2.5rem] p-8 pb-12 shadow-2xl ${animateContent ? "animate-sheet-slide-up" : ""}`}>
             {/* Handle */}
             <div className="absolute top-4 left-1/2 -translate-x-1/2 w-10 h-1 bg-blue-900/10 rounded-full" />
 

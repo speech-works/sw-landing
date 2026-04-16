@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { withBasePath } from "@/app/lib/withBasePath";
+import { useIsMobileViewport } from "./useIsMobileViewport";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DEFAULT_SUCCESS_MESSAGE =
@@ -36,9 +37,9 @@ export default function LaunchUpdates() {
   const [isOpen, setIsOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [isBubbleReady, setIsBubbleReady] = useState(false);
   const [avatarIndex, setAvatarIndex] = useState(0);
+  const isMobileViewport = useIsMobileViewport();
   const hiddenFormRef = useRef<HTMLFormElement>(null);
   const hiddenEmailInputRef = useRef<HTMLInputElement>(null);
   const hiddenSourceInputRef = useRef<HTMLInputElement>(null);
@@ -50,20 +51,11 @@ export default function LaunchUpdates() {
 
     setIsHydrated(true);
 
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const syncViewport = () => {
-      setIsMobileViewport(mediaQuery.matches);
-    };
-
-    syncViewport();
-    mediaQuery.addEventListener("change", syncViewport);
-
     const bubbleTimer = window.setTimeout(() => {
       setIsBubbleReady(true);
     }, 180);
 
     return () => {
-      mediaQuery.removeEventListener("change", syncViewport);
       window.clearTimeout(bubbleTimer);
     };
   }, []);
@@ -72,14 +64,14 @@ export default function LaunchUpdates() {
     if (typeof window === "undefined") return;
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches || isHidden) return;
+    if (mediaQuery.matches || isHidden || isMobileViewport) return;
 
     const interval = window.setInterval(() => {
       setAvatarIndex((current) => (current + 1) % BUBBLE_AVATARS.length);
     }, 5600);
 
     return () => window.clearInterval(interval);
-  }, [isHidden]);
+  }, [isHidden, isMobileViewport]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -341,7 +333,9 @@ export default function LaunchUpdates() {
           type="button"
           aria-hidden={!isOpen}
           onClick={handleClose}
-          className={`absolute inset-0 transition-opacity duration-300 ${
+          className={`absolute inset-0 ${
+            isMobileViewport ? "" : "transition-opacity duration-300 "
+          }${
             isOpen
               ? "pointer-events-auto bg-[#110c09]/26 backdrop-blur-[2px] sm:bg-transparent sm:backdrop-blur-0"
               : "pointer-events-none opacity-0"
@@ -355,20 +349,32 @@ export default function LaunchUpdates() {
             aria-expanded={isOpen}
             aria-controls="launch-updates-dialog"
             onClick={handleOpen}
-            className={`launch-widget-bubble pointer-events-auto absolute bottom-4 right-4 overflow-hidden border border-white/10 bg-[#3b302a]/92 text-left text-white shadow-[0_24px_60px_-30px_rgba(18,12,9,0.68)] backdrop-blur-xl transition-[transform,opacity,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-[0_28px_72px_-30px_rgba(18,12,9,0.78)] ${
+            className={`launch-widget-bubble pointer-events-auto absolute bottom-4 right-4 overflow-hidden border border-white/10 bg-[#3b302a]/92 text-left text-white shadow-[0_24px_60px_-30px_rgba(18,12,9,0.68)] backdrop-blur-xl ${
+              isMobileViewport
+                ? ""
+                : "transition-[transform,opacity,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-[0_28px_72px_-30px_rgba(18,12,9,0.78)] "
+            }${
               isMobileViewport
                 ? "rounded-[1.5rem]"
                 : "right-0 rounded-[1.8rem] rounded-r-[1.05rem]"
             } ${
-              isOpen
-                ? "pointer-events-none translate-y-4 opacity-0 sm:translate-x-10 sm:translate-y-0"
-                : isBubbleReady
-                  ? "translate-y-0 opacity-100 sm:translate-x-0"
-                  : "translate-y-6 opacity-0 sm:translate-x-8 sm:translate-y-0"
+              isMobileViewport
+                ? isOpen
+                  ? "pointer-events-none opacity-0"
+                  : isBubbleReady
+                    ? "opacity-100"
+                    : "opacity-0"
+                : isOpen
+                  ? "pointer-events-none translate-y-4 opacity-0 sm:translate-x-10 sm:translate-y-0"
+                  : isBubbleReady
+                    ? "translate-y-0 opacity-100 sm:translate-x-0"
+                    : "translate-y-6 opacity-0 sm:translate-x-8 sm:translate-y-0"
             }`}
           >
             <div className="relative flex items-center gap-3.5 px-4 py-3 sm:px-4 sm:py-3.5">
-              <div className="launch-widget-avatar-wrap relative h-10 w-10 shrink-0 rounded-[1.25rem] rounded-bl-[0.55rem] border border-white/12 bg-[linear-gradient(180deg,#f58e54_0%,#eb7a3f_100%)] p-[2px] shadow-[0_12px_24px_-12px_rgba(242,128,68,0.75)]">
+              <div
+                className={`${isMobileViewport ? "" : "launch-widget-avatar-wrap"} relative h-10 w-10 shrink-0 rounded-[1.25rem] rounded-bl-[0.55rem] border border-white/12 bg-[linear-gradient(180deg,#f58e54_0%,#eb7a3f_100%)] p-[2px] shadow-[0_12px_24px_-12px_rgba(242,128,68,0.75)]`}
+              >
                 <div className="relative h-full w-full overflow-hidden rounded-[1.12rem] rounded-bl-[0.45rem] bg-[#2f241f]">
                   {BUBBLE_AVATARS.map((avatar, index) => (
                     <div
@@ -408,14 +414,22 @@ export default function LaunchUpdates() {
             role="dialog"
             aria-modal={isMobileViewport}
             aria-label="Get launch updates"
-            className={`launch-widget-panel pointer-events-auto absolute overflow-hidden border border-white/10 bg-[#221916]/92 text-white shadow-[0_40px_90px_-36px_rgba(18,12,9,0.84)] backdrop-blur-2xl transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            className={`launch-widget-panel pointer-events-auto absolute overflow-hidden border border-white/10 bg-[#221916]/92 text-white shadow-[0_40px_90px_-36px_rgba(18,12,9,0.84)] backdrop-blur-2xl ${
+              isMobileViewport
+                ? ""
+                : "transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] "
+            }${
               isMobileViewport
                 ? "bottom-4 left-4 right-4 rounded-[1.75rem]"
                 : "bottom-8 right-0 w-[392px] rounded-[1.9rem] rounded-r-none border-r-0"
             } ${
-              isOpen
-                ? "translate-y-0 opacity-100 blur-0 sm:translate-x-0"
-                : "pointer-events-none translate-y-6 opacity-0 blur-[2px] sm:translate-x-12 sm:translate-y-0"
+              isMobileViewport
+                ? isOpen
+                  ? "translate-y-0 opacity-100 blur-0"
+                  : "pointer-events-none opacity-0"
+                : isOpen
+                  ? "translate-y-0 opacity-100 blur-0 sm:translate-x-0"
+                  : "pointer-events-none translate-y-6 opacity-0 blur-[2px] sm:translate-x-12 sm:translate-y-0"
             }`}
           >
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] [background-size:26px_26px] opacity-[0.14]" />
@@ -456,7 +470,11 @@ export default function LaunchUpdates() {
                     <button
                       type="button"
                       onClick={handleClose}
-                      className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/58 shadow-lg transition-all duration-300 hover:scale-110 hover:border-[#ffb28a]/25 hover:bg-white/[0.08] hover:text-white"
+                      className={`group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/58 shadow-lg ${
+                        isMobileViewport
+                          ? ""
+                          : "transition-all duration-300 hover:scale-110 hover:border-[#ffb28a]/25 hover:bg-white/[0.08] hover:text-white"
+                      }`}
                       aria-label="Close launch updates dialog"
                     >
                       <svg
@@ -467,7 +485,11 @@ export default function LaunchUpdates() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="h-4 w-4 transition-all duration-300 group-hover:rotate-90 group-hover:scale-110"
+                        className={`h-4 w-4 ${
+                          isMobileViewport
+                            ? ""
+                            : "transition-all duration-300 group-hover:rotate-90 group-hover:scale-110"
+                        }`}
                       >
                         <path d="M18 6 6 18" />
                         <path d="m6 6 12 12" />
@@ -479,7 +501,11 @@ export default function LaunchUpdates() {
                     <span className="mb-3 block text-[10px] font-black uppercase tracking-[0.16em] text-white/56">
                       Email
                     </span>
-                    <div className="rounded-[1.35rem] border border-white/10 bg-[#5a4a42]/60 px-4 py-3.5 transition-all duration-300 focus-within:border-brand/55 focus-within:bg-[#625047]/72 focus-within:shadow-[0_16px_36px_-24px_rgba(242,128,68,0.55)]">
+                    <div className={`rounded-[1.35rem] border border-white/10 bg-[#5a4a42]/60 px-4 py-3.5 ${
+                      isMobileViewport
+                        ? ""
+                        : "transition-all duration-300 focus-within:border-brand/55 focus-within:bg-[#625047]/72 focus-within:shadow-[0_16px_36px_-24px_rgba(242,128,68,0.55)]"
+                    }`}>
                       <input
                         ref={visibleEmailInputRef}
                         type="email"
@@ -508,7 +534,11 @@ export default function LaunchUpdates() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="launch-widget-cta inline-flex min-h-[58px] w-full items-center justify-between rounded-full bg-brand px-5 py-3 text-[10.5px] font-black uppercase tracking-[0.18em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-[0_18px_32px_-18px_rgba(242,128,68,0.58)] disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-80"
+                    className={`launch-widget-cta inline-flex min-h-[58px] w-full items-center justify-between rounded-full bg-brand px-5 py-3 text-[10.5px] font-black uppercase tracking-[0.18em] text-white ${
+                      isMobileViewport
+                        ? "disabled:cursor-not-allowed disabled:opacity-80"
+                        : "transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-[0_18px_32px_-18px_rgba(242,128,68,0.58)] disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-80"
+                    }`}
                   >
                     <span>{isSubmitting ? "Joining..." : "Keep me posted"}</span>
                     <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/16 bg-white/12 text-[1rem]">
