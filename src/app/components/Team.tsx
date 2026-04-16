@@ -636,7 +636,7 @@ export default function Team() {
                     <button
                       type="button"
                       onClick={() => setIsContactOpen(true)}
-                      className="inline-flex max-w-full items-center gap-3 whitespace-nowrap rounded-full bg-[linear-gradient(135deg,#F28044_0%,#D9692E_100%)] px-5 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-white shadow-[0_18px_40px_-18px_rgba(242,128,68,0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_-18px_rgba(242,128,68,0.72)] sm:px-6 sm:py-3.5 sm:text-xs"
+                      className="flex w-full items-center justify-center gap-3 rounded-full bg-[linear-gradient(135deg,#F28044_0%,#D9692E_100%)] px-5 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-white shadow-[0_18px_40px_-18px_rgba(242,128,68,0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_-18px_rgba(242,128,68,0.72)] sm:inline-flex sm:w-auto sm:max-w-full sm:justify-start sm:whitespace-nowrap sm:px-6 sm:py-3.5 sm:text-xs"
                     >
                       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/14 ring-1 ring-white/10">
                         <svg
