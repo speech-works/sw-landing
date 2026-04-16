@@ -1,6 +1,7 @@
 import { withBasePath } from "@/app/lib/withBasePath";
 import { useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
+import { useIsMobileViewport } from "./useIsMobileViewport";
 
 function RoadmapMobileChevron({
   direction,
@@ -78,6 +79,10 @@ export default function Roadmap() {
     null
   );
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobileViewport = useIsMobileViewport();
+  const visibleMobilePhases = isMobileViewport
+    ? [ROADMAP_PHASES[activePhase - 1]]
+    : ROADMAP_PHASES;
 
   // Navigation Themes
   const themes: Record<number, string> = {
@@ -168,7 +173,7 @@ export default function Roadmap() {
       <section
         id="roadmap"
         ref={sectionRef}
-        className="pt-8 pb-8 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden font-sans select-none"
+        className="mobile-content-auto pt-8 pb-8 md:py-32 relative z-10 bg-[#FFFAF5] overflow-hidden font-sans select-none"
         style={
           {
             "--mouse-x": `${mousePos.x * 100}%`,
@@ -200,15 +205,17 @@ export default function Roadmap() {
               <div
                 className="flex will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{
-                  width: `${ROADMAP_PHASES.length * 100}%`,
-                  transform: `translate3d(-${(activePhase - 1) * (100 / ROADMAP_PHASES.length)}%, 0, 0)`,
+                  width: `${visibleMobilePhases.length * 100}%`,
+                  transform: isMobileViewport
+                    ? "translate3d(0, 0, 0)"
+                    : `translate3d(-${(activePhase - 1) * (100 / visibleMobilePhases.length)}%, 0, 0)`,
                 }}
               >
-                {ROADMAP_PHASES.map((phase) => (
+                {visibleMobilePhases.map((phase) => (
                   <div
                     key={phase.id}
                     className="shrink-0 py-1.5 sm:py-2"
-                    style={{ width: `${100 / ROADMAP_PHASES.length}%` }}
+                    style={{ width: `${100 / visibleMobilePhases.length}%` }}
                   >
                     <div className="px-[2px]">
                       <div className="flex h-full flex-col gap-6">
@@ -353,7 +360,8 @@ export default function Roadmap() {
             </div>
           </div>
 
-          <div className="hidden lg:flex flex-col lg:flex-row gap-10 md:gap-16 items-stretch reveal reveal-delay-1 active">
+          {!isMobileViewport && (
+            <div className="hidden lg:flex flex-col lg:flex-row gap-10 md:gap-16 items-stretch reveal reveal-delay-1 active">
             {/*  Left: Editorial Typography Menu  */}
             <div className="w-full lg:w-5/12 relative pl-6 md:pl-10 border-l-2 border-black/[0.04] flex flex-col gap-6 md:gap-10 lg:self-center">
               {[1, 2, 3].map((phase) => (
@@ -803,7 +811,8 @@ export default function Roadmap() {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+          )}
         </div>
       </section>
     </>

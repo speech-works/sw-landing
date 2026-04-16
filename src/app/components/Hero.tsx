@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import LiveAppMockup from "./LiveAppMockup";
 import MobileCarouselControls from "./MobileCarouselControls";
 import { useMockDeviceTime } from "./useMockDeviceTime";
+import { useIsMobileViewport } from "./useIsMobileViewport";
 
 const HERO_FAN_SCREEN_KEYFRAMES = `
   @keyframes hero-ai-ripple {
@@ -130,25 +131,10 @@ export default function Hero() {
   const timeStr = useMockDeviceTime("09:41");
   const [activePhone, setActivePhone] = useState<HeroPhoneId>("center");
   const [hoveredPhone, setHoveredPhone] = useState<HeroPhoneId | null>(null);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const isMobileViewport = useIsMobileViewport();
   const activeHeroPhone = HERO_PHONE_COPY[activePhone];
   const activePhoneIndex = Math.max(0, HERO_PHONE_IDS.indexOf(activePhone));
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const mobileMediaQuery = window.matchMedia("(max-width: 767px)");
-    const syncViewport = () => {
-      setIsMobileViewport(mobileMediaQuery.matches);
-    };
-
-    syncViewport();
-    mobileMediaQuery.addEventListener("change", syncViewport);
-
-    return () => {
-      mobileMediaQuery.removeEventListener("change", syncViewport);
-    };
-  }, []);
+  const visibleHeroPhoneIds = isMobileViewport ? [activePhone] : HERO_PHONE_IDS;
 
   useEffect(() => {
     if (isMobileViewport) return;
@@ -216,74 +202,82 @@ export default function Hero() {
 
         {/*  Fascinating Background: Floating Gradient Orbs & Kinetic Text  */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/*  Diagonal Kinetic Typography  */}
-          <div className="absolute inset-0 z-0 flex flex-col justify-center opacity-[0.04] md:opacity-[0.03] -rotate-6 scale-110 md:scale-125">
-            <div className="marquee-container w-full mb-2 md:mb-4">
-              <div
-                className="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-white"
-                style={{ animationDuration: "30s" }}
-              >
-                <span>CHANGE THE CONVERSATION</span>
-                <span>CHANGE THE CONVERSATION</span>
+          {!isMobileViewport && (
+            <>
+              {/*  Diagonal Kinetic Typography  */}
+              <div className="absolute inset-0 z-0 flex flex-col justify-center opacity-[0.04] md:opacity-[0.03] -rotate-6 scale-110 md:scale-125">
+                <div className="marquee-container w-full mb-2 md:mb-4">
+                  <div
+                    className="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-white"
+                    style={{ animationDuration: "30s" }}
+                  >
+                    <span>CHANGE THE CONVERSATION</span>
+                    <span>CHANGE THE CONVERSATION</span>
+                  </div>
+                  <div
+                    className="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-white"
+                    style={{ animationDuration: "30s" }}
+                    aria-hidden="true"
+                  >
+                    <span>CHANGE THE CONVERSATION</span>
+                    <span>CHANGE THE CONVERSATION</span>
+                  </div>
+                </div>
+                <div className="marquee-container w-full">
+                  <div
+                    className="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-transparent"
+                    style={{
+                      WebkitTextStroke: "2px white",
+                      animationDuration: "40s",
+                      animationDirection: "reverse",
+                    }}
+                  >
+                    <span>SPEAK ON YOUR TERMS</span>
+                    <span>SPEAK ON YOUR TERMS</span>
+                  </div>
+                  <div
+                    className="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-transparent"
+                    style={{
+                      WebkitTextStroke: "2px white",
+                      animationDuration: "40s",
+                      animationDirection: "reverse",
+                    }}
+                    aria-hidden="true"
+                  >
+                    <span>SPEAK ON YOUR TERMS</span>
+                    <span>SPEAK ON YOUR TERMS</span>
+                  </div>
+                </div>
               </div>
-              <div
-                className="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-white"
-                style={{ animationDuration: "30s" }}
-                aria-hidden="true"
-              >
-                <span>CHANGE THE CONVERSATION</span>
-                <span>CHANGE THE CONVERSATION</span>
-              </div>
-            </div>
-            <div className="marquee-container w-full">
-              <div
-                className="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-transparent"
-                style={{
-                  WebkitTextStroke: "2px white",
-                  animationDuration: "40s",
-                  animationDirection: "reverse",
-                }}
-              >
-                <span>SPEAK ON YOUR TERMS</span>
-                <span>SPEAK ON YOUR TERMS</span>
-              </div>
-              <div
-                className="marquee-content flex items-center gap-4 md:gap-8 text-[15vw] md:text-[12vw] font-black tracking-tighter leading-none text-transparent"
-                style={{
-                  WebkitTextStroke: "2px white",
-                  animationDuration: "40s",
-                  animationDirection: "reverse",
-                }}
-                aria-hidden="true"
-              >
-                <span>SPEAK ON YOUR TERMS</span>
-                <span>SPEAK ON YOUR TERMS</span>
-              </div>
-            </div>
-          </div>
 
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-            className="absolute left-0 top-0 z-[1] h-full w-full object-cover object-[58%_18%] opacity-[0.42] saturate-[1.05] contrast-[1.08] brightness-[0.97] sm:object-[54%_16%] md:-top-[2%] md:h-[112%] md:object-center"
-          >
-            <source
-              src={withBasePath("/assets/videos/group_avatars_vid2_loop.mp4")}
-              type="video/mp4"
-            />
-          </video>
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                aria-hidden="true"
+                className="absolute left-0 top-0 z-[1] h-full w-full object-cover object-[58%_18%] opacity-[0.42] saturate-[1.05] contrast-[1.08] brightness-[0.97] sm:object-[54%_16%] md:-top-[2%] md:h-[112%] md:object-center"
+              >
+                <source
+                  src={withBasePath("/assets/videos/group_avatars_vid2_loop.mp4")}
+                  type="video/mp4"
+                />
+              </video>
+            </>
+          )}
           <div className="absolute inset-0 z-[2] bg-[radial-gradient(circle_at_50%_28%,rgba(242,128,68,0.16),transparent_24%),linear-gradient(180deg,rgba(10,7,5,0.72)_0%,rgba(10,7,5,0.42)_28%,rgba(10,7,5,0.58)_62%,rgba(10,7,5,0.82)_100%)]"></div>
 
-          {/*  Glowing Orbs  */}
-          <div className="absolute z-[3] top-[-5%] right-[-5%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] bg-brand/30 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen animate-pulse"></div>
-          <div
-            className="absolute z-[3] bottom-[-10%] left-[-5%] w-[50vw] md:w-[30vw] h-[50vw] md:h-[30vw] bg-purple-600/20 rounded-full blur-[60px] md:blur-[100px] mix-blend-screen animate-pulse"
-            style={{ animationDelay: "2s" }}
-          ></div>
+          {!isMobileViewport && (
+            <>
+              {/*  Glowing Orbs  */}
+              <div className="absolute z-[3] top-[-5%] right-[-5%] w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] bg-brand/30 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen animate-pulse"></div>
+              <div
+                className="absolute z-[3] bottom-[-10%] left-[-5%] w-[50vw] md:w-[30vw] h-[50vw] md:h-[30vw] bg-purple-600/20 rounded-full blur-[60px] md:blur-[100px] mix-blend-screen animate-pulse"
+                style={{ animationDelay: "2s" }}
+              ></div>
+            </>
+          )}
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full relative z-10 min-w-0">
@@ -387,15 +381,17 @@ export default function Hero() {
                       <div
                         className="flex h-[496px] select-none will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         style={{
-                          width: `${HERO_PHONE_IDS.length * 100}%`,
-                          transform: `translate3d(-${activePhoneIndex * (100 / HERO_PHONE_IDS.length)}%, 0, 0)`,
+                          width: `${visibleHeroPhoneIds.length * 100}%`,
+                          transform: isMobileViewport
+                            ? "translate3d(0, 0, 0)"
+                            : `translate3d(-${activePhoneIndex * (100 / visibleHeroPhoneIds.length)}%, 0, 0)`,
                         }}
                       >
-                        {HERO_PHONE_IDS.map((phoneId) => (
+                        {visibleHeroPhoneIds.map((phoneId) => (
                           <div
                             key={phoneId}
                             className="min-w-0 shrink-0"
-                            style={{ width: `${100 / HERO_PHONE_IDS.length}%` }}
+                            style={{ width: `${100 / visibleHeroPhoneIds.length}%` }}
                           >
                             {phoneId === "left" && (
                               <div className="relative h-full overflow-hidden bg-[#f8f3ed]">
@@ -564,11 +560,12 @@ export default function Hero() {
             </div>
 
             {/*  Realistic Mobile Frame (Ultra-Refined)  */}
-            <div className="lg:col-span-4 hidden lg:flex justify-end reveal reveal-delay-3 relative active">
-              <div className="relative h-[369px] w-[182px] xl:h-[399px] xl:w-[197px]">
-                <div className="absolute right-0 top-0 origin-top-right translate-y-[15%] scale-[0.604]">
-                  <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px] animate-float transform rotate-[-2deg] group">
-                    <div
+            {!isMobileViewport && (
+              <div className="lg:col-span-4 hidden lg:flex justify-end reveal reveal-delay-3 relative active">
+                <div className="relative h-[369px] w-[182px] xl:h-[399px] xl:w-[197px]">
+                  <div className="absolute right-0 top-0 origin-top-right translate-y-[15%] scale-[0.604]">
+                    <div className="relative w-[300px] xl:w-[325px] h-[610px] xl:h-[660px] animate-float transform rotate-[-2deg] group">
+                      <div
                       className="absolute left-0 top-0 cursor-pointer"
                       style={getPhoneStyle("left")}
                       onClick={() => setActivePhone("left")}
@@ -1196,6 +1193,7 @@ export default function Hero() {
                 </div>
               </div>
             </div>
+            )}
           </div>
         </div>
       </section>

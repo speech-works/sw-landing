@@ -215,6 +215,13 @@ section[id] {
   scrollbar-width: none;
 }
 
+@media (max-width: 767px) {
+  .mobile-content-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 960px;
+  }
+}
+
 /* Component-level Interaction Overrides */
 .magnetic-btn {
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.5s, color 0.5s, box-shadow 0.5s;

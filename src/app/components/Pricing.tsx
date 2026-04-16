@@ -345,7 +345,7 @@ export default function Pricing() {
     <>
       <section
         id="pricing"
-        className="pt-8 pb-8 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden"
+        className="mobile-content-auto pt-8 pb-8 md:py-40 bg-[#FFFAF5] relative z-10 border-t border-[#3F332D]/5 overflow-hidden"
       >
         <style
           dangerouslySetInnerHTML={{

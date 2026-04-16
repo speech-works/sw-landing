@@ -5,6 +5,7 @@ import AdversarialAppMockup from "./AdversarialAppMockup";
 import StaminaAppMockup from "./StaminaAppMockup";
 import RoadmapAppMockup from "./RoadmapAppMockup";
 import RadarUI from "./RadarUI";
+import { useIsMobileViewport } from "./useIsMobileViewport";
 
 /* ─────────────────────────────────────────────
    GLOBAL KEYFRAME STYLES
@@ -425,31 +426,15 @@ export default function Platform() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [mobileCarouselHeight, setMobileCarouselHeight] = useState<
     number | null
   >(null);
   const mobileSlideRefs = useRef<Array<HTMLDivElement | null>>([]);
   const animKey = useAnimKey(activeIndex);
+  const isMobileViewport = useIsMobileViewport();
 
   const DURATION = 6000;
   const UPDATE_INTERVAL = 50;
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const mobileMediaQuery = window.matchMedia("(max-width: 767px)");
-    const syncViewport = () => {
-      setIsMobileViewport(mobileMediaQuery.matches);
-    };
-
-    syncViewport();
-    mobileMediaQuery.addEventListener("change", syncViewport);
-
-    return () => {
-      mobileMediaQuery.removeEventListener("change", syncViewport);
-    };
-  }, []);
 
   useEffect(() => {
     if (isMobileViewport || isHovered) return;
@@ -538,6 +523,7 @@ export default function Platform() {
   const [isHoveredStage, setIsHoveredStage] = useState(false);
   const [stageMousePos, setStageMousePos] = useState({ x: 0, y: 0 });
   const activeFeature = features[activeIndex];
+  const visibleMobileFeatures = isMobileViewport ? [activeFeature] : features;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -625,7 +611,7 @@ export default function Platform() {
   return (
     <section
       id="platform"
-      className="pt-8 pb-0 sm:pt-8 sm:pb-0 md:pt-32 md:pb-36 bg-white md:bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
+      className="mobile-content-auto pt-8 pb-0 sm:pt-8 sm:pb-0 md:pt-32 md:pb-36 bg-white md:bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
       onMouseMove={handleMouseMove}
       style={
         {
@@ -829,11 +815,16 @@ export default function Platform() {
               <div
                 className="flex h-full items-start will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{
-                  width: `${features.length * 100}%`,
-                  transform: `translate3d(-${activeIndex * (100 / features.length)}%, 0, 0)`,
+                  width: `${visibleMobileFeatures.length * 100}%`,
+                  transform: isMobileViewport
+                    ? "translate3d(0, 0, 0)"
+                    : `translate3d(-${activeIndex * (100 / visibleMobileFeatures.length)}%, 0, 0)`,
                 }}
               >
-                {features.map((feature, index) => {
+                {visibleMobileFeatures.map((feature) => {
+                  const featureIndex = features.findIndex(
+                    ({ id }) => id === feature.id
+                  );
                   const mobileStageHeight =
                     feature.id === "roadmap"
                       ? "h-[268px] sm:h-[296px]"
@@ -849,10 +840,10 @@ export default function Platform() {
                     <div
                       key={`mobile-${feature.id}`}
                       ref={(node) => {
-                        mobileSlideRefs.current[index] = node;
+                        mobileSlideRefs.current[featureIndex] = node;
                       }}
                       className="shrink-0 h-full px-[2px]"
-                      style={{ width: `${100 / features.length}%` }}
+                      style={{ width: `${100 / visibleMobileFeatures.length}%` }}
                     >
                       <div className="flex h-full flex-col justify-center gap-6">
                         <div className="relative pl-4 sm:pl-5">
@@ -894,8 +885,8 @@ export default function Platform() {
                           <div className="absolute inset-0 z-10 overflow-visible">
                             {renderMobileFeatureUI(
                               feature.id,
-                              index,
-                              activeIndex === index ? animKey : index + 1
+                              featureIndex,
+                              animKey
                             )}
                           </div>
 
@@ -928,15 +919,16 @@ export default function Platform() {
           </div>
         </div>
 
-        <div
-          className="hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onTouchStart={() => setIsHovered(true)}
-          onTouchEnd={() => setIsHovered(false)}
-        >
-          {/* ── Left Nav ── */}
-          <div className="lg:col-span-5 flex flex-col justify-center space-y-2 lg:pr-8">
+        {!isMobileViewport && (
+          <div
+            className="hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onTouchStart={() => setIsHovered(true)}
+            onTouchEnd={() => setIsHovered(false)}
+          >
+            {/* ── Left Nav ── */}
+            <div className="lg:col-span-5 flex flex-col justify-center space-y-2 lg:pr-8">
             {features.map((feature, index) => {
               const isActive = index === activeIndex;
               return (
@@ -993,18 +985,18 @@ export default function Platform() {
                 </button>
               );
             })}
-          </div>
+            </div>
 
-          {/* ── Right Visual Stage ── */}
-          <div
-            className="lg:col-span-7 relative h-[350px] sm:h-[450px] lg:h-auto overflow-visible"
-            onMouseEnter={() => setIsHoveredStage(true)}
-            onMouseLeave={() => setIsHoveredStage(false)}
-            style={{
-              perspective: "1200px",
-              transformStyle: "preserve-3d",
-            }}
-          >
+            {/* ── Right Visual Stage ── */}
+            <div
+              className="lg:col-span-7 relative h-[350px] sm:h-[450px] lg:h-auto overflow-visible"
+              onMouseEnter={() => setIsHoveredStage(true)}
+              onMouseLeave={() => setIsHoveredStage(false)}
+              style={{
+                perspective: "1200px",
+                transformStyle: "preserve-3d",
+              }}
+            >
             <div
               className="w-full h-full lg:aspect-square xl:aspect-[4/3] relative transition-transform duration-700 ease-out group/stage overflow-visible"
               style={{
@@ -1182,8 +1174,9 @@ export default function Platform() {
                 );
               })}
             </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
     </section>

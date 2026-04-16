@@ -4,9 +4,11 @@ import Image from "next/image";
 import { withBasePath } from "@/app/lib/withBasePath";
 import React, { useState } from "react";
 import ContactModal from "./ContactModal";
+import { useIsMobileViewport } from "./useIsMobileViewport";
 
 export default function Footer() {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const isMobileViewport = useIsMobileViewport();
 
   const handleCommunityClick = () => {
     window.dispatchEvent(
@@ -18,21 +20,23 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="bg-brand pt-16 md:pt-20 pb-8 md:pb-10 relative z-10 text-white overflow-hidden">
+      <footer className="mobile-content-auto bg-brand pt-16 md:pt-20 pb-8 md:pb-10 relative z-10 text-white overflow-hidden">
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <video
-            className="absolute inset-0 h-full w-full object-cover object-center opacity-[0.7] mix-blend-multiply"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          >
-            <source
-              src={withBasePath("/assets/gif/avatars_discussing_loop.mp4")}
-              type="video/mp4"
-            />
-          </video>
+          {!isMobileViewport && (
+            <video
+              className="absolute inset-0 h-full w-full object-cover object-center opacity-[0.7] mix-blend-multiply"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            >
+              <source
+                src={withBasePath("/assets/gif/avatars_discussing_loop.mp4")}
+                type="video/mp4"
+              />
+            </video>
+          )}
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(242,128,68,0.76)_0%,rgba(242,128,68,0.82)_100%)]" />
         </div>
         <div className="absolute top-[-50%] right-[-10%] w-[80%] h-[150%] bg-white/10 blur-[100px] rounded-full pointer-events-none hidden md:block"></div>
@@ -115,33 +119,41 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="w-full border-t border-white/20 pt-10 md:pt-16 pb-6 md:pb-8 overflow-hidden flex relative z-10">
-          <div className="marquee-container w-full">
-            <div className="marquee-content slow flex flex-nowrap items-center text-[18vw] font-black tracking-tighter leading-none select-none py-2 md:py-4">
-              <span className="text-white px-4 md:px-8 drop-shadow-sm">
-                SPEECHWORKS
-              </span>
-              <span className="text-white/30 px-4 md:px-8">•</span>
-              <span className="text-white px-4 md:px-8 drop-shadow-sm">
-                SPEECHWORKS
-              </span>
-              <span className="text-white/30 px-4 md:px-8">•</span>
-            </div>
-            <div
-              className="marquee-content slow flex flex-nowrap items-center text-[18vw] font-black tracking-tighter leading-none select-none py-2 md:py-4"
-              aria-hidden="true"
-            >
-              <span className="text-white px-4 md:px-8 drop-shadow-sm">
-                SPEECHWORKS
-              </span>
-              <span className="text-white/30 px-4 md:px-8">•</span>
-              <span className="text-white px-4 md:px-8 drop-shadow-sm">
-                SPEECHWORKS
-              </span>
-              <span className="text-white/30 px-4 md:px-8">•</span>
+        {isMobileViewport ? (
+          <div className="relative z-10 border-t border-white/20 px-6 pb-6 pt-10 text-center">
+            <div className="text-[17vw] font-black tracking-tighter leading-none text-white/92">
+              SPEECHWORKS
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="w-full border-t border-white/20 pt-10 md:pt-16 pb-6 md:pb-8 overflow-hidden flex relative z-10">
+            <div className="marquee-container w-full">
+              <div className="marquee-content slow flex flex-nowrap items-center text-[18vw] font-black tracking-tighter leading-none select-none py-2 md:py-4">
+                <span className="text-white px-4 md:px-8 drop-shadow-sm">
+                  SPEECHWORKS
+                </span>
+                <span className="text-white/30 px-4 md:px-8">•</span>
+                <span className="text-white px-4 md:px-8 drop-shadow-sm">
+                  SPEECHWORKS
+                </span>
+                <span className="text-white/30 px-4 md:px-8">•</span>
+              </div>
+              <div
+                className="marquee-content slow flex flex-nowrap items-center text-[18vw] font-black tracking-tighter leading-none select-none py-2 md:py-4"
+                aria-hidden="true"
+              >
+                <span className="text-white px-4 md:px-8 drop-shadow-sm">
+                  SPEECHWORKS
+                </span>
+                <span className="text-white/30 px-4 md:px-8">•</span>
+                <span className="text-white px-4 md:px-8 drop-shadow-sm">
+                  SPEECHWORKS
+                </span>
+                <span className="text-white/30 px-4 md:px-8">•</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs font-bold tracking-widest uppercase text-brand-100 mt-4 gap-4 md:gap-0">

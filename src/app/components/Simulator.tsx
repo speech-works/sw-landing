@@ -85,7 +85,7 @@ export default function Simulator() {
 
   return (
     <>
-      <section className="relative z-10 bg-[#FFFAF5] overflow-hidden flex flex-col justify-start md:justify-center min-h-0 md:min-h-screen pt-8 pb-8 md:py-12">
+      <section className="mobile-content-auto relative z-10 bg-[#FFFAF5] overflow-hidden flex flex-col justify-start md:justify-center min-h-0 md:min-h-screen pt-8 pb-8 md:py-12">
         {/*  EXPERIMENTAL STYLES ONLY FOR THIS SECTION  */}
         <style
           dangerouslySetInnerHTML={{
