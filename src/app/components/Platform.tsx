@@ -818,7 +818,7 @@ export default function Platform() {
               }
             >
               <div
-                className="flex items-start will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                className="flex h-full items-start will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{
                   width: `${features.length * 100}%`,
                   transform: `translate3d(-${activeIndex * (100 / features.length)}%, 0, 0)`,
@@ -842,10 +842,10 @@ export default function Platform() {
                       ref={(node) => {
                         mobileSlideRefs.current[index] = node;
                       }}
-                      className="shrink-0 self-start px-[2px]"
+                      className="shrink-0 h-full px-[2px]"
                       style={{ width: `${100 / features.length}%` }}
                     >
-                      <div className="flex flex-col gap-6">
+                      <div className="flex h-full flex-col justify-center gap-6">
                         <div className="relative pl-4 sm:pl-5">
                           <div
                             className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${feature.activeBar}`}
