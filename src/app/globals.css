@@ -220,6 +220,11 @@ section[id] {
     content-visibility: auto;
     contain-intrinsic-size: 960px;
   }
+
+  .mobile-paint-stable {
+    content-visibility: visible;
+    contain-intrinsic-size: auto;
+  }
 }
 
 /* Component-level Interaction Overrides */

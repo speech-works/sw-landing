@@ -274,7 +274,7 @@ export default function Team({
       <style>{TEAM_STAGE_KEYFRAMES}</style>
       <section
         id={sectionId}
-        className="mobile-content-auto relative z-10 overflow-hidden bg-[linear-gradient(180deg,#fffdf9_0%,#fff7f0_45%,#fffdf9_100%)] py-8 md:py-28"
+        className="mobile-content-auto mobile-paint-stable relative z-10 overflow-hidden bg-[linear-gradient(180deg,#fffdf9_0%,#fff7f0_45%,#fffdf9_100%)] py-8 md:py-28"
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(242,128,68,0.18),transparent_26%),radial-gradient(circle_at_86%_20%,rgba(63,51,45,0.08),transparent_24%),radial-gradient(circle_at_80%_84%,rgba(242,128,68,0.1),transparent_28%)]" />
