@@ -127,11 +127,7 @@ function useAnimKey(activeIndex: number) {
   return key;
 }
 
-function MobilePlatformChevron({
-  direction,
-}: {
-  direction: "left" | "right";
-}) {
+function MobilePlatformChevron({ direction }: { direction: "left" | "right" }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -569,7 +565,9 @@ export default function Platform() {
       child: React.ReactNode
     ) => (
       <div className="pointer-events-none relative flex h-full items-center justify-center overflow-visible select-none touch-none">
-        <div className={`relative overflow-visible origin-center ${scaleClass}`}>
+        <div
+          className={`relative overflow-visible origin-center ${scaleClass}`}
+        >
           {child}
         </div>
       </div>
@@ -602,7 +600,9 @@ export default function Platform() {
           : renderMobileMockupShell(
               "scale-[0.48] sm:scale-[0.58]",
               <ProgressAppMockup
-                radarChart={<RadarUI animKey={mobileAnimKey} isFloating={true} />}
+                radarChart={
+                  <RadarUI animKey={mobileAnimKey} isFloating={true} />
+                }
                 softDeviceShadow={true}
                 {...baseProps}
               />
@@ -646,7 +646,7 @@ export default function Platform() {
               "platform-roadmap",
               "Your Roadmap",
               { width: "170%" },
-              { x: "12px", y: "10px", scale: 1.08 }
+              { x: "74px", y: "10px", scale: 1.08 }
             )
           : renderMobileMockupShell(
               "scale-[0.63] sm:scale-[0.7]",
@@ -874,7 +874,9 @@ export default function Platform() {
                   width: `${visibleMobileFeatures.length * 100}%`,
                   transform: isMobileViewport
                     ? "translate3d(0, 0, 0)"
-                    : `translate3d(-${activeIndex * (100 / visibleMobileFeatures.length)}%, 0, 0)`,
+                    : `translate3d(-${
+                        activeIndex * (100 / visibleMobileFeatures.length)
+                      }%, 0, 0)`,
                 }}
               >
                 {visibleMobileFeatures.map((feature) => {
@@ -895,7 +897,9 @@ export default function Platform() {
                         mobileSlideRefs.current[featureIndex] = node;
                       }}
                       className="shrink-0 h-full px-[2px]"
-                      style={{ width: `${100 / visibleMobileFeatures.length}%` }}
+                      style={{
+                        width: `${100 / visibleMobileFeatures.length}%`,
+                      }}
                     >
                       <div className="flex h-full flex-col justify-center gap-6">
                         <div className="relative pl-4 sm:pl-5">
@@ -981,62 +985,62 @@ export default function Platform() {
           >
             {/* ── Left Nav ── */}
             <div className="lg:col-span-5 flex flex-col justify-center space-y-2 lg:pr-8">
-            {features.map((feature, index) => {
-              const isActive = index === activeIndex;
-              return (
-                <button
-                  key={feature.id}
-                  onClick={() => handleFeatureClick(index)}
-                  className={`relative flex flex-col text-left px-6 lg:px-8 py-5 md:py-6 rounded-2xl transition-all duration-300 w-full outline-none
+              {features.map((feature, index) => {
+                const isActive = index === activeIndex;
+                return (
+                  <button
+                    key={feature.id}
+                    onClick={() => handleFeatureClick(index)}
+                    className={`relative flex flex-col text-left px-6 lg:px-8 py-5 md:py-6 rounded-2xl transition-all duration-300 w-full outline-none
                     ${
                       isActive
                         ? "bg-[#FFFAF5] shadow-sm"
                         : "hover:bg-black/[0.02]"
                     }`}
-                  style={{
-                    animation: `platform-navItemIn 0.55s ease ${
-                      0.3 + index * 0.08
-                    }s both`,
-                  }}
-                >
-                  {/* Progress line */}
-                  <div
-                    className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 transition-all duration-500 rounded-full overflow-hidden ${
-                      isActive ? "h-[60%] bg-gray-200" : "h-0 bg-transparent"
-                    }`}
+                    style={{
+                      animation: `platform-navItemIn 0.55s ease ${
+                        0.3 + index * 0.08
+                      }s both`,
+                    }}
                   >
-                    {isActive && (
-                      <div
-                        className={`w-full absolute bottom-0 left-0 transition-all duration-75 ease-linear ${feature.activeBar}`}
-                        style={{ height: `${progress}%` }}
-                      />
-                    )}
-                  </div>
+                    {/* Progress line */}
+                    <div
+                      className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 transition-all duration-500 rounded-full overflow-hidden ${
+                        isActive ? "h-[60%] bg-gray-200" : "h-0 bg-transparent"
+                      }`}
+                    >
+                      {isActive && (
+                        <div
+                          className={`w-full absolute bottom-0 left-0 transition-all duration-75 ease-linear ${feature.activeBar}`}
+                          style={{ height: `${progress}%` }}
+                        />
+                      )}
+                    </div>
 
-                  <h4
-                    className={`text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300 ${
-                      isActive
-                        ? "text-app-text"
-                        : "text-app-muted/60 hover:text-app-text/80"
-                    }`}
-                  >
-                    {feature.title}
-                  </h4>
+                    <h4
+                      className={`text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300 ${
+                        isActive
+                          ? "text-app-text"
+                          : "text-app-muted/60 hover:text-app-text/80"
+                      }`}
+                    >
+                      {feature.title}
+                    </h4>
 
-                  <div
-                    className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                      isActive
-                        ? "max-h-48 opacity-100 mt-3"
-                        : "max-h-0 opacity-0 mt-0"
-                    }`}
-                  >
-                    <p className="text-app-muted text-sm md:text-base leading-relaxed">
-                      {feature.desc}
-                    </p>
-                  </div>
-                </button>
-              );
-            })}
+                    <div
+                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                        isActive
+                          ? "max-h-48 opacity-100 mt-3"
+                          : "max-h-0 opacity-0 mt-0"
+                      }`}
+                    >
+                      <p className="text-app-muted text-sm md:text-base leading-relaxed">
+                        {feature.desc}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
 
             {/* ── Right Visual Stage ── */}
@@ -1049,188 +1053,187 @@ export default function Platform() {
                 transformStyle: "preserve-3d",
               }}
             >
-            <div
-              className="w-full h-full lg:aspect-square xl:aspect-[4/3] relative transition-transform duration-700 ease-out group/stage overflow-visible"
-              style={{
-                transform: `rotateX(${stageMousePos.y * 5}deg) rotateY(${
-                  stageMousePos.x * -5
-                }deg)`,
-                transformStyle: "preserve-3d",
-              }}
-            >
-              {/* Card frame: Contains Glimmer and Backgrounds (Masked) */}
-              <div className="absolute inset-0 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-card-hover border border-orange-100/50">
-                {/* Glass glare */}
-                {activeFeature.id !== "roadmap" && (
-                  <div
-                    className="absolute inset-0 z-30 pointer-events-none opacity-0 group-hover/stage:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background: `radial-gradient(circle 600px at calc(var(--mouse-x-raw) * 1px) calc(var(--mouse-y-raw) * 1px), rgba(255,255,255,0.4) 0%, transparent 60%)`,
-                      mixBlendMode: "overlay",
-                    }}
-                  />
-                )}
-
-                {/* Animated backgrounds */}
-                {features.map((feature, index) => {
-                  const isActive = index === activeIndex;
-                  return (
+              <div
+                className="w-full h-full lg:aspect-square xl:aspect-[4/3] relative transition-transform duration-700 ease-out group/stage overflow-visible"
+                style={{
+                  transform: `rotateX(${stageMousePos.y * 5}deg) rotateY(${
+                    stageMousePos.x * -5
+                  }deg)`,
+                  transformStyle: "preserve-3d",
+                }}
+              >
+                {/* Card frame: Contains Glimmer and Backgrounds (Masked) */}
+                <div className="absolute inset-0 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-card-hover border border-orange-100/50">
+                  {/* Glass glare */}
+                  {activeFeature.id !== "roadmap" && (
                     <div
-                      key={`bg-${feature.id}`}
-                      className={`absolute inset-0 bg-gradient-to-br ${feature.bgGradient} transition-opacity duration-700 ease-in-out flex items-center justify-center`}
+                      className="absolute inset-0 z-30 pointer-events-none opacity-0 group-hover/stage:opacity-100 transition-opacity duration-500"
                       style={{
-                        opacity: isActive ? 1 : 0,
-                        pointerEvents: isActive ? "auto" : "none",
-                        zIndex: isActive ? 10 : 0,
+                        background: `radial-gradient(circle 600px at calc(var(--mouse-x-raw) * 1px) calc(var(--mouse-y-raw) * 1px), rgba(255,255,255,0.4) 0%, transparent 60%)`,
+                        mixBlendMode: "overlay",
                       }}
-                    >
+                    />
+                  )}
+
+                  {/* Animated backgrounds */}
+                  {features.map((feature, index) => {
+                    const isActive = index === activeIndex;
+                    return (
                       <div
-                        className={`absolute ${
-                          feature.id === "progress"
-                            ? "text-brand/10"
-                            : feature.iconColor
-                        } transition-all duration-700`}
+                        key={`bg-${feature.id}`}
+                        className={`absolute inset-0 bg-gradient-to-br ${feature.bgGradient} transition-opacity duration-700 ease-in-out flex items-center justify-center`}
                         style={{
-                          width: feature.id === "progress" ? "115%" : "80%",
-                          height: feature.id === "progress" ? "115%" : "80%",
-                          transform:
-                            feature.id === "progress"
-                              ? "rotate(-12deg) translateZ(-10px)"
-                              : "rotate(-6deg)",
-                          opacity: isActive
-                            ? feature.id === "progress"
-                              ? 0.01
-                              : 0.07
-                            : 0,
-                          animation: isActive
-                            ? feature.id === "progress"
-                              ? "platform-fadeSlideUp 1s cubic-bezier(0.23,1,0.32,1) both"
-                              : "platform-bgIconDrift 8s ease-in-out infinite"
-                            : "none",
+                          opacity: isActive ? 1 : 0,
+                          pointerEvents: isActive ? "auto" : "none",
+                          zIndex: isActive ? 10 : 0,
                         }}
                       >
-                        {feature.bgIcon}
-                      </div>
+                        <div
+                          className={`absolute ${
+                            feature.id === "progress"
+                              ? "text-brand/10"
+                              : feature.iconColor
+                          } transition-all duration-700`}
+                          style={{
+                            width: feature.id === "progress" ? "115%" : "80%",
+                            height: feature.id === "progress" ? "115%" : "80%",
+                            transform:
+                              feature.id === "progress"
+                                ? "rotate(-12deg) translateZ(-10px)"
+                                : "rotate(-6deg)",
+                            opacity: isActive
+                              ? feature.id === "progress"
+                                ? 0.01
+                                : 0.07
+                              : 0,
+                            animation: isActive
+                              ? feature.id === "progress"
+                                ? "platform-fadeSlideUp 1s cubic-bezier(0.23,1,0.32,1) both"
+                                : "platform-bgIconDrift 8s ease-in-out infinite"
+                              : "none",
+                          }}
+                        >
+                          {feature.bgIcon}
+                        </div>
 
-                      {/* SUBMERGED MOCKUP (Stamina Only - Inside Masking) */}
-                      {feature.id === "stamina" && isActive && (
-                        <div className="absolute inset-x-0 bottom-0 top-0 pointer-events-none translate-y-[10%] md:translate-y-[8%]">
-                          {feature.renderUI(
+                        {/* SUBMERGED MOCKUP (Stamina Only - Inside Masking) */}
+                        {feature.id === "stamina" && isActive && (
+                          <div className="absolute inset-x-0 bottom-0 top-0 pointer-events-none translate-y-[10%] md:translate-y-[8%]">
+                            {feature.renderUI(
+                              animKey,
+                              isHoveredStage,
+                              stageMousePos
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Interactive app mockups & content cards (OUTSIDE MASKING for Overflow) */}
+                {features.map((feature, index) => {
+                  const isActive = index === activeIndex;
+                  const isDark = feature.isDark;
+
+                  // Stamina is rendered inside for the submerged/masked effect
+                  if (feature.id === "stamina" && isActive) {
+                    return (
+                      <div
+                        key={`content-stamina-nav`}
+                        className="absolute inset-0 flex flex-col justify-between p-8 md:p-12 z-40"
+                      >
+                        {/* Tag chip only */}
+                        <div
+                          key={`tag-stamina-${animKey}`}
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
+                              bg-white border-emerald-200 text-emerald-500`}
+                          style={{
+                            animation:
+                              "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both",
+                          }}
+                        >
+                          {feature.tagIcon} {feature.shortTitle}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={`content-${feature.id}`}
+                      className={`absolute inset-0 flex flex-col justify-between p-8 md:p-12 transition-opacity duration-500 ease-in-out ${
+                        isActive
+                          ? "opacity-100 pointer-events-auto"
+                          : "opacity-0 pointer-events-none"
+                      }`}
+                      style={{ zIndex: 40 }}
+                    >
+                      {/* Tag chip */}
+                      {isActive && (
+                        <div
+                          key={`tag-${feature.id}-${animKey}`}
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
+                          ${feature.tagBg} ${feature.tagBorder} ${
+                            isDark ? "text-white" : feature.iconColor
+                          }`}
+                          style={{
+                            animation:
+                              "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both",
+                          }}
+                        >
+                          {feature.tagIcon} {feature.shortTitle}
+                        </div>
+                      )}
+
+                      {/* Dynamic mock UI (Overflowing) */}
+                      <div className="absolute inset-0 pointer-events-none">
+                        {isActive &&
+                          feature.renderUI(
                             animKey,
                             isHoveredStage,
                             stageMousePos
                           )}
-                        </div>
-                      )}
+                      </div>
+
+                      {/* Bottom CTA (roadmap only) */}
+                      <div className="self-end mt-auto">
+                        {isDark && isActive && feature.id !== "roadmap" && (
+                          <a
+                            key={`cta-${animKey}`}
+                            href="#roadmap"
+                            className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-brand flex items-center justify-center hover:bg-brand-50 transition-all transform hover:scale-110 shadow-2xl group/btn pointer-events-auto"
+                            style={{
+                              animation:
+                                "platform-popIn 0.55s cubic-bezier(0.23,1,0.32,1) 0.5s both",
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform"
+                            >
+                              <path d="M5 12h14" />
+                              <path d="m12 5 7 7-7 7" />
+                            </svg>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
               </div>
-
-              {/* Interactive app mockups & content cards (OUTSIDE MASKING for Overflow) */}
-              {features.map((feature, index) => {
-                const isActive = index === activeIndex;
-                const isDark = feature.isDark;
-
-                // Stamina is rendered inside for the submerged/masked effect
-                if (feature.id === "stamina" && isActive) {
-                  return (
-                    <div
-                      key={`content-stamina-nav`}
-                      className="absolute inset-0 flex flex-col justify-between p-8 md:p-12 z-40"
-                    >
-                      {/* Tag chip only */}
-                      <div
-                        key={`tag-stamina-${animKey}`}
-                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
-                              bg-white border-emerald-200 text-emerald-500`}
-                        style={{
-                          animation:
-                            "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both",
-                        }}
-                      >
-                        {feature.tagIcon} {feature.shortTitle}
-                      </div>
-                    </div>
-                  );
-                }
-
-                return (
-                  <div
-                    key={`content-${feature.id}`}
-                    className={`absolute inset-0 flex flex-col justify-between p-8 md:p-12 transition-opacity duration-500 ease-in-out ${
-                      isActive
-                        ? "opacity-100 pointer-events-auto"
-                        : "opacity-0 pointer-events-none"
-                    }`}
-                    style={{ zIndex: 40 }}
-                  >
-                    {/* Tag chip */}
-                    {isActive && (
-                      <div
-                        key={`tag-${feature.id}-${animKey}`}
-                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
-                          ${feature.tagBg} ${feature.tagBorder} ${
-                          isDark ? "text-white" : feature.iconColor
-                        }`}
-                        style={{
-                          animation:
-                            "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both",
-                        }}
-                      >
-                        {feature.tagIcon} {feature.shortTitle}
-                      </div>
-                    )}
-
-                    {/* Dynamic mock UI (Overflowing) */}
-                    <div className="absolute inset-0 pointer-events-none">
-                      {isActive &&
-                        feature.renderUI(
-                          animKey,
-                          isHoveredStage,
-                          stageMousePos
-                        )}
-                    </div>
-
-                    {/* Bottom CTA (roadmap only) */}
-                    <div className="self-end mt-auto">
-                      {isDark && isActive && feature.id !== "roadmap" && (
-                        <a
-                          key={`cta-${animKey}`}
-                          href="#roadmap"
-                          className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-brand flex items-center justify-center hover:bg-brand-50 transition-all transform hover:scale-110 shadow-2xl group/btn pointer-events-auto"
-                          style={{
-                            animation:
-                              "platform-popIn 0.55s cubic-bezier(0.23,1,0.32,1) 0.5s both",
-                          }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform"
-                          >
-                            <path d="M5 12h14" />
-                            <path d="m12 5 7 7-7 7" />
-                          </svg>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
             </div>
           </div>
         )}
       </div>
-
     </section>
   );
 }
