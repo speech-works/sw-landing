@@ -1,5 +1,5 @@
 import { withBasePath } from "@/app/lib/withBasePath";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
 import MobileMockupMedia from "./MobileMockupMedia";
 import { useIsMobileViewport } from "./useIsMobileViewport";
@@ -74,10 +74,12 @@ const ROADMAP_PHASES = [
 export default function Roadmap() {
   const [activePhase, setActivePhase] = useState(1);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const [mobileCopyHeight, setMobileCopyHeight] = useState<number | null>(null);
   const [hoveredStackIndex, setHoveredStackIndex] = useState<number | null>(
     null
   );
   const sectionRef = useRef<HTMLElement>(null);
+  const mobileCopyMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const isMobileViewport = useIsMobileViewport();
   const isSectionInView = useElementInView(sectionRef, {
     disabled: !isMobileViewport,
@@ -138,6 +140,56 @@ export default function Roadmap() {
     setActivePhase((currentPhase) => (currentPhase % ROADMAP_PHASES.length) + 1);
   };
 
+  const syncMobileCopyHeight = useCallback(() => {
+    if (!isMobileViewport) {
+      setMobileCopyHeight(null);
+      return;
+    }
+
+    const nextHeight = mobileCopyMeasureRefs.current.reduce((maxHeight, node) => {
+      if (!node) return maxHeight;
+      return Math.max(maxHeight, Math.ceil(node.getBoundingClientRect().height));
+    }, 0);
+
+    if (!nextHeight) return;
+
+    setMobileCopyHeight((current) =>
+      current === nextHeight ? current : nextHeight
+    );
+  }, [isMobileViewport]);
+
+  useEffect(() => {
+    syncMobileCopyHeight();
+  }, [syncMobileCopyHeight]);
+
+  useEffect(() => {
+    if (!isMobileViewport) return;
+
+    const handleResize = () => {
+      syncMobileCopyHeight();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(() => {
+            syncMobileCopyHeight();
+          });
+
+    mobileCopyMeasureRefs.current.forEach((node) => {
+      if (node) {
+        resizeObserver?.observe(node);
+      }
+    });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      resizeObserver?.disconnect();
+    };
+  }, [isMobileViewport, syncMobileCopyHeight]);
+
   const renderMobileRoadmapMedia = (phaseId: number, title: string) => {
     const slug = `roadmap-phase-${phaseId}`;
     const mediaStyle =
@@ -177,6 +229,40 @@ export default function Roadmap() {
         }
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+          {isMobileViewport ? (
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-4 top-0 -z-10 opacity-0 sm:inset-x-6 lg:inset-x-12"
+            >
+              {ROADMAP_PHASES.map((phase, index) => (
+                <div
+                  key={`roadmap-mobile-copy-measure-${phase.id}`}
+                  ref={(node) => {
+                    mobileCopyMeasureRefs.current[index] = node;
+                  }}
+                  className="px-[2px] py-1.5 sm:py-2"
+                >
+                  <div className="relative pl-4 sm:pl-5">
+                    <div className="mb-3 flex items-center gap-2">
+                      <span
+                        className={`inline-flex h-2.5 w-2.5 rounded-full ${phase.accentBarClass}`}
+                      />
+                      <span className="text-[10px] font-black uppercase tracking-[0.18em] text-app-muted">
+                        {phase.status}
+                      </span>
+                    </div>
+                    <h4 className="text-[1.95rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text sm:text-[2rem]">
+                      {phase.title}
+                    </h4>
+                    <p className="mt-2.5 max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
+                      {phase.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : null}
+
           <div className="mb-12 md:mb-16 reveal text-center lg:text-left active">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
@@ -214,7 +300,14 @@ export default function Roadmap() {
                   >
                     <div className="px-[2px]">
                       <div className="flex h-full flex-col gap-6">
-                        <div className="relative pl-4 sm:pl-5">
+                        <div
+                          className="relative pl-4 sm:pl-5"
+                          style={
+                            mobileCopyHeight
+                              ? { minHeight: `${mobileCopyHeight}px` }
+                              : undefined
+                          }
+                        >
                           <div
                             className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${phase.accentBarClass}`}
                           />

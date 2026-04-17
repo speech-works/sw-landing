@@ -424,11 +424,13 @@ export default function Platform() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [mobileCopyHeight, setMobileCopyHeight] = useState<number | null>(null);
   const [mobileCarouselHeight, setMobileCarouselHeight] = useState<
     number | null
   >(null);
   const sectionRef = useRef<HTMLElement>(null);
   const mobileSlideRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const mobileCopyMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const animKey = useAnimKey(activeIndex);
   const isMobileViewport = useIsMobileViewport();
   const isSectionInView = useElementInView(sectionRef, {
@@ -493,9 +495,31 @@ export default function Platform() {
     );
   }, [isMobileViewport]);
 
+  const syncMobileCopyHeight = useCallback(() => {
+    if (!isMobileViewport) {
+      setMobileCopyHeight(null);
+      return;
+    }
+
+    const nextHeight = mobileCopyMeasureRefs.current.reduce((maxHeight, node) => {
+      if (!node) return maxHeight;
+      return Math.max(maxHeight, Math.ceil(node.getBoundingClientRect().height));
+    }, 0);
+
+    if (!nextHeight) return;
+
+    setMobileCopyHeight((current) =>
+      current === nextHeight ? current : nextHeight
+    );
+  }, [isMobileViewport]);
+
   useEffect(() => {
     syncMobileCarouselHeight();
   }, [syncMobileCarouselHeight, animKey]);
+
+  useEffect(() => {
+    syncMobileCopyHeight();
+  }, [syncMobileCopyHeight]);
 
   useEffect(() => {
     if (!isMobileViewport) return;
@@ -524,6 +548,34 @@ export default function Platform() {
       resizeObserver?.disconnect();
     };
   }, [isMobileViewport, syncMobileCarouselHeight]);
+
+  useEffect(() => {
+    if (!isMobileViewport) return;
+
+    const handleResize = () => {
+      syncMobileCopyHeight();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(() => {
+            syncMobileCopyHeight();
+          });
+
+    mobileCopyMeasureRefs.current.forEach((node) => {
+      if (node) {
+        resizeObserver?.observe(node);
+      }
+    });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      resizeObserver?.disconnect();
+    };
+  }, [isMobileViewport, syncMobileCopyHeight]);
 
   const [isHoveredStage, setIsHoveredStage] = useState(false);
   const [stageMousePos, setStageMousePos] = useState({ x: 0, y: 0 });
@@ -808,6 +860,32 @@ export default function Platform() {
 
       {/* ── Main content ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10 space-y-12 sm:space-y-12 md:space-y-0">
+        {isMobileViewport ? (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-4 top-0 -z-10 opacity-0 sm:inset-x-6 lg:inset-x-12"
+          >
+            {features.map((feature, index) => (
+              <div
+                key={`platform-mobile-copy-measure-${feature.id}`}
+                ref={(node) => {
+                  mobileCopyMeasureRefs.current[index] = node;
+                }}
+                className="px-[2px]"
+              >
+                <div className="relative pl-4 sm:pl-5">
+                  <h4 className="text-[1.6rem] font-black leading-[0.95] tracking-[-0.05em] text-app-text sm:text-[1.75rem] sm:leading-[0.95]">
+                    {feature.mobileTitle ?? feature.title}
+                  </h4>
+                  <p className="mt-2.5 max-w-[31ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
+                    {feature.mobileDesc ?? feature.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
         {/* Section heading */}
         <div className="mb-12 flex flex-col text-center md:mb-16 md:flex-row md:items-end md:justify-between md:text-left">
           <div className="max-w-2xl mx-auto md:mx-0">
@@ -883,12 +961,7 @@ export default function Platform() {
                   const featureIndex = features.findIndex(
                     ({ id }) => id === feature.id
                   );
-                  const mobileStageHeight =
-                    feature.id === "roadmap"
-                      ? "h-[268px] sm:h-[296px]"
-                      : feature.id === "stamina"
-                      ? "h-[280px] sm:h-[308px]"
-                      : "h-[286px] sm:h-[316px]";
+                  const mobileStageHeight = "h-[286px] sm:h-[316px]";
 
                   return (
                     <div
@@ -902,7 +975,14 @@ export default function Platform() {
                       }}
                     >
                       <div className="flex h-full flex-col justify-center gap-6">
-                        <div className="relative pl-4 sm:pl-5">
+                        <div
+                          className="relative pl-4 sm:pl-5"
+                          style={
+                            mobileCopyHeight
+                              ? { minHeight: `${mobileCopyHeight}px` }
+                              : undefined
+                          }
+                        >
                           <div
                             className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${feature.activeBar}`}
                           />
