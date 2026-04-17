@@ -5,6 +5,7 @@ import AdversarialAppMockup from "./AdversarialAppMockup";
 import StaminaAppMockup from "./StaminaAppMockup";
 import RoadmapAppMockup from "./RoadmapAppMockup";
 import RadarUI from "./RadarUI";
+import MobileMockupMedia from "./MobileMockupMedia";
 import { useIsMobileViewport } from "./useIsMobileViewport";
 import { useElementInView } from "./useElementInView";
 
@@ -574,46 +575,89 @@ export default function Platform() {
       </div>
     );
 
+    const renderMobileMockupMedia = (
+      slug: string,
+      title: string,
+      mediaStyle: React.CSSProperties,
+      mediaTransform?: { x?: string; y?: string; scale?: number }
+    ) => (
+      <MobileMockupMedia
+        slug={slug}
+        alt={`${title} mobile mockup`}
+        shouldPlay={isMobileAnimationActive}
+        mediaStyle={mediaStyle}
+        mediaTransform={mediaTransform}
+      />
+    );
+
     switch (featureId) {
       case "progress":
-        return renderMobileMockupShell(
-          "scale-[0.48] sm:scale-[0.58]",
-          <ProgressAppMockup
-            radarChart={<RadarUI animKey={mobileAnimKey} isFloating={true} />}
-            softDeviceShadow={true}
-            {...baseProps}
-          />
-        );
+        return isMobileViewport
+          ? renderMobileMockupMedia(
+              "platform-progress",
+              "Progress Tracking",
+              { height: "172%" },
+              { y: "8px", scale: 1.08 }
+            )
+          : renderMobileMockupShell(
+              "scale-[0.48] sm:scale-[0.58]",
+              <ProgressAppMockup
+                radarChart={<RadarUI animKey={mobileAnimKey} isFloating={true} />}
+                softDeviceShadow={true}
+                {...baseProps}
+              />
+            );
       case "adversarial":
-        return renderMobileMockupShell(
-          "scale-[0.48] sm:scale-[0.58]",
-          <AdversarialAppMockup
-            animKey={mobileAnimKey}
-            softDeviceShadow={true}
-            {...baseProps}
-          />
-        );
+        return isMobileViewport
+          ? renderMobileMockupMedia(
+              "platform-adversarial",
+              "Pressure Test",
+              { height: "172%" },
+              { y: "8px", scale: 1.08 }
+            )
+          : renderMobileMockupShell(
+              "scale-[0.48] sm:scale-[0.58]",
+              <AdversarialAppMockup
+                animKey={mobileAnimKey}
+                softDeviceShadow={true}
+                {...baseProps}
+              />
+            );
       case "stamina":
-        return renderMobileMockupShell(
-          "scale-[0.5] sm:scale-[0.6]",
-          <StaminaAppMockup
-            animKey={mobileAnimKey}
-            disableTouchPause={true}
-            softDeviceShadow={true}
-            {...baseProps}
-          />
-        );
+        return isMobileViewport
+          ? renderMobileMockupMedia(
+              "platform-stamina",
+              "Sustainable Training",
+              { width: "150%" },
+              { y: "10px", scale: 1.08 }
+            )
+          : renderMobileMockupShell(
+              "scale-[0.5] sm:scale-[0.6]",
+              <StaminaAppMockup
+                animKey={mobileAnimKey}
+                disableTouchPause={true}
+                softDeviceShadow={true}
+                {...baseProps}
+              />
+            );
       case "roadmap":
-        return renderMobileMockupShell(
-          "scale-[0.63] sm:scale-[0.7]",
-          <RoadmapAppMockup
-            animKey={mobileAnimKey}
-            compactVerticalPadding={true}
-            compactCarouselLayout={true}
-            softDeviceShadow={true}
-            {...baseProps}
-          />
-        );
+        return isMobileViewport
+          ? renderMobileMockupMedia(
+              "platform-roadmap",
+              "Your Roadmap",
+              { width: "170%" },
+              { x: "12px", y: "10px", scale: 1.08 }
+            )
+          : renderMobileMockupShell(
+              "scale-[0.63] sm:scale-[0.7]",
+              <RoadmapAppMockup
+                animKey={mobileAnimKey}
+                compactVerticalPadding={true}
+                compactCarouselLayout={true}
+                softDeviceShadow={true}
+                {...baseProps}
+              />
+            );
       default:
         return null;
     }
@@ -843,10 +887,6 @@ export default function Platform() {
                       : feature.id === "stamina"
                       ? "h-[280px] sm:h-[308px]"
                       : "h-[286px] sm:h-[316px]";
-                  const mobileStageOverflow =
-                    feature.id === "roadmap"
-                      ? "overflow-hidden"
-                      : "overflow-visible";
 
                   return (
                     <div
@@ -871,7 +911,7 @@ export default function Platform() {
                         </div>
 
                         <div
-                          className={`relative ${mobileStageHeight} ${mobileStageOverflow} rounded-[2rem]`}
+                          className={`relative ${mobileStageHeight} overflow-visible rounded-[2rem]`}
                         >
                           <div
                             className={`absolute inset-0 overflow-hidden rounded-[2rem] ${
