@@ -187,6 +187,17 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   };
 
   const handleEmailClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const mailtoUrl = 'mailto:contact@speechworks.in';
+    const userAgent = navigator.userAgent;
+    const shouldUseNativeMailClient =
+      isMobileViewport ||
+      /Android|iPhone|iPad|iPod/i.test(userAgent) ||
+      window.matchMedia('(pointer: coarse)').matches;
+
+    if (shouldUseNativeMailClient) {
+      return;
+    }
+
     event.preventDefault();
 
     const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
@@ -200,7 +211,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     );
 
     if (!openedWindow) {
-      window.location.href = 'mailto:contact@speechworks.in';
+      window.location.href = mailtoUrl;
     }
   };
 

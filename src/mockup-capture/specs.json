@@ -1,0 +1,146 @@
+[
+  {
+    "slug": "hero-live-screen",
+    "name": "Hero Live Screen",
+    "width": 560,
+    "height": 980,
+    "durationMs": 6000,
+    "warmupMs": 1200,
+    "fps": 24,
+    "background": "transparent",
+    "transparent": true,
+    "mode": "composition",
+    "bleed": {
+      "top": 72,
+      "right": 72,
+      "bottom": 72,
+      "left": 72
+    }
+  },
+  {
+    "slug": "platform-progress",
+    "name": "Platform Progress Mockup",
+    "width": 960,
+    "height": 960,
+    "durationMs": 6000,
+    "warmupMs": 1200,
+    "fps": 24,
+    "background": "transparent",
+    "transparent": true,
+    "mode": "composition",
+    "bleed": {
+      "top": 96,
+      "right": 96,
+      "bottom": 96,
+      "left": 96
+    }
+  },
+  {
+    "slug": "platform-adversarial",
+    "name": "Platform Adversarial Mockup",
+    "width": 960,
+    "height": 960,
+    "durationMs": 6000,
+    "warmupMs": 1200,
+    "fps": 24,
+    "background": "transparent",
+    "transparent": true,
+    "mode": "composition",
+    "bleed": {
+      "top": 96,
+      "right": 96,
+      "bottom": 96,
+      "left": 96
+    }
+  },
+  {
+    "slug": "platform-stamina",
+    "name": "Platform Stamina Mockup",
+    "width": 980,
+    "height": 920,
+    "durationMs": 6500,
+    "warmupMs": 1300,
+    "fps": 24,
+    "background": "transparent",
+    "transparent": true,
+    "mode": "composition",
+    "bleed": {
+      "top": 96,
+      "right": 96,
+      "bottom": 96,
+      "left": 96
+    }
+  },
+  {
+    "slug": "platform-roadmap",
+    "name": "Platform Roadmap Mockup",
+    "width": 1280,
+    "height": 980,
+    "durationMs": 6500,
+    "warmupMs": 1300,
+    "fps": 24,
+    "background": "transparent",
+    "transparent": true,
+    "mode": "composition",
+    "bleed": {
+      "top": 112,
+      "right": 112,
+      "bottom": 112,
+      "left": 112
+    }
+  },
+  {
+    "slug": "roadmap-phase-1",
+    "name": "Roadmap Phase 1",
+    "width": 1380,
+    "height": 1040,
+    "durationMs": 6000,
+    "warmupMs": 1200,
+    "fps": 24,
+    "background": "transparent",
+    "transparent": true,
+    "mode": "composition",
+    "bleed": {
+      "top": 112,
+      "right": 112,
+      "bottom": 112,
+      "left": 112
+    }
+  },
+  {
+    "slug": "roadmap-phase-2",
+    "name": "Roadmap Phase 2",
+    "width": 1380,
+    "height": 1040,
+    "durationMs": 6000,
+    "warmupMs": 1200,
+    "fps": 24,
+    "background": "transparent",
+    "transparent": true,
+    "mode": "composition",
+    "bleed": {
+      "top": 112,
+      "right": 112,
+      "bottom": 112,
+      "left": 112
+    }
+  },
+  {
+    "slug": "roadmap-phase-3",
+    "name": "Roadmap Phase 3",
+    "width": 1380,
+    "height": 1040,
+    "durationMs": 6000,
+    "warmupMs": 1200,
+    "fps": 24,
+    "background": "transparent",
+    "transparent": true,
+    "mode": "composition",
+    "bleed": {
+      "top": 112,
+      "right": 112,
+      "bottom": 112,
+      "left": 112
+    }
+  }
+]

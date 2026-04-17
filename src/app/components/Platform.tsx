@@ -5,6 +5,7 @@ import AdversarialAppMockup from "./AdversarialAppMockup";
 import StaminaAppMockup from "./StaminaAppMockup";
 import RoadmapAppMockup from "./RoadmapAppMockup";
 import RadarUI from "./RadarUI";
+import MobileMockupMedia from "./MobileMockupMedia";
 import { useIsMobileViewport } from "./useIsMobileViewport";
 import { useElementInView } from "./useElementInView";
 
@@ -126,11 +127,7 @@ function useAnimKey(activeIndex: number) {
   return key;
 }
 
-function MobilePlatformChevron({
-  direction,
-}: {
-  direction: "left" | "right";
-}) {
+function MobilePlatformChevron({ direction }: { direction: "left" | "right" }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -427,11 +424,13 @@ export default function Platform() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [mobileCopyHeight, setMobileCopyHeight] = useState<number | null>(null);
   const [mobileCarouselHeight, setMobileCarouselHeight] = useState<
     number | null
   >(null);
   const sectionRef = useRef<HTMLElement>(null);
   const mobileSlideRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const mobileCopyMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const animKey = useAnimKey(activeIndex);
   const isMobileViewport = useIsMobileViewport();
   const isSectionInView = useElementInView(sectionRef, {
@@ -496,9 +495,31 @@ export default function Platform() {
     );
   }, [isMobileViewport]);
 
+  const syncMobileCopyHeight = useCallback(() => {
+    if (!isMobileViewport) {
+      setMobileCopyHeight(null);
+      return;
+    }
+
+    const nextHeight = mobileCopyMeasureRefs.current.reduce((maxHeight, node) => {
+      if (!node) return maxHeight;
+      return Math.max(maxHeight, Math.ceil(node.getBoundingClientRect().height));
+    }, 0);
+
+    if (!nextHeight) return;
+
+    setMobileCopyHeight((current) =>
+      current === nextHeight ? current : nextHeight
+    );
+  }, [isMobileViewport]);
+
   useEffect(() => {
     syncMobileCarouselHeight();
   }, [syncMobileCarouselHeight, animKey]);
+
+  useEffect(() => {
+    syncMobileCopyHeight();
+  }, [syncMobileCopyHeight]);
 
   useEffect(() => {
     if (!isMobileViewport) return;
@@ -527,6 +548,34 @@ export default function Platform() {
       resizeObserver?.disconnect();
     };
   }, [isMobileViewport, syncMobileCarouselHeight]);
+
+  useEffect(() => {
+    if (!isMobileViewport) return;
+
+    const handleResize = () => {
+      syncMobileCopyHeight();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(() => {
+            syncMobileCopyHeight();
+          });
+
+    mobileCopyMeasureRefs.current.forEach((node) => {
+      if (node) {
+        resizeObserver?.observe(node);
+      }
+    });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      resizeObserver?.disconnect();
+    };
+  }, [isMobileViewport, syncMobileCopyHeight]);
 
   const [isHoveredStage, setIsHoveredStage] = useState(false);
   const [stageMousePos, setStageMousePos] = useState({ x: 0, y: 0 });
@@ -568,52 +617,99 @@ export default function Platform() {
       child: React.ReactNode
     ) => (
       <div className="pointer-events-none relative flex h-full items-center justify-center overflow-visible select-none touch-none">
-        <div className={`relative overflow-visible origin-center ${scaleClass}`}>
+        <div
+          className={`relative overflow-visible origin-center ${scaleClass}`}
+        >
           {child}
         </div>
       </div>
     );
 
+    const renderMobileMockupMedia = (
+      slug: string,
+      title: string,
+      mediaStyle: React.CSSProperties,
+      mediaTransform?: { x?: string; y?: string; scale?: number }
+    ) => (
+      <MobileMockupMedia
+        slug={slug}
+        alt={`${title} mobile mockup`}
+        shouldPlay={isMobileAnimationActive}
+        mediaStyle={mediaStyle}
+        mediaTransform={mediaTransform}
+      />
+    );
+
     switch (featureId) {
       case "progress":
-        return renderMobileMockupShell(
-          "scale-[0.48] sm:scale-[0.58]",
-          <ProgressAppMockup
-            radarChart={<RadarUI animKey={mobileAnimKey} isFloating={true} />}
-            softDeviceShadow={true}
-            {...baseProps}
-          />
-        );
+        return isMobileViewport
+          ? renderMobileMockupMedia(
+              "platform-progress",
+              "Progress Tracking",
+              { height: "172%" },
+              { y: "8px", scale: 1.08 }
+            )
+          : renderMobileMockupShell(
+              "scale-[0.48] sm:scale-[0.58]",
+              <ProgressAppMockup
+                radarChart={
+                  <RadarUI animKey={mobileAnimKey} isFloating={true} />
+                }
+                softDeviceShadow={true}
+                {...baseProps}
+              />
+            );
       case "adversarial":
-        return renderMobileMockupShell(
-          "scale-[0.48] sm:scale-[0.58]",
-          <AdversarialAppMockup
-            animKey={mobileAnimKey}
-            softDeviceShadow={true}
-            {...baseProps}
-          />
-        );
+        return isMobileViewport
+          ? renderMobileMockupMedia(
+              "platform-adversarial",
+              "Pressure Test",
+              { height: "172%" },
+              { y: "8px", scale: 1.08 }
+            )
+          : renderMobileMockupShell(
+              "scale-[0.48] sm:scale-[0.58]",
+              <AdversarialAppMockup
+                animKey={mobileAnimKey}
+                softDeviceShadow={true}
+                {...baseProps}
+              />
+            );
       case "stamina":
-        return renderMobileMockupShell(
-          "scale-[0.5] sm:scale-[0.6]",
-          <StaminaAppMockup
-            animKey={mobileAnimKey}
-            disableTouchPause={true}
-            softDeviceShadow={true}
-            {...baseProps}
-          />
-        );
+        return isMobileViewport
+          ? renderMobileMockupMedia(
+              "platform-stamina",
+              "Sustainable Training",
+              { width: "150%" },
+              { y: "10px", scale: 1.08 }
+            )
+          : renderMobileMockupShell(
+              "scale-[0.5] sm:scale-[0.6]",
+              <StaminaAppMockup
+                animKey={mobileAnimKey}
+                disableTouchPause={true}
+                softDeviceShadow={true}
+                {...baseProps}
+              />
+            );
       case "roadmap":
-        return renderMobileMockupShell(
-          "scale-[0.63] sm:scale-[0.7]",
-          <RoadmapAppMockup
-            animKey={mobileAnimKey}
-            compactVerticalPadding={true}
-            compactCarouselLayout={true}
-            softDeviceShadow={true}
-            {...baseProps}
-          />
-        );
+        return isMobileViewport
+          ? renderMobileMockupMedia(
+              "platform-roadmap",
+              "Your Roadmap",
+              { width: "170%" },
+              { x: "74px", y: "10px", scale: 1.08 }
+            )
+          : renderMobileMockupShell(
+              "scale-[0.63] sm:scale-[0.7]",
+              <RoadmapAppMockup
+                animKey={mobileAnimKey}
+                compactVerticalPadding={true}
+                compactCarouselLayout={true}
+                softDeviceShadow={true}
+                {...baseProps}
+              />
+            );
       default:
         return null;
     }
@@ -764,6 +860,32 @@ export default function Platform() {
 
       {/* ── Main content ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10 space-y-12 sm:space-y-12 md:space-y-0">
+        {isMobileViewport ? (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-4 top-0 -z-10 opacity-0 sm:inset-x-6 lg:inset-x-12"
+          >
+            {features.map((feature, index) => (
+              <div
+                key={`platform-mobile-copy-measure-${feature.id}`}
+                ref={(node) => {
+                  mobileCopyMeasureRefs.current[index] = node;
+                }}
+                className="px-[2px]"
+              >
+                <div className="relative pl-4 sm:pl-5">
+                  <h4 className="text-[1.6rem] font-black leading-[0.95] tracking-[-0.05em] text-app-text sm:text-[1.75rem] sm:leading-[0.95]">
+                    {feature.mobileTitle ?? feature.title}
+                  </h4>
+                  <p className="mt-2.5 max-w-[31ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
+                    {feature.mobileDesc ?? feature.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
         {/* Section heading */}
         <div className="mb-12 flex flex-col text-center md:mb-16 md:flex-row md:items-end md:justify-between md:text-left">
           <div className="max-w-2xl mx-auto md:mx-0">
@@ -830,23 +952,16 @@ export default function Platform() {
                   width: `${visibleMobileFeatures.length * 100}%`,
                   transform: isMobileViewport
                     ? "translate3d(0, 0, 0)"
-                    : `translate3d(-${activeIndex * (100 / visibleMobileFeatures.length)}%, 0, 0)`,
+                    : `translate3d(-${
+                        activeIndex * (100 / visibleMobileFeatures.length)
+                      }%, 0, 0)`,
                 }}
               >
                 {visibleMobileFeatures.map((feature) => {
                   const featureIndex = features.findIndex(
                     ({ id }) => id === feature.id
                   );
-                  const mobileStageHeight =
-                    feature.id === "roadmap"
-                      ? "h-[268px] sm:h-[296px]"
-                      : feature.id === "stamina"
-                      ? "h-[280px] sm:h-[308px]"
-                      : "h-[286px] sm:h-[316px]";
-                  const mobileStageOverflow =
-                    feature.id === "roadmap"
-                      ? "overflow-hidden"
-                      : "overflow-visible";
+                  const mobileStageHeight = "h-[286px] sm:h-[316px]";
 
                   return (
                     <div
@@ -855,10 +970,19 @@ export default function Platform() {
                         mobileSlideRefs.current[featureIndex] = node;
                       }}
                       className="shrink-0 h-full px-[2px]"
-                      style={{ width: `${100 / visibleMobileFeatures.length}%` }}
+                      style={{
+                        width: `${100 / visibleMobileFeatures.length}%`,
+                      }}
                     >
                       <div className="flex h-full flex-col justify-center gap-6">
-                        <div className="relative pl-4 sm:pl-5">
+                        <div
+                          className="relative pl-4 sm:pl-5"
+                          style={
+                            mobileCopyHeight
+                              ? { minHeight: `${mobileCopyHeight}px` }
+                              : undefined
+                          }
+                        >
                           <div
                             className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${feature.activeBar}`}
                           />
@@ -871,7 +995,7 @@ export default function Platform() {
                         </div>
 
                         <div
-                          className={`relative ${mobileStageHeight} ${mobileStageOverflow} rounded-[2rem]`}
+                          className={`relative ${mobileStageHeight} overflow-visible rounded-[2rem]`}
                         >
                           <div
                             className={`absolute inset-0 overflow-hidden rounded-[2rem] ${
@@ -941,62 +1065,62 @@ export default function Platform() {
           >
             {/* ── Left Nav ── */}
             <div className="lg:col-span-5 flex flex-col justify-center space-y-2 lg:pr-8">
-            {features.map((feature, index) => {
-              const isActive = index === activeIndex;
-              return (
-                <button
-                  key={feature.id}
-                  onClick={() => handleFeatureClick(index)}
-                  className={`relative flex flex-col text-left px-6 lg:px-8 py-5 md:py-6 rounded-2xl transition-all duration-300 w-full outline-none
+              {features.map((feature, index) => {
+                const isActive = index === activeIndex;
+                return (
+                  <button
+                    key={feature.id}
+                    onClick={() => handleFeatureClick(index)}
+                    className={`relative flex flex-col text-left px-6 lg:px-8 py-5 md:py-6 rounded-2xl transition-all duration-300 w-full outline-none
                     ${
                       isActive
                         ? "bg-[#FFFAF5] shadow-sm"
                         : "hover:bg-black/[0.02]"
                     }`}
-                  style={{
-                    animation: `platform-navItemIn 0.55s ease ${
-                      0.3 + index * 0.08
-                    }s both`,
-                  }}
-                >
-                  {/* Progress line */}
-                  <div
-                    className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 transition-all duration-500 rounded-full overflow-hidden ${
-                      isActive ? "h-[60%] bg-gray-200" : "h-0 bg-transparent"
-                    }`}
+                    style={{
+                      animation: `platform-navItemIn 0.55s ease ${
+                        0.3 + index * 0.08
+                      }s both`,
+                    }}
                   >
-                    {isActive && (
-                      <div
-                        className={`w-full absolute bottom-0 left-0 transition-all duration-75 ease-linear ${feature.activeBar}`}
-                        style={{ height: `${progress}%` }}
-                      />
-                    )}
-                  </div>
+                    {/* Progress line */}
+                    <div
+                      className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 transition-all duration-500 rounded-full overflow-hidden ${
+                        isActive ? "h-[60%] bg-gray-200" : "h-0 bg-transparent"
+                      }`}
+                    >
+                      {isActive && (
+                        <div
+                          className={`w-full absolute bottom-0 left-0 transition-all duration-75 ease-linear ${feature.activeBar}`}
+                          style={{ height: `${progress}%` }}
+                        />
+                      )}
+                    </div>
 
-                  <h4
-                    className={`text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300 ${
-                      isActive
-                        ? "text-app-text"
-                        : "text-app-muted/60 hover:text-app-text/80"
-                    }`}
-                  >
-                    {feature.title}
-                  </h4>
+                    <h4
+                      className={`text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300 ${
+                        isActive
+                          ? "text-app-text"
+                          : "text-app-muted/60 hover:text-app-text/80"
+                      }`}
+                    >
+                      {feature.title}
+                    </h4>
 
-                  <div
-                    className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                      isActive
-                        ? "max-h-48 opacity-100 mt-3"
-                        : "max-h-0 opacity-0 mt-0"
-                    }`}
-                  >
-                    <p className="text-app-muted text-sm md:text-base leading-relaxed">
-                      {feature.desc}
-                    </p>
-                  </div>
-                </button>
-              );
-            })}
+                    <div
+                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                        isActive
+                          ? "max-h-48 opacity-100 mt-3"
+                          : "max-h-0 opacity-0 mt-0"
+                      }`}
+                    >
+                      <p className="text-app-muted text-sm md:text-base leading-relaxed">
+                        {feature.desc}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
 
             {/* ── Right Visual Stage ── */}
@@ -1009,188 +1133,187 @@ export default function Platform() {
                 transformStyle: "preserve-3d",
               }}
             >
-            <div
-              className="w-full h-full lg:aspect-square xl:aspect-[4/3] relative transition-transform duration-700 ease-out group/stage overflow-visible"
-              style={{
-                transform: `rotateX(${stageMousePos.y * 5}deg) rotateY(${
-                  stageMousePos.x * -5
-                }deg)`,
-                transformStyle: "preserve-3d",
-              }}
-            >
-              {/* Card frame: Contains Glimmer and Backgrounds (Masked) */}
-              <div className="absolute inset-0 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-card-hover border border-orange-100/50">
-                {/* Glass glare */}
-                {activeFeature.id !== "roadmap" && (
-                  <div
-                    className="absolute inset-0 z-30 pointer-events-none opacity-0 group-hover/stage:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background: `radial-gradient(circle 600px at calc(var(--mouse-x-raw) * 1px) calc(var(--mouse-y-raw) * 1px), rgba(255,255,255,0.4) 0%, transparent 60%)`,
-                      mixBlendMode: "overlay",
-                    }}
-                  />
-                )}
-
-                {/* Animated backgrounds */}
-                {features.map((feature, index) => {
-                  const isActive = index === activeIndex;
-                  return (
+              <div
+                className="w-full h-full lg:aspect-square xl:aspect-[4/3] relative transition-transform duration-700 ease-out group/stage overflow-visible"
+                style={{
+                  transform: `rotateX(${stageMousePos.y * 5}deg) rotateY(${
+                    stageMousePos.x * -5
+                  }deg)`,
+                  transformStyle: "preserve-3d",
+                }}
+              >
+                {/* Card frame: Contains Glimmer and Backgrounds (Masked) */}
+                <div className="absolute inset-0 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-card-hover border border-orange-100/50">
+                  {/* Glass glare */}
+                  {activeFeature.id !== "roadmap" && (
                     <div
-                      key={`bg-${feature.id}`}
-                      className={`absolute inset-0 bg-gradient-to-br ${feature.bgGradient} transition-opacity duration-700 ease-in-out flex items-center justify-center`}
+                      className="absolute inset-0 z-30 pointer-events-none opacity-0 group-hover/stage:opacity-100 transition-opacity duration-500"
                       style={{
-                        opacity: isActive ? 1 : 0,
-                        pointerEvents: isActive ? "auto" : "none",
-                        zIndex: isActive ? 10 : 0,
+                        background: `radial-gradient(circle 600px at calc(var(--mouse-x-raw) * 1px) calc(var(--mouse-y-raw) * 1px), rgba(255,255,255,0.4) 0%, transparent 60%)`,
+                        mixBlendMode: "overlay",
                       }}
-                    >
+                    />
+                  )}
+
+                  {/* Animated backgrounds */}
+                  {features.map((feature, index) => {
+                    const isActive = index === activeIndex;
+                    return (
                       <div
-                        className={`absolute ${
-                          feature.id === "progress"
-                            ? "text-brand/10"
-                            : feature.iconColor
-                        } transition-all duration-700`}
+                        key={`bg-${feature.id}`}
+                        className={`absolute inset-0 bg-gradient-to-br ${feature.bgGradient} transition-opacity duration-700 ease-in-out flex items-center justify-center`}
                         style={{
-                          width: feature.id === "progress" ? "115%" : "80%",
-                          height: feature.id === "progress" ? "115%" : "80%",
-                          transform:
-                            feature.id === "progress"
-                              ? "rotate(-12deg) translateZ(-10px)"
-                              : "rotate(-6deg)",
-                          opacity: isActive
-                            ? feature.id === "progress"
-                              ? 0.01
-                              : 0.07
-                            : 0,
-                          animation: isActive
-                            ? feature.id === "progress"
-                              ? "platform-fadeSlideUp 1s cubic-bezier(0.23,1,0.32,1) both"
-                              : "platform-bgIconDrift 8s ease-in-out infinite"
-                            : "none",
+                          opacity: isActive ? 1 : 0,
+                          pointerEvents: isActive ? "auto" : "none",
+                          zIndex: isActive ? 10 : 0,
                         }}
                       >
-                        {feature.bgIcon}
-                      </div>
+                        <div
+                          className={`absolute ${
+                            feature.id === "progress"
+                              ? "text-brand/10"
+                              : feature.iconColor
+                          } transition-all duration-700`}
+                          style={{
+                            width: feature.id === "progress" ? "115%" : "80%",
+                            height: feature.id === "progress" ? "115%" : "80%",
+                            transform:
+                              feature.id === "progress"
+                                ? "rotate(-12deg) translateZ(-10px)"
+                                : "rotate(-6deg)",
+                            opacity: isActive
+                              ? feature.id === "progress"
+                                ? 0.01
+                                : 0.07
+                              : 0,
+                            animation: isActive
+                              ? feature.id === "progress"
+                                ? "platform-fadeSlideUp 1s cubic-bezier(0.23,1,0.32,1) both"
+                                : "platform-bgIconDrift 8s ease-in-out infinite"
+                              : "none",
+                          }}
+                        >
+                          {feature.bgIcon}
+                        </div>
 
-                      {/* SUBMERGED MOCKUP (Stamina Only - Inside Masking) */}
-                      {feature.id === "stamina" && isActive && (
-                        <div className="absolute inset-x-0 bottom-0 top-0 pointer-events-none translate-y-[10%] md:translate-y-[8%]">
-                          {feature.renderUI(
+                        {/* SUBMERGED MOCKUP (Stamina Only - Inside Masking) */}
+                        {feature.id === "stamina" && isActive && (
+                          <div className="absolute inset-x-0 bottom-0 top-0 pointer-events-none translate-y-[10%] md:translate-y-[8%]">
+                            {feature.renderUI(
+                              animKey,
+                              isHoveredStage,
+                              stageMousePos
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Interactive app mockups & content cards (OUTSIDE MASKING for Overflow) */}
+                {features.map((feature, index) => {
+                  const isActive = index === activeIndex;
+                  const isDark = feature.isDark;
+
+                  // Stamina is rendered inside for the submerged/masked effect
+                  if (feature.id === "stamina" && isActive) {
+                    return (
+                      <div
+                        key={`content-stamina-nav`}
+                        className="absolute inset-0 flex flex-col justify-between p-8 md:p-12 z-40"
+                      >
+                        {/* Tag chip only */}
+                        <div
+                          key={`tag-stamina-${animKey}`}
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
+                              bg-white border-emerald-200 text-emerald-500`}
+                          style={{
+                            animation:
+                              "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both",
+                          }}
+                        >
+                          {feature.tagIcon} {feature.shortTitle}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={`content-${feature.id}`}
+                      className={`absolute inset-0 flex flex-col justify-between p-8 md:p-12 transition-opacity duration-500 ease-in-out ${
+                        isActive
+                          ? "opacity-100 pointer-events-auto"
+                          : "opacity-0 pointer-events-none"
+                      }`}
+                      style={{ zIndex: 40 }}
+                    >
+                      {/* Tag chip */}
+                      {isActive && (
+                        <div
+                          key={`tag-${feature.id}-${animKey}`}
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
+                          ${feature.tagBg} ${feature.tagBorder} ${
+                            isDark ? "text-white" : feature.iconColor
+                          }`}
+                          style={{
+                            animation:
+                              "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both",
+                          }}
+                        >
+                          {feature.tagIcon} {feature.shortTitle}
+                        </div>
+                      )}
+
+                      {/* Dynamic mock UI (Overflowing) */}
+                      <div className="absolute inset-0 pointer-events-none">
+                        {isActive &&
+                          feature.renderUI(
                             animKey,
                             isHoveredStage,
                             stageMousePos
                           )}
-                        </div>
-                      )}
+                      </div>
+
+                      {/* Bottom CTA (roadmap only) */}
+                      <div className="self-end mt-auto">
+                        {isDark && isActive && feature.id !== "roadmap" && (
+                          <a
+                            key={`cta-${animKey}`}
+                            href="#roadmap"
+                            className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-brand flex items-center justify-center hover:bg-brand-50 transition-all transform hover:scale-110 shadow-2xl group/btn pointer-events-auto"
+                            style={{
+                              animation:
+                                "platform-popIn 0.55s cubic-bezier(0.23,1,0.32,1) 0.5s both",
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform"
+                            >
+                              <path d="M5 12h14" />
+                              <path d="m12 5 7 7-7 7" />
+                            </svg>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
               </div>
-
-              {/* Interactive app mockups & content cards (OUTSIDE MASKING for Overflow) */}
-              {features.map((feature, index) => {
-                const isActive = index === activeIndex;
-                const isDark = feature.isDark;
-
-                // Stamina is rendered inside for the submerged/masked effect
-                if (feature.id === "stamina" && isActive) {
-                  return (
-                    <div
-                      key={`content-stamina-nav`}
-                      className="absolute inset-0 flex flex-col justify-between p-8 md:p-12 z-40"
-                    >
-                      {/* Tag chip only */}
-                      <div
-                        key={`tag-stamina-${animKey}`}
-                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
-                              bg-white border-emerald-200 text-emerald-500`}
-                        style={{
-                          animation:
-                            "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both",
-                        }}
-                      >
-                        {feature.tagIcon} {feature.shortTitle}
-                      </div>
-                    </div>
-                  );
-                }
-
-                return (
-                  <div
-                    key={`content-${feature.id}`}
-                    className={`absolute inset-0 flex flex-col justify-between p-8 md:p-12 transition-opacity duration-500 ease-in-out ${
-                      isActive
-                        ? "opacity-100 pointer-events-auto"
-                        : "opacity-0 pointer-events-none"
-                    }`}
-                    style={{ zIndex: 40 }}
-                  >
-                    {/* Tag chip */}
-                    {isActive && (
-                      <div
-                        key={`tag-${feature.id}-${animKey}`}
-                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit shadow-[0_10px_30px_rgba(0,0,0,0.1)]
-                          ${feature.tagBg} ${feature.tagBorder} ${
-                          isDark ? "text-white" : feature.iconColor
-                        }`}
-                        style={{
-                          animation:
-                            "platform-tagDrop 0.55s cubic-bezier(0.23,1,0.32,1) 0.05s both",
-                        }}
-                      >
-                        {feature.tagIcon} {feature.shortTitle}
-                      </div>
-                    )}
-
-                    {/* Dynamic mock UI (Overflowing) */}
-                    <div className="absolute inset-0 pointer-events-none">
-                      {isActive &&
-                        feature.renderUI(
-                          animKey,
-                          isHoveredStage,
-                          stageMousePos
-                        )}
-                    </div>
-
-                    {/* Bottom CTA (roadmap only) */}
-                    <div className="self-end mt-auto">
-                      {isDark && isActive && feature.id !== "roadmap" && (
-                        <a
-                          key={`cta-${animKey}`}
-                          href="#roadmap"
-                          className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-brand flex items-center justify-center hover:bg-brand-50 transition-all transform hover:scale-110 shadow-2xl group/btn pointer-events-auto"
-                          style={{
-                            animation:
-                              "platform-popIn 0.55s cubic-bezier(0.23,1,0.32,1) 0.5s both",
-                          }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform"
-                          >
-                            <path d="M5 12h14" />
-                            <path d="m12 5 7 7-7 7" />
-                          </svg>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
             </div>
           </div>
         )}
       </div>
-
     </section>
   );
 }

@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export:mockups": "node ./scripts/export-mobile-mockups.mjs",
+    "verify:mockups:alpha": "node ./scripts/verify-alpha-mockups.mjs"
   },
   "dependencies": {
     "next": "15.4.7",
@@ -22,6 +24,7 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.4.7",
+    "playwright-core": "^1.59.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.12",
     "typescript": "^5"

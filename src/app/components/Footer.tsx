@@ -120,9 +120,31 @@ export default function Footer() {
         </div>
 
         {isMobileViewport ? (
-          <div className="relative z-10 border-t border-white/20 px-6 pb-6 pt-10 text-center">
-            <div className="text-[17vw] font-black tracking-tighter leading-none text-white/92">
-              SPEECHWORKS
+          <div className="relative z-10 w-full overflow-hidden border-t border-white/20 pb-6 pt-10">
+            <div className="marquee-container w-full">
+              <div className="marquee-content flex flex-nowrap items-center whitespace-nowrap py-2 text-[17vw] font-black leading-none tracking-tighter select-none">
+                <span className="px-4 text-white/92 drop-shadow-sm">
+                  SPEECHWORKS
+                </span>
+                <span className="px-4 text-white/30">•</span>
+                <span className="px-4 text-white/92 drop-shadow-sm">
+                  SPEECHWORKS
+                </span>
+                <span className="px-4 text-white/30">•</span>
+              </div>
+              <div
+                className="marquee-content flex flex-nowrap items-center whitespace-nowrap py-2 text-[17vw] font-black leading-none tracking-tighter select-none"
+                aria-hidden="true"
+              >
+                <span className="px-4 text-white/92 drop-shadow-sm">
+                  SPEECHWORKS
+                </span>
+                <span className="px-4 text-white/30">•</span>
+                <span className="px-4 text-white/92 drop-shadow-sm">
+                  SPEECHWORKS
+                </span>
+                <span className="px-4 text-white/30">•</span>
+              </div>
             </div>
           </div>
         ) : (

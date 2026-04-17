@@ -1,6 +1,7 @@
 import { withBasePath } from "@/app/lib/withBasePath";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
+import MobileMockupMedia from "./MobileMockupMedia";
 import { useIsMobileViewport } from "./useIsMobileViewport";
 import { useElementInView } from "./useElementInView";
 
@@ -70,23 +71,21 @@ const ROADMAP_PHASES = [
   },
 ] as const;
 
-const MOBILE_ROADMAP_STACK_PHASES = [2, 3, 1] as const;
-
 export default function Roadmap() {
   const [activePhase, setActivePhase] = useState(1);
-  const [mobileStackFrontPhase, setMobileStackFrontPhase] = useState<number>(1);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const [mobileCopyHeight, setMobileCopyHeight] = useState<number | null>(null);
   const [hoveredStackIndex, setHoveredStackIndex] = useState<number | null>(
     null
   );
   const sectionRef = useRef<HTMLElement>(null);
+  const mobileCopyMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const isMobileViewport = useIsMobileViewport();
   const isSectionInView = useElementInView(sectionRef, {
     disabled: !isMobileViewport,
     rootMargin: "180px 0px",
     threshold: 0.1,
   });
-  const animateMobileMockups = !isMobileViewport && isSectionInView;
   const visibleMobilePhases = isMobileViewport
     ? [ROADMAP_PHASES[activePhase - 1]]
     : ROADMAP_PHASES;
@@ -141,38 +140,79 @@ export default function Roadmap() {
     setActivePhase((currentPhase) => (currentPhase % ROADMAP_PHASES.length) + 1);
   };
 
-  const getMobileStackStyle = (phase: number) => {
-    const leftStyle = {
-      transform: "translate3d(-88px, 196px, 0) scale(0.31) rotate(-14deg)",
-      zIndex: 10,
-      opacity: 0.94,
-    };
-    const centerStyle = {
-      transform: "translate3d(0, 148px, 0) scale(0.41) rotate(0deg)",
-      zIndex: 30,
-      opacity: 1,
-    };
-    const rightStyle = {
-      transform: "translate3d(88px, 196px, 0) scale(0.31) rotate(14deg)",
-      zIndex: 12,
-      opacity: 0.94,
-    };
-
-    if (mobileStackFrontPhase === 1) {
-      if (phase === 1) return centerStyle;
-      if (phase === 2) return leftStyle;
-      return rightStyle;
+  const syncMobileCopyHeight = useCallback(() => {
+    if (!isMobileViewport) {
+      setMobileCopyHeight(null);
+      return;
     }
 
-    if (mobileStackFrontPhase === 2) {
-      if (phase === 2) return centerStyle;
-      if (phase === 1) return leftStyle;
-      return rightStyle;
-    }
+    const nextHeight = mobileCopyMeasureRefs.current.reduce((maxHeight, node) => {
+      if (!node) return maxHeight;
+      return Math.max(maxHeight, Math.ceil(node.getBoundingClientRect().height));
+    }, 0);
 
-    if (phase === 3) return centerStyle;
-    if (phase === 2) return leftStyle;
-    return rightStyle;
+    if (!nextHeight) return;
+
+    setMobileCopyHeight((current) =>
+      current === nextHeight ? current : nextHeight
+    );
+  }, [isMobileViewport]);
+
+  useEffect(() => {
+    syncMobileCopyHeight();
+  }, [syncMobileCopyHeight]);
+
+  useEffect(() => {
+    if (!isMobileViewport) return;
+
+    const handleResize = () => {
+      syncMobileCopyHeight();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(() => {
+            syncMobileCopyHeight();
+          });
+
+    mobileCopyMeasureRefs.current.forEach((node) => {
+      if (node) {
+        resizeObserver?.observe(node);
+      }
+    });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      resizeObserver?.disconnect();
+    };
+  }, [isMobileViewport, syncMobileCopyHeight]);
+
+  const renderMobileRoadmapMedia = (phaseId: number, title: string) => {
+    const slug = `roadmap-phase-${phaseId}`;
+    const mediaStyle =
+      phaseId === 1
+        ? ({ width: "184%" } as React.CSSProperties)
+        : ({ width: "170%" } as React.CSSProperties);
+    const mediaTransform =
+      phaseId === 1
+        ? { x: "10px", y: "8px", scale: 1.01 }
+        : { y: "4px", scale: 0.94 };
+
+    return (
+      <div className="absolute inset-0 z-10 flex items-end justify-center overflow-visible px-2 pb-0">
+        <MobileMockupMedia
+          slug={slug}
+          alt={`${title} roadmap preview`}
+          shouldPlay={isSectionInView}
+          className="h-full w-full"
+          mediaStyle={mediaStyle}
+          mediaTransform={mediaTransform}
+        />
+      </div>
+    );
   };
 
   return (
@@ -189,6 +229,40 @@ export default function Roadmap() {
         }
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+          {isMobileViewport ? (
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-4 top-0 -z-10 opacity-0 sm:inset-x-6 lg:inset-x-12"
+            >
+              {ROADMAP_PHASES.map((phase, index) => (
+                <div
+                  key={`roadmap-mobile-copy-measure-${phase.id}`}
+                  ref={(node) => {
+                    mobileCopyMeasureRefs.current[index] = node;
+                  }}
+                  className="px-[2px] py-1.5 sm:py-2"
+                >
+                  <div className="relative pl-4 sm:pl-5">
+                    <div className="mb-3 flex items-center gap-2">
+                      <span
+                        className={`inline-flex h-2.5 w-2.5 rounded-full ${phase.accentBarClass}`}
+                      />
+                      <span className="text-[10px] font-black uppercase tracking-[0.18em] text-app-muted">
+                        {phase.status}
+                      </span>
+                    </div>
+                    <h4 className="text-[1.95rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text sm:text-[2rem]">
+                      {phase.title}
+                    </h4>
+                    <p className="mt-2.5 max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
+                      {phase.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : null}
+
           <div className="mb-12 md:mb-16 reveal text-center lg:text-left active">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
@@ -226,7 +300,14 @@ export default function Roadmap() {
                   >
                     <div className="px-[2px]">
                       <div className="flex h-full flex-col gap-6">
-                        <div className="relative pl-4 sm:pl-5">
+                        <div
+                          className="relative pl-4 sm:pl-5"
+                          style={
+                            mobileCopyHeight
+                              ? { minHeight: `${mobileCopyHeight}px` }
+                              : undefined
+                          }
+                        >
                           <div
                             className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${phase.accentBarClass}`}
                           />
@@ -251,71 +332,7 @@ export default function Roadmap() {
                         >
                           <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.18),transparent_22%),linear-gradient(180deg,rgba(255,255,255,0.06),transparent_58%)]" />
                           <div className="absolute inset-0 opacity-[0.08] bg-grid" />
-                          {phase.id === 1 ? (
-                            <div className="absolute inset-0 flex items-end justify-center overflow-hidden px-3 pb-2">
-                              <div className="relative h-full w-full max-w-[320px]">
-                                {MOBILE_ROADMAP_STACK_PHASES.map((stackPhase) => {
-                                  const stackStyle = getMobileStackStyle(stackPhase);
-                                  const isFocused = mobileStackFrontPhase === stackPhase;
-
-                                  return (
-                                    <button
-                                      key={stackPhase}
-                                      type="button"
-                                      onClick={() => setMobileStackFrontPhase(stackPhase)}
-                                      className="absolute bottom-0 left-1/2 block will-change-transform bg-transparent p-0 text-left transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
-                                      style={{
-                                        transform: `translateX(-50%) ${stackStyle.transform}`,
-                                        zIndex: stackStyle.zIndex,
-                                        opacity: stackStyle.opacity,
-                                      }}
-                                      aria-label={`Bring roadmap preview ${stackPhase} to front`}
-                                      aria-pressed={isFocused}
-                                    >
-                                      <div
-                                        className={`transition-all duration-700 ${
-                                          isFocused
-                                            ? "opacity-100 blur-0"
-                                            : "opacity-80 blur-[0.6px]"
-                                        }`}
-                                      >
-                                        <RoadmapMockup
-                                          phase={stackPhase}
-                                          status={
-                                            stackPhase === 1
-                                              ? "live"
-                                              : stackPhase === 2
-                                              ? "building"
-                                              : "future"
-                                          }
-                                          animateContent={animateMobileMockups}
-                                          syncTime={!isMobileViewport}
-                                        />
-                                      </div>
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="absolute inset-x-0 bottom-0 flex items-end justify-center">
-                              <div
-                                className={`origin-bottom scale-[0.54] sm:scale-[0.58] ${
-                                  phase.comingSoon ? "translate-y-[7.25rem]" : ""
-                                }`}
-                              >
-                                <RoadmapMockup
-                                  phase={phase.mockupPhase}
-                                  status={
-                                    phase.id === 2 ? "building" : "future"
-                                  }
-                                  comingSoon={phase.comingSoon}
-                                  animateContent={animateMobileMockups}
-                                  syncTime={!isMobileViewport}
-                                />
-                              </div>
-                            </div>
-                          )}
+                          {renderMobileRoadmapMedia(phase.id, phase.title)}
 
                           <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-between px-3 sm:px-4">
                             <button

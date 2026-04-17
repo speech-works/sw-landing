@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { withBasePath } from "@/app/lib/withBasePath";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LiveAppMockup from "./LiveAppMockup";
+import MobileMockupMedia from "./MobileMockupMedia";
 import MobileCarouselControls from "./MobileCarouselControls";
+import { useElementInView } from "./useElementInView";
 import { useMockDeviceTime } from "./useMockDeviceTime";
 import { useIsMobileViewport } from "./useIsMobileViewport";
 
@@ -128,13 +130,21 @@ const HERO_PHONE_COPY: Record<
 };
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [activePhone, setActivePhone] = useState<HeroPhoneId>("center");
   const [hoveredPhone, setHoveredPhone] = useState<HeroPhoneId | null>(null);
   const isMobileViewport = useIsMobileViewport();
+  const isHeroInView = useElementInView(sectionRef, {
+    disabled: !isMobileViewport,
+    rootMargin: "120px 0px",
+    threshold: 0.15,
+  });
   const timeStr = useMockDeviceTime("09:41", { enabled: !isMobileViewport });
   const activeHeroPhone = HERO_PHONE_COPY[activePhone];
   const activePhoneIndex = Math.max(0, HERO_PHONE_IDS.indexOf(activePhone));
   const visibleHeroPhoneIds = isMobileViewport ? [activePhone] : HERO_PHONE_IDS;
+  const shouldPlayMobileHeroScreen =
+    isMobileViewport && isHeroInView && activePhone === "center";
 
   useEffect(() => {
     if (isMobileViewport) return;
@@ -197,7 +207,10 @@ export default function Hero() {
   return (
     <>
       {/*  EXPERIMENTAL HERO SECTION: Dark Mode Cinematic Entrance  */}
-      <section className="relative flex min-h-[100svh] items-center bg-[#0A0705] overflow-hidden pb-16 pt-[calc(var(--nav-height)+1.5rem)] sm:pt-[calc(var(--nav-height)+2rem)] md:min-h-screen md:pt-32 md:pb-20 z-10">
+      <section
+        ref={sectionRef}
+        className="relative flex min-h-[100svh] items-center bg-[#0A0705] overflow-hidden pb-16 pt-[calc(var(--nav-height)+1.5rem)] sm:pt-[calc(var(--nav-height)+2rem)] md:min-h-screen md:pt-32 md:pb-20 z-10"
+      >
         <style>{HERO_FAN_SCREEN_KEYFRAMES}</style>
 
         {/*  Fascinating Background: Floating Gradient Orbs & Kinetic Text  */}
@@ -451,12 +464,12 @@ export default function Hero() {
 
                             {phoneId === "center" && (
                               <div className="h-full overflow-hidden bg-[#f9fafb]">
-                                <LiveAppMockup
-                                  disableVerticalPan
-                                  compact
-                                  hideStatusBar
-                                  isAnimationActive={!isMobileViewport}
-                                  syncTime={!isMobileViewport}
+                                <MobileMockupMedia
+                                  slug="hero-live-screen"
+                                  alt="Speechworks dashboard preview"
+                                  shouldPlay={shouldPlayMobileHeroScreen}
+                                  className="h-full w-full"
+                                  mediaStyle={{ height: "136%" }}
                                 />
                               </div>
                             )}
