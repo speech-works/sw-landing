@@ -260,6 +260,19 @@ export default function InviteOnlyModal({
     const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
       "mayank@speechworks.in"
     )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailtoUrl = `mailto:mayank@speechworks.in?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    const userAgent = navigator.userAgent;
+    const shouldUseNativeMailClient =
+      isMobileViewport ||
+      /Android|iPhone|iPad|iPod/i.test(userAgent) ||
+      window.matchMedia("(pointer: coarse)").matches;
+
+    if (shouldUseNativeMailClient) {
+      window.location.href = mailtoUrl;
+      return;
+    }
 
     const openedWindow = window.open(
       gmailComposeUrl,
@@ -268,9 +281,7 @@ export default function InviteOnlyModal({
     );
 
     if (!openedWindow) {
-      window.location.href = `mailto:mayank@speechworks.in?subject=${encodeURIComponent(
-        subject
-      )}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoUrl;
     }
   };
 
