@@ -5,23 +5,56 @@ import React from "react";
 export default function ApplyButton() {
   const handleApplyClick = () => {
     // Explicit event tracking placeholder
-    // If you add PostHog or Google Analytics later, you can add it here.
-    // e.g., posthog.capture('clicked_apply_advisory_board')
     console.log('Event tracked: clicked_apply_advisory_board');
   };
 
   return (
-    <a 
-      href="https://form.typeform.com/to/placeholder" 
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={handleApplyClick}
-      className="inline-flex items-center justify-center gap-3 px-8 py-5 md:px-12 md:py-6 rounded-full bg-brand text-white text-sm md:text-base font-black uppercase tracking-wider hover:bg-brand-600 transition-all duration-300 shadow-[0_15px_30px_-10px_rgba(234,88,12,0.4)] hover:shadow-[0_20px_40px_-10px_rgba(234,88,12,0.5)] hover:-translate-y-1"
-    >
-      Apply for the Advisory Board
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-      </svg>
-    </a>
+    <>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            .clinician-cta-btn {
+                border-radius: 9999px;
+                background: linear-gradient(135deg, #FF955E 0%, #D9692E 100%);
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                box-shadow: 0 15px 35px -5px rgba(242, 128, 68, 0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+                cursor: pointer;
+                will-change: transform, box-shadow;
+                transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
+                isolation: isolate;
+                display: inline-flex;
+                text-decoration: none;
+            }
+            .clinician-cta-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 17px 30px -9px rgba(121, 76, 57, 0.22), inset 0 2px 4px rgba(255,255,255,0.42);
+            }
+            .clinician-cta-layer {
+                color: #ffffff;
+                transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+                white-space: nowrap;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .clinician-cta-btn:hover .clinician-cta-layer {
+                transform: scale(0.992);
+            }
+          `,
+        }}
+      />
+      
+      <a 
+        href="https://form.typeform.com/to/placeholder" 
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={handleApplyClick}
+        className="clinician-cta-btn relative z-30"
+      >
+        <div className="clinician-cta-layer w-full h-full flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-12 py-5 sm:py-6">
+          <span className="font-black uppercase tracking-[0.25em] text-xs sm:text-sm whitespace-nowrap text-center">
+            Apply for Advisory Board
+          </span>
+        </div>
+      </a>
+    </>
   );
 }

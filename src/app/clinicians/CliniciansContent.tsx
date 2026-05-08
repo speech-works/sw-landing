@@ -78,37 +78,44 @@ export default function CliniciansContent() {
         </div>
 
         {/* Interactive Bento Box Layout */}
-        <div className="w-full grid md:grid-cols-2 gap-8 mb-8">
+        <div className="w-full grid md:grid-cols-2 gap-6 lg:gap-8 mb-16">
           
           {/* Left Bento: The Clinical Reality */}
-          <div className="group relative rounded-[2.5rem] bg-white/60 backdrop-blur-2xl border border-white/80 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden p-10 md:p-14 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] transition-all duration-500">
+          <div className="group relative rounded-[2.5rem] bg-white/40 backdrop-blur-3xl border border-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden p-10 md:p-14 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_30px_60px_-15px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-500">
             {/* Subtle Inner Glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none" />
-            <div className="absolute -inset-1 bg-gradient-to-br from-brand/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute -inset-1 bg-gradient-to-br from-brand/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none" />
             
-            <div className="relative z-10 flex flex-col h-full justify-center">
-              <div className="w-14 h-1.5 bg-gradient-to-r from-brand to-brand-400 rounded-full mb-6 shadow-sm" />
-              <h3 className="text-3xl md:text-4xl font-black tracking-tight mb-6 text-app-text">
+            <div className="relative z-10 flex flex-col h-full">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 border border-white shadow-sm w-fit mb-8 group-hover:scale-105 transition-transform">
+                <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-app-text">Context</span>
+              </div>
+              <h3 className="text-3xl md:text-4xl font-black tracking-tight text-app-text mb-6">
                 The Clinical Reality
               </h3>
-              <p className="text-lg text-app-muted leading-relaxed font-medium">
-                We are building the backend architecture for a new era of speech therapy—tracking objective progress, simulating adversarial environments, and bridging the massive data gap between the clinic and the living room. But the math means nothing without clinical truth.
+              <p className="text-[1.05rem] md:text-[1.15rem] text-app-muted leading-relaxed font-medium">
+                We are building the backend architecture for a new era of speech therapy—tracking objective progress, simulating adversarial environments, and bridging the massive data gap between the clinic and the living room. But the math means nothing without <strong className="text-app-text font-black">clinical truth</strong>.
               </p>
             </div>
           </div>
 
           {/* Right Bento: The Invitation */}
-          <div className="group relative rounded-[2.5rem] bg-[#0A0705] text-white backdrop-blur-2xl border border-white/10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] overflow-hidden p-10 md:p-14 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-500">
-             {/* Abstract glow inside dark card */}
-             <div className="absolute top-0 right-0 w-64 h-64 bg-brand/20 blur-[80px] rounded-full pointer-events-none opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
+          <div className="group relative rounded-[2.5rem] bg-gradient-to-b from-[#1a1412] to-[#0A0705] text-white backdrop-blur-3xl border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_40px_-15px_rgba(0,0,0,0.4)] overflow-hidden p-10 md:p-14 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_30px_60px_-15px_rgba(0,0,0,0.5)] hover:-translate-y-1 transition-all duration-500">
+             {/* Architectural lines/glows inside dark card */}
+             <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand/30 to-transparent opacity-50" />
+             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand/15 via-transparent to-transparent pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
             
-            <div className="relative z-10 flex flex-col h-full justify-center">
-              <div className="w-14 h-1.5 bg-white rounded-full mb-6 shadow-sm" />
-              <h3 className="text-3xl md:text-4xl font-black tracking-tight mb-6">
+            <div className="relative z-10 flex flex-col h-full">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 shadow-sm w-fit mb-8 group-hover:scale-105 transition-transform">
+                <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/80">Opportunity</span>
+              </div>
+              <h3 className="text-3xl md:text-4xl font-black tracking-tight text-white mb-6">
                 The Invitation
               </h3>
-              <p className="text-lg text-white/70 leading-relaxed font-medium">
-                As we build the clinical portal, we are actively recruiting a tight-knit Founding Clinical Advisory Board (CAB). We are looking for 3 to 5 forward-thinking, private practice SLPs who are tired of clunky EMRs and want to steer the development of a platform that actually eliminates administrative friction and drives practice growth.
+              <p className="text-[1.05rem] md:text-[1.15rem] text-white/70 leading-relaxed font-medium">
+                As we build the clinical portal, we are actively recruiting a tight-knit <strong className="text-white font-black">Founding Clinical Advisory Board (CAB)</strong>. We are looking for 3 to 5 forward-thinking, private practice SLPs who are tired of clunky EMRs and want to steer the development of a platform that actually eliminates administrative friction and drives practice growth.
               </p>
             </div>
           </div>
@@ -173,10 +180,7 @@ export default function CliniciansContent() {
 
         {/* Global CTA */}
         <div className="flex justify-center z-20 relative">
-          <div className="relative group">
-             <div className="absolute -inset-2 bg-gradient-to-r from-brand to-purple-500 rounded-full blur-lg opacity-40 group-hover:opacity-70 transition duration-500 pointer-events-none"></div>
-             <ApplyButton />
-          </div>
+          <ApplyButton />
         </div>
 
       </section>
