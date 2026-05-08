@@ -264,15 +264,31 @@ export default function Roadmap() {
           ) : null}
 
           <div className="mb-12 md:mb-16 reveal text-center lg:text-left active">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
-              Master Plan
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 lg:gap-8">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-6">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
+                  Master Plan
+                </div>
+                <h3 className="text-4xl sm:text-5xl md:text-7xl lg:text-[5rem] font-black tracking-tighter leading-[0.95] text-app-text">
+                  THE SPEECHWORKS
+                  <br />
+                  ROADMAP.
+                </h3>
+              </div>
+              <div className="lg:pb-3 flex justify-center lg:justify-end">
+                <a 
+                  href="/clinicians" 
+                  className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full bg-black text-white text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-black/80 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                >
+                  Are you an SLP? Help us build this.
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </a>
+              </div>
             </div>
-            <h3 className="text-4xl sm:text-5xl md:text-7xl lg:text-[5rem] font-black tracking-tighter leading-[0.95] text-app-text">
-              THE SPEECHWORKS
-              <br />
-              ROADMAP.
-            </h3>
           </div>
 
           <div

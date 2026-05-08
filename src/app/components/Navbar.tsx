@@ -2,12 +2,17 @@
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { withBasePath } from "@/app/lib/withBasePath";
 
 import ContactModal from "./ContactModal";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const prefix = isHome ? "" : "/";
+
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -72,7 +77,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <div className="mobile-fixed-glass flex justify-between items-center backdrop-blur-2xl bg-white/90 border border-orange-900/10 rounded-full px-4 md:px-6 py-2.5 md:py-3 shadow-lg">
-            <div className="flex items-center gap-2 md:gap-3">
+            <a href="/" className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80">
                 <div className="relative h-7 w-7 overflow-hidden rounded-full md:h-8 md:w-8">
                   <Image
                     src={withBasePath("/assets/logo.png")}
@@ -85,26 +90,32 @@ export default function Navbar() {
                 <span className="font-bold text-base md:text-lg tracking-tight text-app-text">
                   Speechworks
                 </span>
-            </div>
+            </a>
 
             <div className="hidden lg:flex items-center space-x-8">
               <a
-                href="#roadmap"
+                href={`${prefix}#roadmap`}
                 className="text-xs font-semibold uppercase tracking-widest text-app-muted transition-colors hover:text-brand"
               >
                 Roadmap
               </a>
               <a
-                href="#platform"
+                href={`${prefix}#platform`}
                 className="text-xs font-semibold uppercase tracking-widest text-app-muted transition-colors hover:text-brand"
               >
                 Platform
               </a>
               <a
-                href="#team"
+                href={`${prefix}#team`}
                 className="text-xs font-semibold uppercase tracking-widest text-app-muted transition-colors hover:text-brand"
               >
                 Team
+              </a>
+              <a
+                href="/clinicians"
+                className="text-xs font-semibold uppercase tracking-widest text-app-muted transition-colors hover:text-brand"
+              >
+                For Clinicians
               </a>
               <button
                 type="button"
@@ -117,7 +128,7 @@ export default function Navbar() {
 
             <div className="flex items-center gap-2">
               <a
-                href="#download"
+                href={`${prefix}#download`}
                 onClick={closeMenu}
                 className="bg-brand text-white hover:bg-brand-600 px-4 md:px-6 py-2 md:py-2.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg"
               >
@@ -177,25 +188,32 @@ export default function Navbar() {
             <div className="mobile-fixed-glass mx-3 rounded-[1.75rem] border border-orange-900/10 bg-white/92 px-4 py-3 shadow-lg backdrop-blur-2xl">
               <div className="grid gap-2">
                 <a
-                  href="#roadmap"
+                  href={`${prefix}#roadmap`}
                   onClick={closeMenu}
                   className="rounded-2xl px-4 py-3 text-sm font-semibold text-app-text transition-colors hover:bg-brand-50"
                 >
                   Roadmap
                 </a>
                 <a
-                  href="#platform"
+                  href={`${prefix}#platform`}
                   onClick={closeMenu}
                   className="rounded-2xl px-4 py-3 text-sm font-semibold text-app-text transition-colors hover:bg-brand-50"
                 >
                   Platform
                 </a>
                 <a
-                  href="#team"
+                  href={`${prefix}#team`}
                   onClick={closeMenu}
                   className="rounded-2xl px-4 py-3 text-sm font-semibold text-app-text transition-colors hover:bg-brand-50"
                 >
                   Team
+                </a>
+                <a
+                  href="/clinicians"
+                  onClick={closeMenu}
+                  className="rounded-2xl px-4 py-3 text-sm font-semibold text-app-text transition-colors hover:bg-brand-50"
+                >
+                  For Clinicians
                 </a>
                 <button
                   type="button"
