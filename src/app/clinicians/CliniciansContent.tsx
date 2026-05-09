@@ -4,11 +4,10 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ApplyButton from './ApplyButton';
-import DecryptedText from './DecryptedText';
 
 export default function CliniciansContent() {
   const [stageMousePos, setStageMousePos] = useState({ x: 500, y: 500 });
-  const [isInviteHovered, setIsInviteHovered] = useState(false);
+  const [hoveredSide, setHoveredSide] = useState<'left' | 'right' | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -21,7 +20,7 @@ export default function CliniciansContent() {
   };
 
   return (
-    <main 
+    <main
       className="min-h-screen flex flex-col bg-[#FFFAF5] text-app-text relative overflow-hidden group"
       onMouseMove={handleMouseMove}
       style={{
@@ -33,7 +32,7 @@ export default function CliniciansContent() {
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-white/50">
         <div className="absolute top-[10%] left-[5%] w-[40%] h-[60%] bg-gradient-to-tr from-brand/10 to-transparent blur-[120px] mix-blend-multiply rounded-full animate-pulse" />
         <div className="absolute bottom-[10%] right-[5%] w-[50%] h-[50%] bg-gradient-to-bl from-purple-500/10 to-transparent blur-[120px] mix-blend-multiply rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
-        
+
         {/* X-Ray Mouse Tracking Spotlight */}
         <div
           className="absolute inset-0 transition-opacity duration-1000 opacity-0 group-hover:opacity-100"
@@ -57,7 +56,7 @@ export default function CliniciansContent() {
       <Navbar />
 
       <section className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-32 md:pt-48 pb-24 relative z-10 flex flex-col items-center">
-        
+
         <div className="mb-10 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 backdrop-blur-xl border border-brand/20 shadow-sm text-app-text text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-center transition-transform hover:scale-105">
           <svg className="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
@@ -80,38 +79,37 @@ export default function CliniciansContent() {
         </div>
 
         {/* Unified Glass Content Container */}
-        <div 
+        <div
           className="w-full relative rounded-[3rem] bg-white/40 backdrop-blur-3xl border border-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_20px_40px_-15px_rgba(0,0,0,0.05)] p-8 md:p-16 lg:p-20 mb-16 overflow-hidden group/container transition-all duration-300 ease-out"
-          style={{ transform: `perspective(1000px) rotateX(${(stageMousePos.y - window.innerHeight/2) * -0.005}deg) rotateY(${(stageMousePos.x - window.innerWidth/2) * 0.005}deg)` }}
+          style={{ transform: `perspective(1000px) rotateX(${(stageMousePos.y - window.innerHeight / 2) * -0.005}deg) rotateY(${(stageMousePos.x - window.innerWidth / 2) * 0.005}deg)` }}
         >
           {/* Subtle Inner Glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent pointer-events-none" />
-          
+
           <div className="relative z-10 grid md:grid-cols-2 gap-12 md:gap-20">
             {/* Left Column: The Clinical Reality */}
-            <div className="flex flex-col relative">
-              {/* Tech/Data Overlay */}
-              <div className="absolute -top-4 -left-2 text-[8px] font-mono text-app-text/30 uppercase tracking-[0.3em] pointer-events-none">
-                SEC.01 // CONTEXT
-              </div>
-
+            <div 
+              className={`flex flex-col relative transition-all duration-700 ease-out ${hoveredSide === 'right' ? 'opacity-30 blur-[2px] grayscale-[0.5]' : 'opacity-100'}`}
+              onMouseEnter={() => setHoveredSide('left')}
+              onMouseLeave={() => setHoveredSide(null)}
+            >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 border border-white shadow-sm w-fit mb-8 mt-2">
                 <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
                 <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-app-text">Context</span>
               </div>
-              <h3 className="text-3xl md:text-4xl font-black tracking-tight text-app-text mb-6">
+              <h3 className="text-3xl md:text-4xl font-black tracking-tight text-app-text mb-6 flex items-center gap-3">
                 The Clinical Reality
               </h3>
               <p className="text-[1.05rem] md:text-[1.15rem] text-app-muted leading-relaxed font-medium">
-                We are building the backend architecture for a new era of speech therapy—tracking objective progress, simulating adversarial environments, and bridging the massive data gap between the clinic and the living room. But the math means nothing without <strong className="text-app-text font-black">clinical truth</strong>.
+                We are building the backend architecture for a new era of speech therapy—tracking objective progress, simulating adversarial environments, and bridging the massive data gap between the clinic and the living room. But the math means nothing without <strong className={`font-black transition-all duration-500 ${hoveredSide === 'left' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.3)]' : 'text-app-text'}`}>clinical truth</strong>.
               </p>
             </div>
 
             {/* Right Column: The Invitation */}
-            <div 
-              className="flex flex-col relative group/invite cursor-crosshair"
-              onMouseEnter={() => setIsInviteHovered(true)}
-              onMouseLeave={() => setIsInviteHovered(false)}
+            <div
+              className={`flex flex-col relative group/invite cursor-default transition-all duration-700 ease-out ${hoveredSide === 'left' ? 'opacity-30 blur-[2px] grayscale-[0.5]' : 'opacity-100'}`}
+              onMouseEnter={() => setHoveredSide('right')}
+              onMouseLeave={() => setHoveredSide(null)}
             >
               {/* Divider for desktop */}
               <div className="hidden md:block absolute -left-6 lg:-left-10 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-brand/20 to-transparent" />
@@ -119,50 +117,31 @@ export default function CliniciansContent() {
               <div className="md:hidden w-full h-[1px] bg-gradient-to-r from-transparent via-brand/20 to-transparent my-4" />
 
               {/* Scarcity Tracker */}
-              <div className="inline-flex items-center gap-4 px-4 py-2 rounded-full bg-white/80 border border-white shadow-sm w-fit mb-8 relative overflow-hidden group/tracker mt-2 transition-transform duration-300 group-hover/invite:scale-105">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand/10 to-transparent translate-x-[-100%] group-hover/tracker:translate-x-[100%] transition-transform duration-1000" />
+              <div className="inline-flex items-center gap-3 px-3 py-1.5 rounded-full bg-white/80 border border-white shadow-sm w-fit mb-8 relative overflow-hidden mt-2">
                 <div className="flex gap-1.5">
-                  <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-app-text/20 shadow-[inset_0_1px_1px_rgba(0,0,0,0.1)]" /> {/* Locked */}
-                  <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-app-text/20 shadow-[inset_0_1px_1px_rgba(0,0,0,0.1)]" /> {/* Locked */}
-                  <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-brand shadow-[0_0_8px_rgba(234,88,12,0.5)] animate-pulse" /> {/* Open */}
-                  <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-brand shadow-[0_0_8px_rgba(234,88,12,0.5)] animate-pulse" style={{animationDelay: "0.2s"}} /> {/* Open */}
-                  <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-brand shadow-[0_0_8px_rgba(234,88,12,0.5)] animate-pulse" style={{animationDelay: "0.4s"}} /> {/* Open */}
+                  <div className="w-2 h-2 rounded-full bg-app-text/20 shadow-[inset_0_1px_1px_rgba(0,0,0,0.1)]" /> {/* Locked */}
+                  <div className="w-2 h-2 rounded-full bg-app-text/20 shadow-[inset_0_1px_1px_rgba(0,0,0,0.1)]" /> {/* Locked */}
+                  <div className="w-2 h-2 rounded-full bg-brand shadow-[0_0_8px_rgba(234,88,12,0.5)] animate-pulse" /> {/* Open */}
+                  <div className="w-2 h-2 rounded-full bg-brand shadow-[0_0_8px_rgba(234,88,12,0.5)] animate-pulse" style={{ animationDelay: "0.2s" }} /> {/* Open */}
+                  <div className="w-2 h-2 rounded-full bg-brand shadow-[0_0_8px_rgba(234,88,12,0.5)] animate-pulse" style={{ animationDelay: "0.4s" }} /> {/* Open */}
                 </div>
-                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-app-text font-mono">
-                  03 / 05 SEATS
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-app-text/60">
+                  Exclusive CAB Membership
                 </span>
               </div>
               <h3 className="text-3xl md:text-4xl font-black tracking-tight text-app-text mb-6 flex items-center gap-3">
                 The Invitation
-                {isInviteHovered ? (
-                  <svg className="w-5 h-5 text-brand animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                ) : (
-                  <svg className="w-5 h-5 text-app-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
-                )}
+                <svg 
+                  className={`w-6 h-6 text-brand transition-all duration-700 ease-out ${hoveredSide === 'right' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`} 
+                  viewBox="0 0 24 24" fill="currentColor" 
+                >
+                  <path d="M12 2l2.4 7.6 7.6 2.4-7.6 2.4L12 22l-2.4-7.6-7.6-2.4 7.6-2.4L12 2z"/>
+                </svg>
               </h3>
-              
-              <div className="relative">
-                {/* Awwwards Tech Overlay */}
-                <div className="absolute -top-16 right-0 text-[8px] font-mono text-brand/60 uppercase tracking-[0.3em] opacity-0 group-hover/invite:opacity-100 transition-opacity duration-700 pointer-events-none text-right">
-                  SYS.REQ.SLP_CAB<br/>
-                  AUTH_PENDING...
-                </div>
 
-                <div className="text-[0.95rem] md:text-[1.1rem] leading-relaxed relative z-10 transition-all duration-500 flex items-start w-full">
-                  {/* The "Ghost" text that forces the height to be stable and prevents layout shifts */}
-                  <div className="invisible opacity-0 select-none pointer-events-none font-mono whitespace-pre-wrap break-words" aria-hidden="true">
-                    As we build the clinical portal, we are actively recruiting a tight-knit Founding Clinical Advisory Board (CAB). We are looking for 3 to 5 forward-thinking, private practice SLPs who are tired of clunky EMRs and want to steer the development of a platform that actually eliminates administrative friction and drives practice growth.
-                  </div>
-                  
-                  {/* The actual interactive text positioned on top */}
-                  <div className="absolute inset-0 w-full">
-                    <DecryptedText 
-                      text="As we build the clinical portal, we are actively recruiting a tight-knit Founding Clinical Advisory Board (CAB). We are looking for 3 to 5 forward-thinking, private practice SLPs who are tired of clunky EMRs and want to steer the development of a platform that actually eliminates administrative friction and drives practice growth."
-                      isHovered={isInviteHovered}
-                      speed={20}
-                      className={isInviteHovered ? "opacity-100" : "opacity-80 select-none"}
-                    />
-                  </div>
+              <div className="relative">
+                <div className="text-[0.95rem] md:text-[1.1rem] leading-relaxed relative z-10 w-full text-app-muted font-medium transition-colors duration-500">
+                  As we build the clinical portal, we are actively recruiting a tight-knit <span className={`font-black transition-all duration-500 ${hoveredSide === 'right' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.2)]' : 'text-app-text'}`}>Founding Clinical Advisory Board (CAB)</span>. We are looking for 3 to 5 forward-thinking, private practice SLPs who are tired of clunky EMRs and want to <span className={`font-black transition-all duration-500 ${hoveredSide === 'right' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.2)]' : 'text-app-text'}`}>steer the development</span> of a platform that actually eliminates administrative friction and drives practice growth.
                 </div>
               </div>
             </div>
@@ -174,7 +153,7 @@ export default function CliniciansContent() {
           <h3 className="text-sm md:text-base font-black tracking-[0.2em] text-center mb-12 uppercase text-brand">
             Advisory Board Benefits
           </h3>
-          
+
           <div className="grid md:grid-cols-3 gap-6 lg:gap-10">
             {/* Benefit 1 */}
             <div className="relative group bg-white/70 backdrop-blur-xl rounded-[2rem] p-8 border border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(242,128,68,0.1)] hover:-translate-y-1 transition-all duration-500 overflow-hidden">
