@@ -1,4 +1,5 @@
 import { withBasePath } from "@/app/lib/withBasePath";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
 import MobileMockupMedia from "./MobileMockupMedia";
@@ -254,9 +255,19 @@ export default function Roadmap() {
                     <h4 className="text-[1.95rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text sm:text-[2rem]">
                       {phase.title}
                     </h4>
-                    <p className="mt-2.5 max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
-                      {phase.description}
-                    </p>
+                    <div className="mt-2.5">
+                      <p className="max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
+                        {phase.description}
+                      </p>
+                      {phase.id === 3 && (
+                        <Link href="/clinicians" className="inline-flex items-center gap-1.5 mt-4 text-[10px] md:text-xs font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-700 transition-colors group/link">
+                          Explore Clinical Board
+                          <svg className="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform duration-300 group-hover/link:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                          </svg>
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -338,9 +349,19 @@ export default function Roadmap() {
                           <h4 className="text-[1.95rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text sm:text-[2rem]">
                             {phase.title}
                           </h4>
-                          <p className="mt-2.5 max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
-                            {phase.description}
-                          </p>
+                          <div className="mt-2.5">
+                            <p className="max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
+                              {phase.description}
+                            </p>
+                            {phase.id === 3 && (
+                              <Link href="/clinicians" className="inline-flex items-center gap-1.5 mt-4 text-[10px] md:text-xs font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-700 transition-colors group/link">
+                                Explore Clinical Board
+                                <svg className="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform duration-300 group-hover/link:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                              </Link>
+                            )}
+                          </div>
                         </div>
 
                         <div
@@ -474,6 +495,14 @@ export default function Roadmap() {
                         ? "We are actively building a unified community space where users can share their experiences, celebrate victories, and find support."
                         : "Bridging the gap between practice and professional therapy. Connect seamlessly with vetted Speech-Language Pathologists."}
                     </p>
+                    {phase === 3 && (
+                      <Link href="/clinicians" className="inline-flex items-center gap-1.5 mt-4 text-[10px] md:text-xs font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-700 transition-colors group/link">
+                        Explore Clinical Board
+                        <svg className="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform duration-300 group-hover/link:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                      </Link>
+                    )}
                   </div>
                 </button>
               ))}
