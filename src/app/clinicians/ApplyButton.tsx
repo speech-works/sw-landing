@@ -2,12 +2,11 @@
 
 import React from "react";
 
-export default function ApplyButton() {
-  const handleApplyClick = () => {
-    // Explicit event tracking placeholder
-    console.log('Event tracked: clicked_apply_advisory_board');
-  };
+interface ApplyButtonProps {
+  onClick?: (e: React.MouseEvent) => void;
+}
 
+export default function ApplyButton({ onClick }: ApplyButtonProps) {
   return (
     <>
       <style
@@ -24,6 +23,9 @@ export default function ApplyButton() {
                 isolation: isolate;
                 display: inline-flex;
                 text-decoration: none;
+                border: none;
+                outline: none;
+                -webkit-tap-highlight-color: transparent;
             }
             .clinician-cta-btn:hover {
                 transform: translateY(-1px);
@@ -42,11 +44,8 @@ export default function ApplyButton() {
         }}
       />
       
-      <a 
-        href="https://form.typeform.com/to/placeholder" 
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={handleApplyClick}
+      <button 
+        onClick={onClick}
         className="clinician-cta-btn relative z-30"
       >
         <div className="clinician-cta-layer w-full h-full flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-12 py-5 sm:py-6">
@@ -54,7 +53,9 @@ export default function ApplyButton() {
             Apply for Advisory Board
           </span>
         </div>
-      </a>
+      </button>
     </>
   );
 }
+
+

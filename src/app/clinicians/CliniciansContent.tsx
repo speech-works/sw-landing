@@ -5,10 +5,12 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ApplyButton from './ApplyButton';
 import { AlgorithmTable } from '../components/AlgorithmTable';
+import ClinicianModal from '../components/ClinicianModal';
 
 export default function CliniciansContent() {
   const [stageMousePos, setStageMousePos] = useState({ x: 500, y: 500 });
   const [hoveredSide, setHoveredSide] = useState<'left' | 'right' | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -18,6 +20,12 @@ export default function CliniciansContent() {
     setStageMousePos({ x, y });
     e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
     e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+  };
+
+  const handleApplyClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+    console.log('Event tracked: clicked_apply_advisory_board');
   };
 
   return (
@@ -219,12 +227,17 @@ export default function CliniciansContent() {
 
         {/* Global CTA */}
         <div className="flex justify-center z-20 relative">
-          <ApplyButton />
+          <ApplyButton onClick={handleApplyClick} />
         </div>
 
       </section>
 
       <Footer />
+
+      <ClinicianModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </main>
   );
 }
