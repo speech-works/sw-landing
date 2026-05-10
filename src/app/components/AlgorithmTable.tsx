@@ -1,131 +1,159 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useRef, MouseEvent } from 'react';
 
 const ALGORITHM_DATA = [
   {
     name: "Severity Scoring",
     description: "Maps onboarding answers to a 0-100 scale anchored to published stuttering impact norms.",
-    research: "Yaruss & Quesal (2006), J. Fluency Disorders",
+    research: "[YARUSS & QUESAL, 2006]",
     status: "VALIDATED"
   },
   {
     name: "1-D Kalman Filter",
     description: "Updates clinical state after every session. Uncertainty grows when you go quiet; corrects when new data arrives.",
-    research: "Ecological Momentary Assessment research; population data from N=173 standardization sample",
+    research: "[EMA RESEARCH; N=173]",
     status: "VALIDATED"
   },
   {
     name: "Crisis Detection",
     description: "Recency-weighted volatility index. Decay factor 0.85/day. Triggers safety gate if SD > 15 over 7 days.",
-    research: "Kuppens et al. (2008), JPSP — emotional state decay rate",
+    research: "[KUPPENS ET AL., 2008]",
     status: "VALIDATED"
   },
   {
     name: "Safety Gating",
     description: "Blocks high-intensity practice during emotional instability. Forces Stabilization content.",
-    research: "Foa & McLean (2016), Annual Review of Clinical Psychology",
+    research: "[FOA & MCLEAN, 2016]",
     status: "VALIDATED"
   },
   {
     name: "Covert Phenotype Routing",
     description: "High-avoidance, low-struggle users get ACT-path content, not fluency shaping.",
-    research: "Tichenor & Yaruss (2019), JSLHR",
+    research: "[TICHENOR & YARUSS, 2019]",
     status: "VALIDATED"
   },
   {
     name: "Avoidance Frequency Mapping",
     description: "Translates self-reported avoidance frequency to severity scores.",
-    research: "Clinically reasonable, not directly cited from research",
+    research: "[CLINICAL HEURISTIC]",
     status: "HEURISTIC"
   },
   {
     name: "Emotional Weighting",
     description: "Modulates initial severity based on emotional state at onboarding.",
-    research: "Conceptually sound, coefficients are estimated",
+    research: "[CLINICAL HEURISTIC]",
     status: "HEURISTIC"
   }
 ];
 
 export function AlgorithmTable() {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const toggleRow = (index: number) => {
-    setExpandedIndex(expandedIndex === index ? null : index);
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const cards = containerRef.current.querySelectorAll('.algo-card');
+    cards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+      (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+    });
   };
 
   return (
     <div className="w-full relative z-10 mb-16 md:mb-24 pt-8 md:pt-16">
-      <div className="text-center mb-12">
-        <h3 className="text-3xl md:text-4xl font-black tracking-tight text-white mb-4">
+      <div className="text-center mb-16">
+        <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 mb-6 shadow-sm backdrop-blur-xl">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
+          </span>
+          <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white/80">
+            Backend Architecture
+          </span>
+        </div>
+        <h3 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-6">
           What We Built, and Why.
         </h3>
-        <p className="text-[1.05rem] text-white/70 font-medium leading-relaxed max-w-2xl mx-auto">
+        <p className="text-[1.05rem] md:text-lg text-white/60 font-medium leading-relaxed max-w-3xl mx-auto">
           Some of these are validated against published research. Some are still being refined as real user data comes in. We document the difference.
         </p>
       </div>
 
-      <div className="w-full bg-[#1A1310] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
-        <div className="hidden md:grid grid-cols-12 gap-4 p-4 border-b border-white/10 bg-white/5 text-[10px] uppercase tracking-widest font-bold text-white/50">
-          <div className="col-span-3">Algorithm</div>
-          <div className="col-span-4">What it Does</div>
-          <div className="col-span-3">Research Base</div>
-          <div className="col-span-2">Status</div>
-        </div>
-
-        <div className="divide-y divide-white/5">
-          {ALGORITHM_DATA.map((row, idx) => (
-            <div key={idx} className="group hover:bg-white/[0.02] transition-colors">
+      <div 
+        ref={containerRef}
+        onMouseMove={handleMouseMove}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 group/grid"
+      >
+        {ALGORITHM_DATA.map((row, idx) => {
+          const isValidated = row.status === 'VALIDATED';
+          // Make the last item span 2 columns on large screens to balance the 7 items
+          const isLast = idx === ALGORITHM_DATA.length - 1;
+          
+          return (
+            <div 
+              key={idx} 
+              className={`algo-card relative rounded-3xl bg-[#1A1310]/40 backdrop-blur-md border border-white/5 p-6 md:p-8 overflow-hidden transition-colors duration-500 hover:bg-[#1A1310]/80 group/card ${isLast ? 'lg:col-span-2' : ''}`}
+            >
+              {/* Spotlight Background Glow */}
               <div 
-                className="grid grid-cols-1 md:grid-cols-12 gap-4 p-5 md:p-4 items-center cursor-pointer md:cursor-default"
-                onClick={() => window.innerWidth < 768 && toggleRow(idx)}
-              >
-                {/* Mobile Header (Algorithm Name & Status) */}
-                <div className="md:hidden flex justify-between items-center w-full">
-                  <div className="font-bold text-white text-base">{row.name}</div>
-                  <div className={`inline-flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold tracking-widest ${
-                    row.status === 'VALIDATED' 
+                className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
+                style={{
+                  background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.04), transparent 40%)`
+                }}
+              />
+              {/* Spotlight Border Glow */}
+              <div 
+                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
+                style={{
+                  background: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), ${isValidated ? 'rgba(52,211,153,0.3)' : 'rgba(251,191,36,0.3)'}, transparent 50%)`,
+                  WebkitMaskImage: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
+                  WebkitMaskComposite: `xor`,
+                  maskComposite: `exclude`,
+                  padding: `1px`
+                }}
+              />
+
+              <div className="relative z-10 flex flex-col h-full justify-between gap-6">
+                
+                <div className="flex justify-between items-start gap-4">
+                  <h4 className="text-xl md:text-2xl font-black text-white group-hover/card:translate-x-1 transition-transform duration-300 ease-out">
+                    {row.name}
+                  </h4>
+                  
+                  {/* Status Badge */}
+                  <div className={`shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[10px] font-black tracking-widest ${
+                    isValidated 
                       ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
                       : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
                   }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${row.status === 'VALIDATED' ? 'bg-emerald-400' : 'bg-amber-400'}`} />
+                    <span className={`w-1.5 h-1.5 rounded-full ${isValidated ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'}`} />
                     {row.status}
                   </div>
                 </div>
 
-                {/* Desktop layout & Expandable Mobile Content */}
-                <div className={`col-span-3 hidden md:block font-bold text-white text-sm`}>
-                  {row.name}
-                </div>
-                
-                <div className={`col-span-4 text-sm text-white/70 leading-relaxed ${expandedIndex === idx ? 'block mt-3 md:mt-0' : 'hidden md:block'}`}>
-                  <span className="md:hidden text-[10px] uppercase text-white/40 block mb-1">What it Does</span>
+                <p className="text-[0.95rem] md:text-base text-white/60 font-medium leading-relaxed max-w-[50ch]">
                   {row.description}
-                </div>
-                
-                <div className={`col-span-3 text-sm text-white/50 leading-relaxed ${expandedIndex === idx ? 'block mt-4 md:mt-0' : 'hidden md:block'}`}>
-                  <span className="md:hidden text-[10px] uppercase text-white/40 block mb-1">Research Base</span>
-                  {row.research}
-                </div>
-                
-                <div className="col-span-2 hidden md:flex items-center">
-                  <div className={`inline-flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold tracking-widest ${
-                    row.status === 'VALIDATED' 
-                      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                      : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                  }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${row.status === 'VALIDATED' ? 'bg-emerald-400' : 'bg-amber-400'}`} />
-                    {row.status === 'HEURISTIC' ? 'HEURISTIC — PENDING' : row.status}
+                </p>
+
+                <div className="pt-4 mt-auto">
+                  <div className="inline-flex items-center rounded bg-black/40 py-1.5 px-2.5 border border-white/5">
+                    <span className="font-mono text-[10px] font-semibold tracking-widest text-white/50 group-hover/card:text-white/80 transition-colors duration-300">
+                      {row.research}
+                    </span>
                   </div>
                 </div>
+
               </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
 
-      <div className="mt-8 text-center max-w-3xl mx-auto">
-        <p className="text-sm md:text-base font-semibold text-white/60 italic">
+      <div className="mt-12 text-center max-w-3xl mx-auto">
+        <p className="text-sm md:text-base font-medium text-white/40 italic">
           &quot;Two of our parameters are clearly marked as heuristics pending validation. We built the infrastructure to test and refine them as real user data comes in. We document everything.&quot;
         </p>
       </div>
