@@ -1,16 +1,36 @@
 "use client";
 
 import React from 'react';
+import MobileCarouselControls from './MobileCarouselControls';
 
 export function ICFDomainMap() {
-  
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+  const scrollToIndex = (index: number) => {
+    const container = document.getElementById('icf-carousel');
+    if (!container) return;
+    const count = 4;
+    const wrappedIndex = (index + count) % count;
+    const scrollAmount = wrappedIndex * window.innerWidth;
+    container.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+    setActiveIndex(wrappedIndex);
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const element = e.currentTarget;
+    const index = Math.round(element.scrollLeft / window.innerWidth);
+    if (index !== activeIndex) {
+      setActiveIndex(index);
+    }
+  };
+
   return (
     <section className="bg-[#FFFAF5] text-app-text py-24 md:py-32 relative z-10 overflow-hidden">
       
       {/* Background decorations */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand/5 blur-[100px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-500/5 blur-[100px] rounded-full pointer-events-none translate-y-1/3 -translate-x-1/3" />
-
+ 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         
         {/* Header */}
@@ -29,125 +49,145 @@ export function ICFDomainMap() {
           </p>
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-[minmax(300px,_auto)]">
-          
-          {/* MASTERY (Domain 1) - Col Span 2 */}
-          <div className="lg:col-span-2 relative bg-white border border-orange-900/10 rounded-[2.5rem] p-8 md:p-12 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] group reveal translate-y-8 opacity-0 transition-all duration-700 delay-[300ms] [&.active]:translate-y-0 [&.active]:opacity-100 flex flex-col justify-end min-h-[360px] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
+        {/* Bento Grid / Mobile Carousel */}
+        <div className="relative -mx-4 sm:-mx-6 lg:mx-0">
+          <div 
+            id="icf-carousel"
+            onScroll={handleScroll}
+            className="flex lg:grid lg:grid-cols-3 gap-0 lg:gap-8 auto-rows-[minmax(300px,_auto)] overflow-x-auto lg:overflow-visible pb-12 lg:pb-0 snap-x snap-mandatory scroll-smooth hide-scrollbar"
+          >
             
-            {/* Ambient Animation: Sine Wave / Fluency representation */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-50 group-hover:opacity-100 transition-opacity duration-1000">
-              <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] bg-brand/10 blur-[80px] rounded-full group-hover:scale-110 group-hover:bg-brand/15 transition-all duration-1000" />
-            </div>
+            {/* MASTERY (Domain 1) - Col Span 2 */}
+            <div className="shrink-0 w-screen lg:w-auto snap-center px-4 sm:px-6 lg:px-0 lg:col-span-2 min-h-[360px]">
+              <div className="group h-full relative bg-white border border-orange-900/10 rounded-[2.5rem] p-8 md:p-12 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col justify-end hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500">
+                {/* Ambient Animation: Sine Wave / Fluency representation */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-50 group-hover:opacity-100 transition-opacity duration-1000">
+                  <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] bg-brand/10 blur-[80px] rounded-full group-hover:scale-110 group-hover:bg-brand/15 transition-all duration-1000" />
+                </div>
 
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand" />
-                <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-app-muted">
-                  Domain 1: Body Functions
-                </span>
-              </div>
-              <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-app-text mb-3 tracking-tight group-hover:text-brand transition-colors duration-300">
-                Mastery
-              </h3>
-              <p className="text-[1.05rem] md:text-lg text-app-muted font-medium max-w-sm">
-                Physical speech fluency and struggle.
-              </p>
-            </div>
-          </div>
-
-          {/* EASE (Domain 2) - Col Span 1 */}
-          <div className="lg:col-span-1 relative bg-white border border-orange-900/10 rounded-[2.5rem] p-8 md:p-10 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] group reveal translate-y-8 opacity-0 transition-all duration-700 delay-[400ms] [&.active]:translate-y-0 [&.active]:opacity-100 flex flex-col justify-end min-h-[360px] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-            
-            {/* Ambient Animation: Flowing Orb */}
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-40 group-hover:opacity-80 transition-opacity duration-1000">
-              <div className="w-[200px] h-[200px] bg-purple-500/15 blur-[60px] rounded-full group-hover:scale-110 transition-transform duration-1000" />
-            </div>
-
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-                <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-app-muted">
-                  Domain 2: Activity
-                </span>
-              </div>
-              <h3 className="text-2xl md:text-3xl font-black text-app-text mb-3 tracking-tight group-hover:text-purple-600 transition-colors duration-300">
-                Ease
-              </h3>
-              <p className="text-[1.05rem] md:text-lg text-app-muted font-medium">
-                Daily communication comfort.
-              </p>
-            </div>
-          </div>
-
-          {/* SOCIAL (Domain 3) - Col Span 1 */}
-          <div className="lg:col-span-1 relative bg-white border border-orange-900/10 rounded-[2.5rem] p-8 md:p-10 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] group reveal translate-y-8 opacity-0 transition-all duration-700 delay-[500ms] [&.active]:translate-y-0 [&.active]:opacity-100 flex flex-col justify-end min-h-[360px] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-            
-            {/* Ambient Animation: Intersecting Rings */}
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30 group-hover:opacity-100 transition-opacity duration-1000">
-              <div className="w-[180px] h-[180px] bg-emerald-500/15 blur-[60px] rounded-full group-hover:scale-110 transition-transform duration-1000" />
-            </div>
-
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-app-muted">
-                  Domain 3: Participation
-                </span>
-              </div>
-              <h3 className="text-2xl md:text-3xl font-black text-app-text mb-3 tracking-tight group-hover:text-emerald-600 transition-colors duration-300">
-                Social
-              </h3>
-              <p className="text-[1.05rem] md:text-lg text-app-muted font-medium">
-                How much you show up in conversations.
-              </p>
-            </div>
-          </div>
-
-          {/* CONTEXTUAL FACTORS (Domain 4) - Col Span 2, Containing 2 metrics */}
-          <div className="lg:col-span-2 relative bg-[#F7F2ED] border border-orange-900/5 rounded-[2.5rem] p-3 md:p-4 overflow-hidden shadow-[inset_0_4px_20px_rgba(0,0,0,0.02)] reveal translate-y-8 opacity-0 transition-all duration-700 delay-[600ms] [&.active]:translate-y-0 [&.active]:opacity-100 min-h-[360px] flex flex-col group/container">
-            
-            <div className="flex items-center gap-2 px-6 pt-5 pb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-app-muted">
-                Domain 4: Contextual Factors
-              </span>
-            </div>
-
-            {/* Inner Grid for Courage and Confidence */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-grow">
-              
-              {/* Courage */}
-              <div className="bg-white rounded-[2rem] p-6 md:p-10 flex flex-col justify-end shadow-sm border border-orange-900/5 group/inner relative overflow-hidden transition-all duration-300 hover:shadow-md">
-                <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover/inner:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10">
-                  <h3 className="text-2xl md:text-3xl font-black text-app-text mb-3 tracking-tight group-hover/inner:text-blue-600 transition-colors duration-300">
-                    Courage
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand" />
+                    <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-app-muted">
+                      Domain 1: Body Functions
+                    </span>
+                  </div>
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-app-text mb-3 tracking-tight group-hover:text-brand transition-colors duration-300">
+                    Mastery
                   </h3>
-                  <p className="text-[0.95rem] md:text-[1.05rem] text-app-muted font-medium leading-relaxed">
-                    Avoidance — the situations you stop entering.
+                  <p className="text-[1.05rem] md:text-lg text-app-muted font-medium max-w-sm">
+                    Physical speech fluency and struggle.
                   </p>
                 </div>
               </div>
+            </div>
 
-              {/* Confidence */}
-              <div className="bg-white rounded-[2rem] p-6 md:p-10 flex flex-col justify-end shadow-sm border border-orange-900/5 group/inner relative overflow-hidden transition-all duration-300 hover:shadow-md">
-                <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover/inner:opacity-100 transition-opacity duration-500" />
+            {/* EASE (Domain 2) - Col Span 1 */}
+            <div className="shrink-0 w-screen lg:w-auto snap-center px-4 sm:px-6 lg:px-0 lg:col-span-1 min-h-[360px]">
+              <div className="group h-full relative bg-white border border-orange-900/10 rounded-[2.5rem] p-8 md:p-10 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col justify-end hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500">
+                {/* Ambient Animation: Flowing Orb */}
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-40 group-hover:opacity-80 transition-opacity duration-1000">
+                  <div className="w-[200px] h-[200px] bg-purple-500/15 blur-[60px] rounded-full group-hover:scale-110 transition-transform duration-1000" />
+                </div>
+
                 <div className="relative z-10">
-                  <h3 className="text-2xl md:text-3xl font-black text-app-text mb-3 tracking-tight group-hover/inner:text-blue-600 transition-colors duration-300">
-                    Confidence
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+                    <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-app-muted">
+                      Domain 2: Activity
+                    </span>
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-black text-app-text mb-3 tracking-tight group-hover:text-purple-600 transition-colors duration-300">
+                    Ease
                   </h3>
-                  <p className="text-[0.95rem] md:text-[1.05rem] text-app-muted font-medium leading-relaxed">
-                    Emotional distress around speaking.
+                  <p className="text-[1.05rem] md:text-lg text-app-muted font-medium">
+                    Daily communication comfort.
                   </p>
                 </div>
               </div>
+            </div>
 
+            {/* SOCIAL (Domain 3) - Col Span 1 */}
+            <div className="shrink-0 w-screen lg:w-auto snap-center px-4 sm:px-6 lg:px-0 lg:col-span-1 min-h-[360px]">
+              <div className="group h-full relative bg-white border border-orange-900/10 rounded-[2.5rem] p-8 md:p-10 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col justify-end hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500">
+                {/* Ambient Animation: Intersecting Rings */}
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30 group-hover:opacity-100 transition-opacity duration-1000">
+                  <div className="w-[180px] h-[180px] bg-emerald-500/15 blur-[60px] rounded-full group-hover:scale-110 transition-transform duration-1000" />
+                </div>
+
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-app-muted">
+                      Domain 3: Participation
+                    </span>
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-black text-app-text mb-3 tracking-tight group-hover:text-emerald-600 transition-colors duration-300">
+                    Social
+                  </h3>
+                  <p className="text-[1.05rem] md:text-lg text-app-muted font-medium">
+                    How much you show up in conversations.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* CONTEXTUAL FACTORS (Domain 4) - Col Span 2, Containing 2 metrics */}
+            <div className="shrink-0 w-screen lg:w-auto snap-center px-4 sm:px-6 lg:px-0 lg:col-span-2 min-h-[360px] flex flex-col">
+              <div className="h-full bg-[#F7F2ED] border border-orange-900/5 rounded-[2.5rem] p-3 md:p-4 overflow-hidden shadow-[inset_0_4px_20px_rgba(0,0,0,0.02)] flex flex-col group/container">
+                <div className="flex items-center gap-2 px-6 pt-5 pb-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                  <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-app-muted">
+                    Domain 4: Contextual Factors
+                  </span>
+                </div>
+
+                {/* Inner Grid for Courage and Confidence */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-grow">
+                  
+                  {/* Courage */}
+                  <div className="bg-white rounded-[2rem] p-6 md:p-10 flex flex-col justify-end shadow-sm border border-orange-900/5 group/inner relative overflow-hidden transition-all duration-300 hover:shadow-md">
+                    <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover/inner:opacity-100 transition-opacity duration-500" />
+                    <div className="relative z-10">
+                      <h3 className="text-2xl md:text-3xl font-black text-app-text mb-3 tracking-tight group-hover/inner:text-blue-600 transition-colors duration-300">
+                        Courage
+                      </h3>
+                      <p className="text-[0.95rem] md:text-[1.05rem] text-app-muted font-medium leading-relaxed">
+                        Avoidance — the situations you stop entering.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Confidence */}
+                  <div className="bg-white rounded-[2rem] p-6 md:p-10 flex flex-col justify-end shadow-sm border border-orange-900/5 group/inner relative overflow-hidden transition-all duration-300 hover:shadow-md">
+                    <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover/inner:opacity-100 transition-opacity duration-500" />
+                    <div className="relative z-10">
+                      <h3 className="text-2xl md:text-3xl font-black text-app-text mb-3 tracking-tight group-hover/inner:text-blue-600 transition-colors duration-300">
+                        Confidence
+                      </h3>
+                      <p className="text-[0.95rem] md:text-[1.05rem] text-app-muted font-medium leading-relaxed">
+                        Emotional distress around speaking.
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
           </div>
 
+          <div className="lg:hidden">
+            <MobileCarouselControls
+              currentIndex={activeIndex}
+              count={4}
+              onPrevious={() => scrollToIndex(activeIndex - 1)}
+              onNext={() => scrollToIndex(activeIndex + 1)}
+              onSelect={scrollToIndex}
+              tone="light"
+              layout="inline"
+            />
+          </div>
         </div>
-
       </div>
     </section>
   );

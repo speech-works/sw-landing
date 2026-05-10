@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, MouseEvent } from 'react';
+import MobileCarouselControls from './MobileCarouselControls';
 
 const ALGORITHM_DATA = [
   {
@@ -50,6 +51,26 @@ const ALGORITHM_DATA = [
 export function AlgorithmTable() {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+  const scrollToIndex = (index: number) => {
+    if (!containerRef.current) return;
+    const count = ALGORITHM_DATA.length;
+    const wrappedIndex = (index + count) % count;
+    
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    if (isMobile) {
+      const child = containerRef.current.children[wrappedIndex] as HTMLElement;
+      if (child) {
+        containerRef.current.scrollTo({ left: child.offsetLeft, behavior: 'smooth' });
+      }
+    } else {
+      const scrollAmount = wrappedIndex * window.innerWidth;
+      containerRef.current.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+    }
+    setActiveIndex(wrappedIndex);
+  };
+
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const cards = containerRef.current.querySelectorAll('.algo-card');
@@ -60,6 +81,32 @@ export function AlgorithmTable() {
       (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
       (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
     });
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const element = e.currentTarget;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    
+    let index = 0;
+    if (isMobile) {
+      const scrollLeft = element.scrollLeft;
+      const children = Array.from(element.children) as HTMLElement[];
+      let closestDistance = Infinity;
+      
+      children.forEach((child, i) => {
+        const distance = Math.abs(child.offsetLeft - scrollLeft);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          index = i;
+        }
+      });
+    } else {
+      index = Math.round(element.scrollLeft / window.innerWidth);
+    }
+    
+    if (index !== activeIndex) {
+      setActiveIndex(index);
+    }
   };
 
   return (
@@ -82,74 +129,91 @@ export function AlgorithmTable() {
         </p>
       </div>
 
-      <div 
-        ref={containerRef}
-        onMouseMove={handleMouseMove}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 group/grid"
-      >
-        {ALGORITHM_DATA.map((row, idx) => {
-          const isValidated = row.status === 'VALIDATED';
-          // Make the last item span 2 columns on large screens to balance the 7 items
-          const isLast = idx === ALGORITHM_DATA.length - 1;
-          
-          return (
-            <div 
-              key={idx} 
-              className={`algo-card relative rounded-3xl bg-[#1A1310]/40 backdrop-blur-md border border-white/5 p-6 md:p-8 overflow-hidden transition-colors duration-500 hover:bg-[#1A1310]/80 group/card ${isLast ? 'lg:col-span-2' : ''}`}
-            >
-              {/* Spotlight Background Glow */}
+      <div className="relative">
+        <div 
+          ref={containerRef}
+          onMouseMove={handleMouseMove}
+          onScroll={handleScroll}
+          className="flex md:grid md:grid-cols-2 gap-4 md:gap-6 group/grid overflow-x-auto md:overflow-visible pb-12 md:pb-0 snap-x snap-mandatory scroll-smooth hide-scrollbar"
+        >
+          {ALGORITHM_DATA.map((row, idx) => {
+            const isValidated = row.status === 'VALIDATED';
+            // Make the last item span 2 columns on large screens to balance the 7 items
+            const isLast = idx === ALGORITHM_DATA.length - 1;
+            
+            return (
               <div 
-                className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
-                style={{
-                  background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.04), transparent 40%)`
-                }}
-              />
-              {/* Spotlight Border Glow */}
-              <div 
-                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
-                style={{
-                  background: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), ${isValidated ? 'rgba(52,211,153,0.3)' : 'rgba(251,191,36,0.3)'}, transparent 50%)`,
-                  WebkitMaskImage: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
-                  WebkitMaskComposite: `xor`,
-                  maskComposite: `exclude`,
-                  padding: `1px`
-                }}
-              />
+                key={idx} 
+                className={`algo-card relative shrink-0 w-full md:w-auto snap-center group/card ${isLast ? 'lg:col-span-2' : ''}`}
+              >
+                <div className="relative h-full rounded-3xl bg-[#1A1310]/40 backdrop-blur-md border border-white/5 p-6 md:p-8 overflow-hidden hover:bg-[#1A1310]/80 transition-colors duration-500" style={{ transitionDelay: `${idx * 100 + 300}ms` }}>
+                  {/* Spotlight Background Glow */}
+                  <div 
+                    className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
+                    style={{
+                      background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.04), transparent 40%)`
+                    }}
+                  />
+                  {/* Spotlight Border Glow */}
+                  <div 
+                    className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
+                    style={{
+                      background: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), ${isValidated ? 'rgba(52,211,153,0.3)' : 'rgba(251,191,36,0.3)'}, transparent 50%)`,
+                      WebkitMaskImage: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
+                      WebkitMaskComposite: `xor`,
+                      maskComposite: `exclude`,
+                      padding: `1px`
+                    }}
+                  />
 
-              <div className="relative z-10 flex flex-col h-full justify-between gap-6">
-                
-                <div className="flex justify-between items-start gap-4">
-                  <h4 className="text-xl md:text-2xl font-black text-white group-hover/card:translate-x-1 transition-transform duration-300 ease-out">
-                    {row.name}
-                  </h4>
-                  
-                  {/* Status Badge */}
-                  <div className={`shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[10px] font-black tracking-widest ${
-                    isValidated 
-                      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                      : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                  }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${isValidated ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'}`} />
-                    {row.status}
+                  <div className="relative z-10 flex flex-col h-full justify-between gap-6">
+                    
+                    <div className="flex justify-between items-start gap-4">
+                      <h4 className="text-xl md:text-2xl font-black text-white group-hover/card:translate-x-1 transition-transform duration-300 ease-out">
+                        {row.name}
+                      </h4>
+                      
+                      {/* Status Badge */}
+                      <div className={`shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[10px] font-black tracking-widest ${
+                        isValidated 
+                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                          : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                      }`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${isValidated ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'}`} />
+                        {row.status}
+                      </div>
+                    </div>
+
+                    <p className="text-[0.95rem] md:text-base text-white/60 font-medium leading-relaxed max-w-[50ch]">
+                      {row.description}
+                    </p>
+
+                    <div className="pt-4 mt-auto">
+                      <div className="inline-flex items-center rounded bg-black/40 py-1.5 px-2.5 border border-white/5">
+                        <span className="font-mono text-[10px] font-semibold tracking-widest text-white/50 group-hover/card:text-white/80 transition-colors duration-300">
+                          {row.research}
+                        </span>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
-
-                <p className="text-[0.95rem] md:text-base text-white/60 font-medium leading-relaxed max-w-[50ch]">
-                  {row.description}
-                </p>
-
-                <div className="pt-4 mt-auto">
-                  <div className="inline-flex items-center rounded bg-black/40 py-1.5 px-2.5 border border-white/5">
-                    <span className="font-mono text-[10px] font-semibold tracking-widest text-white/50 group-hover/card:text-white/80 transition-colors duration-300">
-                      {row.research}
-                    </span>
-                  </div>
-                </div>
-
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        <div className="md:hidden">
+          <MobileCarouselControls
+            currentIndex={activeIndex}
+            count={ALGORITHM_DATA.length}
+            onPrevious={() => scrollToIndex(activeIndex - 1)}
+            onNext={() => scrollToIndex(activeIndex + 1)}
+            onSelect={scrollToIndex}
+            tone="dark"
+            layout="inline"
+          />
+        </div>
       </div>
 
       <div className="mt-12 text-center max-w-3xl mx-auto">

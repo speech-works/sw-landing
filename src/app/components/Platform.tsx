@@ -719,7 +719,7 @@ export default function Platform() {
     <section
       id="platform"
       ref={sectionRef}
-      className="mobile-content-auto pt-8 pb-0 sm:pt-8 sm:pb-0 md:pt-32 md:pb-36 bg-white md:bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
+      className="mobile-content-auto pt-8 pb-20 sm:pt-8 sm:pb-24 md:pt-32 md:pb-36 bg-white md:bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
       onMouseMove={handleMouseMove}
       style={
         {

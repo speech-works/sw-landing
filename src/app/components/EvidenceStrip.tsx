@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, MouseEvent } from 'react';
+import MobileCarouselControls from './MobileCarouselControls';
 
 const EVIDENCE_DATA = [
   {
@@ -28,6 +29,26 @@ const EVIDENCE_DATA = [
 export function EvidenceStrip() {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+  const scrollToIndex = (index: number) => {
+    if (!containerRef.current) return;
+    const count = EVIDENCE_DATA.length;
+    const wrappedIndex = (index + count) % count;
+    
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    if (isMobile) {
+      const child = containerRef.current.children[wrappedIndex] as HTMLElement;
+      if (child) {
+        containerRef.current.scrollTo({ left: child.offsetLeft, behavior: 'smooth' });
+      }
+    } else {
+      const scrollAmount = wrappedIndex * window.innerWidth;
+      containerRef.current.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+    }
+    setActiveIndex(wrappedIndex);
+  };
+
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const cards = containerRef.current.querySelectorAll('.evidence-card');
@@ -38,6 +59,32 @@ export function EvidenceStrip() {
       (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
       (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
     });
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const element = e.currentTarget;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    
+    let index = 0;
+    if (isMobile) {
+      const scrollLeft = element.scrollLeft;
+      const children = Array.from(element.children) as HTMLElement[];
+      let closestDistance = Infinity;
+      
+      children.forEach((child, i) => {
+        const distance = Math.abs(child.offsetLeft - scrollLeft);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          index = i;
+        }
+      });
+    } else {
+      index = Math.round(element.scrollLeft / window.innerWidth);
+    }
+    
+    if (index !== activeIndex) {
+      setActiveIndex(index);
+    }
   };
 
   return (
@@ -68,55 +115,70 @@ export function EvidenceStrip() {
           </p>
         </div>
 
-        {/* Spotlight Grid */}
-        <div 
-          ref={containerRef}
-          onMouseMove={handleMouseMove}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 group/grid"
-        >
-          {EVIDENCE_DATA.map((item, index) => (
-            <div 
-              key={index} 
-              className="evidence-card relative rounded-3xl bg-white/[0.02] border border-white/5 p-8 md:p-12 overflow-hidden transition-colors duration-500 hover:bg-white/[0.04] group/card reveal translate-y-8 opacity-0 transition-all duration-700 [&.active]:translate-y-0 [&.active]:opacity-100"
-              style={{ transitionDelay: `${index * 100 + 300}ms` }}
-            >
-              {/* Spotlight Background Glow */}
+        <div className="relative">
+          <div 
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            onScroll={handleScroll}
+            className="flex md:grid md:grid-cols-2 gap-4 md:gap-6 group/grid overflow-x-auto md:overflow-visible pb-12 md:pb-0 snap-x snap-mandatory scroll-smooth hide-scrollbar"
+          >
+            {EVIDENCE_DATA.map((item, index) => (
               <div 
-                className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
-                style={{
-                  background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%)`
-                }}
-              />
-              {/* Spotlight Border Glow */}
-              <div 
-                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
-                style={{
-                  background: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(242,128,68,0.4), transparent 50%)`,
-                  WebkitMaskImage: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
-                  WebkitMaskComposite: `xor`,
-                  maskComposite: `exclude`,
-                  padding: `1px`
-                }}
-              />
+                key={index} 
+                className="evidence-card relative shrink-0 w-full md:w-auto snap-center"
+              >
+                <div className="relative h-full rounded-3xl bg-white/[0.02] border border-white/5 p-8 md:p-12 overflow-hidden transition-colors duration-500 hover:bg-white/[0.04] group/card reveal translate-y-8 opacity-0 transition-all duration-700 [&.active]:translate-y-0 [&.active]:opacity-100" style={{ transitionDelay: `${index * 100 + 300}ms` }}>
+                  {/* Spotlight Background Glow */}
+                  <div 
+                    className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
+                    style={{
+                      background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%)`
+                    }}
+                  />
+                  {/* Spotlight Border Glow */}
+                  <div 
+                    className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
+                    style={{
+                      background: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(242,128,68,0.4), transparent 50%)`,
+                      WebkitMaskImage: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
+                      WebkitMaskComposite: `xor`,
+                      maskComposite: `exclude`,
+                      padding: `1px`
+                    }}
+                  />
 
-              <div className="relative z-10 flex flex-col h-full justify-between min-h-[160px] gap-8">
-                <div className="flex flex-col space-y-5 items-start">
-                  <div className="inline-flex items-center rounded bg-black/40 py-1.5 px-2.5 border border-white/5">
-                    <span className="font-mono text-[10px] md:text-[11px] font-semibold tracking-widest text-brand group-hover/card:text-brand-light transition-colors duration-300">
-                      {item.citation}
-                    </span>
+                  <div className="relative z-10 flex flex-col h-full justify-between min-h-[160px] gap-8">
+                    <div className="flex flex-col space-y-5 items-start">
+                      <div className="inline-flex items-center rounded bg-black/40 py-1.5 px-2.5 border border-white/5">
+                        <span className="font-mono text-[10px] md:text-[11px] font-semibold tracking-widest text-brand group-hover/card:text-brand-light transition-colors duration-300">
+                          {item.citation}
+                        </span>
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-black tracking-tight text-white group-hover/card:translate-x-1 transition-transform duration-300 ease-out">
+                        {item.label}
+                      </h3>
+                    </div>
+                    
+                    <p className="text-[0.95rem] md:text-[1.05rem] text-white/50 font-medium leading-relaxed max-w-[42ch]">
+                      {item.text}
+                    </p>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-black tracking-tight text-white group-hover/card:translate-x-1 transition-transform duration-300 ease-out">
-                    {item.label}
-                  </h3>
                 </div>
-                
-                <p className="text-[0.95rem] md:text-[1.05rem] text-white/50 font-medium leading-relaxed max-w-[42ch]">
-                  {item.text}
-                </p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <div className="md:hidden">
+            <MobileCarouselControls
+              currentIndex={activeIndex}
+              count={EVIDENCE_DATA.length}
+              onPrevious={() => scrollToIndex(activeIndex - 1)}
+              onNext={() => scrollToIndex(activeIndex + 1)}
+              onSelect={scrollToIndex}
+              tone="dark"
+              layout="inline"
+            />
+          </div>
         </div>
       </div>
     </section>
