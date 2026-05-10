@@ -151,8 +151,8 @@ export default function Navbar() {
                 Team
               </a>
               <div 
-                className={`relative flex h-9 items-center justify-center transition-[width] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  isRoadmapVisible ? "w-[174px]" : "w-[108px]"
+                className={`relative flex h-10 items-center justify-center transition-[width] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  isRoadmapVisible ? "w-[196px]" : "w-[110px]"
                 }`}
               >
                 {/* Default Link State */}
@@ -167,28 +167,39 @@ export default function Navbar() {
                   For Clinicians
                 </a>
                 
-                {/* Premium Dark Pill State */}
+                {/* Important Animated Orange Pill State */}
                 <a 
                   href="/clinicians"
-                  className={`absolute flex w-max items-center gap-2 overflow-hidden rounded-full border border-white/15 bg-[#0a0a0a] py-2 pl-2 pr-5 shadow-[0_16px_32px_-10px_rgba(242,128,68,0.3)] backdrop-blur-xl transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  className={`absolute flex w-max items-center gap-2.5 overflow-hidden rounded-full bg-brand px-4 md:px-5 py-2 md:py-2.5 text-[10px] md:text-xs font-bold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(242,128,68,0.4)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-[0_0_30px_rgba(242,128,68,0.7)] hover:bg-brand-600 hover:scale-105 ${
                     isRoadmapVisible
                       ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
                       : "opacity-0 scale-95 pointer-events-none translate-y-2"
                   }`}
                 >
-                  {/* Subtle inner glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-brand/15 to-transparent pointer-events-none" />
+                  {/* Shine Overlay */}
+                  <div 
+                    className="absolute inset-0 pointer-events-none mix-blend-overlay"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)',
+                      width: '50%',
+                      animation: 'shimmerSweep 3s infinite'
+                    }}
+                  />
+                  <style>{`
+                    @keyframes shimmerSweep {
+                      0% { transform: translateX(-200%) skewX(-20deg); }
+                      40% { transform: translateX(300%) skewX(-20deg); }
+                      100% { transform: translateX(300%) skewX(-20deg); }
+                    }
+                  `}</style>
                   
-                  {/* Pulsing indicator */}
-                  <div className="relative flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/5 border border-white/10">
-                    <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-brand opacity-60"></span>
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand shadow-[0_0_8px_rgba(242,128,68,0.8)]"></span>
+                  {/* Ping Dot */}
+                  <div className="relative flex h-2 w-2 shrink-0 items-center justify-center">
+                    <span className="absolute inline-flex h-3 w-3 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] rounded-full bg-white opacity-80"></span>
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-white"></span>
                   </div>
 
-                  <div className="relative flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.15em]">
-                    <span className="font-semibold text-white/50">SLP?</span>
-                    <span className="font-black text-brand">Help us build</span>
-                  </div>
+                  <span>SLP? Help us build</span>
                 </a>
               </div>
               <button
