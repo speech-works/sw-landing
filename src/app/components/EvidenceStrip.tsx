@@ -111,7 +111,7 @@ export function EvidenceStrip() {
             </h2>
           </div>
           <p className="text-white/40 font-medium max-w-sm md:text-right reveal translate-y-4 opacity-0 transition-all duration-700 delay-200 [&.active]:translate-y-0 [&.active]:opacity-100">
-            We don&apos;t guess. Every parameter in our backend maps to established peer-reviewed literature.
+            We don&apos;t guess. Every parameter in our backend maps to <span className="text-white font-bold">established peer-reviewed literature</span>.
           </p>
         </div>
 

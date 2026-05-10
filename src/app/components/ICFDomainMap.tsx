@@ -72,7 +72,7 @@ export function ICFDomainMap() {
             How We Measure<br className="hidden md:block"/> What Actually Matters
           </h2>
           <p className="text-lg md:text-xl text-app-muted font-medium leading-relaxed reveal translate-y-4 opacity-0 transition-all duration-700 delay-200 ease-out [&.active]:translate-y-0 [&.active]:opacity-100">
-            Every dimension on your Growth Profile maps directly to the World Health Organization&apos;s International Classification of Functioning (ICF). Fluency alone is an incomplete picture.
+            Every dimension on your Growth Profile maps directly to the World Health Organization&apos;s <span className="text-brand font-bold">International Classification of Functioning (ICF)</span>. Fluency alone is an incomplete picture.
           </p>
         </div>
 

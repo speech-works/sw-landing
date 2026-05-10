@@ -125,7 +125,7 @@ export function AlgorithmTable() {
           What We Built, and Why.
         </h3>
         <p className="text-[1.05rem] md:text-lg text-white/60 font-medium leading-relaxed max-w-3xl mx-auto">
-          Some of these are validated against published research. Some are still being refined as real user data comes in. We document the difference.
+          Some of these are validated against <span className="text-white font-bold">published research</span>. Some are still being refined as real user data comes in. We document the difference.
         </p>
       </div>
 
