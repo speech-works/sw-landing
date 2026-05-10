@@ -287,7 +287,7 @@ export default function Team({
             <div className="mobile-section-glass mb-4 inline-flex items-center gap-2 rounded-full border border-orange-900/10 bg-white/85 px-4 py-2 shadow-sm backdrop-blur-xl">
               <span className="h-2 w-2 rounded-full bg-brand" />
               <span className="text-[10px] font-black uppercase tracking-[0.22em] text-app-text">
-                Who's Behind This
+                Who&apos;s Behind This
               </span>
             </div>
 

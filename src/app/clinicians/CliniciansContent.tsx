@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ApplyButton from './ApplyButton';
+import { AlgorithmTable } from '../components/AlgorithmTable';
 
 export default function CliniciansContent() {
   const [stageMousePos, setStageMousePos] = useState({ x: 500, y: 500 });
@@ -61,7 +62,7 @@ export default function CliniciansContent() {
           <svg className="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
           </svg>
-          For the SLP Tired of Assigning Homework That Doesn't Stick
+          For the SLP Tired of Assigning Homework That Doesn&apos;t Stick
         </div>
 
         {/* Hero Copy - Dramatic Scaling */}
@@ -74,7 +75,7 @@ export default function CliniciansContent() {
             YOU WISH EXISTED.
           </h2>
           <p className="text-lg md:text-xl text-app-muted font-medium leading-relaxed max-w-3xl mx-auto">
-            You spend six hours a week on documentation. You assign home practice that rarely happens. Your clients achieve clinical fluency, then lose it when they leave the clinic. The infrastructure for the hours between sessions doesn't exist yet. We're building it.
+            You spend six hours a week on documentation. You assign home practice that rarely happens. Your clients achieve clinical fluency, then lose it when they leave the clinic. The infrastructure for the hours between sessions doesn&apos;t exist yet. We&apos;re building it.
           </p>
         </div>
 
@@ -143,11 +144,17 @@ export default function CliniciansContent() {
 
               <div className="relative">
                 <div className="text-[0.95rem] md:text-[1.1rem] leading-relaxed relative z-10 w-full text-white/70 font-medium transition-colors duration-500">
-                  We're looking for the clinician who has been quietly frustrated by the "carryover gap" for years. Who has a patient with 80% clinic fluency and 10% real-world fluency, and no objective bridge between the two. <span className={`font-black transition-all duration-500 ${hoveredSide === 'right' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.2)]' : 'text-white'}`}>Three to five founding advisory members.</span> We have the algorithm. We need the clinical judgment.
+                  We&apos;re looking for the clinician who has been quietly frustrated by the &quot;carryover gap&quot; for years. Who has a client with 80% clinic fluency and 10% real-world fluency, and no objective bridge between the two. <span className={`font-black transition-all duration-500 ${hoveredSide === 'right' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.2)]' : 'text-white'}`}>Three to five founding advisory members.</span> We have the algorithm. We need the clinical judgment.
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Elegant Divider */}
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-12 md:my-16 relative z-10" />
+
+          {/* Algorithm Table */}
+          <AlgorithmTable />
 
           {/* Elegant Divider */}
           <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-12 md:my-16 relative z-10" />
@@ -170,7 +177,7 @@ export default function CliniciansContent() {
                   </div>
                   <h4 className="text-xl font-black mb-3 text-white tracking-tight">Direct Influence</h4>
                   <p className="text-[0.95rem] text-white/60 font-medium leading-relaxed">
-                    Your caseload problems become our build priorities. You'll see your feedback ship.
+                    Your caseload problems become our build priorities. You&apos;ll see your feedback ship.
                   </p>
                 </div>
               </div>

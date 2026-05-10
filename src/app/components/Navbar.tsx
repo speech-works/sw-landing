@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { withBasePath } from "@/app/lib/withBasePath";
+import Link from "next/link";
 
 import ContactModal from "./ContactModal";
 
@@ -32,10 +33,9 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    let observer: IntersectionObserver;
     let mutationObserver: MutationObserver;
 
-    observer = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           setIsRoadmapVisible(entry.isIntersecting);
@@ -116,7 +116,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <div className="mobile-fixed-glass flex justify-between items-center backdrop-blur-2xl bg-white/90 border border-orange-900/10 rounded-full px-4 md:px-6 py-2.5 md:py-3 shadow-lg">
-            <a href="/" className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80">
+            <Link href="/" className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80">
                 <div className="relative h-7 w-7 overflow-hidden rounded-full md:h-8 md:w-8">
                   <Image
                     src={withBasePath("/assets/logo.png")}
@@ -129,7 +129,7 @@ export default function Navbar() {
                 <span className="font-bold text-base md:text-lg tracking-tight text-app-text">
                   Speechworks
                 </span>
-            </a>
+            </Link>
 
             <div className="hidden lg:flex items-center space-x-8">
               <a

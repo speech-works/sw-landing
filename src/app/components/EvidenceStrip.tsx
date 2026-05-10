@@ -1,0 +1,124 @@
+"use client";
+
+import React, { useRef, MouseEvent } from 'react';
+
+const EVIDENCE_DATA = [
+  {
+    label: "Anchored in Reality",
+    citation: "[YARUSS & QUESAL, 2006]",
+    text: "Severity scores are based on a clinical sample of 173 adults who stutter. Not invented.",
+  },
+  {
+    label: "5 Dimensions, 4 Domains",
+    citation: "[WHO ICF FRAMEWORK]",
+    text: "We map five growth metrics into the four clinical domains defined by the World Health Organization's International Classification of Functioning (ICF).",
+  },
+  {
+    label: "Safety-Gated Practice",
+    citation: "[FOA & MCLEAN, 2016]",
+    text: "If your emotional distress fluctuates too quickly, the algorithm stops high-stress practice. Safety before progress.",
+  },
+  {
+    label: "Two Distinct Paths",
+    citation: "[TICHENOR & YARUSS, 2019]",
+    text: "Hidden (covert) and visible (overt) stuttering require completely different practice paths. The algorithm reads the difference.",
+  }
+];
+
+export function EvidenceStrip() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const cards = containerRef.current.querySelectorAll('.evidence-card');
+    cards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+      (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+    });
+  };
+
+  return (
+    <section className="bg-[#050505] text-app-light py-24 md:py-32 relative overflow-hidden border-t border-white/5">
+      {/* Background Ambience */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-brand/10 blur-[150px] pointer-events-none rounded-full" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+        
+        {/* Section Header */}
+        <div className="mb-16 md:mb-20 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 mb-6 shadow-sm backdrop-blur-xl reveal translate-y-4 opacity-0 transition-all duration-700 [&.active]:translate-y-0 [&.active]:opacity-100">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
+              </span>
+              <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white/80">
+                Scientific Foundation
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-white reveal translate-y-4 opacity-0 transition-all duration-700 delay-100 [&.active]:translate-y-0 [&.active]:opacity-100">
+              Built on validated clinical research.
+            </h2>
+          </div>
+          <p className="text-white/40 font-medium max-w-sm md:text-right reveal translate-y-4 opacity-0 transition-all duration-700 delay-200 [&.active]:translate-y-0 [&.active]:opacity-100">
+            We don&apos;t guess. Every parameter in our backend maps to established peer-reviewed literature.
+          </p>
+        </div>
+
+        {/* Spotlight Grid */}
+        <div 
+          ref={containerRef}
+          onMouseMove={handleMouseMove}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 group/grid"
+        >
+          {EVIDENCE_DATA.map((item, index) => (
+            <div 
+              key={index} 
+              className="evidence-card relative rounded-3xl bg-white/[0.02] border border-white/5 p-8 md:p-12 overflow-hidden transition-colors duration-500 hover:bg-white/[0.04] group/card reveal translate-y-8 opacity-0 transition-all duration-700 [&.active]:translate-y-0 [&.active]:opacity-100"
+              style={{ transitionDelay: `${index * 100 + 300}ms` }}
+            >
+              {/* Spotlight Background Glow */}
+              <div 
+                className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
+                style={{
+                  background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%)`
+                }}
+              />
+              {/* Spotlight Border Glow */}
+              <div 
+                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition duration-500 group-hover/grid:opacity-100"
+                style={{
+                  background: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(242,128,68,0.4), transparent 50%)`,
+                  WebkitMaskImage: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
+                  WebkitMaskComposite: `xor`,
+                  maskComposite: `exclude`,
+                  padding: `1px`
+                }}
+              />
+
+              <div className="relative z-10 flex flex-col h-full justify-between min-h-[160px] gap-8">
+                <div className="flex flex-col space-y-5 items-start">
+                  <div className="inline-flex items-center rounded bg-black/40 py-1.5 px-2.5 border border-white/5">
+                    <span className="font-mono text-[10px] md:text-[11px] font-semibold tracking-widest text-brand group-hover/card:text-brand-light transition-colors duration-300">
+                      {item.citation}
+                    </span>
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-black tracking-tight text-white group-hover/card:translate-x-1 transition-transform duration-300 ease-out">
+                    {item.label}
+                  </h3>
+                </div>
+                
+                <p className="text-[0.95rem] md:text-[1.05rem] text-white/50 font-medium leading-relaxed max-w-[42ch]">
+                  {item.text}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

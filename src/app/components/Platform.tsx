@@ -1056,7 +1056,7 @@ export default function Platform() {
 
         {!isMobileViewport && (
           <div
-            className="hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
+            className="hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 lg:min-h-[720px] items-center"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onTouchStart={() => setIsHovered(true)}

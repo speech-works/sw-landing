@@ -317,7 +317,7 @@ export default function Hero() {
               <div className="w-10 md:w-12 h-1 bg-gradient-to-r from-brand to-purple-500 rounded-full mb-6 md:mb-8 reveal reveal-delay-1 shadow-[0_0_10px_#F28044] active"></div>
 
               <p className="w-full max-w-none text-[1.02rem] sm:max-w-[24ch] sm:text-xl md:text-2xl text-white/70 leading-7 sm:leading-relaxed lg:max-w-2xl font-light mb-8 md:mb-10 reveal reveal-delay-1 active">
-                You know that feeling when the phone rings and your chest tightens? We get it. Stuttering isn't just about the words; it's about the fear of the next block. We built the practice ground for the moments that actually matter.
+                You know that feeling when the phone rings and your chest tightens? We get it. Stuttering isn&apos;t just about the words; it&apos;s about the fear of the next block. We built the practice ground for the moments that actually matter.
               </p>
 
               <div className="flex min-w-0 w-full max-w-none flex-col gap-3 sm:max-w-none sm:flex-row sm:gap-4 md:gap-5 reveal reveal-delay-2 active">

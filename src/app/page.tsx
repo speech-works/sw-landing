@@ -8,6 +8,8 @@ import Hero from './components/Hero';
 import MarqueeDivider from './components/MarqueeDivider';
 import Roadmap from './components/Roadmap';
 import Platform from './components/Platform';
+import { EvidenceStrip } from './components/EvidenceStrip';
+import { ICFDomainMap } from './components/ICFDomainMap';
 import MobileDeferredSection from "./components/MobileDeferredSection";
 
 const SimulatorSection = dynamic(() => import("./components/Simulator"), {
@@ -353,6 +355,8 @@ export default function Home() {
       <MarqueeDivider />
       <Roadmap />
       <Platform />
+      <EvidenceStrip />
+      <ICFDomainMap />
       <MobileDeferredSection placeholderClassName="mobile-content-auto min-h-[860px]">
         <SimulatorSection />
       </MobileDeferredSection>
