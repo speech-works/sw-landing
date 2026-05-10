@@ -151,11 +151,11 @@ const features = [
   {
     id: "progress",
     shortTitle: "Growth Profile",
-    title: "Pro-Level Progress Tracking",
-    mobileTitle: "Progress Tracking",
-    desc: "A 5-axis Radar Chart tracking Mastery, Ease, Courage, Confidence, and Social Participation. Leveling up isn't just a number—it's an expansion of capability. See your growth not as a fluency score, but as a resilience map.",
+    title: "Five Dimensions of Real Growth",
+    mobileTitle: "Five Dimensions",
+    desc: "We track five things: how naturally you speak, how comfortable it feels, how often you face hard moments, how confident you feel, and how much you show up socially. Each axis is clinically grounded.",
     mobileDesc:
-      "Track mastery across five real-world dimensions. See growth as resilience, not just fluency.",
+      "Five dimensions. Each one clinically grounded. See where you're actually growing.",
     tagIcon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -286,11 +286,11 @@ const features = [
   {
     id: "stamina",
     shortTitle: "Biological Stamina",
-    title: "Sustainable Training",
-    mobileTitle: "Sustainable Training",
-    desc: "We treat speech mastery like an elite sport. Stamina Guardrails prevent burnout and ensure you only practice at your peak.",
+    title: "Practice That Knows When to Stop",
+    mobileTitle: "Know When to Stop",
+    desc: "Cognitive fatigue breaks down speech. The app tracks your energy across each session. When you're running low, it stops the session before you do damage.",
     mobileDesc:
-      "Practice like an athlete. Stamina Guardrails help you stop before burnout.",
+      "Cognitive fatigue breaks down speech. The app stops the session before you run yourself into the ground.",
     tagIcon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -350,11 +350,11 @@ const features = [
   {
     id: "roadmap",
     shortTitle: "Clinical Packs",
-    title: "Your 0-to-100 Roadmap",
-    mobileTitle: "Your Roadmap",
-    desc: 'Expert-designed curriculums that follow a strict Clinical Arc. No more guesswork. Our Recommendation Engine audits your unique speech profile and presents the exact "Pack" you need right now.',
+    title: "A Path Built for Your Specific Profile",
+    mobileTitle: "Your Path",
+    desc: "No guessing what to practice next. The algorithm reads your severity score, your avoidance pattern, and your emotional state — then recommends one pack. The right one, for right now.",
     mobileDesc:
-      "A clear path from foundations to harder speaking moments, without the guesswork.",
+      "Your profile. Your next step. No guessing.",
     tagIcon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -925,8 +925,7 @@ export default function Platform() {
             className="hidden md:block text-app-muted font-medium mt-4 md:mt-0 max-w-xs mx-auto md:mx-0 md:text-right text-sm md:text-base"
             style={{ animation: "platform-fadeSlideUp 0.6s ease 0.4s both" }}
           >
-            A clinical-grade foundation designed to analyze, challenge, and
-            elevate your speech patterns.
+            We built it to analyze your speech in real time. Then push back against it.
           </p>
         </div>
 

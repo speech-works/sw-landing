@@ -16,6 +16,7 @@ export default function Navbar() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isRoadmapVisible, setIsRoadmapVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +28,44 @@ export default function Navbar() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    let observer: IntersectionObserver;
+    let mutationObserver: MutationObserver;
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsRoadmapVisible(entry.isIntersecting);
+        });
+      },
+      {
+        rootMargin: "-25% 0px -40% 0px",
+      }
+    );
+
+    const observeRoadmap = () => {
+      const roadmapEl = document.getElementById("roadmap");
+      if (roadmapEl) {
+        observer.observe(roadmapEl);
+        if (mutationObserver) mutationObserver.disconnect();
+      }
+    };
+
+    observeRoadmap();
+
+    if (!document.getElementById("roadmap")) {
+      mutationObserver = new MutationObserver(() => {
+        observeRoadmap();
+      });
+      mutationObserver.observe(document.body, { childList: true, subtree: true });
+    }
+
+    return () => {
+      if (observer) observer.disconnect();
+      if (mutationObserver) mutationObserver.disconnect();
     };
   }, []);
 
@@ -111,12 +150,47 @@ export default function Navbar() {
               >
                 Team
               </a>
-              <a
-                href="/clinicians"
-                className="text-xs font-semibold uppercase tracking-widest text-app-muted transition-colors hover:text-brand"
+              <div 
+                className={`relative flex h-9 items-center justify-center transition-[width] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  isRoadmapVisible ? "w-[174px]" : "w-[108px]"
+                }`}
               >
-                For Clinicians
-              </a>
+                {/* Default Link State */}
+                <a
+                  href="/clinicians"
+                  className={`absolute flex w-max items-center justify-center text-xs font-semibold uppercase tracking-widest transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-brand ${
+                    isRoadmapVisible 
+                      ? "opacity-0 scale-90 pointer-events-none -translate-y-2" 
+                      : "opacity-100 scale-100 text-app-muted translate-y-0"
+                  }`}
+                >
+                  For Clinicians
+                </a>
+                
+                {/* Premium Dark Pill State */}
+                <a 
+                  href="/clinicians"
+                  className={`absolute flex w-max items-center gap-2 overflow-hidden rounded-full border border-white/15 bg-[#0a0a0a] py-2 pl-2 pr-5 shadow-[0_16px_32px_-10px_rgba(242,128,68,0.3)] backdrop-blur-xl transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    isRoadmapVisible
+                      ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
+                      : "opacity-0 scale-95 pointer-events-none translate-y-2"
+                  }`}
+                >
+                  {/* Subtle inner glow */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand/15 to-transparent pointer-events-none" />
+                  
+                  {/* Pulsing indicator */}
+                  <div className="relative flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/5 border border-white/10">
+                    <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-brand opacity-60"></span>
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand shadow-[0_0_8px_rgba(242,128,68,0.8)]"></span>
+                  </div>
+
+                  <div className="relative flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.15em]">
+                    <span className="font-semibold text-white/50">SLP?</span>
+                    <span className="font-black text-brand">Help us build</span>
+                  </div>
+                </a>
+              </div>
               <button
                 type="button"
                 onClick={() => setIsContactOpen(true)}

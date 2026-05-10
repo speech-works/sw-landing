@@ -61,7 +61,7 @@ export default function CliniciansContent() {
           <svg className="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
           </svg>
-          Built by people who know trust is part of the product.
+          For the SLP Tired of Assigning Homework That Doesn't Stick
         </div>
 
         {/* Hero Copy - Dramatic Scaling */}
@@ -74,7 +74,7 @@ export default function CliniciansContent() {
             YOU WISH EXISTED.
           </h2>
           <p className="text-lg md:text-xl text-app-muted font-medium leading-relaxed max-w-3xl mx-auto">
-            Most clinical software is built by engineers who have never managed a caseload, wrestled with point-of-service documentation, or dealt with the "carryover" crisis. We are taking a different approach.
+            You spend six hours a week on documentation. You assign home practice that rarely happens. Your clients achieve clinical fluency, then lose it when they leave the clinic. The infrastructure for the hours between sessions doesn't exist yet. We're building it.
           </p>
         </div>
 
@@ -103,7 +103,7 @@ export default function CliniciansContent() {
                 The Clinical Reality
               </h3>
               <p className="text-[1.05rem] md:text-[1.15rem] text-white/80 leading-relaxed font-medium">
-                We are building the backend architecture for a new era of speech therapy—tracking objective progress, simulating adversarial environments, and bridging the massive data gap between the clinic and the living room. But the math means nothing without <strong className={`font-black transition-all duration-500 ${hoveredSide === 'left' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.3)]' : 'text-white'}`}>clinical truth</strong>.
+                We scored our severity model against published clinical norms. We built our exposure hierarchy on evidence-based desensitization research. Our Kalman filters track real-time speech volatility, and we implemented phenotype-aware routing with built-in crisis gates. We did the reading. Now we need clinicians to tell us what we missed.
               </p>
             </div>
 
@@ -143,7 +143,7 @@ export default function CliniciansContent() {
 
               <div className="relative">
                 <div className="text-[0.95rem] md:text-[1.1rem] leading-relaxed relative z-10 w-full text-white/70 font-medium transition-colors duration-500">
-                  As we build the clinical portal, we are actively recruiting a tight-knit <span className={`font-black transition-all duration-500 ${hoveredSide === 'right' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.2)]' : 'text-white'}`}>Founding Clinical Advisory Board (CAB)</span>. We are looking for 3 to 5 forward-thinking, private practice SLPs who are tired of clunky EMRs and want to <span className={`font-black transition-all duration-500 ${hoveredSide === 'right' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.2)]' : 'text-white'}`}>steer the development</span> of a platform that actually eliminates administrative friction and drives practice growth.
+                  We're looking for the clinician who has been quietly frustrated by the "carryover gap" for years. Who has a patient with 80% clinic fluency and 10% real-world fluency, and no objective bridge between the two. <span className={`font-black transition-all duration-500 ${hoveredSide === 'right' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.2)]' : 'text-white'}`}>Three to five founding advisory members.</span> We have the algorithm. We need the clinical judgment.
                 </div>
               </div>
             </div>
@@ -170,7 +170,7 @@ export default function CliniciansContent() {
                   </div>
                   <h4 className="text-xl font-black mb-3 text-white tracking-tight">Direct Influence</h4>
                   <p className="text-[0.95rem] text-white/60 font-medium leading-relaxed">
-                    Tell us what is broken in your workflow, and watch us engineer the solution.
+                    Your caseload problems become our build priorities. You'll see your feedback ship.
                   </p>
                 </div>
               </div>
@@ -184,9 +184,9 @@ export default function CliniciansContent() {
                       <circle cx="12" cy="8" r="7" /><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
                     </svg>
                   </div>
-                  <h4 className="text-xl font-black mb-3 text-white tracking-tight">Clinical Status</h4>
+                  <h4 className="text-xl font-black mb-3 text-white tracking-tight">Founding Clinical Advisory</h4>
                   <p className="text-[0.95rem] text-white/60 font-medium leading-relaxed">
-                    A formal "Founding Clinical Advisory Board" position for your professional portfolio.
+                    Secure a strategic position shaping the first evidence-backed category for clinical carryover. Influence our algorithmic roadmap and establish your practice as a first-mover.
                   </p>
                 </div>
               </div>
@@ -200,9 +200,9 @@ export default function CliniciansContent() {
                       <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
                     </svg>
                   </div>
-                  <h4 className="text-xl font-black mb-3 text-white tracking-tight">Exclusive Access</h4>
+                  <h4 className="text-xl font-black mb-3 text-white tracking-tight">Free Access, Forever</h4>
                   <p className="text-[0.95rem] text-white/60 font-medium leading-relaxed">
-                    Lifetime free access to the clinical portal for your private practice upon launch.
+                    When we launch the clinical portal, your practice gets full access. No subscription. Forever.
                   </p>
                 </div>
               </div>

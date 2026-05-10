@@ -37,7 +37,7 @@ const ROADMAP_PHASES = [
     kicker: "We Built",
     title: "Forging the Tools",
     description:
-      "A clinical-grade sandbox. Live and available now. We have built an AI-driven app that provides a safe environment for you to practice real-world scenarios.",
+      "An app built on real clinical science. Not a meditation timer. A place to practice the conversations that actually challenge you. Live now.",
     status: "Live now",
     mockupPhase: 1,
     comingSoon: false,
@@ -49,9 +49,9 @@ const ROADMAP_PHASES = [
     stageGradient: "from-purple-500 to-purple-800",
     stageGlow: "shadow-[0_28px_70px_-18px_rgba(107,33,168,0.28)]",
     kicker: "We Are Building",
-    title: "Uniting the Community",
+    title: "Finding the Others",
     description:
-      "We are actively building a unified community space where users can share their experiences, celebrate victories, and find support.",
+      "Figuring this out alone is exhausting. We are building a space to connect with people who actually get it.",
     status: "In build",
     mockupPhase: 2,
     comingSoon: true,
@@ -63,9 +63,9 @@ const ROADMAP_PHASES = [
     stageGradient: "from-emerald-500 to-emerald-800",
     stageGlow: "shadow-[0_28px_70px_-18px_rgba(5,150,105,0.28)]",
     kicker: "We Will Build",
-    title: "Bridging the Gap",
+    title: "Closing the 167-Hour Void",
     description:
-      "Bridging the gap between practice and professional therapy. Connect seamlessly with vetted Speech-Language Pathologists.",
+      "Your therapist sees you one hour a week. We're building the system that gives them visibility into the other 167.",
     status: "Coming next",
     mockupPhase: 3,
     comingSoon: true,
@@ -287,18 +287,6 @@ export default function Roadmap() {
                   ROADMAP.
                 </h3>
               </div>
-              <div className="lg:pb-3 flex justify-center lg:justify-end">
-                <a 
-                  href="/clinicians" 
-                  className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full bg-black text-white text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-black/80 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
-                >
-                  Are you an SLP? Help us build this.
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14"/>
-                    <path d="m12 5 7 7-7 7"/>
-                  </svg>
-                </a>
-              </div>
             </div>
           </div>
 
@@ -489,11 +477,7 @@ export default function Roadmap() {
                     }}
                   >
                     <p className="text-app-muted font-medium leading-relaxed pr-2 md:pr-4 text-sm md:text-base">
-                      {phase === 1
-                        ? "A clinical-grade sandbox. Live and available now. We have built an AI-driven app that provides a safe environment for you to practice real-world scenarios."
-                        : phase === 2
-                        ? "We are actively building a unified community space where users can share their experiences, celebrate victories, and find support."
-                        : "Bridging the gap between practice and professional therapy. Connect seamlessly with vetted Speech-Language Pathologists."}
+                      {ROADMAP_PHASES.find((p) => p.id === phase)?.description}
                     </p>
                     {phase === 3 && (
                       <Link href="/clinicians" className="inline-flex items-center gap-1.5 mt-4 text-[10px] md:text-xs font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-700 transition-colors group/link">
