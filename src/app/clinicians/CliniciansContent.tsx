@@ -89,6 +89,12 @@ export default function CliniciansContent() {
             <div className="absolute inset-0 opacity-[0.06] bg-grid" />
           </div>
 
+          {/* Algorithm Table - Moved to top */}
+          <AlgorithmTable />
+
+          {/* Elegant Divider */}
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-12 md:my-16 relative z-10" />
+
           <div className="relative z-10 grid md:grid-cols-2 gap-12 md:gap-20">
             {/* Left Column: The Clinical Reality */}
             <div 
@@ -149,12 +155,6 @@ export default function CliniciansContent() {
               </div>
             </div>
           </div>
-
-          {/* Elegant Divider */}
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-12 md:my-16 relative z-10" />
-
-          {/* Algorithm Table */}
-          <AlgorithmTable />
 
           {/* Elegant Divider */}
           <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-12 md:my-16 relative z-10" />
