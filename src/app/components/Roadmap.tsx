@@ -148,6 +148,18 @@ export default function Roadmap() {
         }
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+          <div className="mb-12 md:mb-16 reveal text-center lg:text-left active">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
+              Master Plan
+            </div>
+            <h3 className="text-4xl sm:text-5xl md:text-7xl lg:text-[5rem] font-black tracking-tighter leading-[0.95] text-app-text">
+              THE SPEECHWORKS
+              <br />
+              ROADMAP.
+            </h3>
+          </div>
+
           <div
             className="relative lg:hidden reveal reveal-delay-1 active flex flex-col gap-12"
             role="region"

@@ -69,7 +69,7 @@ export function ICFDomainMap() {
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-6 reveal translate-y-4 opacity-0 transition-all duration-700 delay-100 [&.active]:translate-y-0 [&.active]:opacity-100 text-app-text leading-[0.95]">
-            How We Measure<br className="hidden md:block"/> What Actually Matters
+            What Growing<br className="hidden md:block"/> Actually Looks Like
           </h2>
           <p className="text-lg md:text-xl text-app-muted font-medium leading-relaxed reveal translate-y-4 opacity-0 transition-all duration-700 delay-200 ease-out [&.active]:translate-y-0 [&.active]:opacity-100">
             Every dimension on your Growth Profile maps directly to the World Health Organization&apos;s <span className="text-brand font-bold">International Classification of Functioning (ICF)</span>. Fluency alone is an incomplete picture.
@@ -103,7 +103,7 @@ export function ICFDomainMap() {
                     Mastery
                   </h3>
                   <p className="text-[1.05rem] md:text-lg text-app-muted font-medium max-w-sm">
-                    Physical speech fluency and struggle.
+                    How freely the words come out — and how hard you work when they don't.
                   </p>
                 </div>
               </div>
@@ -128,7 +128,7 @@ export function ICFDomainMap() {
                     Ease
                   </h3>
                   <p className="text-[1.05rem] md:text-lg text-app-muted font-medium">
-                    Daily communication comfort.
+                    How much effort it takes to get through a normal conversation.
                   </p>
                 </div>
               </div>
@@ -153,7 +153,7 @@ export function ICFDomainMap() {
                     Social
                   </h3>
                   <p className="text-[1.05rem] md:text-lg text-app-muted font-medium">
-                    How much you show up in conversations.
+                    How much of your social life you're actually living versus watching from the edge.
                   </p>
                 </div>
               </div>
@@ -180,7 +180,7 @@ export function ICFDomainMap() {
                         Courage
                       </h3>
                       <p className="text-[0.95rem] md:text-[1.05rem] text-app-muted font-medium leading-relaxed">
-                        Avoidance — the situations you stop entering.
+                        The phone calls you don't make. The introductions you skip. The situations you've quietly stopped walking into.
                       </p>
                     </div>
                   </div>
@@ -193,7 +193,7 @@ export function ICFDomainMap() {
                         Confidence
                       </h3>
                       <p className="text-[0.95rem] md:text-[1.05rem] text-app-muted font-medium leading-relaxed">
-                        Emotional distress around speaking.
+                        Whether your stutter still makes you feel ashamed, afraid, or less than — and whether that's starting to change.
                       </p>
                     </div>
                   </div>

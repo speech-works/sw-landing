@@ -7,22 +7,22 @@ const EVIDENCE_DATA = [
   {
     label: "Anchored in Reality",
     citation: "[YARUSS & QUESAL, 2006]",
-    text: "Severity scores are based on a clinical sample of 173 adults who stutter. Not invented.",
+    text: "The scale that measures where you are is built from real stories — 173 adults who stutter, whose experiences were studied and turned into the numbers you'll see.",
   },
   {
-    label: "5 Dimensions, 4 Domains",
+    label: "More Than Fluency",
     citation: "[WHO ICF FRAMEWORK]",
-    text: "We map five growth metrics into the four clinical domains defined by the World Health Organization's International Classification of Functioning (ICF).",
+    text: "Stuttering affects more than how words come out. It affects what you do, who you see, and how you feel about yourself. We track all of it — using the same framework the WHO uses to understand disability and functioning.",
   },
   {
     label: "Safety-Gated Practice",
     citation: "[FOA & MCLEAN, 2016]",
-    text: "If your emotional distress fluctuates too quickly, the algorithm stops high-stress practice. Safety before progress.",
+    text: "Not every day is the right day to push hard. When your emotional state is too unstable, the app pulls back the intensity automatically. Progress needs a safe foundation.",
   },
   {
     label: "Two Distinct Paths",
     citation: "[TICHENOR & YARUSS, 2019]",
-    text: "Hidden (covert) and visible (overt) stuttering require completely different practice paths. The algorithm reads the difference.",
+    text: "If you've spent years avoiding certain words, certain situations, certain people — your practice path is different from someone whose stutter is visible. The algorithm knows the difference and routes accordingly.",
   }
 ];
 
@@ -103,15 +103,15 @@ export function EvidenceStrip() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
               </span>
               <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white/80">
-                Scientific Foundation
+                Why You Can Trust This
               </span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-white reveal translate-y-4 opacity-0 transition-all duration-700 delay-100 [&.active]:translate-y-0 [&.active]:opacity-100">
-              Built on validated clinical research.
+              Rooted in decades of research.
             </h2>
           </div>
           <p className="text-white/40 font-medium max-w-sm md:text-right reveal translate-y-4 opacity-0 transition-all duration-700 delay-200 [&.active]:translate-y-0 [&.active]:opacity-100">
-            We don&apos;t guess. Every parameter in our backend maps to <span className="text-white font-bold">established peer-reviewed literature</span>.
+            The research behind this app is real and citable. We show our sources.
           </p>
         </div>
 

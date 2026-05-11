@@ -138,7 +138,7 @@ const features = [
     shortTitle: "Growth Profile",
     title: "Five Dimensions of Real Growth",
     mobileTitle: "Five Dimensions",
-    desc: "We track five things: how naturally you speak, how comfortable it feels, how often you face hard moments, how confident you feel, and how much you show up socially. Each axis is clinically grounded.",
+    desc: "Fluency is one number. But your experience of stuttering is five. We track all of them — the physical, the emotional, the social, and the things that keep you from showing up. Each axis is clinically grounded.",
     mobileDesc:
       "Five dimensions. Each one clinically grounded. See where you're actually growing.",
     tagIcon: (
@@ -273,7 +273,7 @@ const features = [
     shortTitle: "Biological Stamina",
     title: "Practice That Knows When to Stop",
     mobileTitle: "Know When to Stop",
-    desc: "Cognitive fatigue breaks down speech. The app tracks your energy across each session. When you're running low, it stops the session before you do damage.",
+    desc: "Some days you have more in the tank than others. The app watches your energy through each session and ends it at the right moment — before fatigue takes over.",
     mobileDesc:
       "Cognitive fatigue breaks down speech. The app stops the session before you run yourself into the ground.",
     tagIcon: (
@@ -876,7 +876,7 @@ export default function Platform() {
             <div className="md:hidden">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-black/5 bg-white px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest text-app-text shadow-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand animate-pulse"></span>
-                Professional Speech Academy
+                Your Practice Space
               </div>
               <h3 className="text-4xl font-black tracking-tighter leading-[0.95] text-app-text sm:text-5xl">
                 ADVERSARIAL AI.
@@ -890,7 +890,7 @@ export default function Platform() {
                   animation: "platform-fadeSlideDown 0.6s ease 0.1s both",
                 }}
               >
-                Professional Speech Academy
+                Your Practice Space
               </h2>
               <h3
                 className="text-[2rem] font-black tracking-tighter leading-[0.92] text-app-text sm:text-4xl md:text-5xl"
@@ -909,7 +909,7 @@ export default function Platform() {
             className="hidden md:block text-app-muted font-medium mt-4 md:mt-0 max-w-xs mx-auto md:mx-0 md:text-right text-sm md:text-base"
             style={{ animation: "platform-fadeSlideUp 0.6s ease 0.4s both" }}
           >
-            We built it to analyze your speech in real time. Then push back against it.
+            Built to simulate the moments that actually make you nervous.
           </p>
         </div>
 

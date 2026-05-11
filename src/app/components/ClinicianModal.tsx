@@ -204,9 +204,9 @@ export default function ClinicianModal({
 
   const updateField =
     (field: keyof ClinicianFormState) =>
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setForm((current) => ({ ...current, [field]: event.target.value }));
-    };
+      (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setForm((current) => ({ ...current, [field]: event.target.value }));
+      };
 
   const handleSubmit = () => {
     setAttemptedSubmit(true);
@@ -216,7 +216,9 @@ export default function ClinicianModal({
   };
 
   const openDraftedEmail = () => {
-    const subject = `Clinical Advisory Board Application - ${form.name.trim()}`;
+    const subject = form.specialization.trim()
+      ? `CAB Application: ${form.name.trim()} — ${form.specialization.trim()}`
+      : `CAB Application: ${form.name.trim()}`;
     const practiceLine = form.practice.trim() || "Not provided";
     const specializationLine = form.specialization.trim() || "Not provided";
 
@@ -273,14 +275,13 @@ export default function ClinicianModal({
     isMobileViewport
       ? undefined
       : {
-          animation: `invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) ${delay}ms both`,
-        };
+        animation: `invite-fade-up 520ms cubic-bezier(0.22,1,0.36,1) ${delay}ms both`,
+      };
 
   return (
     <div
-      className={`fixed inset-0 z-[120] flex items-center justify-center overflow-hidden p-3 sm:p-6 ${
-        isMobileViewport ? "" : "transition-opacity duration-300 "
-      }${isOpen ? "opacity-100" : "opacity-0"}`}
+      className={`fixed inset-0 z-[120] flex items-center justify-center overflow-hidden p-3 sm:p-6 ${isMobileViewport ? "" : "transition-opacity duration-300 "
+        }${isOpen ? "opacity-100" : "opacity-0"}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="clinician-modal-title"
@@ -294,12 +295,10 @@ export default function ClinicianModal({
         ref={modalRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`relative w-full max-w-[540px] overflow-hidden rounded-[1.7rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] ${
-          isMobileViewport ? "" : "transition-opacity duration-500 "
-        }sm:rounded-[2rem] ${
-          isOpen ? "opacity-100" : "opacity-0"
-        }`}
-        style={{ 
+        className={`relative w-full max-w-[540px] overflow-hidden rounded-[1.7rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] ${isMobileViewport ? "" : "transition-opacity duration-500 "
+          }sm:rounded-[2rem] ${isOpen ? "opacity-100" : "opacity-0"
+          }`}
+        style={{
           willChange: isMobileViewport ? "auto" : "transform",
           minHeight: step === 'confirm' ? '320px' : 'auto'
         }}
@@ -321,11 +320,10 @@ export default function ClinicianModal({
 
         <button
           onClick={onClose}
-          className={`absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 ${
-            isMobileViewport
+          className={`absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 ${isMobileViewport
               ? ""
               : "transition-all duration-300 hover:scale-110 hover:rotate-90 hover:border-[#ffb28a]/25 hover:bg-white/10 hover:text-white "
-          }sm:right-4 sm:top-4 sm:h-10 sm:w-10`}
+            }sm:right-4 sm:top-4 sm:h-10 sm:w-10`}
           aria-label="Close modal"
         >
           <svg
@@ -346,7 +344,7 @@ export default function ClinicianModal({
           <div className="relative z-10 p-5 sm:p-8 md:p-10 max-h-[calc(100dvh-1.25rem)] overflow-y-auto sm:max-h-[min(820px,calc(100dvh-3rem))]">
             <div className="mb-6">
               <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#ffb28a] sm:text-[11px]">
-                Founding Clinical Advisory
+                Founding Clinical Advisor
               </div>
               <h2
                 id="clinician-modal-title"
@@ -359,7 +357,7 @@ export default function ClinicianModal({
                 className="mt-3 text-[14px] leading-relaxed text-white/60 sm:text-[15px]"
                 style={getFadeUpStyle(120)}
               >
-                Join a select group of clinicians building the first evidence-backed category for clinical carryover.
+                Join a select group of clinicians building the first clinical technology platform designed specifically for the carryover phase.
               </p>
             </div>
 
@@ -444,11 +442,10 @@ export default function ClinicianModal({
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  className={`inline-flex min-h-[54px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white ${
-                    isMobileViewport
+                  className={`inline-flex min-h-[54px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white ${isMobileViewport
                       ? ""
                       : "transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 "
-                  }`}
+                    }`}
                 >
                   Send Application
                 </button>
@@ -462,15 +459,15 @@ export default function ClinicianModal({
                 <path d="M22 2L11 13" /><path d="M22 2l-7 20-4-9-9-4 20-7z" />
               </svg>
             </div>
-            
+
             <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-4 tracking-tight" style={getFadeUpStyle(60)}>
               Drafting Your Email
             </h2>
-            
+
             <p className="text-[15px] sm:text-16 text-white/60 leading-relaxed mb-10 max-w-sm" style={getFadeUpStyle(120)}>
-              We are drafting the application for you. Please review the details in your email client and send it forward to apply.
+              We are drafting the application for you. Please review the details in your email client and hit send to apply.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 w-full max-w-[320px]" style={getFadeUpStyle(180)}>
               <button
                 onClick={() => setStep('form')}
