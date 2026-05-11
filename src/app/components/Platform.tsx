@@ -409,10 +409,6 @@ export default function Platform() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [mobileCopyHeight, setMobileCopyHeight] = useState<number | null>(null);
-  const [mobileCarouselHeight, setMobileCarouselHeight] = useState<
-    number | null
-  >(null);
   const sectionRef = useRef<HTMLElement>(null);
   const mobileSlideRefs = useRef<Array<HTMLDivElement | null>>([]);
   const mobileCopyMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -450,17 +446,8 @@ export default function Platform() {
     setProgress(0);
   }, []);
 
-  const showPreviousFeature = useCallback(() => {
-    handleFeatureClick((activeIndex - 1 + features.length) % features.length);
-  }, [activeIndex, handleFeatureClick]);
-
-  const showNextFeature = useCallback(() => {
-    handleFeatureClick((activeIndex + 1) % features.length);
-  }, [activeIndex, handleFeatureClick]);
-
   const syncMobileCarouselHeight = useCallback(() => {
     if (!isMobileViewport) {
-      setMobileCarouselHeight(null);
       return;
     }
 
@@ -474,15 +461,10 @@ export default function Platform() {
     }, 0);
 
     if (!nextHeight) return;
-
-    setMobileCarouselHeight((current) =>
-      current === nextHeight ? current : nextHeight
-    );
   }, [isMobileViewport]);
 
   const syncMobileCopyHeight = useCallback(() => {
     if (!isMobileViewport) {
-      setMobileCopyHeight(null);
       return;
     }
 
@@ -492,10 +474,6 @@ export default function Platform() {
     }, 0);
 
     if (!nextHeight) return;
-
-    setMobileCopyHeight((current) =>
-      current === nextHeight ? current : nextHeight
-    );
   }, [isMobileViewport]);
 
   useEffect(() => {
@@ -559,6 +537,13 @@ export default function Platform() {
     return () => {
       window.removeEventListener("resize", handleResize);
       resizeObserver?.disconnect();
+    };
+  }, [isMobileViewport, syncMobileCopyHeight]);
+
+  useEffect(() => {
+    window.addEventListener("resize", syncMobileCopyHeight);
+    return () => {
+      window.removeEventListener("resize", syncMobileCopyHeight);
     };
   }, [isMobileViewport, syncMobileCopyHeight]);
 

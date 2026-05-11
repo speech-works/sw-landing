@@ -190,14 +190,6 @@ export default function Simulator() {
     return `${mobileClasses} ${desktopClasses}`;
   };
 
-  const showPreviousSimulator = () => {
-    setActiveSimulator((current) => (current === 1 ? 3 : current - 1));
-  };
-
-  const showNextSimulator = () => {
-    setActiveSimulator((current) => (current % 3) + 1);
-  };
-
   return (
     <>
       <section

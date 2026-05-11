@@ -103,7 +103,7 @@ export function ICFDomainMap() {
                     Mastery
                   </h3>
                   <p className="text-[1.05rem] md:text-lg text-app-muted font-medium max-w-sm">
-                    How freely the words come out — and how hard you work when they don't.
+                    How freely the words come out — and how hard you work when they don&apos;t.
                   </p>
                 </div>
               </div>
@@ -153,7 +153,7 @@ export function ICFDomainMap() {
                     Social
                   </h3>
                   <p className="text-[1.05rem] md:text-lg text-app-muted font-medium">
-                    How much of your social life you're actually living versus watching from the edge.
+                    How much of your social life you&apos;re actually living versus watching from the edge.
                   </p>
                 </div>
               </div>
@@ -180,7 +180,7 @@ export function ICFDomainMap() {
                         Courage
                       </h3>
                       <p className="text-[0.95rem] md:text-[1.05rem] text-app-muted font-medium leading-relaxed">
-                        The phone calls you don't make. The introductions you skip. The situations you've quietly stopped walking into.
+                        The phone calls you don&apos;t make. The introductions you skip. The situations you&apos;ve quietly stopped walking into.
                       </p>
                     </div>
                   </div>
@@ -193,7 +193,7 @@ export function ICFDomainMap() {
                         Confidence
                       </h3>
                       <p className="text-[0.95rem] md:text-[1.05rem] text-app-muted font-medium leading-relaxed">
-                        Whether your stutter still makes you feel ashamed, afraid, or less than — and whether that's starting to change.
+                        Whether your stutter still makes you feel ashamed, afraid, or less than — and whether that&apos;s starting to change.
                       </p>
                     </div>
                   </div>

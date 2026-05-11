@@ -1,6 +1,6 @@
 import { withBasePath } from "@/app/lib/withBasePath";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
 import MobileMockupMedia from "./MobileMockupMedia";
 import { useIsMobileViewport } from "./useIsMobileViewport";

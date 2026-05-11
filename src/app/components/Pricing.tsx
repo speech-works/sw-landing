@@ -94,7 +94,6 @@ export default function Pricing({
   sectionId?: string;
 }) {
   const [activeCard, setActiveCard] = useState(1);
-  const [mobileCard, setMobileCard] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [inviteVariant, setInviteVariant] = useState<"default" | "premium">(
@@ -102,8 +101,6 @@ export default function Pricing({
   );
   const isHoverLocked = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const pricingTouchStartX = useRef<number | null>(null);
-  const pricingTouchStartY = useRef<number | null>(null);
 
   // Track mouse coordinates for the 3D 'Magnetic' Tilt effect
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -162,52 +159,7 @@ export default function Pricing({
     setIsInviteModalOpen(true);
   };
 
-  const showPreviousTier = () => {
-    setMobileCard(
-      (current) => (current - 1 + pricingTiers.length) % pricingTiers.length
-    );
-  };
-
-  const showNextTier = () => {
-    setMobileCard((current) => (current + 1) % pricingTiers.length);
-  };
-
-  const handlePricingTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    const touch = e.touches[0];
-    pricingTouchStartX.current = touch.clientX;
-    pricingTouchStartY.current = touch.clientY;
-  };
-
-  const handlePricingTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (
-      pricingTouchStartX.current === null ||
-      pricingTouchStartY.current === null
-    ) {
-      return;
-    }
-
-    const touch = e.changedTouches[0];
-    const deltaX = touch.clientX - pricingTouchStartX.current;
-    const deltaY = touch.clientY - pricingTouchStartY.current;
-
-    pricingTouchStartX.current = null;
-    pricingTouchStartY.current = null;
-
-    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY)) {
-      return;
-    }
-
-    if (deltaX < 0) {
-      showNextTier();
-      return;
-    }
-
-    showPreviousTier();
-  };
-
   const handlePricingTouchCancel = () => {
-    pricingTouchStartX.current = null;
-    pricingTouchStartY.current = null;
   };
 
   const renderCard = (
