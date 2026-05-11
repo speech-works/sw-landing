@@ -58,8 +58,7 @@ export default function Footer() {
                 </span>
               </div>
               <p className="text-brand-50 font-medium max-w-sm text-sm md:text-base leading-relaxed">
-                A radical fusion of AI-sculpted practice, community fuel, and
-                expert therapy. Reclaim your voice. Join the rebellion.
+                Because the hour with your therapist is only one hour. We built the other 167.
               </p>
             </div>
 

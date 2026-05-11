@@ -127,22 +127,7 @@ function useAnimKey(activeIndex: number) {
   return key;
 }
 
-function MobilePlatformChevron({ direction }: { direction: "left" | "right" }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-5 w-5"
-      aria-hidden="true"
-    >
-      <path d={direction === "left" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6"} />
-    </svg>
-  );
-}
+
 
 /* ─────────────────────────────────────────────
    FEATURES DATA
@@ -151,11 +136,11 @@ const features = [
   {
     id: "progress",
     shortTitle: "Growth Profile",
-    title: "Pro-Level Progress Tracking",
-    mobileTitle: "Progress Tracking",
-    desc: "A 5-axis Radar Chart tracking Mastery, Ease, Courage, Confidence, and Social Participation. Leveling up isn't just a number—it's an expansion of capability. See your growth not as a fluency score, but as a resilience map.",
+    title: "Five Dimensions of Real Growth",
+    mobileTitle: "Five Dimensions",
+    desc: "Fluency is one number. But your experience of stuttering is five. We track all of them — the physical, the emotional, the social, and the things that keep you from showing up. Each axis is clinically grounded.",
     mobileDesc:
-      "Track mastery across five real-world dimensions. See growth as resilience, not just fluency.",
+      "Five dimensions. Each one clinically grounded. See where you're actually growing.",
     tagIcon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -286,11 +271,11 @@ const features = [
   {
     id: "stamina",
     shortTitle: "Biological Stamina",
-    title: "Sustainable Training",
-    mobileTitle: "Sustainable Training",
-    desc: "We treat speech mastery like an elite sport. Stamina Guardrails prevent burnout and ensure you only practice at your peak.",
+    title: "Practice That Knows When to Stop",
+    mobileTitle: "Know When to Stop",
+    desc: "Some days you have more in the tank than others. The app watches your energy through each session and ends it at the right moment — before fatigue takes over.",
     mobileDesc:
-      "Practice like an athlete. Stamina Guardrails help you stop before burnout.",
+      "Cognitive fatigue breaks down speech. The app stops the session before you run yourself into the ground.",
     tagIcon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -350,11 +335,11 @@ const features = [
   {
     id: "roadmap",
     shortTitle: "Clinical Packs",
-    title: "Your 0-to-100 Roadmap",
-    mobileTitle: "Your Roadmap",
-    desc: 'Expert-designed curriculums that follow a strict Clinical Arc. No more guesswork. Our Recommendation Engine audits your unique speech profile and presents the exact "Pack" you need right now.',
+    title: "A Path Built for Your Specific Profile",
+    mobileTitle: "Your Path",
+    desc: "No guessing what to practice next. The algorithm reads your severity score, your avoidance pattern, and your emotional state — then recommends one pack. The right one, for right now.",
     mobileDesc:
-      "A clear path from foundations to harder speaking moments, without the guesswork.",
+      "Your profile. Your next step. No guessing.",
     tagIcon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -580,7 +565,6 @@ export default function Platform() {
   const [isHoveredStage, setIsHoveredStage] = useState(false);
   const [stageMousePos, setStageMousePos] = useState({ x: 0, y: 0 });
   const activeFeature = features[activeIndex];
-  const visibleMobileFeatures = isMobileViewport ? [activeFeature] : features;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -681,7 +665,7 @@ export default function Platform() {
               "platform-stamina",
               "Sustainable Training",
               { width: "150%" },
-              { y: "10px", scale: 1.08 }
+              { x: "24px", y: "10px", scale: 1.08 }
             )
           : renderMobileMockupShell(
               "scale-[0.5] sm:scale-[0.6]",
@@ -719,7 +703,7 @@ export default function Platform() {
     <section
       id="platform"
       ref={sectionRef}
-      className="mobile-content-auto pt-8 pb-0 sm:pt-8 sm:pb-0 md:pt-32 md:pb-36 bg-white md:bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
+      className="mobile-content-auto py-8 md:pt-32 md:pb-36 bg-white md:bg-[#FFFAF5] relative z-10 border-t border-orange-900/5 group overflow-hidden"
       onMouseMove={handleMouseMove}
       style={
         {
@@ -892,7 +876,7 @@ export default function Platform() {
             <div className="md:hidden">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-black/5 bg-white px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest text-app-text shadow-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand animate-pulse"></span>
-                Professional Speech Academy
+                Your Practice Space
               </div>
               <h3 className="text-4xl font-black tracking-tighter leading-[0.95] text-app-text sm:text-5xl">
                 ADVERSARIAL AI.
@@ -906,7 +890,7 @@ export default function Platform() {
                   animation: "platform-fadeSlideDown 0.6s ease 0.1s both",
                 }}
               >
-                Professional Speech Academy
+                Your Practice Space
               </h2>
               <h3
                 className="text-[2rem] font-black tracking-tighter leading-[0.92] text-app-text sm:text-4xl md:text-5xl"
@@ -925,139 +909,75 @@ export default function Platform() {
             className="hidden md:block text-app-muted font-medium mt-4 md:mt-0 max-w-xs mx-auto md:mx-0 md:text-right text-sm md:text-base"
             style={{ animation: "platform-fadeSlideUp 0.6s ease 0.4s both" }}
           >
-            A clinical-grade foundation designed to analyze, challenge, and
-            elevate your speech patterns.
+            Built to simulate the moments that actually make you nervous.
           </p>
         </div>
 
         <div
-          className="relative lg:hidden"
+          className="relative lg:hidden flex flex-col gap-12"
           role="region"
-          aria-roledescription="carousel"
           aria-label="Speechworks platform features"
-          style={{ touchAction: "pan-y" }}
         >
-          <div className="overflow-hidden pt-2 pb-0 sm:pt-3 sm:pb-0">
-            <div
-              className="transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-              style={
-                mobileCarouselHeight
-                  ? { height: `${mobileCarouselHeight}px` }
-                  : undefined
-              }
-            >
+          {features.map((feature, featureIndex) => {
+            const mobileStageHeight = "h-[320px] sm:h-[350px]";
+
+            return (
               <div
-                className="flex h-full items-start will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                style={{
-                  width: `${visibleMobileFeatures.length * 100}%`,
-                  transform: isMobileViewport
-                    ? "translate3d(0, 0, 0)"
-                    : `translate3d(-${
-                        activeIndex * (100 / visibleMobileFeatures.length)
-                      }%, 0, 0)`,
-                }}
+                key={`mobile-${feature.id}`}
+                className="flex flex-col justify-center gap-6"
               >
-                {visibleMobileFeatures.map((feature) => {
-                  const featureIndex = features.findIndex(
-                    ({ id }) => id === feature.id
-                  );
-                  const mobileStageHeight = "h-[286px] sm:h-[316px]";
+                <div className="relative pl-4 sm:pl-5">
+                  <div
+                    className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${feature.activeBar}`}
+                  />
+                  <h4 className="text-[1.6rem] font-black leading-[0.95] tracking-[-0.05em] text-app-text sm:text-[1.75rem] sm:leading-[0.95]">
+                    {feature.mobileTitle ?? feature.title}
+                  </h4>
+                  <p className="mt-2.5 max-w-[31ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
+                    {feature.mobileDesc ?? feature.desc}
+                  </p>
+                </div>
 
-                  return (
+                <div
+                  className={`relative ${mobileStageHeight} overflow-visible rounded-[2rem]`}
+                >
+                  <div
+                    className={`absolute inset-0 overflow-hidden rounded-[2rem] ${
+                      feature.id === "roadmap"
+                        ? "bg-gradient-to-br from-brand to-[#D9692E]"
+                        : `bg-gradient-to-br ${feature.bgGradient}`
+                    }`}
+                  >
+                    <div className="absolute inset-0 opacity-[0.08] bg-grid" />
                     <div
-                      key={`mobile-${feature.id}`}
-                      ref={(node) => {
-                        mobileSlideRefs.current[featureIndex] = node;
-                      }}
-                      className="shrink-0 h-full px-[2px]"
-                      style={{
-                        width: `${100 / visibleMobileFeatures.length}%`,
-                      }}
+                      className={`absolute inset-0 flex items-center justify-center ${
+                        feature.id === "roadmap"
+                          ? "text-white/12"
+                          : feature.iconColor
+                      }`}
                     >
-                      <div className="flex h-full flex-col justify-center gap-6">
-                        <div
-                          className="relative pl-4 sm:pl-5"
-                          style={
-                            mobileCopyHeight
-                              ? { minHeight: `${mobileCopyHeight}px` }
-                              : undefined
-                          }
-                        >
-                          <div
-                            className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${feature.activeBar}`}
-                          />
-                          <h4 className="text-[1.6rem] font-black leading-[0.95] tracking-[-0.05em] text-app-text sm:text-[1.75rem] sm:leading-[0.95]">
-                            {feature.mobileTitle ?? feature.title}
-                          </h4>
-                          <p className="mt-2.5 max-w-[31ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
-                            {feature.mobileDesc ?? feature.desc}
-                          </p>
-                        </div>
-
-                        <div
-                          className={`relative ${mobileStageHeight} overflow-visible rounded-[2rem]`}
-                        >
-                          <div
-                            className={`absolute inset-0 overflow-hidden rounded-[2rem] ${
-                              feature.id === "roadmap"
-                                ? "bg-gradient-to-br from-brand to-[#D9692E]"
-                                : `bg-gradient-to-br ${feature.bgGradient}`
-                            }`}
-                          >
-                            <div className="absolute inset-0 opacity-[0.08] bg-grid" />
-                            <div
-                              className={`absolute inset-0 flex items-center justify-center ${
-                                feature.id === "roadmap"
-                                  ? "text-white/12"
-                                  : feature.iconColor
-                              }`}
-                            >
-                              <div className="h-[78%] w-[78%] opacity-[0.12]">
-                                {feature.bgIcon}
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="absolute inset-0 z-10 overflow-visible">
-                            {renderMobileFeatureUI(
-                              feature.id,
-                              featureIndex,
-                              animKey
-                            )}
-                          </div>
-
-                          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-between px-3 sm:px-4">
-                            <button
-                              type="button"
-                              onClick={showPreviousFeature}
-                              className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white/94 text-app-text shadow-[0_18px_32px_rgba(63,51,45,0.14)] backdrop-blur-md transition-all duration-300 hover:scale-[1.04] hover:bg-white"
-                              aria-label="Show previous feature"
-                            >
-                              <MobilePlatformChevron direction="left" />
-                            </button>
-
-                            <button
-                              type="button"
-                              onClick={showNextFeature}
-                              className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white/94 text-app-text shadow-[0_18px_32px_rgba(63,51,45,0.14)] backdrop-blur-md transition-all duration-300 hover:scale-[1.04] hover:bg-white"
-                              aria-label="Show next feature"
-                            >
-                              <MobilePlatformChevron direction="right" />
-                            </button>
-                          </div>
-                        </div>
+                      <div className="h-[78%] w-[78%] opacity-[0.12]">
+                        {feature.bgIcon}
                       </div>
                     </div>
-                  );
-                })}
+                  </div>
+
+                  <div className="absolute inset-0 z-10 overflow-visible">
+                    {renderMobileFeatureUI(
+                      feature.id,
+                      featureIndex,
+                      animKey
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
 
         {!isMobileViewport && (
           <div
-            className="hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
+            className="hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 lg:min-h-[720px] items-center"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onTouchStart={() => setIsHovered(true)}

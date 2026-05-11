@@ -17,7 +17,7 @@ type InviteFormState = {
   referralCode: string;
 };
 
-type InviteStep = "pitch" | "details";
+type InviteStep = "pitch" | "details" | "confirm";
 
 const INITIAL_FORM: InviteFormState = {
   name: "",
@@ -231,10 +231,14 @@ export default function InviteOnlyModal({
       setForm((current) => ({ ...current, [field]: event.target.value }));
     };
 
-  const openDraftedEmail = () => {
+  const handleSubmit = () => {
     setAttemptedSubmit(true);
-    if (!isValid) return;
+    if (isValid) {
+      setStep("confirm");
+    }
+  };
 
+  const openDraftedEmail = () => {
     const subject = `Speechworks invite request - ${form.name.trim()}`;
     const contactLine = form.phone.trim()
       ? `${form.countryCode} ${form.phone.trim()}`
@@ -271,18 +275,18 @@ export default function InviteOnlyModal({
 
     if (shouldUseNativeMailClient) {
       window.location.href = mailtoUrl;
-      return;
-    }
+    } else {
+      const openedWindow = window.open(
+        gmailComposeUrl,
+        "_blank",
+        "noopener,noreferrer"
+      );
 
-    const openedWindow = window.open(
-      gmailComposeUrl,
-      "_blank",
-      "noopener,noreferrer"
-    );
-
-    if (!openedWindow) {
-      window.location.href = mailtoUrl;
+      if (!openedWindow) {
+        window.location.href = mailtoUrl;
+      }
     }
+    onClose();
   };
 
   if (!isOpen && !isRendered) return null;
@@ -321,9 +325,7 @@ export default function InviteOnlyModal({
     <div
       className={`fixed inset-0 z-[120] flex items-center justify-center overflow-hidden p-3 sm:p-6 ${
         isMobileViewport ? "" : "transition-opacity duration-300 "
-      }${
-        isOpen ? "opacity-100" : "opacity-0"
-      }`}
+      }${isOpen ? "opacity-100" : "opacity-0"}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="invite-only-title"
@@ -337,12 +339,15 @@ export default function InviteOnlyModal({
         ref={modalRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`relative w-full max-w-[480px] max-h-[calc(100dvh-1.25rem)] overflow-hidden rounded-[1.7rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] ${
+        className={`relative w-full max-w-[480px] overflow-hidden rounded-[1.7rem] border border-white/10 bg-[#110d0b] shadow-[0_40px_120px_rgba(0,0,0,0.48)] ${
           isMobileViewport ? "" : "transition-opacity duration-500 "
-        }sm:max-w-[540px] sm:max-h-[min(820px,calc(100dvh-3rem))] sm:overflow-x-hidden sm:overflow-y-auto sm:overscroll-contain sm:rounded-[2rem] ${
+        }sm:max-w-[540px] sm:rounded-[2rem] ${
           isOpen ? "opacity-100" : "opacity-0"
         }`}
-        style={{ willChange: isMobileViewport ? "auto" : "transform" }}
+        style={{ 
+          willChange: isMobileViewport ? "auto" : "transform",
+          minHeight: step === "confirm" ? "320px" : "auto"
+        }}
       >
         <style>{`
           @keyframes invite-fade-up {
@@ -382,225 +387,259 @@ export default function InviteOnlyModal({
           </svg>
         </button>
 
-        <div className="relative z-10 p-3.5 sm:p-5 md:p-6">
-          <div className="mb-3 flex items-start justify-between gap-3 pr-10 sm:mb-4 sm:gap-4 sm:pr-12">
-            <div>
-              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#ffb28a] sm:text-[11px] sm:tracking-[0.22em]">
-                {eyebrowCopy}
-              </div>
-              <div className="mt-0.5 text-[11px] font-semibold text-white/60 sm:mt-1 sm:text-[13px]">
-                {sublineCopy}
-              </div>
+        {step === "confirm" ? (
+          <div className="relative z-10 p-8 sm:p-12 md:p-16 flex flex-col items-center text-center">
+            <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-inner" style={getFadeUpStyle(0)}>
+              <svg className="w-8 h-8 text-[#ff955e]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 2L11 13" /><path d="M22 2l-7 20-4-9-9-4 20-7z" />
+              </svg>
             </div>
-            <div className="pointer-events-none text-[2rem] font-black leading-none tracking-[-0.08em] text-white/[0.05] sm:text-[2.8rem]">
-              WAVE 01
+            
+            <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-4 tracking-tight" style={getFadeUpStyle(60)}>
+              Drafting Your Invite
+            </h2>
+            
+            <p className="text-[15px] sm:text-16 text-white/60 leading-relaxed mb-10 max-w-sm" style={getFadeUpStyle(120)}>
+              We are drafting the request for you. Please review the details in your email client and send it forward to claim your spot.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 w-full max-w-[320px]" style={getFadeUpStyle(180)}>
+              <button
+                onClick={() => setStep("details")}
+                className="flex-1 px-6 py-3.5 rounded-full border border-white/10 bg-white/5 text-[11px] font-black uppercase tracking-widest text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={openDraftedEmail}
+                className="flex-1 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] text-[11px] font-black uppercase tracking-widest text-white shadow-[0_10px_20px_rgba(242,128,68,0.2)] hover:-translate-y-0.5 transition-all duration-300"
+              >
+                OK
+              </button>
             </div>
           </div>
-
-          <div className="relative overflow-hidden rounded-[1.3rem] border border-white/8 bg-white/[0.03] px-3.5 py-3.5 sm:rounded-[1.6rem] sm:px-5 sm:py-5 md:px-6 md:py-6">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/18 to-transparent" />
-            <div className="pointer-events-none absolute right-3 top-3 text-[3.35rem] font-black leading-none tracking-[-0.08em] text-white/[0.03] sm:right-5 sm:top-5 sm:text-[4.8rem]">
-              {step === "pitch" ? "EARLY" : "REBEL"}
+        ) : (
+          <div className="relative z-10 p-3.5 sm:p-5 md:p-6 max-h-[calc(100dvh-1.25rem)] overflow-y-auto sm:max-h-[min(820px,calc(100dvh-3rem))]">
+            <div className="mb-3 flex items-start justify-between gap-3 pr-10 sm:mb-4 sm:gap-4 sm:pr-12">
+              <div>
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#ffb28a] sm:text-[11px] sm:tracking-[0.22em]">
+                  {eyebrowCopy}
+                </div>
+                <div className="mt-0.5 text-[11px] font-semibold text-white/60 sm:mt-1 sm:text-[13px]">
+                  {sublineCopy}
+                </div>
+              </div>
+              <div className="pointer-events-none text-[2rem] font-black leading-none tracking-[-0.08em] text-white/[0.05] sm:text-[2.8rem]">
+                WAVE 01
+              </div>
             </div>
 
-            {step === "pitch" ? (
-              <>
-                <div
-                  className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-[#ffb28a]/25 bg-[#ffb28a]/10 px-3 py-1.5 text-[8.5px] font-black uppercase tracking-[0.16em] text-[#ffd6bf] sm:mb-3 sm:text-[9px]"
-                  style={getFadeUpStyle()}
-                >
-                  <span className="relative flex h-2 w-2">
-                    <span
-                      className={`absolute inline-flex h-full w-full rounded-full bg-[#ff8b55] opacity-75 ${
-                        isMobileViewport ? "" : "animate-ping"
-                      }`}
-                    />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[#ff8b55]" />
-                  </span>
-                  {badgeCopy}
-                </div>
+            <div className="relative overflow-hidden rounded-[1.3rem] border border-white/8 bg-white/[0.03] px-3.5 py-3.5 sm:rounded-[1.6rem] sm:px-5 sm:py-5 md:px-6 md:py-6">
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/18 to-transparent" />
+              <div className="pointer-events-none absolute right-3 top-3 text-[3.35rem] font-black leading-none tracking-[-0.08em] text-white/[0.03] sm:right-5 sm:top-5 sm:text-[4.8rem]">
+                {step === "pitch" ? "EARLY" : "REBEL"}
+              </div>
 
-                <h2
-                  id="invite-only-title"
-                  className="max-w-[10ch] text-[1.72rem] font-black leading-[0.92] tracking-[-0.055em] text-white sm:text-[1.9rem] md:text-[2.4rem]"
-                  style={getFadeUpStyle(60)}
-                >
-                  {titleCopy}
-                </h2>
-
-                <p
-                  className="mt-2.5 max-w-[38ch] text-[13px] leading-[1.72] text-white/72 sm:mt-3 sm:text-[14px] sm:leading-6 md:text-[15px]"
-                  style={getFadeUpStyle(120)}
-                >
-                  {bodyCopy}
-                </p>
-
-                <div
-                  className="mt-4 rounded-[1.05rem] border border-[#ffb28a]/12 bg-[#ffb28a]/6 px-3.5 py-3 sm:mt-5 sm:rounded-[1.15rem] sm:px-4"
-                  style={getFadeUpStyle(220)}
-                >
-                  <div className="text-[10px] font-black uppercase tracking-[0.18em] text-[#ffb28a]">
-                    {reasonTitle}
-                  </div>
-                  <div className="mt-1.5 text-[12.5px] leading-[1.6] text-white/76 sm:text-[13px] sm:leading-5">
-                    {reasonBody}
-                  </div>
-                </div>
-
-                <div
-                  className="mt-4 sm:mt-5"
-                  style={getFadeUpStyle(320)}
-                >
-                  <button
-                    type="button"
-                    onClick={() => setStep("details")}
-                    className={`inline-flex min-h-[50px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[10.5px] font-black uppercase tracking-[0.16em] text-white ${
-                      isMobileViewport
-                        ? ""
-                        : "transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 "
-                    }sm:min-h-[54px] sm:text-[11px]`}
+              {step === "pitch" ? (
+                <>
+                  <div
+                    className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-[#ffb28a]/25 bg-[#ffb28a]/10 px-3 py-1.5 text-[8.5px] font-black uppercase tracking-[0.16em] text-[#ffd6bf] sm:mb-3 sm:text-[9px]"
+                    style={getFadeUpStyle()}
                   >
-                    {ctaLabel}
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="mb-2.5 flex items-start justify-between gap-2.5 sm:mb-4 sm:gap-4">
-                  <div>
+                    <span className="relative flex h-2 w-2">
+                      <span
+                        className={`absolute inline-flex h-full w-full rounded-full bg-[#ff8b55] opacity-75 ${
+                          isMobileViewport ? "" : "animate-ping"
+                        }`}
+                      />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-[#ff8b55]" />
+                    </span>
+                    {badgeCopy}
+                  </div>
+
+                  <h2
+                    id="invite-only-title"
+                    className="max-w-[10ch] text-[1.72rem] font-black leading-[0.92] tracking-[-0.055em] text-white sm:text-[1.9rem] md:text-[2.4rem]"
+                    style={getFadeUpStyle(60)}
+                  >
+                    {titleCopy}
+                  </h2>
+
+                  <p
+                    className="mt-2.5 max-w-[38ch] text-[13px] leading-[1.72] text-white/72 sm:mt-3 sm:text-[14px] sm:leading-6 md:text-[15px]"
+                    style={getFadeUpStyle(120)}
+                  >
+                    {bodyCopy}
+                  </p>
+
+                  <div
+                    className="mt-4 rounded-[1.05rem] border border-[#ffb28a]/12 bg-[#ffb28a]/6 px-3.5 py-3 sm:mt-5 sm:rounded-[1.15rem] sm:px-4"
+                    style={getFadeUpStyle(220)}
+                  >
                     <div className="text-[10px] font-black uppercase tracking-[0.18em] text-[#ffb28a]">
-                      One clean step
+                      {reasonTitle}
                     </div>
-                    <h2 className="mt-0.5 text-[1.24rem] font-black tracking-[-0.05em] text-white sm:mt-1.5 sm:text-[1.55rem]">
-                      Raise your hand.
-                    </h2>
-                    <p className="mt-0.5 max-w-[32ch] text-[11px] leading-[1.42] text-white/62 sm:mt-1.5 sm:text-[13px] sm:leading-5">
-                      Give us the essentials and we&apos;ll prepare the email
-                      draft around your details.
-                    </p>
+                    <div className="mt-1.5 text-[12.5px] leading-[1.6] text-white/76 sm:text-[13px] sm:leading-5">
+                      {reasonBody}
+                    </div>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setStep("pitch")}
-                    className={`rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.12em] text-white/70 ${
-                      isMobileViewport
-                        ? ""
-                        : "transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:text-white "
-                    }sm:px-3 sm:py-2 sm:text-[10px]`}
+
+                  <div
+                    className="mt-4 sm:mt-5"
+                    style={getFadeUpStyle(320)}
                   >
-                    Back
-                  </button>
-                </div>
-
-                <div className="grid gap-2 sm:gap-3">
-                  <div className="grid gap-2 md:grid-cols-2 sm:gap-3">
-                    <label className="block">
-                      <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
-                        Name
-                      </span>
-                      <input
-                        ref={firstInputRef}
-                        type="text"
-                        value={form.name}
-                        onChange={updateField("name")}
-                        placeholder="Your full name"
-                        className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
-                      />
-                    </label>
-
-                    <label className="block">
-                      <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
-                        Email
-                      </span>
-                      <input
-                        type="email"
-                        value={form.email}
-                        onChange={updateField("email")}
-                        placeholder="you@example.com"
-                        className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
-                      />
-                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setStep("details")}
+                      className={`inline-flex min-h-[50px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-6 py-3 text-[10.5px] font-black uppercase tracking-[0.16em] text-white ${
+                        isMobileViewport
+                          ? ""
+                          : "transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 "
+                      }sm:min-h-[54px] sm:text-[11px]`}
+                    >
+                      {ctaLabel}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="mb-2.5 flex items-start justify-between gap-2.5 sm:mb-4 sm:gap-4">
+                    <div>
+                      <div className="text-[10px] font-black uppercase tracking-[0.18em] text-[#ffb28a]">
+                        One clean step
+                      </div>
+                      <h2 className="mt-0.5 text-[1.24rem] font-black tracking-[-0.05em] text-white sm:mt-1.5 sm:text-[1.55rem]">
+                        Raise your hand.
+                      </h2>
+                      <p className="mt-0.5 max-w-[32ch] text-[11px] leading-[1.42] text-white/62 sm:mt-1.5 sm:text-[13px] sm:leading-5">
+                        Give us the essentials and we&apos;ll prepare the email
+                        draft around your details.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setStep("pitch")}
+                      className={`rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.12em] text-white/70 ${
+                        isMobileViewport
+                          ? ""
+                          : "transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:text-white "
+                      }sm:px-3 sm:py-2 sm:text-[10px]`}
+                    >
+                      Back
+                    </button>
                   </div>
 
-                  <div className="grid gap-2 md:grid-cols-[118px_minmax(0,1fr)] sm:gap-3">
-                    <label className="block">
-                      <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
-                        Code
-                      </span>
-                      <input
-                        list="invite-country-codes"
-                        value={form.countryCode}
-                        onChange={updateField("countryCode")}
-                        placeholder="+1"
-                        className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3 py-2.25 text-[12.5px] font-semibold text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:py-3 sm:text-[14px]"
-                      />
-                      <datalist id="invite-country-codes">
-                        {COUNTRY_CODES.map((option, index) => (
-                          <option
-                            key={`${option.label}-${option.code}-${index}`}
-                            value={option.code}
-                          >
-                            {option.label}
-                          </option>
-                        ))}
-                      </datalist>
-                    </label>
+                  <div className="grid gap-2 sm:gap-3">
+                    <div className="grid gap-2 md:grid-cols-2 sm:gap-3">
+                      <label className="block">
+                        <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
+                          Name
+                        </span>
+                        <input
+                          ref={firstInputRef}
+                          type="text"
+                          value={form.name}
+                          onChange={updateField("name")}
+                          placeholder="Your full name"
+                          className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
+                        />
+                      </label>
+
+                      <label className="block">
+                        <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
+                          Email
+                        </span>
+                        <input
+                          type="email"
+                          value={form.email}
+                          onChange={updateField("email")}
+                          placeholder="you@example.com"
+                          className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
+                        />
+                      </label>
+                    </div>
+
+                    <div className="grid gap-2 md:grid-cols-[118px_minmax(0,1fr)] sm:gap-3">
+                      <label className="block">
+                        <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
+                          Code
+                        </span>
+                        <input
+                          list="invite-country-codes"
+                          value={form.countryCode}
+                          onChange={updateField("countryCode")}
+                          placeholder="+1"
+                          className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3 py-2.25 text-[12.5px] font-semibold text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:py-3 sm:text-[14px]"
+                        />
+                        <datalist id="invite-country-codes">
+                          {COUNTRY_CODES.map((option, index) => (
+                            <option
+                              key={`${option.label}-${option.code}-${index}`}
+                              value={option.code}
+                            >
+                              {option.label}
+                            </option>
+                          ))}
+                        </datalist>
+                      </label>
+
+                      <label className="block">
+                        <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
+                          Contact number{" "}
+                          <span className="text-white/30">(optional)</span>
+                        </span>
+                        <input
+                          type="tel"
+                          value={form.phone}
+                          onChange={updateField("phone")}
+                          placeholder="Contact number"
+                          className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
+                        />
+                      </label>
+                    </div>
 
                     <label className="block">
                       <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
-                        Contact number{" "}
+                        Referral code{" "}
                         <span className="text-white/30">(optional)</span>
                       </span>
                       <input
-                        type="tel"
-                        value={form.phone}
-                        onChange={updateField("phone")}
-                        placeholder="Contact number"
+                        type="text"
+                        value={form.referralCode}
+                        onChange={updateField("referralCode")}
+                        placeholder="This gives you bonus points, but we’ll still consider you"
                         className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
                       />
                     </label>
                   </div>
 
-                  <label className="block">
-                    <span className="mb-1 block text-[9px] font-black uppercase tracking-[0.15em] text-white/55 sm:mb-1.5 sm:text-[10px] sm:tracking-[0.16em]">
-                      Referral code{" "}
-                      <span className="text-white/30">(optional)</span>
-                    </span>
-                    <input
-                      type="text"
-                      value={form.referralCode}
-                      onChange={updateField("referralCode")}
-                      placeholder="This gives you bonus points, but we’ll still consider you"
-                      className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
-                    />
-                  </label>
-                </div>
+                  {attemptedSubmit && !isValid ? (
+                    <p className="mt-2.5 text-[11.5px] font-semibold text-[#ffb28a] sm:mt-3 sm:text-[12px]">
+                      Add your name and a valid email so we can prepare the invite
+                      draft for you.
+                    </p>
+                  ) : null}
 
-                {attemptedSubmit && !isValid ? (
-                  <p className="mt-2.5 text-[11.5px] font-semibold text-[#ffb28a] sm:mt-3 sm:text-[12px]">
-                    Add your name and a valid email so we can prepare the invite
-                    draft for you.
-                  </p>
-                ) : null}
-
-                <div className="mt-2.5 sm:mt-4">
-                  <button
-                    type="button"
-                    onClick={openDraftedEmail}
-                    className={`inline-flex min-h-[46px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] text-white ${
-                      isMobileViewport
-                        ? ""
-                        : "transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 "
-                    }sm:min-h-[54px] sm:px-6 sm:py-3 sm:text-[11px] sm:tracking-[0.16em]`}
-                  >
-                    Be a rebel
-                  </button>
-                </div>
-              </>
-            )}
+                  <div className="mt-2.5 sm:mt-4">
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      className={`inline-flex min-h-[46px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] text-white ${
+                        isMobileViewport
+                          ? ""
+                          : "transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 "
+                      }sm:min-h-[54px] sm:px-6 sm:py-3 sm:text-[11px] sm:tracking-[0.16em]`}
+                    >
+                      Be a rebel
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
 }
+

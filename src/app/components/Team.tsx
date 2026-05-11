@@ -168,8 +168,8 @@ const teamMembers: TeamMember[] = [
     image: "/assets/Sanae_avatar.jpeg",
     animatedImage: "/assets/Sanae_avatar_animated.gif",
     story: [
-      "Growing up, I never saw anyone else who stuttered, but I knew I couldn't be the only one. When I finally connected with others who shared that exact experience, I realized I wanted to do more than just belong. I wanted to build.",
-      "At Speechworks, I jump between writing code and driving communications to create the platform I always wished existed. We're laying the foundation right now, but it won't be complete without you. Bring your ideas, and let's finish building this together.",
+      "I grew up stuttering. For years I thought I had to figure it out alone.",
+      "Then I finally found the community. I don't feel isolated as much anymore but the platform I need doesn't exist yet. That's why I'm here, building it.",
     ],
     highlights: ["Development", "Community Care"],
   },
@@ -180,9 +180,8 @@ const teamMembers: TeamMember[] = [
     image: "/assets/mayank_avatar.png",
     animatedImage: "/assets/mayank_avatar_animated.gif",
     story: [
-      "I don't have a stutter, but I've watched brilliant people silence themselves because they do. Seeing remarkable minds choose to stay quiet rather than face judgment showed me a broken system.",
-      "I founded Speechworks to build a different reality. We are laying the groundwork for a platform where no brilliant mind has to choose between speaking up and feeling safe.",
-      "But we can't do it alone. A space built for your voice needs to be guided by your voice. Join us as we build this from the ground up, and help shape Speechworks into what you need it to be.",
+      "I don't stutter. But I've watched people I respect choose silence over judgment. Not because they had nothing to say. Because the cost of saying it was too high.",
+      "I can build the engineering. But I can't build the product alone. A space built for this community has to be steered by this community.",
     ],
     highlights: ["Product", "AI Practice"],
   },
@@ -288,7 +287,7 @@ export default function Team({
             <div className="mobile-section-glass mb-4 inline-flex items-center gap-2 rounded-full border border-orange-900/10 bg-white/85 px-4 py-2 shadow-sm backdrop-blur-xl">
               <span className="h-2 w-2 rounded-full bg-brand" />
               <span className="text-[10px] font-black uppercase tracking-[0.22em] text-app-text">
-                Meet The Team
+                Who&apos;s Behind This
               </span>
             </div>
 
@@ -297,9 +296,7 @@ export default function Team({
             </h2>
 
             <p className="mt-5 max-w-2xl text-base leading-7 text-app-muted sm:text-lg">
-              Speechworks is being built close to the people it serves. These
-              are the voices laying the foundation and inviting you into the
-              process.
+              Success in the clinic is one thing; success in the real world is another. We know the distance between the two and we know how to close it. We focus on the hours outside the session, where real-world communication is built.
             </p>
           </div>
 
@@ -377,28 +374,25 @@ export default function Team({
                         className={`group absolute left-0 top-0 text-left transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform ${positionClass}`}
                       >
                         <div
-                          className={`relative transform-gpu transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                            isActive
-                              ? "scale-100 opacity-100"
-                              : "scale-[0.96] opacity-82"
-                          }`}
+                          className={`relative transform-gpu transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
+                            ? "scale-100 opacity-100"
+                            : "scale-[0.96] opacity-82"
+                            }`}
                         >
                           <div
-                            className={`mobile-soft-glow pointer-events-none absolute rounded-full blur-2xl transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                              isActive
-                                ? "-inset-x-3 top-3 h-16 bg-brand/26"
-                                : "-inset-1 top-2 h-14 bg-white/8"
-                            }`}
+                            className={`mobile-soft-glow pointer-events-none absolute rounded-full blur-2xl transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
+                              ? "-inset-x-3 top-3 h-16 bg-brand/26"
+                              : "-inset-1 top-2 h-14 bg-white/8"
+                              }`}
                           />
 
                           <div className="relative flex items-center">
                             <div className="relative shrink-0">
                               <span
-                                className={`team-selector-pulse pointer-events-none absolute -inset-2 rounded-[1.5rem] border ${
-                                  isActive
-                                    ? "border-brand/25"
-                                    : "border-white/10"
-                                }`}
+                                className={`team-selector-pulse pointer-events-none absolute -inset-2 rounded-[1.5rem] border ${isActive
+                                  ? "border-brand/25"
+                                  : "border-white/10"
+                                  }`}
                               />
                               <div
                                 className="relative h-[4.35rem] w-[4.35rem] overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 shadow-[0_20px_40px_-24px_rgba(0,0,0,0.85)]"
@@ -413,27 +407,24 @@ export default function Team({
                                 />
                               </div>
                               <span
-                                className={`absolute -right-1 top-2 h-2.5 w-2.5 rounded-full ${
-                                  isActive
-                                    ? "bg-brand shadow-[0_0_18px_rgba(242,128,68,0.85)]"
-                                    : "bg-white/20"
-                                }`}
+                                className={`absolute -right-1 top-2 h-2.5 w-2.5 rounded-full ${isActive
+                                  ? "bg-brand shadow-[0_0_18px_rgba(242,128,68,0.85)]"
+                                  : "bg-white/20"
+                                  }`}
                               />
                             </div>
 
                             <div
-                              className={`pointer-events-none absolute left-[4.95rem] top-1/2 w-[10.75rem] min-w-0 -translate-y-1/2 transform-gpu transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                                isActive
-                                  ? "translate-x-0 opacity-100"
-                                  : "-translate-x-2 opacity-0"
-                              }`}
+                              className={`pointer-events-none absolute left-[4.95rem] top-1/2 w-[10.75rem] min-w-0 -translate-y-1/2 transform-gpu transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
+                                ? "translate-x-0 opacity-100"
+                                : "-translate-x-2 opacity-0"
+                                }`}
                             >
                               <div
-                                className={`mobile-section-glass relative overflow-hidden rounded-[1.7rem] border backdrop-blur-xl transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                                  isActive
-                                    ? "border-white/10 bg-white/10 px-4 py-3 text-white shadow-[0_24px_50px_-28px_rgba(0,0,0,0.9)]"
-                                    : "border-transparent bg-transparent px-0 py-0 text-white/82 shadow-none"
-                                }`}
+                                className={`mobile-section-glass relative overflow-hidden rounded-[1.7rem] border backdrop-blur-xl transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
+                                  ? "border-white/10 bg-white/10 px-4 py-3 text-white shadow-[0_24px_50px_-28px_rgba(0,0,0,0.9)]"
+                                  : "border-transparent bg-transparent px-0 py-0 text-white/82 shadow-none"
+                                  }`}
                               >
                                 <span className="team-selector-sheen pointer-events-none absolute inset-y-0 left-[-20%] w-20 -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent)]" />
 
@@ -497,49 +488,42 @@ export default function Team({
                           )
                         }
                         aria-pressed={isActive}
-                        className={`absolute ${positionClass} ${floatClass} text-left transition-all duration-500 ${
-                          isActive
-                            ? "z-20 opacity-100"
-                            : "z-10 opacity-72 hover:opacity-100"
-                        }`}
+                        className={`absolute ${positionClass} ${floatClass} text-left transition-all duration-500 ${isActive
+                          ? "z-20 opacity-100"
+                          : "z-10 opacity-72 hover:opacity-100"
+                          }`}
                         style={selectorMotionStyle}
                       >
                         <div
-                          className={`relative transition-all duration-500 ${
-                            isActive
-                              ? "rotate-0 scale-100"
-                              : `${tiltClass} scale-[0.96] group-hover:scale-[0.99] group-hover:rotate-0`
-                          }`}
+                          className={`relative transition-all duration-500 ${isActive
+                            ? "rotate-0 scale-100"
+                            : `${tiltClass} scale-[0.96] group-hover:scale-[0.99] group-hover:rotate-0`
+                            }`}
                         >
                           <span
-                            className={`pointer-events-none absolute inset-x-10 top-10 h-24 rounded-full blur-3xl transition-all duration-500 ${
-                              isActive ? "bg-brand/30" : "bg-white/8"
-                            }`}
+                            className={`pointer-events-none absolute inset-x-10 top-10 h-24 rounded-full blur-3xl transition-all duration-500 ${isActive ? "bg-brand/30" : "bg-white/8"
+                              }`}
                           />
 
                           <span
-                            className={`team-selector-orbit pointer-events-none absolute ${
-                              index === 0
-                                ? "-left-6 -top-8 h-56 w-56"
-                                : "-right-8 -bottom-10 h-60 w-60"
-                            } rounded-full border border-dashed transition-colors duration-500 ${
-                              isActive ? "border-brand/18" : "border-white/8"
-                            }`}
+                            className={`team-selector-orbit pointer-events-none absolute ${index === 0
+                              ? "-left-6 -top-8 h-56 w-56"
+                              : "-right-8 -bottom-10 h-60 w-60"
+                              } rounded-full border border-dashed transition-colors duration-500 ${isActive ? "border-brand/18" : "border-white/8"
+                              }`}
                           />
 
                           <div className="relative flex items-center gap-5">
                             <div className="relative shrink-0">
                               <span
-                                className={`team-selector-pulse pointer-events-none absolute -inset-3 rounded-[2rem] border ${
-                                  isActive
-                                    ? "border-brand/25"
-                                    : "border-white/10"
-                                }`}
+                                className={`team-selector-pulse pointer-events-none absolute -inset-3 rounded-[2rem] border ${isActive
+                                  ? "border-brand/25"
+                                  : "border-white/10"
+                                  }`}
                               />
                               <span
-                                className={`pointer-events-none absolute -inset-5 rounded-[2.3rem] bg-[radial-gradient(circle,rgba(242,128,68,0.25),transparent_68%)] blur-2xl transition-opacity duration-500 ${
-                                  isActive ? "opacity-80" : "opacity-30"
-                                }`}
+                                className={`pointer-events-none absolute -inset-5 rounded-[2.3rem] bg-[radial-gradient(circle,rgba(242,128,68,0.25),transparent_68%)] blur-2xl transition-opacity duration-500 ${isActive ? "opacity-80" : "opacity-30"
+                                  }`}
                               />
                               <div className="relative h-24 w-24 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-[0_28px_48px_-30px_rgba(0,0,0,0.95)]">
                                 {isDesktopAvatarAnimated ? (
@@ -563,21 +547,19 @@ export default function Team({
                                 )}
                               </div>
                               <span
-                                className={`absolute -right-2 top-3 h-3 w-3 rounded-full ${
-                                  isActive
-                                    ? "bg-brand shadow-[0_0_22px_rgba(242,128,68,0.9)]"
-                                    : "bg-white/20"
-                                }`}
+                                className={`absolute -right-2 top-3 h-3 w-3 rounded-full ${isActive
+                                  ? "bg-brand shadow-[0_0_22px_rgba(242,128,68,0.9)]"
+                                  : "bg-white/20"
+                                  }`}
                               />
                             </div>
 
                             <div className="min-w-0 flex-1">
                               <div
-                                className={`relative ml-4 overflow-hidden rounded-[2rem] border px-5 py-4 backdrop-blur-xl transition-all duration-500 ${
-                                  isActive
-                                    ? "border-white/12 bg-white/10 text-white shadow-[0_28px_70px_-36px_rgba(0,0,0,0.78)]"
-                                    : "border-white/8 bg-white/[0.04] text-white/82"
-                                }`}
+                                className={`relative ml-4 overflow-hidden rounded-[2rem] border px-5 py-4 backdrop-blur-xl transition-all duration-500 ${isActive
+                                  ? "border-white/12 bg-white/10 text-white shadow-[0_28px_70px_-36px_rgba(0,0,0,0.78)]"
+                                  : "border-white/8 bg-white/[0.04] text-white/82"
+                                  }`}
                               >
                                 <span className="team-selector-sheen pointer-events-none absolute inset-y-0 left-[-22%] w-24 -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent)]" />
                                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(242,128,68,0.14),transparent_42%)]" />

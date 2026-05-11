@@ -1,30 +1,12 @@
 import { withBasePath } from "@/app/lib/withBasePath";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import RoadmapMockup from "./RoadmapMockup";
 import MobileMockupMedia from "./MobileMockupMedia";
 import { useIsMobileViewport } from "./useIsMobileViewport";
 import { useElementInView } from "./useElementInView";
 
-function RoadmapMobileChevron({
-  direction,
-}: {
-  direction: "left" | "right";
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-5 w-5"
-      aria-hidden="true"
-    >
-      <path d={direction === "left" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6"} />
-    </svg>
-  );
-}
+
 
 const ROADMAP_PHASES = [
   {
@@ -36,7 +18,7 @@ const ROADMAP_PHASES = [
     kicker: "We Built",
     title: "Forging the Tools",
     description:
-      "A clinical-grade sandbox. Live and available now. We have built an AI-driven app that provides a safe environment for you to practice real-world scenarios.",
+      "An app built on real clinical science. Not a meditation timer. A place to practice the conversations that actually challenge you. Live now.",
     status: "Live now",
     mockupPhase: 1,
     comingSoon: false,
@@ -48,9 +30,9 @@ const ROADMAP_PHASES = [
     stageGradient: "from-purple-500 to-purple-800",
     stageGlow: "shadow-[0_28px_70px_-18px_rgba(107,33,168,0.28)]",
     kicker: "We Are Building",
-    title: "Uniting the Community",
+    title: "Finding the Others",
     description:
-      "We are actively building a unified community space where users can share their experiences, celebrate victories, and find support.",
+      "Figuring this out alone is exhausting. We are building a space to connect with people who actually get it.",
     status: "In build",
     mockupPhase: 2,
     comingSoon: true,
@@ -62,9 +44,9 @@ const ROADMAP_PHASES = [
     stageGradient: "from-emerald-500 to-emerald-800",
     stageGlow: "shadow-[0_28px_70px_-18px_rgba(5,150,105,0.28)]",
     kicker: "We Will Build",
-    title: "Bridging the Gap",
+    title: "Closing the 167-Hour Void",
     description:
-      "Bridging the gap between practice and professional therapy. Connect seamlessly with vetted Speech-Language Pathologists.",
+      "Your therapist sees you one hour a week. We're building the system that gives them visibility into the other 167.",
     status: "Coming next",
     mockupPhase: 3,
     comingSoon: true,
@@ -74,21 +56,16 @@ const ROADMAP_PHASES = [
 export default function Roadmap() {
   const [activePhase, setActivePhase] = useState(1);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
-  const [mobileCopyHeight, setMobileCopyHeight] = useState<number | null>(null);
   const [hoveredStackIndex, setHoveredStackIndex] = useState<number | null>(
     null
   );
   const sectionRef = useRef<HTMLElement>(null);
-  const mobileCopyMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const isMobileViewport = useIsMobileViewport();
   const isSectionInView = useElementInView(sectionRef, {
     disabled: !isMobileViewport,
     rootMargin: "180px 0px",
     threshold: 0.1,
   });
-  const visibleMobilePhases = isMobileViewport
-    ? [ROADMAP_PHASES[activePhase - 1]]
-    : ROADMAP_PHASES;
 
   // Navigation Themes
   const themes: Record<number, string> = {
@@ -130,65 +107,7 @@ export default function Roadmap() {
       );
   }, []);
 
-  const showPreviousPhase = () => {
-    setActivePhase((currentPhase) =>
-      currentPhase === 1 ? ROADMAP_PHASES.length : currentPhase - 1
-    );
-  };
 
-  const showNextPhase = () => {
-    setActivePhase((currentPhase) => (currentPhase % ROADMAP_PHASES.length) + 1);
-  };
-
-  const syncMobileCopyHeight = useCallback(() => {
-    if (!isMobileViewport) {
-      setMobileCopyHeight(null);
-      return;
-    }
-
-    const nextHeight = mobileCopyMeasureRefs.current.reduce((maxHeight, node) => {
-      if (!node) return maxHeight;
-      return Math.max(maxHeight, Math.ceil(node.getBoundingClientRect().height));
-    }, 0);
-
-    if (!nextHeight) return;
-
-    setMobileCopyHeight((current) =>
-      current === nextHeight ? current : nextHeight
-    );
-  }, [isMobileViewport]);
-
-  useEffect(() => {
-    syncMobileCopyHeight();
-  }, [syncMobileCopyHeight]);
-
-  useEffect(() => {
-    if (!isMobileViewport) return;
-
-    const handleResize = () => {
-      syncMobileCopyHeight();
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    const resizeObserver =
-      typeof ResizeObserver === "undefined"
-        ? null
-        : new ResizeObserver(() => {
-            syncMobileCopyHeight();
-          });
-
-    mobileCopyMeasureRefs.current.forEach((node) => {
-      if (node) {
-        resizeObserver?.observe(node);
-      }
-    });
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      resizeObserver?.disconnect();
-    };
-  }, [isMobileViewport, syncMobileCopyHeight]);
 
   const renderMobileRoadmapMedia = (phaseId: number, title: string) => {
     const slug = `roadmap-phase-${phaseId}`;
@@ -229,40 +148,6 @@ export default function Roadmap() {
         }
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-          {isMobileViewport ? (
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-4 top-0 -z-10 opacity-0 sm:inset-x-6 lg:inset-x-12"
-            >
-              {ROADMAP_PHASES.map((phase, index) => (
-                <div
-                  key={`roadmap-mobile-copy-measure-${phase.id}`}
-                  ref={(node) => {
-                    mobileCopyMeasureRefs.current[index] = node;
-                  }}
-                  className="px-[2px] py-1.5 sm:py-2"
-                >
-                  <div className="relative pl-4 sm:pl-5">
-                    <div className="mb-3 flex items-center gap-2">
-                      <span
-                        className={`inline-flex h-2.5 w-2.5 rounded-full ${phase.accentBarClass}`}
-                      />
-                      <span className="text-[10px] font-black uppercase tracking-[0.18em] text-app-muted">
-                        {phase.status}
-                      </span>
-                    </div>
-                    <h4 className="text-[1.95rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text sm:text-[2rem]">
-                      {phase.title}
-                    </h4>
-                    <p className="mt-2.5 max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
-                      {phase.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : null}
-
           <div className="mb-12 md:mb-16 reveal text-center lg:text-left active">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
@@ -276,116 +161,54 @@ export default function Roadmap() {
           </div>
 
           <div
-            className="relative lg:hidden reveal reveal-delay-1 active"
+            className="relative lg:hidden reveal reveal-delay-1 active flex flex-col gap-12"
             role="region"
-            aria-roledescription="carousel"
             aria-label="Speechworks roadmap phases"
-            style={{ touchAction: "pan-y" }}
           >
-            <div className="overflow-hidden pt-2 sm:pt-3">
+            {ROADMAP_PHASES.map((phase) => (
               <div
-                className="flex will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                style={{
-                  width: `${visibleMobilePhases.length * 100}%`,
-                  transform: isMobileViewport
-                    ? "translate3d(0, 0, 0)"
-                    : `translate3d(-${(activePhase - 1) * (100 / visibleMobilePhases.length)}%, 0, 0)`,
-                }}
+                key={phase.id}
+                className="w-full flex flex-col gap-6"
               >
-                {visibleMobilePhases.map((phase) => (
+                <div className="relative pl-4 sm:pl-5">
                   <div
-                    key={phase.id}
-                    className="shrink-0 py-1.5 sm:py-2"
-                    style={{ width: `${100 / visibleMobilePhases.length}%` }}
-                  >
-                    <div className="px-[2px]">
-                      <div className="flex h-full flex-col gap-6">
-                        <div
-                          className="relative pl-4 sm:pl-5"
-                          style={
-                            mobileCopyHeight
-                              ? { minHeight: `${mobileCopyHeight}px` }
-                              : undefined
-                          }
-                        >
-                          <div
-                            className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${phase.accentBarClass}`}
-                          />
-                          <div className="mb-3 flex items-center gap-2">
-                            <span
-                              className={`inline-flex h-2.5 w-2.5 rounded-full ${phase.accentBarClass}`}
-                            />
-                            <span className="text-[10px] font-black uppercase tracking-[0.18em] text-app-muted">
-                              {phase.status}
-                            </span>
-                          </div>
-                          <h4 className="text-[1.95rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text sm:text-[2rem]">
-                            {phase.title}
-                          </h4>
-                          <p className="mt-2.5 max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
-                            {phase.description}
-                          </p>
-                        </div>
-
-                        <div
-                          className={`relative h-[360px] overflow-hidden rounded-[2rem] bg-gradient-to-br ${phase.stageGradient}`}
-                        >
-                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.18),transparent_22%),linear-gradient(180deg,rgba(255,255,255,0.06),transparent_58%)]" />
-                          <div className="absolute inset-0 opacity-[0.08] bg-grid" />
-                          {renderMobileRoadmapMedia(phase.id, phase.title)}
-
-                          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-between px-3 sm:px-4">
-                            <button
-                              type="button"
-                              onClick={showPreviousPhase}
-                              className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white/94 text-app-text shadow-[0_18px_32px_rgba(63,51,45,0.14)] backdrop-blur-md transition-all duration-300 hover:scale-[1.04] hover:bg-white"
-                              aria-label="Show previous roadmap phase"
-                            >
-                              <RoadmapMobileChevron direction="left" />
-                            </button>
-
-                            <button
-                              type="button"
-                              onClick={showNextPhase}
-                              className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white/94 text-app-text shadow-[0_18px_32px_rgba(63,51,45,0.14)] backdrop-blur-md transition-all duration-300 hover:scale-[1.04] hover:bg-white"
-                              aria-label="Show next roadmap phase"
-                            >
-                              <RoadmapMobileChevron direction="right" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-            </div>
-
-            <div className="mt-4 flex items-center justify-center gap-2.5">
-              {ROADMAP_PHASES.map((phase) => {
-                const isActive = activePhase === phase.id;
-
-                return (
-                  <button
-                    key={phase.id}
-                    type="button"
-                    onClick={() => setActivePhase(phase.id)}
-                    className="flex h-7 items-center justify-center"
-                    aria-label={`Show roadmap phase ${phase.id}`}
-                    aria-pressed={isActive}
-                  >
+                    className={`absolute bottom-1 left-0 top-1 w-1 rounded-r-full ${phase.accentBarClass}`}
+                  />
+                  <div className="mb-3 flex items-center gap-2">
                     <span
-                      className={`block h-2.5 rounded-full transition-all duration-300 ${
-                        isActive
-                          ? "w-8 bg-app-text shadow-[0_0_18px_rgba(63,51,45,0.18)]"
-                          : "w-2.5 bg-black/18"
-                      }`}
+                      className={`inline-flex h-2.5 w-2.5 rounded-full ${phase.accentBarClass}`}
                     />
-                  </button>
-                );
-              })}
-            </div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.18em] text-app-muted">
+                      {phase.status}
+                    </span>
+                  </div>
+                  <h4 className="text-[1.95rem] font-black tracking-[-0.05em] leading-[0.95] text-app-text sm:text-[2rem]">
+                    {phase.title}
+                  </h4>
+                  <div className="mt-2.5">
+                    <p className="max-w-[34ch] text-[1rem] leading-[1.45] text-app-muted sm:max-w-[33ch] sm:text-[1.05rem] sm:leading-[1.48]">
+                      {phase.description}
+                    </p>
+                    {phase.id === 3 && (
+                      <Link href="/clinicians" className="inline-flex items-center gap-1.5 mt-4 text-[10px] md:text-xs font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-700 transition-colors group/link">
+                        Explore Clinical Board
+                        <svg className="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform duration-300 group-hover/link:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+
+                <div
+                  className={`relative h-[360px] overflow-hidden rounded-[2rem] bg-gradient-to-br ${phase.stageGradient}`}
+                >
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.18),transparent_22%),linear-gradient(180deg,rgba(255,255,255,0.06),transparent_58%)]" />
+                  <div className="absolute inset-0 opacity-[0.08] bg-grid" />
+                  {renderMobileRoadmapMedia(phase.id, phase.title)}
+                </div>
+              </div>
+            ))}
           </div>
 
           {!isMobileViewport && (
@@ -452,12 +275,16 @@ export default function Roadmap() {
                     }}
                   >
                     <p className="text-app-muted font-medium leading-relaxed pr-2 md:pr-4 text-sm md:text-base">
-                      {phase === 1
-                        ? "A clinical-grade sandbox. Live and available now. We have built an AI-driven app that provides a safe environment for you to practice real-world scenarios."
-                        : phase === 2
-                        ? "We are actively building a unified community space where users can share their experiences, celebrate victories, and find support."
-                        : "Bridging the gap between practice and professional therapy. Connect seamlessly with vetted Speech-Language Pathologists."}
+                      {ROADMAP_PHASES.find((p) => p.id === phase)?.description}
                     </p>
+                    {phase === 3 && (
+                      <Link href="/clinicians" className="inline-flex items-center gap-1.5 mt-4 text-[10px] md:text-xs font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-700 transition-colors group/link">
+                        Explore Clinical Board
+                        <svg className="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform duration-300 group-hover/link:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                      </Link>
+                    )}
                   </div>
                 </button>
               ))}

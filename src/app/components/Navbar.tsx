@@ -2,15 +2,22 @@
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { withBasePath } from "@/app/lib/withBasePath";
+import Link from "next/link";
 
 import ContactModal from "./ContactModal";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const prefix = isHome ? "" : "/";
+
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isRoadmapVisible, setIsRoadmapVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +29,43 @@ export default function Navbar() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    let mutationObserver: MutationObserver;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsRoadmapVisible(entry.isIntersecting);
+        });
+      },
+      {
+        rootMargin: "-25% 0px -40% 0px",
+      }
+    );
+
+    const observeRoadmap = () => {
+      const roadmapEl = document.getElementById("roadmap");
+      if (roadmapEl) {
+        observer.observe(roadmapEl);
+        if (mutationObserver) mutationObserver.disconnect();
+      }
+    };
+
+    observeRoadmap();
+
+    if (!document.getElementById("roadmap")) {
+      mutationObserver = new MutationObserver(() => {
+        observeRoadmap();
+      });
+      mutationObserver.observe(document.body, { childList: true, subtree: true });
+    }
+
+    return () => {
+      if (observer) observer.disconnect();
+      if (mutationObserver) mutationObserver.disconnect();
     };
   }, []);
 
@@ -72,7 +116,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <div className="mobile-fixed-glass flex justify-between items-center backdrop-blur-2xl bg-white/90 border border-orange-900/10 rounded-full px-4 md:px-6 py-2.5 md:py-3 shadow-lg">
-            <div className="flex items-center gap-2 md:gap-3">
+            <Link href="/" className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80">
                 <div className="relative h-7 w-7 overflow-hidden rounded-full md:h-8 md:w-8">
                   <Image
                     src={withBasePath("/assets/logo.png")}
@@ -85,27 +129,79 @@ export default function Navbar() {
                 <span className="font-bold text-base md:text-lg tracking-tight text-app-text">
                   Speechworks
                 </span>
-            </div>
+            </Link>
 
             <div className="hidden lg:flex items-center space-x-8">
               <a
-                href="#roadmap"
+                href={`${prefix}#roadmap`}
                 className="text-xs font-semibold uppercase tracking-widest text-app-muted transition-colors hover:text-brand"
               >
                 Roadmap
               </a>
               <a
-                href="#platform"
+                href={`${prefix}#platform`}
                 className="text-xs font-semibold uppercase tracking-widest text-app-muted transition-colors hover:text-brand"
               >
                 Platform
               </a>
               <a
-                href="#team"
+                href={`${prefix}#team`}
                 className="text-xs font-semibold uppercase tracking-widest text-app-muted transition-colors hover:text-brand"
               >
                 Team
               </a>
+              <div 
+                className={`relative flex h-10 items-center justify-center transition-[width] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  isRoadmapVisible ? "w-[196px]" : "w-[110px]"
+                }`}
+              >
+                {/* Default Link State */}
+                <a
+                  href="/clinicians"
+                  className={`absolute flex w-max items-center justify-center text-xs font-semibold uppercase tracking-widest transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-brand ${
+                    isRoadmapVisible 
+                      ? "opacity-0 scale-90 pointer-events-none -translate-y-2" 
+                      : "opacity-100 scale-100 text-app-muted translate-y-0"
+                  }`}
+                >
+                  For Clinicians
+                </a>
+                
+                {/* Important Animated Orange Pill State */}
+                <a 
+                  href="/clinicians"
+                  className={`absolute flex w-max items-center gap-2.5 overflow-hidden rounded-full bg-brand px-4 md:px-5 py-2 md:py-2.5 text-[10px] md:text-xs font-bold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(242,128,68,0.4)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-[0_0_30px_rgba(242,128,68,0.7)] hover:bg-brand-600 hover:scale-105 ${
+                    isRoadmapVisible
+                      ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
+                      : "opacity-0 scale-95 pointer-events-none translate-y-2"
+                  }`}
+                >
+                  {/* Shine Overlay */}
+                  <div 
+                    className="absolute inset-0 pointer-events-none mix-blend-overlay"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)',
+                      width: '50%',
+                      animation: 'shimmerSweep 3s infinite'
+                    }}
+                  />
+                  <style>{`
+                    @keyframes shimmerSweep {
+                      0% { transform: translateX(-200%) skewX(-20deg); }
+                      40% { transform: translateX(300%) skewX(-20deg); }
+                      100% { transform: translateX(300%) skewX(-20deg); }
+                    }
+                  `}</style>
+                  
+                  {/* Ping Dot */}
+                  <div className="relative flex h-2 w-2 shrink-0 items-center justify-center">
+                    <span className="absolute inline-flex h-3 w-3 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] rounded-full bg-white opacity-80"></span>
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-white"></span>
+                  </div>
+
+                  <span>SLP? Help us build</span>
+                </a>
+              </div>
               <button
                 type="button"
                 onClick={() => setIsContactOpen(true)}
@@ -117,7 +213,7 @@ export default function Navbar() {
 
             <div className="flex items-center gap-2">
               <a
-                href="#download"
+                href={`${prefix}#download`}
                 onClick={closeMenu}
                 className="bg-brand text-white hover:bg-brand-600 px-4 md:px-6 py-2 md:py-2.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg"
               >
@@ -177,25 +273,32 @@ export default function Navbar() {
             <div className="mobile-fixed-glass mx-3 rounded-[1.75rem] border border-orange-900/10 bg-white/92 px-4 py-3 shadow-lg backdrop-blur-2xl">
               <div className="grid gap-2">
                 <a
-                  href="#roadmap"
+                  href={`${prefix}#roadmap`}
                   onClick={closeMenu}
                   className="rounded-2xl px-4 py-3 text-sm font-semibold text-app-text transition-colors hover:bg-brand-50"
                 >
                   Roadmap
                 </a>
                 <a
-                  href="#platform"
+                  href={`${prefix}#platform`}
                   onClick={closeMenu}
                   className="rounded-2xl px-4 py-3 text-sm font-semibold text-app-text transition-colors hover:bg-brand-50"
                 >
                   Platform
                 </a>
                 <a
-                  href="#team"
+                  href={`${prefix}#team`}
                   onClick={closeMenu}
                   className="rounded-2xl px-4 py-3 text-sm font-semibold text-app-text transition-colors hover:bg-brand-50"
                 >
                   Team
+                </a>
+                <a
+                  href="/clinicians"
+                  onClick={closeMenu}
+                  className="rounded-2xl px-4 py-3 text-sm font-semibold text-app-text transition-colors hover:bg-brand-50"
+                >
+                  For Clinicians
                 </a>
                 <button
                   type="button"
