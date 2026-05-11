@@ -13,17 +13,22 @@ type InviteFormState = {
   name: string;
   email: string;
   countryCode: string;
-  phone: string;
+  contactNumber: string;
   referralCode: string;
 };
 
-type InviteStep = "pitch" | "details" | "confirm";
+type InviteStep = "pitch" | "details";
+
+type SubmitStatus = "idle" | "submitting" | "success";
+
+const WAITLIST_URL =
+  "https://script.google.com/macros/s/AKfycbycUdLvAd-E68-2p3Dm4iyI3mMhm-7JVXnQ0ByWigY7-q17vHLZ1oVC8YxIgnuxA86zXQ/exec";
 
 const INITIAL_FORM: InviteFormState = {
   name: "",
   email: "",
   countryCode: "+1",
-  phone: "",
+  contactNumber: "",
   referralCode: "",
 };
 
@@ -56,6 +61,8 @@ export default function InviteOnlyModal({
   const [step, setStep] = useState<InviteStep>("pitch");
   const [form, setForm] = useState<InviteFormState>(INITIAL_FORM);
   const [attemptedSubmit, setAttemptedSubmit] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
+  const [submitError, setSubmitError] = useState(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
@@ -84,6 +91,8 @@ export default function InviteOnlyModal({
       setIsRendered(true);
       setStep("pitch");
       setAttemptedSubmit(false);
+      setSubmitStatus("idle");
+      setSubmitError(false);
       setForm(INITIAL_FORM);
       document.body.style.overflow = "hidden";
       physics.current = {
@@ -231,62 +240,30 @@ export default function InviteOnlyModal({
       setForm((current) => ({ ...current, [field]: event.target.value }));
     };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setAttemptedSubmit(true);
-    if (isValid) {
-      setStep("confirm");
+    setSubmitError(false);
+    if (!isValid) return;
+
+    setSubmitStatus("submitting");
+    try {
+      await fetch(WAITLIST_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          countryCode: form.countryCode.trim(),
+          contactNumber: form.contactNumber.trim() || "N/A",
+          referralCode: form.referralCode.trim() || "N/A",
+        }),
+      });
+      setSubmitStatus("success");
+    } catch {
+      setSubmitStatus("idle");
+      setSubmitError(true);
     }
-  };
-
-  const openDraftedEmail = () => {
-    const subject = `Speechworks invite request - ${form.name.trim()}`;
-    const contactLine = form.phone.trim()
-      ? `${form.countryCode} ${form.phone.trim()}`
-      : "Not provided";
-    const referralLine = form.referralCode.trim() || "Not provided";
-
-    const body = [
-      "Hi Mayank,",
-      "",
-      "I would like to register my interest for invite-only access to Speechworks.",
-      "",
-      `Name: ${form.name.trim()}`,
-      `Email: ${form.email.trim()}`,
-      `Contact Number: ${contactLine}`,
-      `Referral Code: ${referralLine}`,
-      "",
-      "I would love to be considered for early access.",
-      "",
-      "Thanks,",
-      form.name.trim(),
-    ].join("\n");
-
-    const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-      "mayank@speechworks.in"
-    )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    const mailtoUrl = `mailto:mayank@speechworks.in?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-    const userAgent = navigator.userAgent;
-    const shouldUseNativeMailClient =
-      isMobileViewport ||
-      /Android|iPhone|iPad|iPod/i.test(userAgent) ||
-      window.matchMedia("(pointer: coarse)").matches;
-
-    if (shouldUseNativeMailClient) {
-      window.location.href = mailtoUrl;
-    } else {
-      const openedWindow = window.open(
-        gmailComposeUrl,
-        "_blank",
-        "noopener,noreferrer"
-      );
-
-      if (!openedWindow) {
-        window.location.href = mailtoUrl;
-      }
-    }
-    onClose();
   };
 
   if (!isOpen && !isRendered) return null;
@@ -344,9 +321,9 @@ export default function InviteOnlyModal({
         }sm:max-w-[540px] sm:rounded-[2rem] ${
           isOpen ? "opacity-100" : "opacity-0"
         }`}
-        style={{ 
+        style={{
           willChange: isMobileViewport ? "auto" : "transform",
-          minHeight: step === "confirm" ? "320px" : "auto"
+          minHeight: submitStatus === "success" ? "320px" : "auto"
         }}
       >
         <style>{`
@@ -387,36 +364,35 @@ export default function InviteOnlyModal({
           </svg>
         </button>
 
-        {step === "confirm" ? (
-          <div className="relative z-10 p-8 sm:p-12 md:p-16 flex flex-col items-center text-center">
-            <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-inner" style={getFadeUpStyle(0)}>
-              <svg className="w-8 h-8 text-[#ff955e]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 2L11 13" /><path d="M22 2l-7 20-4-9-9-4 20-7z" />
+        {submitStatus === "success" ? (
+          <div className="relative z-10 p-8 sm:p-12 md:p-16 flex flex-col items-center text-center min-h-[320px] justify-center">
+            <div
+              className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-inner"
+              style={getFadeUpStyle(0)}
+            >
+              <svg className="w-7 h-7 text-[#ff955e]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            
-            <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-4 tracking-tight" style={getFadeUpStyle(60)}>
-              Drafting Your Invite
+            <h2
+              className="text-2xl sm:text-[1.8rem] font-black text-white leading-tight mb-5 tracking-tight"
+              style={getFadeUpStyle(60)}
+            >
+              You&apos;re on the list.
             </h2>
-            
-            <p className="text-[15px] sm:text-16 text-white/60 leading-relaxed mb-10 max-w-sm" style={getFadeUpStyle(120)}>
-              We are drafting the request for you. Please review the details in your email client and send it forward to claim your spot.
+            <p
+              className="text-[14px] sm:text-[15px] text-white/55 leading-relaxed max-w-[300px] mb-10"
+              style={getFadeUpStyle(120)}
+            >
+              All set. We&apos;ve received your details and will reach out to you personally, soon.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 w-full max-w-[320px]" style={getFadeUpStyle(180)}>
-              <button
-                onClick={() => setStep("details")}
-                className="flex-1 px-6 py-3.5 rounded-full border border-white/10 bg-white/5 text-[11px] font-black uppercase tracking-widest text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={openDraftedEmail}
-                className="flex-1 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] text-[11px] font-black uppercase tracking-widest text-white shadow-[0_10px_20px_rgba(242,128,68,0.2)] hover:-translate-y-0.5 transition-all duration-300"
-              >
-                OK
-              </button>
-            </div>
+            <button
+              onClick={onClose}
+              className="px-8 py-3 rounded-full border border-white/10 bg-white/5 text-[11px] font-black uppercase tracking-widest text-white/60 hover:bg-white/10 hover:text-white transition-all duration-300"
+              style={getFadeUpStyle(180)}
+            >
+              Close
+            </button>
           </div>
         ) : (
           <div className="relative z-10 p-3.5 sm:p-5 md:p-6 max-h-[calc(100dvh-1.25rem)] overflow-y-auto sm:max-h-[min(820px,calc(100dvh-3rem))]">
@@ -590,10 +566,11 @@ export default function InviteOnlyModal({
                         </span>
                         <input
                           type="tel"
-                          value={form.phone}
-                          onChange={updateField("phone")}
+                          value={form.contactNumber}
+                          onChange={updateField("contactNumber")}
                           placeholder="Contact number"
-                          className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
+                          disabled={submitStatus === "submitting"}
+                          className="w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.25 text-[12.5px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] disabled:opacity-40 sm:rounded-[1rem] sm:px-4 sm:py-3 sm:text-[14px]"
                         />
                       </label>
                     </div>
@@ -613,24 +590,39 @@ export default function InviteOnlyModal({
                     </label>
                   </div>
 
-                  {attemptedSubmit && !isValid ? (
+                  {attemptedSubmit && !isValid && (
                     <p className="mt-2.5 text-[11.5px] font-semibold text-[#ffb28a] sm:mt-3 sm:text-[12px]">
-                      Add your name and a valid email so we can prepare the invite
-                      draft for you.
+                      Add your name and a valid email to claim your spot.
                     </p>
-                  ) : null}
+                  )}
+
+                  {submitError && (
+                    <p className="mt-2.5 text-[11.5px] font-semibold text-[#ffb28a] bg-[#ff955e]/10 border border-[#ff955e]/20 rounded-xl px-3.5 py-2.5 sm:mt-3 sm:text-[12px]">
+                      Connection failed. Please try again.
+                    </p>
+                  )}
 
                   <div className="mt-2.5 sm:mt-4">
                     <button
                       type="button"
                       onClick={handleSubmit}
-                      className={`inline-flex min-h-[46px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] text-white ${
+                      disabled={submitStatus === "submitting"}
+                      className={`inline-flex min-h-[46px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] text-white disabled:opacity-60 disabled:cursor-not-allowed ${
                         isMobileViewport
                           ? ""
                           : "transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 "
                       }sm:min-h-[54px] sm:px-6 sm:py-3 sm:text-[11px] sm:tracking-[0.16em]`}
                     >
-                      Be a rebel
+                      {submitStatus === "submitting" ? (
+                        <>
+                          <svg className="w-3.5 h-3.5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                          </svg>
+                          Joining&hellip;
+                        </>
+                      ) : (
+                        "Be a rebel"
+                      )}
                     </button>
                   </div>
                 </>
