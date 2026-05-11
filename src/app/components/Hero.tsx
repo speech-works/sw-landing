@@ -3,7 +3,7 @@ import { withBasePath } from "@/app/lib/withBasePath";
 import React, { useEffect, useRef, useState } from "react";
 import LiveAppMockup from "./LiveAppMockup";
 import MobileMockupMedia from "./MobileMockupMedia";
-import MobileCarouselControls from "./MobileCarouselControls";
+
 import { useElementInView } from "./useElementInView";
 import { useMockDeviceTime } from "./useMockDeviceTime";
 import { useIsMobileViewport } from "./useIsMobileViewport";
@@ -141,10 +141,6 @@ export default function Hero() {
   });
   const timeStr = useMockDeviceTime("09:41", { enabled: !isMobileViewport });
   const activeHeroPhone = HERO_PHONE_COPY[activePhone];
-  const activePhoneIndex = Math.max(0, HERO_PHONE_IDS.indexOf(activePhone));
-  const visibleHeroPhoneIds = isMobileViewport ? [activePhone] : HERO_PHONE_IDS;
-  const shouldPlayMobileHeroScreen =
-    isMobileViewport && isHeroInView && activePhone === "center";
 
   useEffect(() => {
     if (isMobileViewport) return;
@@ -188,19 +184,6 @@ export default function Hero() {
       }
     };
 
-  const showPreviousPhone = () => {
-    setActivePhone(
-      HERO_PHONE_IDS[
-      (activePhoneIndex - 1 + HERO_PHONE_IDS.length) % HERO_PHONE_IDS.length
-      ]
-    );
-  };
-
-  const showNextPhone = () => {
-    setActivePhone(
-      HERO_PHONE_IDS[(activePhoneIndex + 1) % HERO_PHONE_IDS.length]
-    );
-  };
 
   return (
     <>
@@ -339,24 +322,22 @@ export default function Hero() {
               </div>
 
               <div className="relative mt-10 lg:hidden reveal reveal-delay-3 active min-w-0">
-                <div className="mx-auto w-full max-w-[286px]">
-                  <div
-                    className="relative rounded-[2.75rem] bg-gradient-to-tr from-[#1a1a1a] via-[#353535] to-[#262626] p-[4px] shadow-[0_32px_56px_rgba(0,0,0,0.34)]"
-                    role="region"
-                    aria-roledescription="carousel"
-                    aria-label="Speechworks mobile showcase"
-                    style={{ touchAction: "pan-y" }}
-                  >
-                    <div className="absolute left-[-4px] top-[102px] h-10 w-[7px] rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] shadow-[1px_0_3px_rgba(0,0,0,0.5)]" />
-                    <div className="absolute left-[-4px] top-[165px] h-16 w-[7px] rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] shadow-[1px_0_3px_rgba(0,0,0,0.5)]" />
-                    <div className="absolute left-[-4px] top-[246px] h-16 w-[7px] rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] shadow-[1px_0_3px_rgba(0,0,0,0.5)]" />
-                    <div className="absolute right-[-4px] top-[192px] h-28 w-[7px] rounded-r-[3px] border-y border-l border-white/10 bg-gradient-to-l from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] shadow-[-1px_0_3px_rgba(0,0,0,0.5)]" />
+                <div className="mx-auto w-full max-w-[286px] flex flex-col gap-16">
+                  {HERO_PHONE_IDS.map((phoneId) => (
+                    <div
+                      key={phoneId}
+                      className="relative rounded-[2.75rem] bg-gradient-to-tr from-[#1a1a1a] via-[#353535] to-[#262626] p-[4px] shadow-[0_32px_56px_rgba(0,0,0,0.34)]"
+                    >
+                      <div className="absolute left-[-4px] top-[102px] h-10 w-[7px] rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] shadow-[1px_0_3px_rgba(0,0,0,0.5)]" />
+                      <div className="absolute left-[-4px] top-[165px] h-16 w-[7px] rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] shadow-[1px_0_3px_rgba(0,0,0,0.5)]" />
+                      <div className="absolute left-[-4px] top-[246px] h-16 w-[7px] rounded-l-[3px] border-y border-l border-white/10 bg-gradient-to-r from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] shadow-[1px_0_3px_rgba(0,0,0,0.5)]" />
+                      <div className="absolute right-[-4px] top-[192px] h-28 w-[7px] rounded-r-[3px] border-y border-l border-white/10 bg-gradient-to-l from-[#0a0a0a] via-[#3a3a3a] to-[#2a2a2a] shadow-[-1px_0_3px_rgba(0,0,0,0.5)]" />
 
-                    <div className="relative overflow-hidden rounded-[2.45rem] bg-black shadow-[inset_0_0_10px_rgba(255,255,255,0.08)]">
-                      <div className="pointer-events-none absolute inset-x-0 top-3 z-[60] flex justify-center">
-                        <div className="h-[22px] w-[74px] rounded-full bg-[#050505] shadow-[inset_0_0_1px_rgba(255,255,255,0.08)]" />
-                      </div>
-                      {activePhone !== "right" && (
+                      <div className="relative overflow-hidden rounded-[2.45rem] bg-black shadow-[inset_0_0_10px_rgba(255,255,255,0.08)]">
+                        <div className="pointer-events-none absolute inset-x-0 top-3 z-[60] flex justify-center">
+                          <div className="h-[22px] w-[74px] rounded-full bg-[#050505] shadow-[inset_0_0_1px_rgba(255,255,255,0.08)]" />
+                        </div>
+                        {phoneId !== "right" && (
                         <>
                           <div className="pointer-events-none absolute inset-x-0 top-0 z-[58] h-[72px] bg-[linear-gradient(180deg,rgba(248,243,237,0.92)_0%,rgba(248,243,237,0.74)_58%,rgba(248,243,237,0)_100%)]" />
                           <div className="pointer-events-none absolute inset-x-0 top-0 z-[59] flex items-center justify-between px-5 pb-2 pt-7 text-[11px] font-bold text-slate-900">
@@ -384,21 +365,8 @@ export default function Hero() {
                         </>
                       )}
 
-                      <div
-                        className="flex h-[496px] select-none will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                        style={{
-                          width: `${visibleHeroPhoneIds.length * 100}%`,
-                          transform: isMobileViewport
-                            ? "translate3d(0, 0, 0)"
-                            : `translate3d(-${activePhoneIndex * (100 / visibleHeroPhoneIds.length)}%, 0, 0)`,
-                        }}
-                      >
-                        {visibleHeroPhoneIds.map((phoneId) => (
-                          <div
-                            key={phoneId}
-                            className="min-w-0 shrink-0"
-                            style={{ width: `${100 / visibleHeroPhoneIds.length}%` }}
-                          >
+                        <div className="flex h-[496px]">
+                          <div className="min-w-0 w-full shrink-0">
                             {phoneId === "left" && (
                               <div className="relative h-full overflow-hidden bg-[#f8f3ed]">
                                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(255,183,126,0.14),transparent_24%),radial-gradient(circle_at_24%_82%,rgba(255,226,191,0.28),transparent_32%),linear-gradient(180deg,#f8f3ed_0%,#f7f1e9_48%,#f6efe7_100%)]" />
@@ -460,7 +428,7 @@ export default function Hero() {
                                 <MobileMockupMedia
                                   slug="hero-live-screen"
                                   alt="Speechworks dashboard preview"
-                                  shouldPlay={shouldPlayMobileHeroScreen}
+                                  shouldPlay={isMobileViewport && isHeroInView}
                                   className="h-full w-full"
                                   mediaStyle={{ height: "136%" }}
                                 />
@@ -521,7 +489,6 @@ export default function Hero() {
                               </div>
                             )}
                           </div>
-                        ))}
                       </div>
 
                       <div className="pointer-events-none absolute inset-x-0 bottom-2 z-[60] flex justify-center">
@@ -529,8 +496,8 @@ export default function Hero() {
                       </div>
                     </div>
 
-                    <div
-                      className={`pointer-events-none absolute z-[70] ${activePhone === "right"
+                      <div
+                        className={`pointer-events-none absolute z-[70] ${phoneId === "right"
                         ? "right-[4.5rem] top-[4.35rem] bottom-auto"
                         : "right-12 bottom-5"
                         }`}
@@ -541,31 +508,19 @@ export default function Hero() {
                       <div className="inline-flex max-w-full flex-col gap-2 overflow-hidden rounded-[1.15rem] border border-white/12 bg-[linear-gradient(180deg,rgba(7,7,10,0.42),rgba(7,7,10,0.72))] px-3.5 py-3 shadow-[0_18px_36px_rgba(0,0,0,0.3)] backdrop-blur-xl">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="rounded-full border border-brand/20 bg-brand/10 px-2.5 py-1 text-[8px] font-black uppercase tracking-[0.16em] text-brand-100">
-                            {activeHeroPhone.tag}
+                            {HERO_PHONE_COPY[phoneId].tag}
                           </span>
                           <span className="text-[8px] font-black uppercase tracking-[0.18em] text-white/48">
-                            {activeHeroPhone.eyebrow}
+                            {HERO_PHONE_COPY[phoneId].eyebrow}
                           </span>
                         </div>
                         <div className="max-w-[16ch] text-[0.98rem] font-black leading-[0.96] tracking-[-0.04em] text-white">
-                          {activeHeroPhone.title}
+                          {HERO_PHONE_COPY[phoneId].title}
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <MobileCarouselControls
-                    currentIndex={activePhoneIndex}
-                    count={HERO_PHONE_IDS.length}
-                    onPrevious={showPreviousPhone}
-                    onNext={showNextPhone}
-                    onSelect={(index) => setActivePhone(HERO_PHONE_IDS[index])}
-                    getItemLabel={(index) =>
-                      HERO_PHONE_COPY[HERO_PHONE_IDS[index]].tab
-                    }
-                    tone="dark"
-                  />
-
+                  ))}
                 </div>
               </div>
             </div>

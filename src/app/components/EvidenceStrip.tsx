@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, MouseEvent } from 'react';
-import MobileCarouselControls from './MobileCarouselControls';
+
 
 const EVIDENCE_DATA = [
   {
@@ -88,7 +88,7 @@ export function EvidenceStrip() {
   };
 
   return (
-    <section className="bg-[#050505] text-app-light py-24 md:py-32 relative overflow-hidden border-t border-white/5">
+    <section className="bg-[#050505] text-app-light py-8 md:py-32 relative overflow-hidden border-t border-white/5">
       {/* Background Ambience */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-brand/10 blur-[150px] pointer-events-none rounded-full" />
       
@@ -120,7 +120,7 @@ export function EvidenceStrip() {
             ref={containerRef}
             onMouseMove={handleMouseMove}
             onScroll={handleScroll}
-            className="flex md:grid md:grid-cols-2 gap-4 md:gap-6 group/grid overflow-x-auto md:overflow-visible pb-12 md:pb-0 snap-x snap-mandatory scroll-smooth hide-scrollbar"
+            className="flex flex-col md:grid md:grid-cols-2 gap-4 md:gap-6 group/grid"
           >
             {EVIDENCE_DATA.map((item, index) => (
               <div 
@@ -168,17 +168,7 @@ export function EvidenceStrip() {
             ))}
           </div>
 
-          <div className="md:hidden">
-            <MobileCarouselControls
-              currentIndex={activeIndex}
-              count={EVIDENCE_DATA.length}
-              onPrevious={() => scrollToIndex(activeIndex - 1)}
-              onNext={() => scrollToIndex(activeIndex + 1)}
-              onSelect={scrollToIndex}
-              tone="dark"
-              layout="inline"
-            />
-          </div>
+
         </div>
       </div>
     </section>

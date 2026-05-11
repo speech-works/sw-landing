@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, MouseEvent } from 'react';
-import MobileCarouselControls from './MobileCarouselControls';
+
 
 const ALGORITHM_DATA = [
   {
@@ -134,7 +134,7 @@ export function AlgorithmTable() {
           ref={containerRef}
           onMouseMove={handleMouseMove}
           onScroll={handleScroll}
-          className="flex md:grid md:grid-cols-2 gap-4 md:gap-6 group/grid overflow-x-auto md:overflow-visible pb-12 md:pb-0 snap-x snap-mandatory scroll-smooth hide-scrollbar"
+          className="flex flex-col md:grid md:grid-cols-2 gap-4 md:gap-6 group/grid"
         >
           {ALGORITHM_DATA.map((row, idx) => {
             const isValidated = row.status === 'VALIDATED';
@@ -203,17 +203,7 @@ export function AlgorithmTable() {
           })}
         </div>
 
-        <div className="md:hidden">
-          <MobileCarouselControls
-            currentIndex={activeIndex}
-            count={ALGORITHM_DATA.length}
-            onPrevious={() => scrollToIndex(activeIndex - 1)}
-            onNext={() => scrollToIndex(activeIndex + 1)}
-            onSelect={scrollToIndex}
-            tone="dark"
-            layout="inline"
-          />
-        </div>
+
       </div>
 
       <div className="mt-12 text-center max-w-3xl mx-auto">

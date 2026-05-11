@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useCallback } from "react";
 import InviteOnlyModal from "./InviteOnlyModal";
-import MobileCarouselControls from "./MobileCarouselControls";
+
 
 /* ─────────────────────────────────────────────
    REFINED DESIGN SYSTEM UTILS
@@ -391,46 +391,20 @@ export default function Pricing({
 
           {/* Mobile View */}
           <div
-            className="relative lg:hidden w-full max-w-sm mx-auto"
+            className="relative lg:hidden w-full max-w-sm mx-auto flex flex-col gap-8 pb-8"
             role="region"
-            aria-roledescription="carousel"
             aria-label="Pricing tiers"
-            onTouchStart={handlePricingTouchStart}
-            onTouchEnd={handlePricingTouchEnd}
-            onTouchCancel={handlePricingTouchCancel}
-            style={{ touchAction: "pan-y" }}
           >
-            <div className="overflow-x-hidden overflow-y-visible pt-4 pb-8">
+            {pricingTiers.map((tier, i) => (
               <div
-                className="flex will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                style={{
-                  width: `${pricingTiers.length * 100}%`,
-                  transform: `translate3d(-${mobileCard * (100 / pricingTiers.length)}%, 0, 0)`,
-                }}
+                key={`m-${i}`}
+                className="w-full"
               >
-                {pricingTiers.map((tier, i) => (
-                  <div
-                    key={`m-${i}`}
-                    className="shrink-0 px-5"
-                    style={{ width: `${100 / pricingTiers.length}%` }}
-                  >
-                    <div className="mx-auto w-full max-w-[19.75rem] min-h-[478px]">
-                      {renderCard(tier, mobileCard === i ? 0 : 1, true)}
-                    </div>
-                  </div>
-                ))}
+                <div className="mx-auto w-full min-h-[478px]">
+                  {renderCard(tier, 0, true)}
+                </div>
               </div>
-            </div>
-
-            <MobileCarouselControls
-              currentIndex={mobileCard}
-              count={pricingTiers.length}
-              onPrevious={showPreviousTier}
-              onNext={showNextTier}
-              onSelect={setMobileCard}
-              getItemLabel={(index) => pricingTiers[index].title}
-              layout="inline"
-            />
+            ))}
           </div>
 
           {/* Desktop Interactive Stages */}

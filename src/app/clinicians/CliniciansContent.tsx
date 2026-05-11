@@ -66,11 +66,9 @@ export default function CliniciansContent() {
 
       <section className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-32 md:pt-48 pb-24 relative z-10 flex flex-col items-center">
 
-        <div className="mb-10 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 backdrop-blur-xl border border-brand/20 shadow-sm text-app-text text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-center transition-transform hover:scale-105">
-          <svg className="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-          </svg>
-          For the SLP Tired of Assigning Homework That Doesn&apos;t Stick
+        <div className="mb-10 inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-black/5 shadow-sm text-app-text text-[10px] md:text-xs font-black uppercase tracking-[0.22em] text-center transition-transform hover:scale-105">
+          <span className="h-2 w-2 rounded-full bg-brand" />
+          Your client speaks perfectly. Then leaves your office.
         </div>
 
         {/* Hero Copy - Dramatic Scaling */}
@@ -83,7 +81,7 @@ export default function CliniciansContent() {
             YOU WISH EXISTED.
           </h2>
           <p className="text-lg md:text-xl text-app-muted font-medium leading-relaxed max-w-3xl mx-auto">
-            You spend six hours a week on documentation. You assign home practice that rarely happens. Your clients achieve clinical fluency, then lose it when they leave the clinic. The infrastructure for the hours between sessions doesn&apos;t exist yet. We&apos;re building it.
+            You spend several hours a week on documentation. You assign home practice that rarely happens. Your clients achieve clinical fluency, then lose it when they leave the clinic. The infrastructure for the hours between sessions doesn&apos;t exist yet. We&apos;re building it.
           </p>
         </div>
 
@@ -105,7 +103,7 @@ export default function CliniciansContent() {
 
           <div className="relative z-10 grid md:grid-cols-2 gap-12 md:gap-20">
             {/* Left Column: The Clinical Reality */}
-            <div 
+            <div
               className={`flex flex-col relative transition-all duration-700 ease-out ${hoveredSide === 'right' ? 'opacity-30 blur-[2px] grayscale-[0.5]' : 'opacity-100'}`}
               onMouseEnter={() => setHoveredSide('left')}
               onMouseLeave={() => setHoveredSide(null)}
@@ -148,11 +146,11 @@ export default function CliniciansContent() {
               </div>
               <h3 className="text-3xl md:text-4xl font-black tracking-tight text-white mb-6 flex items-center gap-3">
                 The Invitation
-                <svg 
-                  className={`w-6 h-6 text-brand transition-all duration-700 ease-out ${hoveredSide === 'right' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`} 
-                  viewBox="0 0 24 24" fill="currentColor" 
+                <svg
+                  className={`w-6 h-6 text-brand transition-all duration-700 ease-out ${hoveredSide === 'right' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`}
+                  viewBox="0 0 24 24" fill="currentColor"
                 >
-                  <path d="M12 2l2.4 7.6 7.6 2.4-7.6 2.4L12 22l-2.4-7.6-7.6-2.4 7.6-2.4L12 2z"/>
+                  <path d="M12 2l2.4 7.6 7.6 2.4-7.6 2.4L12 22l-2.4-7.6-7.6-2.4 7.6-2.4L12 2z" />
                 </svg>
               </h3>
 
@@ -234,7 +232,7 @@ export default function CliniciansContent() {
 
       <Footer />
 
-      <ClinicianModal 
+      <ClinicianModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />

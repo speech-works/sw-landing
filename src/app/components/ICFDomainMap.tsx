@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import MobileCarouselControls from './MobileCarouselControls';
+
 
 export function ICFDomainMap() {
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -52,7 +52,7 @@ export function ICFDomainMap() {
   };
 
   return (
-    <section className="bg-[#FFFAF5] text-app-text py-24 md:py-32 relative z-10 overflow-hidden">
+    <section className="bg-[#FFFAF5] text-app-text py-8 md:py-32 relative z-10 overflow-hidden">
       
       {/* Background decorations */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand/5 blur-[100px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
@@ -81,11 +81,11 @@ export function ICFDomainMap() {
           <div 
             id="icf-carousel"
             onScroll={handleScroll}
-            className="flex lg:grid lg:grid-cols-3 gap-4 lg:gap-8 auto-rows-[minmax(300px,_auto)] overflow-x-auto lg:overflow-visible pb-12 lg:pb-0 snap-x snap-mandatory scroll-smooth hide-scrollbar"
+            className="flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8 auto-rows-[minmax(300px,_auto)]"
           >
             
             {/* MASTERY (Domain 1) - Col Span 2 */}
-            <div className="shrink-0 w-full lg:w-auto snap-center lg:col-span-2 min-h-[360px]">
+            <div className="shrink-0 w-full lg:w-auto snap-center lg:col-span-2 lg:min-h-[360px]">
               <div className="group h-full relative bg-white border border-orange-900/10 rounded-[2.5rem] p-8 md:p-12 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col justify-end hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500">
                 {/* Ambient Animation: Sine Wave / Fluency representation */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-50 group-hover:opacity-100 transition-opacity duration-1000">
@@ -110,7 +110,7 @@ export function ICFDomainMap() {
             </div>
 
             {/* EASE (Domain 2) - Col Span 1 */}
-            <div className="shrink-0 w-full lg:w-auto snap-center lg:col-span-1 min-h-[360px]">
+            <div className="shrink-0 w-full lg:w-auto snap-center lg:col-span-1 lg:min-h-[360px]">
               <div className="group h-full relative bg-white border border-orange-900/10 rounded-[2.5rem] p-8 md:p-10 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col justify-end hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500">
                 {/* Ambient Animation: Flowing Orb */}
                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-40 group-hover:opacity-80 transition-opacity duration-1000">
@@ -135,7 +135,7 @@ export function ICFDomainMap() {
             </div>
 
             {/* SOCIAL (Domain 3) - Col Span 1 */}
-            <div className="shrink-0 w-full lg:w-auto snap-center lg:col-span-1 min-h-[360px]">
+            <div className="shrink-0 w-full lg:w-auto snap-center lg:col-span-1 lg:min-h-[360px]">
               <div className="group h-full relative bg-white border border-orange-900/10 rounded-[2.5rem] p-8 md:p-10 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col justify-end hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500">
                 {/* Ambient Animation: Intersecting Rings */}
                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30 group-hover:opacity-100 transition-opacity duration-1000">
@@ -160,7 +160,7 @@ export function ICFDomainMap() {
             </div>
 
             {/* CONTEXTUAL FACTORS (Domain 4) - Col Span 2, Containing 2 metrics */}
-            <div className="shrink-0 w-full lg:w-auto snap-center lg:col-span-2 min-h-[360px] flex flex-col">
+            <div className="shrink-0 w-full lg:w-auto snap-center lg:col-span-2 lg:min-h-[360px] flex flex-col">
               <div className="h-full bg-[#F7F2ED] border border-orange-900/5 rounded-[2.5rem] p-3 md:p-4 overflow-hidden shadow-[inset_0_4px_20px_rgba(0,0,0,0.02)] flex flex-col group/container">
                 <div className="flex items-center gap-2 px-6 pt-5 pb-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
@@ -203,17 +203,7 @@ export function ICFDomainMap() {
             </div>
           </div>
 
-          <div className="lg:hidden">
-            <MobileCarouselControls
-              currentIndex={activeIndex}
-              count={4}
-              onPrevious={() => scrollToIndex(activeIndex - 1)}
-              onNext={() => scrollToIndex(activeIndex + 1)}
-              onSelect={scrollToIndex}
-              tone="light"
-              layout="inline"
-            />
-          </div>
+
         </div>
       </div>
     </section>

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import MobileCarouselControls from "./MobileCarouselControls";
 
 declare global {
   interface Window {
@@ -183,10 +182,13 @@ export default function Simulator() {
     };
   }, []);
 
-  const getStageViewClasses = (index: number) =>
-    activeSimulator === index
-      ? "opacity-100 translate-y-0 scale-100 z-20 pointer-events-none"
-      : "opacity-0 translate-y-16 scale-95 z-0 pointer-events-none";
+  const getStageViewClasses = (index: number) => {
+    const mobileClasses = "relative w-full h-[400px] sm:h-[395px] bg-[#080808] rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 overflow-hidden md:h-auto md:bg-transparent md:rounded-none md:shadow-none md:ring-0 md:overflow-visible";
+    const desktopClasses = activeSimulator === index
+      ? "opacity-100 translate-y-0 scale-100 z-20 pointer-events-none md:absolute md:inset-0"
+      : "opacity-100 translate-y-0 scale-100 z-20 pointer-events-none md:opacity-0 md:translate-y-16 md:scale-95 md:z-0 md:absolute md:inset-0";
+    return `${mobileClasses} ${desktopClasses}`;
+  };
 
   const showPreviousSimulator = () => {
     setActiveSimulator((current) => (current === 1 ? 3 : current - 1));
@@ -443,20 +445,21 @@ export default function Simulator() {
                 {/*  Stage Viewport: Strictly constrained height  */}
                 <div
                   id="simulator-stage"
-                  className="relative w-full h-[400px] sm:h-[395px] md:h-[440px] lg:h-[420px] bg-[#080808] rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 overflow-hidden cursor-default md:cursor-crosshair"
+                  className="relative w-full flex flex-col gap-6 md:block md:h-[440px] lg:h-[420px] bg-transparent md:bg-[#080808] md:rounded-[2.5rem] shadow-none md:shadow-2xl ring-0 md:ring-1 md:ring-white/10 overflow-visible md:overflow-hidden cursor-default md:cursor-crosshair"
                 >
                   {/*  Standard Subtle Grid  */}
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+                  <div className="hidden md:block absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
                   {/*  Mouse Tracking Holographic Grid Glow  */}
-                  <div className="stage-grid-glow absolute inset-0 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+                  <div className="hidden md:block stage-grid-glow absolute inset-0 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
 
                   {/*  STAGE VIEW 1: CAFE  */}
                   <div
                     id="sim-view-1"
-                    className={`sim-stage-view absolute inset-0 flex flex-col justify-between gap-6 p-5 sm:p-6 md:p-10 transition-all duration-[800ms] ${getStageViewClasses(
+                    className={`sim-stage-view flex flex-col justify-between gap-6 p-5 sm:p-6 md:p-10 transition-all duration-[800ms] ${getStageViewClasses(
                       1
                     )}`}
                   >
+                    <div className="md:hidden absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
                     <div className="mobile-soft-glow absolute -top-40 -right-40 w-[600px] h-[600px] bg-brand/10 blur-[120px] rounded-full pointer-events-none"></div>
 
                     <div className="sim-stage-copy relative z-10 max-w-full md:max-w-[50%] animate-glitch pointer-events-auto">
@@ -523,10 +526,11 @@ export default function Simulator() {
                   {/*  STAGE VIEW 2  */}
                   <div
                     id="sim-view-2"
-                    className={`sim-stage-view absolute inset-0 flex flex-col justify-between gap-6 p-5 sm:p-6 md:p-10 transition-all duration-[800ms] ${getStageViewClasses(
+                    className={`sim-stage-view flex flex-col justify-between gap-6 p-5 sm:p-6 md:p-10 transition-all duration-[800ms] ${getStageViewClasses(
                       2
                     )}`}
                   >
+                    <div className="md:hidden absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
                     <div className="mobile-soft-glow absolute -top-40 -right-40 w-[600px] h-[600px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none"></div>
                     <div className="sim-stage-copy relative z-10 max-w-full md:max-w-[50%] pointer-events-auto">
                       <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-200 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
@@ -591,10 +595,11 @@ export default function Simulator() {
                   {/*  STAGE VIEW 3  */}
                   <div
                     id="sim-view-3"
-                    className={`sim-stage-view absolute inset-0 flex flex-col justify-between gap-6 p-5 sm:p-6 md:p-10 transition-all duration-[800ms] ${getStageViewClasses(
+                    className={`sim-stage-view flex flex-col justify-between gap-6 p-5 sm:p-6 md:p-10 transition-all duration-[800ms] ${getStageViewClasses(
                       3
                     )}`}
                   >
+                    <div className="md:hidden absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
                     <div className="mobile-soft-glow absolute -top-40 -right-40 w-[600px] h-[600px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"></div>
                     <div className="sim-stage-copy relative z-10 max-w-full md:max-w-[50%] pointer-events-auto">
                       <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-200 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
@@ -656,18 +661,7 @@ export default function Simulator() {
                   </div>
                 </div>
 
-                <div className="md:hidden">
-                  <MobileCarouselControls
-                    currentIndex={activeSimulator - 1}
-                    count={3}
-                    onPrevious={showPreviousSimulator}
-                    onNext={showNextSimulator}
-                    onSelect={(index) => setActiveSimulator(index + 1)}
-                    getItemLabel={(index) =>
-                      ["Cafe Order", "Phone Call", "Pro Interview"][index]
-                    }
-                  />
-                </div>
+
               </div>
             </div>
           </div>
