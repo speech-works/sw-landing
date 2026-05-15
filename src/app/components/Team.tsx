@@ -201,7 +201,7 @@ const teamMembers: TeamMember[] = [
     animatedImage: "/assets/mayank_avatar_animated.gif",
     audio: "/assets/mayank_avatar_audio.wav",
     story: [
-      "I don't stutter myself. But I’ve seen people I really care about stay quiet just to avoid judgment. It's not that they didn't have anything to say—it’s just that the cost of speaking up felt too high.",
+      "I don't stutter myself. But I’ve seen people I really care about stay quiet just to avoid judgment. It's not that they didn't have anything to say, it’s just that the cost of speaking up felt too high.",
       "As an engineer, I know how to build the tech behind this. But I can't build the actual experience alone. If this space is going to genuinely work for the community, it has to be guided by the community.",
     ],
     highlights: ["Product", "AI Practice"],
@@ -389,13 +389,13 @@ export default function Team({
             </div>
 
             <div className="relative z-10 grid gap-4 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:items-center xl:gap-14">
-              <div className="relative min-h-[8.5rem] sm:min-h-[10rem] lg:min-h-[38rem]">
+              <div className="relative lg:min-h-[38rem]">
                 <div className="absolute inset-0 hidden lg:block">
                   <div className="absolute left-[6%] top-[16%] h-44 w-44 rounded-full border border-white/6" />
                   <div className="absolute right-[10%] bottom-[18%] h-52 w-52 rounded-full border border-brand/10" />
                 </div>
 
-                <div className="relative mb-6 min-w-0 lg:hidden">
+                <div className="relative min-w-0 lg:hidden">
                   <div className="pointer-events-none absolute -left-4 top-0 h-40 w-40 rounded-full bg-brand/10 blur-2xl" />
 
                   <div className="relative flex w-full min-w-0 items-center gap-2.5 overflow-x-auto px-1 pb-4 pt-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden after:shrink-0 after:content-[''] after:w-2">
@@ -413,14 +413,14 @@ export default function Team({
                           onClick={() => handleMemberSelect(index)}
                           aria-pressed={isActive}
                           className={`group relative flex shrink-0 items-center rounded-[2.5rem] p-1.5 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
-                              ? "bg-white/10 pr-5 shadow-[0_8px_32px_-12px_rgba(255,255,255,0.12)] ring-1 ring-white/10"
-                              : "bg-white/[0.04] hover:bg-white/10 ring-1 ring-transparent hover:ring-white/5"
+                            ? "bg-white/10 pr-5 shadow-[0_8px_32px_-12px_rgba(255,255,255,0.12)] ring-1 ring-white/10"
+                            : "bg-white/[0.04] hover:bg-white/10 ring-1 ring-transparent hover:ring-white/5"
                             }`}
                         >
                           <div
                             className={`relative shrink-0 overflow-hidden rounded-full transition-all duration-500 ${isActive
-                                ? "h-12 w-12 scale-100 shadow-lg"
-                                : "h-10 w-10 scale-95 opacity-60 group-hover:scale-100 group-hover:opacity-100"
+                              ? "h-12 w-12 scale-100 shadow-lg"
+                              : "h-10 w-10 scale-95 opacity-60 group-hover:scale-100 group-hover:opacity-100"
                               }`}
                           >
                             <span
@@ -636,11 +636,13 @@ export default function Team({
                         type="button"
                         onClick={toggleAudio}
                         className={`group inline-flex items-center gap-3 rounded-full border px-4 py-2 transition-all duration-300 ${isPlaying
-                            ? "border-brand/40 bg-brand/10 shadow-[0_0_20px_rgba(242,128,68,0.15)]"
-                            : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
+                          ? "border-brand/40 bg-brand/10 shadow-[0_0_20px_rgba(242,128,68,0.25)]"
+                          : "border-brand/30 bg-brand/5 shadow-[0_0_15px_rgba(242,128,68,0.15)] animate-[pulse_3s_ease-in-out_infinite] hover:border-brand/50 hover:bg-brand/15 hover:shadow-[0_0_25px_rgba(242,128,68,0.3)] hover:animate-none"
                           }`}
                       >
-                        <span className={`flex h-6 w-6 items-center justify-center rounded-full transition-colors duration-300 ${isPlaying ? "bg-brand text-white" : "bg-white/10 text-white group-hover:bg-brand group-hover:text-white"
+                        <span className={`flex h-6 w-6 items-center justify-center rounded-full transition-all duration-300 ${isPlaying
+                          ? "bg-brand text-white shadow-[0_0_10px_rgba(242,128,68,0.8)]"
+                          : "bg-brand text-white shadow-[0_0_12px_rgba(242,128,68,0.6)] group-hover:scale-110 group-hover:shadow-[0_0_16px_rgba(242,128,68,0.9)]"
                           }`}>
                           {isPlaying ? (
                             <svg className="h-2.5 w-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
