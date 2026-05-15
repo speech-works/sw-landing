@@ -89,6 +89,11 @@ const TEAM_STAGE_KEYFRAMES = `
     }
   }
 
+  @keyframes waveform {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+  }
+
   .team-selector-float {
     will-change: transform;
     animation-duration: 5s;
@@ -158,9 +163,24 @@ type TeamMember = {
   highlights: string[];
   image: string;
   animatedImage: string;
+  audio?: string;
 };
 
 const teamMembers: TeamMember[] = [
+  {
+    name: "Sagar",
+    role: "Engineering",
+    badge: "Engineering",
+    image: "/assets/Sagar_avatar.jpeg",
+    animatedImage: "/assets/Sagar_avatar_animated.gif",
+    audio: "/assets/Sagar_avatar_audio.wav",
+    story: [
+      "I've been a stutterer since I was 5 years old. I've always been someone who looks at a broken thing and thinks, “okay, how do we fix this?”",
+      "For years I applied that to everything except my own voice. It was easier to adapt than to address it.",
+      "Speechworks is the first time I've felt like both parts of me - the person who stutters, and the person who solves, belong in the same room.",
+    ],
+    highlights: ["Machine Learning", "Problem Solving", "Engineering"],
+  },
   {
     name: "Sanae",
     role: "Communications & Development",
@@ -179,9 +199,10 @@ const teamMembers: TeamMember[] = [
     badge: "Founder",
     image: "/assets/mayank_avatar.png",
     animatedImage: "/assets/mayank_avatar_animated.gif",
+    audio: "/assets/mayank_avatar_audio.wav",
     story: [
-      "I don't stutter. But I've watched people I respect choose silence over judgment. Not because they had nothing to say. Because the cost of saying it was too high.",
-      "I can build the engineering. But I can't build the product alone. A space built for this community has to be steered by this community.",
+      "I don't stutter myself. But I’ve seen people I really care about stay quiet just to avoid judgment. It's not that they didn't have anything to say—it’s just that the cost of speaking up felt too high.",
+      "As an engineer, I know how to build the tech behind this. But I can't build the actual experience alone. If this space is going to genuinely work for the community, it has to be guided by the community.",
     ],
     highlights: ["Product", "AI Practice"],
   },
@@ -189,7 +210,7 @@ const teamMembers: TeamMember[] = [
 
 const teamAnimationStateVar = "--team-anim-state" as const;
 const defaultTeamMemberIndex = Math.max(
-  teamMembers.findIndex((member) => member.name === "Sanae"),
+  teamMembers.findIndex((member) => member.name === "Sagar"),
   0
 );
 
@@ -207,7 +228,33 @@ export default function Team({
   >(null);
   const [hasStoppedIdleMotion, setHasStoppedIdleMotion] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsPlaying(false);
+    }
+  }, [activeMemberIndex]);
+
+  const toggleAudio = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -271,6 +318,11 @@ export default function Team({
   return (
     <>
       <style>{TEAM_STAGE_KEYFRAMES}</style>
+      <audio
+        ref={audioRef}
+        src={activeMember.audio ? withBasePath(activeMember.audio) : undefined}
+        onEnded={handleAudioEnded}
+      />
       <section
         id={sectionId}
         className="mobile-content-auto mobile-paint-stable relative z-10 overflow-hidden bg-[linear-gradient(180deg,#fffdf9_0%,#fff7f0_45%,#fffdf9_100%)] py-8 md:py-28"
@@ -337,115 +389,71 @@ export default function Team({
             </div>
 
             <div className="relative z-10 grid gap-4 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:items-center xl:gap-14">
-              <div className="relative min-h-[8.5rem] sm:min-h-[10rem] lg:min-h-[32rem]">
+              <div className="relative min-h-[8.5rem] sm:min-h-[10rem] lg:min-h-[38rem]">
                 <div className="absolute inset-0 hidden lg:block">
                   <div className="absolute left-[6%] top-[16%] h-44 w-44 rounded-full border border-white/6" />
                   <div className="absolute right-[10%] bottom-[18%] h-52 w-52 rounded-full border border-brand/10" />
                 </div>
 
-                <div className="relative h-[7.75rem] lg:hidden">
-                  <div className="pointer-events-none absolute left-3 top-8 h-16 w-16 rounded-full border border-brand/10" />
-                  <div className="pointer-events-none absolute left-12 top-3 h-24 w-24 rounded-full border border-white/8" />
+                <div className="relative mb-6 min-w-0 lg:hidden">
+                  <div className="pointer-events-none absolute -left-4 top-0 h-40 w-40 rounded-full bg-brand/10 blur-2xl" />
 
-                  {teamMembers.map((member, index) => {
-                    const isActive = index === activeMemberIndex;
-                    const portraitImageStyle =
-                      member.name === "Mayank"
-                        ? { objectPosition: "center 22%" }
-                        : undefined;
-                    const selectorAnimationState =
-                      !hasStoppedIdleMotion && !prefersReducedMotion
-                        ? "running"
-                        : "paused";
-                    const selectorMotionStyle = {
-                      [teamAnimationStateVar]: selectorAnimationState,
-                    } as React.CSSProperties;
-                    const positionClass = isActive
-                      ? "translate-x-[3.85rem] translate-y-0 z-20"
-                      : "translate-x-0 translate-y-7 z-10";
+                  <div className="relative flex w-full min-w-0 items-center gap-2.5 overflow-x-auto px-1 pb-4 pt-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden after:shrink-0 after:content-[''] after:w-2">
+                    {teamMembers.map((member, index) => {
+                      const isActive = index === activeMemberIndex;
+                      const portraitImageStyle =
+                        member.name === "Mayank"
+                          ? { objectPosition: "center 22%" }
+                          : undefined;
 
-                    return (
-                      <button
-                        key={member.name}
-                        type="button"
-                        onClick={() => handleMemberSelect(index)}
-                        aria-pressed={isActive}
-                        style={selectorMotionStyle}
-                        className={`group absolute left-0 top-0 text-left transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform ${positionClass}`}
-                      >
-                        <div
-                          className={`relative transform-gpu transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
-                            ? "scale-100 opacity-100"
-                            : "scale-[0.96] opacity-82"
+                      return (
+                        <button
+                          key={member.name}
+                          type="button"
+                          onClick={() => handleMemberSelect(index)}
+                          aria-pressed={isActive}
+                          className={`group relative flex shrink-0 items-center rounded-[2.5rem] p-1.5 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
+                              ? "bg-white/10 pr-5 shadow-[0_8px_32px_-12px_rgba(255,255,255,0.12)] ring-1 ring-white/10"
+                              : "bg-white/[0.04] hover:bg-white/10 ring-1 ring-transparent hover:ring-white/5"
                             }`}
                         >
                           <div
-                            className={`mobile-soft-glow pointer-events-none absolute rounded-full blur-2xl transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
-                              ? "-inset-x-3 top-3 h-16 bg-brand/26"
-                              : "-inset-1 top-2 h-14 bg-white/8"
+                            className={`relative shrink-0 overflow-hidden rounded-full transition-all duration-500 ${isActive
+                                ? "h-12 w-12 scale-100 shadow-lg"
+                                : "h-10 w-10 scale-95 opacity-60 group-hover:scale-100 group-hover:opacity-100"
                               }`}
-                          />
-
-                          <div className="relative flex items-center">
-                            <div className="relative shrink-0">
-                              <span
-                                className={`team-selector-pulse pointer-events-none absolute -inset-2 rounded-[1.5rem] border ${isActive
-                                  ? "border-brand/25"
-                                  : "border-white/10"
-                                  }`}
-                              />
-                              <div
-                                className="relative h-[4.35rem] w-[4.35rem] overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 shadow-[0_20px_40px_-24px_rgba(0,0,0,0.85)]"
-                              >
-                                <Image
-                                  src={withBasePath(member.image)}
-                                  alt={`${member.name} portrait`}
-                                  fill
-                                  className="object-cover"
-                                  style={portraitImageStyle}
-                                  sizes="64px"
-                                />
-                              </div>
-                              <span
-                                className={`absolute -right-1 top-2 h-2.5 w-2.5 rounded-full ${isActive
-                                  ? "bg-brand shadow-[0_0_18px_rgba(242,128,68,0.85)]"
-                                  : "bg-white/20"
-                                  }`}
-                              />
-                            </div>
-
-                            <div
-                              className={`pointer-events-none absolute left-[4.95rem] top-1/2 w-[10.75rem] min-w-0 -translate-y-1/2 transform-gpu transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
-                                ? "translate-x-0 opacity-100"
-                                : "-translate-x-2 opacity-0"
+                          >
+                            <span
+                              className={`absolute inset-0 z-10 rounded-full border transition-colors duration-500 ${isActive ? "border-brand/40" : "border-white/10"
                                 }`}
-                            >
-                              <div
-                                className={`mobile-section-glass relative overflow-hidden rounded-[1.7rem] border backdrop-blur-xl transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive
-                                  ? "border-white/10 bg-white/10 px-4 py-3 text-white shadow-[0_24px_50px_-28px_rgba(0,0,0,0.9)]"
-                                  : "border-transparent bg-transparent px-0 py-0 text-white/82 shadow-none"
-                                  }`}
-                              >
-                                <span className="team-selector-sheen pointer-events-none absolute inset-y-0 left-[-20%] w-20 -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent)]" />
+                            />
+                            <Image
+                              src={withBasePath(isActive ? member.animatedImage : member.image)}
+                              alt={`${member.name} portrait`}
+                              fill
+                              className="object-cover"
+                              style={portraitImageStyle}
+                              sizes="48px"
+                            />
+                          </div>
 
-                                <div className="relative z-10 min-w-0">
-                                  <p className="text-[9px] font-black uppercase tracking-[0.18em] text-brand/90">
-                                    {member.badge}
-                                  </p>
-                                  <h3 className="mt-1 truncate text-[1.45rem] font-black tracking-tight text-white">
-                                    {member.name}
-                                  </h3>
-                                  <p className="mt-1 text-[9px] font-black uppercase tracking-[0.18em] text-white/48">
-                                    {member.role}
-                                  </p>
-                                </div>
-                              </div>
+                          <div
+                            className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive ? "ml-2.5 max-w-[10rem] opacity-100" : "max-w-0 opacity-0"
+                              }`}
+                          >
+                            <div className="flex flex-col items-start justify-center whitespace-nowrap">
+                              <span className="text-[8px] font-black uppercase tracking-[0.2em] text-brand">
+                                {member.badge}
+                              </span>
+                              <span className="text-base font-black tracking-tight text-white">
+                                {member.name}
+                              </span>
                             </div>
                           </div>
-                        </div>
-                      </button>
-                    );
-                  })}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <div className="hidden h-full lg:block">
@@ -459,12 +467,16 @@ export default function Team({
                         : undefined;
                     const positionClass =
                       index === 0
-                        ? "left-[0%] top-[7%] w-[23rem]"
-                        : "right-[1%] bottom-[10%] w-[22rem]";
+                        ? "left-[0%] top-[2%] w-[21rem]"
+                        : index === 1
+                          ? "right-[0%] top-[38%] w-[21rem]"
+                          : "left-[5%] bottom-[2%] w-[21rem]";
                     const floatClass =
                       index === 0
                         ? "team-selector-float team-selector-float-a"
-                        : "team-selector-float team-selector-float-b";
+                        : index === 1
+                          ? "team-selector-float team-selector-float-b"
+                          : "team-selector-float team-selector-float-a";
                     const selectorAnimationState =
                       !hasStoppedIdleMotion && !prefersReducedMotion
                         ? "running"
@@ -474,7 +486,11 @@ export default function Team({
                       [teamAnimationStateVar]: selectorAnimationState,
                     } as React.CSSProperties;
                     const tiltClass =
-                      index === 0 ? "-rotate-[5deg]" : "rotate-[5deg]";
+                      index === 0
+                        ? "-rotate-[5deg]"
+                        : index === 1
+                          ? "rotate-[3deg]"
+                          : "rotate-[6deg]";
 
                     return (
                       <button
@@ -508,7 +524,9 @@ export default function Team({
                           <span
                             className={`team-selector-orbit pointer-events-none absolute ${index === 0
                               ? "-left-6 -top-8 h-56 w-56"
-                              : "-right-8 -bottom-10 h-60 w-60"
+                              : index === 1
+                                ? "-right-8 -bottom-10 h-60 w-60"
+                                : "-left-4 -bottom-6 h-52 w-52"
                               } rounded-full border border-dashed transition-colors duration-500 ${isActive ? "border-brand/18" : "border-white/8"
                               }`}
                           />
@@ -612,7 +630,40 @@ export default function Team({
                     ))}
                   </div>
 
-                  <div className="mt-8 max-w-2xl space-y-5 text-[16px] leading-8 text-white/80">
+                  {activeMember.audio && (
+                    <div className="mt-6">
+                      <button
+                        type="button"
+                        onClick={toggleAudio}
+                        className={`group inline-flex items-center gap-3 rounded-full border px-4 py-2 transition-all duration-300 ${isPlaying
+                            ? "border-brand/40 bg-brand/10 shadow-[0_0_20px_rgba(242,128,68,0.15)]"
+                            : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
+                          }`}
+                      >
+                        <span className={`flex h-6 w-6 items-center justify-center rounded-full transition-colors duration-300 ${isPlaying ? "bg-brand text-white" : "bg-white/10 text-white group-hover:bg-brand group-hover:text-white"
+                          }`}>
+                          {isPlaying ? (
+                            <svg className="h-2.5 w-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
+                          ) : (
+                            <svg className="h-2.5 w-2.5 translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                          )}
+                        </span>
+                        <span className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-300 ${isPlaying ? "text-brand" : "text-white/70 group-hover:text-white"
+                          }`}>
+                          {isPlaying ? "Playing Story" : "Listen To Story"}
+                        </span>
+                        {isPlaying && (
+                          <div className="ml-1 flex h-3 items-end gap-0.5">
+                            <span className="w-0.5 animate-[waveform_1s_ease-in-out_infinite] rounded-full bg-brand" style={{ height: '40%' }} />
+                            <span className="w-0.5 animate-[waveform_1s_ease-in-out_infinite_0.2s] rounded-full bg-brand" style={{ height: '100%' }} />
+                            <span className="w-0.5 animate-[waveform_1s_ease-in-out_infinite_0.4s] rounded-full bg-brand" style={{ height: '60%' }} />
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                  )}
+
+                  <div className="mt-6 sm:mt-8 max-w-2xl space-y-5 text-[16px] leading-8 text-white/80">
                     {activeMember.story.map((paragraph) => (
                       <p key={paragraph}>{paragraph}</p>
                     ))}
