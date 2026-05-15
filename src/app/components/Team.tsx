@@ -188,8 +188,8 @@ const teamMembers: TeamMember[] = [
     image: "/assets/Sanae_avatar.jpeg",
     animatedImage: "/assets/Sanae_avatar_animated.gif",
     story: [
-      "I grew up stuttering. For years I thought I had to figure it out alone.",
-      "Then I finally found the community. I don't feel isolated as much anymore but the platform I need doesn't exist yet. That's why I'm here, building it.",
+      "I grew up stuttering, and for a long time, I thought I had to navigate it completely on my own.",
+      "Finding others who understood changed everything, it took away so much of that isolation. But even with a great community, I realized the platform we actually need to support each other simply doesn't exist yet. That's exactly why I'm here helping to build Speechworks.",
     ],
     highlights: ["Development", "Community Care"],
   },
