@@ -72,6 +72,40 @@ export default function PrivacyPolicyPage() {
           </p>
         </div>
 
+        {/* Privacy at a glance */}
+        <div className="mt-10 rounded-2xl border border-[#FFD9C2] bg-white/70 p-6 md:p-8">
+          <h2 className="text-[20px] md:text-[24px] font-semibold tracking-tight text-[#401B00]">
+            Your privacy at a glance
+          </h2>
+          <div className="mt-4 space-y-4 text-[15px] md:text-[16px] leading-relaxed text-gray-600">
+            <p>
+              <strong className="text-gray-700">
+                Speechworks is a wellness and self-help tool
+              </strong>{" "}
+              for people who stutter. It is not a medical provider, a diagnosis
+              service, or an emergency service. If you are in crisis, please
+              contact your local emergency services or a qualified professional.
+            </p>
+            <p>
+              <strong className="text-gray-700">What Speechworks can&rsquo;t see.</strong>{" "}
+              The app runs inside your phone&rsquo;s secure sandbox. We{" "}
+              <strong className="text-gray-700">cannot</strong> access other apps
+              or their data, your web browsing history, your messages or call
+              logs, your contacts, your photos and files (beyond an image you
+              deliberately choose to upload), or your location. We only receive
+              what you create inside Speechworks — your practice recordings,
+              exercise results, and the profile details you choose to share.
+            </p>
+            <p>
+              <strong className="text-gray-700">What you control.</strong> You
+              decide when to record, what (if anything) to share with a buddy, and
+              you can delete your recordings and your entire account at any time.
+              We never sell your personal data, and we never use your voice or
+              health-related information for advertising.
+            </p>
+          </div>
+        </div>
+
         <Section title="1. Information We Collect">
           <p>
             <strong className="text-gray-700">Account &amp; profile.</strong> When
@@ -238,7 +272,38 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <Section title="8. Account & Data Deletion">
+        <Section title="8. Your Rights in the EEA & UK (GDPR)">
+          <p>
+            If you are in the European Economic Area or the United Kingdom, you
+            have rights under the GDPR and UK GDPR, including the rights to access,
+            correct, delete, restrict, or object to our processing of your personal
+            data, and the right to data portability.
+          </p>
+          <p>
+            Some of the information we handle — such as voice recordings and
+            well-being data — is &ldquo;special category&rdquo; data. We process it
+            to provide the features you choose to use and, where the law requires,
+            on the basis of your consent, which you can withdraw at any time. For
+            international transfers (for example, to providers based outside your
+            region), we take steps designed to keep your data protected.
+          </p>
+          <p>
+            Speechworks is <strong className="text-gray-700">designed to align
+            with the principles of the GDPR</strong> — data minimization, purpose
+            limitation, security, and transparency. To exercise any of your rights,
+            contact us at{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="text-[#D9692E] underline-offset-2 hover:underline"
+            >
+              {CONTACT_EMAIL}
+            </a>
+            . You also have the right to lodge a complaint with your local data
+            protection authority.
+          </p>
+        </Section>
+
+        <Section title="9. Account & Data Deletion">
           <p>
             You can request deletion of your account at any time from within the
             app or by emailing us at{" "}
@@ -256,7 +321,7 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <Section title="9. Data Security">
+        <Section title="10. Data Security">
           <p>
             We use reasonable technical and organizational safeguards to protect
             your information. Data is transmitted over encrypted connections
@@ -266,7 +331,7 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <Section title="10. International Data Transfers">
+        <Section title="11. International Data Transfers">
           <p>
             We and our service providers may process and store your information in
             countries other than your own, including the United States, the
@@ -276,7 +341,7 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <Section title="11. Children's Privacy">
+        <Section title="12. Children's Privacy">
           <p>
             The Services are intended for users aged 13 and older (or the minimum
             age required in your jurisdiction). We do not knowingly collect
@@ -286,7 +351,7 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <Section title="12. Changes to This Policy">
+        <Section title="13. Changes to This Policy">
           <p>
             We may update this Privacy Policy from time to time. When we do, we
             will revise the &ldquo;Last updated&rdquo; date above and, where
@@ -296,7 +361,7 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <Section title="13. Contact Us">
+        <Section title="14. Contact Us">
           <p>
             If you have questions or requests regarding this Privacy Policy or your
             data, contact us at{" "}
