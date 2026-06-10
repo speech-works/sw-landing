@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { withBasePath } from "@/app/lib/withBasePath";
 import React, { useState } from "react";
 import ContactModal from "./ContactModal";
@@ -9,6 +11,10 @@ import { useIsMobileViewport } from "./useIsMobileViewport";
 export default function Footer() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const isMobileViewport = useIsMobileViewport();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  // On non-home pages, in-page anchors must point back to the home route.
+  const homeHash = (hash: string) => (isHome ? hash : `/${hash}`);
 
   const handleCommunityClick = () => {
     window.dispatchEvent(
@@ -69,7 +75,7 @@ export default function Footer() {
               <ul className="space-y-3 md:space-y-4 text-sm font-medium text-brand-100">
                 <li>
                   <a
-                    href="#platform"
+                    href={homeHash("#platform")}
                     className="hover:text-white transition-colors"
                   >
                     Features
@@ -77,7 +83,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <a
-                    href="#roadmap"
+                    href={homeHash("#roadmap")}
                     className="hover:text-white transition-colors"
                   >
                     Roadmap
@@ -85,8 +91,8 @@ export default function Footer() {
                 </li>
                 <li>
                   <a
-                    href="#roadmap"
-                    onClick={handleCommunityClick}
+                    href={homeHash("#roadmap")}
+                    onClick={isHome ? handleCommunityClick : undefined}
                     className="hover:text-white transition-colors"
                   >
                     Community
@@ -101,7 +107,10 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3 md:space-y-4 text-sm font-medium text-brand-100">
                 <li>
-                  <a href="#team" className="hover:text-white transition-colors">
+                  <a
+                    href={homeHash("#team")}
+                    className="hover:text-white transition-colors"
+                  >
                     Team
                   </a>
                 </li>
@@ -112,6 +121,14 @@ export default function Footer() {
                   >
                     Contact
                   </button>
+                </li>
+                <li>
+                  <Link
+                    href="/privacy"
+                    className="hover:text-white transition-colors"
+                  >
+                    Privacy Policy
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -179,7 +196,14 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs font-bold tracking-widest uppercase text-brand-100 mt-4 gap-4 md:gap-0">
             <p>© 2026 SPEECHWORKS.</p>
-            <div className="flex gap-6 md:gap-8"></div>
+            <div className="flex gap-6 md:gap-8">
+              <Link
+                href="/privacy"
+                className="hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </Link>
+            </div>
           </div>
         </div>
       </footer>

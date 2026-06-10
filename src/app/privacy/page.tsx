@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { withBasePath } from "@/app/lib/withBasePath";
+import Navbar from "@/app/components/Navbar";
+import Footer from "@/app/components/Footer";
 
 // NOTE: Update this whenever the policy text changes.
 const LAST_UPDATED = "June 11, 2026";
@@ -45,32 +45,9 @@ function Section({
 export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-dvh bg-[#FFF5F0]">
-      {/* Header */}
-      <header className="border-b border-black/5 bg-white/70 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
-          <Link
-            href="/"
-            className="flex items-center gap-2 transition-opacity hover:opacity-80"
-          >
-            <Image
-              src={withBasePath("/assets/logo.png")}
-              alt="Speechworks logo"
-              width={32}
-              height={32}
-              className="h-8 w-8 rounded-md"
-            />
-            <span className="text-lg font-bold text-[#401B00]">Speechworks</span>
-          </Link>
-          <Link
-            href="/"
-            className="text-sm font-medium text-[#D9692E] hover:text-[#F28044]"
-          >
-            ← Back to home
-          </Link>
-        </div>
-      </header>
+      <Navbar />
 
-      <article className="mx-auto max-w-3xl px-6 py-12 md:py-16">
+      <article className="mx-auto max-w-3xl px-6 pt-28 pb-12 md:pt-36 md:pb-16">
         <h1 className="text-[34px] md:text-[44px] font-bold leading-tight tracking-tight text-[#401B00]">
           Privacy Policy
         </h1>
@@ -333,16 +310,17 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <footer className="mt-16 border-t border-black/5 pt-8 text-sm text-gray-500">
-          <p>© {LAST_UPDATED.split(", ")[1]} Speechworks. All rights reserved.</p>
+        <div className="mt-12 border-t border-black/5 pt-8 text-sm text-gray-500">
           <Link
             href="/"
-            className="mt-2 inline-block font-medium text-[#D9692E] hover:text-[#F28044]"
+            className="font-medium text-[#D9692E] hover:text-[#F28044]"
           >
             ← Back to home
           </Link>
-        </footer>
+        </div>
       </article>
+
+      <Footer />
     </main>
   );
 }
