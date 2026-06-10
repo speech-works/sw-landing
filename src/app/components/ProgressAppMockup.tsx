@@ -47,7 +47,7 @@ const AmbientParticles = ({ enabled = true }: { enabled?: boolean }) => {
 };
 
 // -------------------------------------------------------
-// MAIN COMPONENT — IMMERSIVE 3D SHOWCASE
+// MAIN COMPONENT - IMMERSIVE 3D SHOWCASE
 // -------------------------------------------------------
 
 export default function ProgressAppMockup({ 

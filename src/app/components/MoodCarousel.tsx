@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 // -------------------------------------------------------
-// MOOD FACES — Ported from mobile Reanimated SVGs to Web CSS
+// MOOD FACES - Ported from mobile Reanimated SVGs to Web CSS
 // -------------------------------------------------------
 
 const AngryFace = () => (

@@ -2,7 +2,7 @@
 import React from "react";
 
 // -------------------------------------------------------
-// FACES — ported from sw-faces/ in the mobile repo
+// FACES - ported from sw-faces/ in the mobile repo
 // -------------------------------------------------------
 
 const GuidedBreathingFace = ({
@@ -38,7 +38,7 @@ const GuidedBreathingFace = ({
         <path stroke="#000" strokeWidth="2.5" strokeLinecap="round" d="M14 24 Q18 23, 22 24" fill="none" />
         <path stroke="#000" strokeWidth="2.5" strokeLinecap="round" d="M26 24 Q30 23, 34 24" fill="none" />
       </g>
-      {/* Breath streams — animated fade in/out */}
+      {/* Breath streams - animated fade in/out */}
       <g className={animateContent ? "animate-gb-breath" : ""}>
         <path d="M24 38 C24 40, 24 43, 22 45" stroke="#90A4AE" strokeWidth="2" strokeLinecap="round" fill="none" />
         <path d="M21 38 C20 40, 18 43, 16 44" stroke="#90A4AE" strokeWidth="2" strokeLinecap="round" fill="none" />

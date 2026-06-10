@@ -255,10 +255,10 @@ export default function ClinicianModal({
           email: form.email.trim(),
           setting: form.setting,
           software: form.software.trim() || "N/A",
-          carryover: `${Number.isFinite(form.carryoverMin) ? form.carryoverMin : 20}% – ${Number.isFinite(form.carryoverMax) ? form.carryoverMax : 60}%`,
+          carryover: `${Number.isFinite(form.carryoverMin) ? form.carryoverMin : 20}% - ${Number.isFinite(form.carryoverMax) ? form.carryoverMax : 60}%`,
         }),
       });
-      // no-cors responses are opaque — any non-throw = success
+      // no-cors responses are opaque - any non-throw = success
       setStatus("success");
     } catch {
       setStatus("idle");
@@ -567,7 +567,7 @@ export default function ClinicianModal({
                   <span
                     className="shrink-0 rounded-xl border border-white/10 bg-white/5 px-3 py-1 text-[13px] font-black text-[#ff955e] tabular-nums leading-tight"
                   >
-                    {carryoverMin}%&nbsp;–&nbsp;{carryoverMax}%
+                    {carryoverMin}%&nbsp;-&nbsp;{carryoverMax}%
                   </span>
                 </div>
 

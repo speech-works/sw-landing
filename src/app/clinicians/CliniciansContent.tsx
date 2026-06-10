@@ -156,7 +156,7 @@ export default function CliniciansContent() {
 
               <div className="relative">
                 <div className="text-[0.95rem] md:text-[1.1rem] leading-relaxed relative z-10 w-full text-white/70 font-medium transition-colors duration-500">
-                  We&apos;re looking for the clinician who has been quietly frustrated by the &quot;carryover gap&quot; for years. Who has a client with near-perfect clinic fluency and a stutter that returns the moment they&apos;re in a job interview or a crowded room — with no objective way to track or predict it. <span className={`font-black transition-all duration-500 ${hoveredSide === 'right' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.2)]' : 'text-white'}`}>Five founding advisory members.</span> We have the algorithm. We need the clinical judgment.
+                  We&apos;re looking for the clinician who has been quietly frustrated by the &quot;carryover gap&quot; for years. Who has a client with near-perfect clinic fluency and a stutter that returns the moment they&apos;re in a job interview or a crowded room, with no objective way to track or predict it. <span className={`font-black transition-all duration-500 ${hoveredSide === 'right' ? 'text-brand drop-shadow-[0_0_8px_rgba(234,88,12,0.2)]' : 'text-white'}`}>Five founding advisory members.</span> We have the algorithm. We need the clinical judgment.
                 </div>
               </div>
             </div>

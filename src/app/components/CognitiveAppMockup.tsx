@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from "react";
 
 // -------------------------------------------------------
-// FACES — ported exactly from sw-faces/ in the mobile repo
+// FACES - ported exactly from sw-faces/ in the mobile repo
 // -------------------------------------------------------
 
 /**
- * GuidedBreathingFace — sw-faces/GuidedBreathingFace.tsx
+ * GuidedBreathingFace - sw-faces/GuidedBreathingFace.tsx
  * Dark night-sky background, glowing moon, forest horizon, skin face with animated eyes
  */
 const GuidedBreathingFace = () => (
@@ -48,7 +48,7 @@ const GuidedBreathingFace = () => (
         <path stroke="#000" strokeWidth="2.5" strokeLinecap="round" d="M14 24 Q18 23, 22 24" fill="none" />
         <path stroke="#000" strokeWidth="2.5" strokeLinecap="round" d="M26 24 Q30 23, 34 24" fill="none" />
       </g>
-      {/* Breath streams — animated fade in/out */}
+      {/* Breath streams - animated fade in/out */}
       <g className="animate-gb-breath">
         <path d="M24 38 C24 40, 24 43, 22 45" stroke="#90A4AE" strokeWidth="2" strokeLinecap="round" fill="none" />
         <path d="M21 38 C20 40, 18 43, 16 44" stroke="#90A4AE" strokeWidth="2" strokeLinecap="round" fill="none" />
@@ -59,7 +59,7 @@ const GuidedBreathingFace = () => (
 );
 
 /**
- * MeditationFace — sw-faces/MeditationFace.tsx
+ * MeditationFace - sw-faces/MeditationFace.tsx
  * Blue circle bg, peach face, flat line eyes/mouth. Pulsing halo rings expand outward.
  * The rings scale from 0→3x and drift upward toward the forehead (translateY -30%)
  * matching the original Reanimated: scale=progress*3, translateY=-size*0.3, opacity=0.6*(1-progress)
@@ -67,7 +67,7 @@ const GuidedBreathingFace = () => (
 const MeditationFace = () => (
   // overflow-visible so expanding rings are NOT clipped by the face boundary
   <div className="w-full h-full relative" style={{ overflow: "visible" }}>
-    {/* 4 staggered pulsing rings — rendered BEHIND the face circle, allowed to overflow */}
+    {/* 4 staggered pulsing rings - rendered BEHIND the face circle, allowed to overflow */}
     {[0, 1, 2, 3].map((i) => (
       <div
         key={i}
@@ -80,7 +80,7 @@ const MeditationFace = () => (
         }}
       />
     ))}
-    {/* Face SVG — has its own overflow-hidden to clip the circle shape */}
+    {/* Face SVG - has its own overflow-hidden to clip the circle shape */}
     <div className="absolute inset-0 rounded-full overflow-hidden">
       <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
         {/* Blue circle background */}
@@ -98,7 +98,7 @@ const MeditationFace = () => (
 );
 
 /**
- * RewiringFace — sw-faces/RewiringFace.tsx
+ * RewiringFace - sw-faces/RewiringFace.tsx
  * Red circle bg, white face, dot eyes with blink, smile mouth, spinning spiral on forehead
  */
 const RewiringFace = () => (
@@ -348,7 +348,7 @@ export default function CognitiveAppMockup({
                       <div style={{ fontSize: "16px", fontWeight: 700, color: "#FFF", letterSpacing: "-0.3px", lineHeight: 1.2 }}>{card.title}</div>
                       <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.9)", fontWeight: 500, marginTop: 2 }}>{card.subtitle}</div>
                     </div>
-                    {/* Face icon — absolute bottom-right, clipped partially */}
+                    {/* Face icon - absolute bottom-right, clipped partially */}
                     <div style={{ position: "absolute", bottom: -36, right: -14, width: 72, height: 72, transform: "rotate(-10deg) scale(1.1)", opacity: 0.92, zIndex: 0 }}>
                       {card.face}
                     </div>
@@ -460,7 +460,7 @@ export default function CognitiveAppMockup({
         }
         .animate-gb-breath { animation: gb-breath 3.5s ease-in-out infinite; }
 
-        /* MeditationFace: pulsing halo rings — scale 0→3, drift upward toward forehead, fade 0.6→0 */
+        /* MeditationFace: pulsing halo rings - scale 0→3, drift upward toward forehead, fade 0.6→0 */
         /* Matches original: scale=progress*3, translateY=-size*0.3, opacity=0.6*(1-progress), duration=3500ms */
         @keyframes med-ring {
           0%   { transform: scale(0) translateY(0%);    opacity: 0.6; }

@@ -85,7 +85,7 @@ export default function PrivacyPolicyPage() {
             uses, shares, and protects your information when you use the
             Speechworks mobile application and related services (the
             &ldquo;Services&rdquo;). Speechworks is a practice and support app for
-            people who stutter — it offers guided speech exercises, progress
+            people who stutter. It offers guided speech exercises, progress
             tracking, mood check-ins, AI-assisted speaking practice, and optional
             peer (&ldquo;buddy&rdquo;) connections.
           </p>
@@ -109,7 +109,7 @@ export default function PrivacyPolicyPage() {
                 Speechworks is a practice and self-help tool
               </strong>{" "}
               for people who stutter. It is grounded in clinical research and
-              built with speech-language professionals — but it does not provide
+              built with speech-language professionals, but it does not provide
               medical advice, diagnosis, or treatment, and it is not a substitute
               for care from a qualified professional. It is also not an emergency
               service; if you are in crisis, please contact your local emergency
@@ -122,7 +122,7 @@ export default function PrivacyPolicyPage() {
               or their data, your web browsing history, your messages or call
               logs, your contacts, your photos and files (beyond an image you
               deliberately choose to upload), or your location. We only receive
-              what you create inside Speechworks — your practice recordings,
+              what you create inside Speechworks: your practice recordings,
               exercise results, and the profile details you choose to share.
             </p>
             <p>
@@ -168,7 +168,7 @@ export default function PrivacyPolicyPage() {
             </strong>{" "}
             Some &ldquo;mirror work&rdquo; and awareness exercises use your camera
             and device motion sensors to give you live feedback. This processing
-            happens on your device — <strong>no video is recorded, stored, or
+            happens on your device. <strong>No video is recorded, stored, or
             transmitted</strong>; only the resulting practice metrics (for example,
             head-movement or awareness scores) are saved.
           </p>
@@ -195,8 +195,7 @@ export default function PrivacyPolicyPage() {
             basic profile details (such as name, email, and avatar) with us.{" "}
             <strong>
               We do not create or store a password for your Speechworks account
-            </strong>{" "}
-            — credentials are handled by your sign-in provider.
+            </strong>. Your credentials are handled by your sign-in provider.
           </p>
         </Section>
 
@@ -230,18 +229,18 @@ export default function PrivacyPolicyPage() {
               <strong className="text-gray-700">
                 Authentication &amp; identity providers
               </strong>{" "}
-              — to create and secure your account.
+              to create and secure your account.
             </li>
             <li>
               <strong className="text-gray-700">
                 Cloud hosting &amp; storage providers
               </strong>{" "}
-              — to run the Services and store your data, including your voice
+              to run the Services and store your data, including your voice
               recordings.
             </li>
             <li>
               <strong className="text-gray-700">Speech &amp; AI providers</strong>{" "}
-              — to power AI-assisted speaking practice. Your voice audio and the
+              to power AI-assisted speaking practice. Your voice audio and the
               text of your practice conversations are processed by these providers
               to provide real-time speech-to-text, text-to-speech, and
               conversational responses.
@@ -250,19 +249,19 @@ export default function PrivacyPolicyPage() {
               <strong className="text-gray-700">
                 Payment &amp; subscription processors
               </strong>{" "}
-              — to handle subscriptions and payments. Your full payment card
+              to handle subscriptions and payments. Your full payment card
               details are handled by these processors; we do not store them.
             </li>
             <li>
               <strong className="text-gray-700">Push notification providers</strong>{" "}
-              — to deliver the notifications you enable (using a device push token).
+              to deliver the notifications you enable (using a device push token).
             </li>
             <li>
               <strong className="text-gray-700">Content delivery providers</strong>{" "}
-              — to deliver video and learning content.
+              to deliver video and learning content.
             </li>
             <li>
-              <strong className="text-gray-700">Analytics providers</strong> — to
+              <strong className="text-gray-700">Analytics providers</strong> to
               understand how features are used and improve the app.
             </li>
           </ul>
@@ -314,8 +313,8 @@ export default function PrivacyPolicyPage() {
             data, and the right to data portability.
           </p>
           <p>
-            Some of the information we handle — such as voice recordings and
-            well-being data — is &ldquo;special category&rdquo; data. We process it
+            Some of the information we handle, such as voice recordings and
+            well-being data, is &ldquo;special category&rdquo; data. We process it
             to provide the features you choose to use and, where the law requires,
             on the basis of your consent, which you can withdraw at any time. For
             international transfers (for example, to providers based outside your
@@ -323,7 +322,7 @@ export default function PrivacyPolicyPage() {
           </p>
           <p>
             Speechworks is <strong className="text-gray-700">designed to align
-            with the principles of the GDPR</strong> — data minimization, purpose
+            with the principles of the GDPR</strong>: data minimization, purpose
             limitation, security, and transparency. To exercise any of your rights,
             contact us at{" "}
             <a

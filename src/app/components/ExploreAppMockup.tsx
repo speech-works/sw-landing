@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from "react";
 
 // -------------------------------------------------------
-// FACES — exact SVG geometry ported from the mobile repo
+// FACES - exact SVG geometry ported from the mobile repo
 // Animations are CSS keyframe equivalents of Reanimated logic
 // -------------------------------------------------------
 
-/** ReaderFace — mood-check/ReaderFace.tsx */
+/** ReaderFace - mood-check/ReaderFace.tsx */
 const ReaderFace = () => (
   <div className="w-full h-full rounded-full overflow-hidden">
     <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
@@ -15,7 +15,7 @@ const ReaderFace = () => (
       {/* White goggle lenses */}
       <circle cx="16.8" cy="24" r="7.2" fill="#FFF" />
       <circle cx="31.2" cy="24" r="7.2" fill="#FFF" />
-      {/* Red-brown pupils — animated side-to-side */}
+      {/* Red-brown pupils - animated side-to-side */}
       <circle cx="16.8" cy="26" r="2.5" fill="#BF360C" className="animate-reader-pupils" />
       <circle cx="31.2" cy="26" r="2.5" fill="#BF360C" className="animate-reader-pupils" />
       {/* Green goggle frames */}
@@ -26,7 +26,7 @@ const ReaderFace = () => (
       </g>
       {/* White mask */}
       <path fill="#FFF" d="M14 36h20l-2 12H16z" />
-      {/* Green stripes — animated slide */}
+      {/* Green stripes - animated slide */}
       <path stroke="#1B5E20" strokeWidth="1.5" strokeLinecap="round" d="M18 40h12" className="animate-reader-text" />
       <path stroke="#1B5E20" strokeWidth="1.5" strokeLinecap="round" d="M18 44h10" className="animate-reader-text" />
       {/* Peach cheek dot */}
@@ -35,7 +35,7 @@ const ReaderFace = () => (
   </div>
 );
 
-/** MovieFace — sw-faces/MovieFace.tsx */
+/** MovieFace - sw-faces/MovieFace.tsx */
 const MovieFace = () => (
   <div className="w-full h-full rounded-full overflow-hidden">
     <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
@@ -68,28 +68,28 @@ const MovieFace = () => (
   </div>
 );
 
-/** BreathingFace — sw-faces/BreathingFace.tsx */
+/** BreathingFace - sw-faces/BreathingFace.tsx */
 const BreathingFace = () => (
   <div className="w-full h-full rounded-full overflow-hidden">
     <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
       <path fill="#BFC2FF" d="M48 24C48 10.745 37.255 0 24 0S0 10.745 0 24s10.745 24 24 24 24-10.745 24-24" />
       <path d="M8.075 10.075c0-2.767 33.199-2.767 33.199 0 2.767 0 2.767 38.736 0 38.736 0 2.766-33.2 2.766-33.2 0-2.766 0-2.766-38.736 0-38.736" fill="#000" opacity="0.15" transform="translate(1,1)" />
       <path fill="#FFDABF" d="M8.075 10.075c0-2.767 33.199-2.767 33.199 0 2.767 0 2.767 38.736 0 38.736 0 2.766-33.2 2.766-33.2 0-2.766 0-2.766-38.736 0-38.736" />
-      {/* Closed happy eyes — animated up/down with breathing */}
+      {/* Closed happy eyes - animated up/down with breathing */}
       <g className="animate-breathing-eyes">
         <path stroke="#000340" strokeWidth="2.5" strokeLinecap="round" d="M14 24 Q18 26, 22 24" fill="none" />
         <path stroke="#000340" strokeWidth="2.5" strokeLinecap="round" d="M26 24 Q30 26, 34 24" fill="none" />
       </g>
       {/* Small mouth */}
       <path stroke="#000340" strokeWidth="2.5" strokeLinecap="round" d="M22 34 Q24 35, 26 34" fill="none" />
-      {/* Breath particles — animated scale + fade */}
+      {/* Breath particles - animated scale + fade */}
       <path stroke="#4047FF" strokeWidth="2" strokeLinecap="round" fill="none" d="M30 34 C34 32, 36 36, 34 38" className="animate-breath-puff" />
       <path stroke="#4047FF" strokeWidth="2" strokeLinecap="round" fill="none" d="M32 36 C36 34, 40 38, 38 42" className="animate-breath-puff animate-breath-puff-delay" />
     </svg>
   </div>
 );
 
-/** WarriorFace — mood-check/WarriorFace.tsx */
+/** WarriorFace - mood-check/WarriorFace.tsx */
 const WarriorFace = () => (
   <div className="w-full h-full rounded-full overflow-hidden">
     <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
@@ -97,7 +97,7 @@ const WarriorFace = () => (
       <path fill="#FFCCBC" d="M8.075 10.075c0-2.767 33.199-2.767 33.199 0 2.767 0 2.767 38.736 0 38.736 0 2.766-33.2 2.766-33.2 0-2.766 0-2.766-38.736 0-38.736" />
       {/* Red bandana */}
       <path fill="#D32F2F" d="M5 14h39v6H5z" />
-      {/* Bandana knot ties — animated */}
+      {/* Bandana knot ties - animated */}
       <path stroke="#D32F2F" strokeWidth="3" d="M42 16l4-4" className="animate-warrior-knot-upper" />
       <path stroke="#D32F2F" strokeWidth="3" d="M42 18l4 4" className="animate-warrior-knot-lower" />
       {/* White eye whites */}
@@ -106,7 +106,7 @@ const WarriorFace = () => (
       {/* Dark pupils */}
       <circle cx="16.8" cy="24.32" r="4.32" fill="#3E2723" />
       <circle cx="31.2" cy="24.32" r="4.32" fill="#3E2723" />
-      {/* Angry eyebrows — animated */}
+      {/* Angry eyebrows - animated */}
       <g className="animate-warrior-brows">
         <path stroke="#3E2723" strokeWidth="3" strokeLinecap="round" d="M12 13l8 3M36 13l-8 3" />
       </g>
@@ -149,7 +149,7 @@ const Flame = () => (
 );
 
 // -------------------------------------------------------
-// JUMP IN CARD — shared component for identical layout
+// JUMP IN CARD - shared component for identical layout
 // -------------------------------------------------------
 interface JumpInCardProps {
   subtitle: string;
@@ -188,7 +188,7 @@ const JumpInCard = ({ subtitle, title, badge, from, to, shadow, face }: JumpInCa
       </span>
     </div>
 
-    {/* Face — bottom-right, clipped by overflow-hidden */}
+    {/* Face - bottom-right, clipped by overflow-hidden */}
     <div className="absolute" style={{ bottom: 0, right: 0, width: 60, height: 60 }}>
       {face}
     </div>

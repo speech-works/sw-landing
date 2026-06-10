@@ -7,12 +7,12 @@ const EVIDENCE_DATA = [
   {
     label: "Anchored in Reality",
     citation: "[YARUSS & QUESAL, 2006]",
-    text: "The scale that measures where you are is built from real stories — 173 adults who stutter, whose experiences were studied and turned into the numbers you'll see.",
+    text: "The scale that measures where you are is built from real stories: 173 adults who stutter, whose experiences were studied and turned into the numbers you'll see.",
   },
   {
     label: "More Than Fluency",
     citation: "[WHO ICF FRAMEWORK]",
-    text: "Stuttering affects more than how words come out. It affects what you do, who you see, and how you feel about yourself. We track all of it — using the same framework the WHO uses to understand disability and functioning.",
+    text: "Stuttering affects more than how words come out. It affects what you do, who you see, and how you feel about yourself. We track all of it, using the same framework the WHO uses to understand disability and functioning.",
   },
   {
     label: "Safety-Gated Practice",
@@ -22,7 +22,7 @@ const EVIDENCE_DATA = [
   {
     label: "Two Distinct Paths",
     citation: "[TICHENOR & YARUSS, 2019]",
-    text: "If you've spent years avoiding certain words, certain situations, certain people — your practice path is different from someone whose stutter is visible. The algorithm knows the difference and routes accordingly.",
+    text: "If you've spent years avoiding certain words, certain situations, certain people, your practice path is different from someone whose stutter is visible. The algorithm knows the difference and routes accordingly.",
   }
 ];
 

@@ -112,7 +112,7 @@ function useInjectKeyframes() {
 }
 
 /* ─────────────────────────────────────────────
-   ANIMATION KEY — forces re-mount of animated
+   ANIMATION KEY - forces re-mount of animated
    children every time a tab is shown
 ───────────────────────────────────────────── */
 function useAnimKey(activeIndex: number) {
@@ -138,7 +138,7 @@ const features = [
     shortTitle: "Growth Profile",
     title: "Five Dimensions of Real Growth",
     mobileTitle: "Five Dimensions",
-    desc: "Fluency is one number. But your experience of stuttering is five. We track all of them — the physical, the emotional, the social, and the things that keep you from showing up. Each axis is clinically grounded.",
+    desc: "Fluency is one number. But your experience of stuttering is five. We track all of them: the physical, the emotional, the social, and the things that keep you from showing up. Each axis is clinically grounded.",
     mobileDesc:
       "Five dimensions. Each one clinically grounded. See where you're actually growing.",
     tagIcon: (
@@ -273,7 +273,7 @@ const features = [
     shortTitle: "Biological Stamina",
     title: "Practice That Knows When to Stop",
     mobileTitle: "Know When to Stop",
-    desc: "Some days you have more in the tank than others. The app watches your energy through each session and ends it at the right moment — before fatigue takes over.",
+    desc: "Some days you have more in the tank than others. The app watches your energy through each session and ends it at the right moment, before fatigue takes over.",
     mobileDesc:
       "Cognitive fatigue breaks down speech. The app stops the session before you run yourself into the ground.",
     tagIcon: (
@@ -337,7 +337,7 @@ const features = [
     shortTitle: "Clinical Packs",
     title: "A Path Built for Your Specific Profile",
     mobileTitle: "Your Path",
-    desc: "No guessing what to practice next. The algorithm reads your severity score, your avoidance pattern, and your emotional state — then recommends one pack. The right one, for right now.",
+    desc: "No guessing what to practice next. The algorithm reads your severity score, your avoidance pattern, and your emotional state, then recommends one pack. The right one, for right now.",
     mobileDesc:
       "Your profile. Your next step. No guessing.",
     tagIcon: (
