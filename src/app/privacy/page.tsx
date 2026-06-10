@@ -30,12 +30,22 @@ function Section({
   title: string;
   children: React.ReactNode;
 }) {
+  const match = title.match(/^(\d+)\.\s+(.*)$/);
+  const num = match?.[1];
+  const heading = match?.[2] ?? title;
   return (
-    <section className="mt-10">
-      <h2 className="text-[22px] md:text-[28px] font-semibold text-[#401B00] tracking-tight">
-        {title}
-      </h2>
-      <div className="mt-3 space-y-4 text-[16px] md:text-[17px] leading-relaxed text-gray-600">
+    <section className="mt-12 scroll-mt-28">
+      <div className="flex items-center gap-3">
+        {num && (
+          <span className="inline-flex h-7 min-w-[28px] items-center justify-center rounded-lg bg-[#F28044]/12 px-2 font-mono text-[11px] font-semibold tracking-wider text-[#D9692E]">
+            {num.padStart(2, "0")}
+          </span>
+        )}
+        <h2 className="text-[22px] md:text-[28px] font-bold text-[#401B00] tracking-tight">
+          {heading}
+        </h2>
+      </div>
+      <div className="mt-4 space-y-4 text-[16px] md:text-[17px] leading-relaxed text-gray-600">
         {children}
       </div>
     </section>
@@ -44,14 +54,29 @@ function Section({
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-dvh bg-[#FFF5F0]">
+    <main className="relative min-h-dvh overflow-clip bg-[#FFF5F0]">
+      {/* Ambient brand glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(70%_100%_at_50%_0%,rgba(242,128,68,0.12),transparent_70%)]"
+      />
+
       <Navbar />
 
-      <article className="mx-auto max-w-3xl px-6 pt-28 pb-12 md:pt-36 md:pb-16">
-        <h1 className="text-[34px] md:text-[44px] font-bold leading-tight tracking-tight text-[#401B00]">
+      <article className="relative mx-auto max-w-3xl px-6 pt-28 pb-12 md:pt-36 md:pb-16">
+        <span className="inline-flex items-center gap-2 rounded-full border border-[#F28044]/20 bg-white/70 px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.22em] text-[#D9692E] shadow-sm backdrop-blur">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F28044] opacity-60" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#F28044]" />
+          </span>
+          Privacy
+        </span>
+        <h1 className="mt-5 text-[36px] md:text-[52px] font-black leading-[1.05] tracking-tight text-[#401B00]">
           Privacy Policy
         </h1>
-        <p className="mt-3 text-sm text-gray-500">Last updated: {LAST_UPDATED}</p>
+        <p className="mt-4 text-sm font-medium text-gray-500">
+          Last updated: {LAST_UPDATED}
+        </p>
 
         <div className="mt-8 space-y-4 text-[16px] md:text-[17px] leading-relaxed text-gray-600">
           <p>
@@ -73,8 +98,9 @@ export default function PrivacyPolicyPage() {
         </div>
 
         {/* Privacy at a glance */}
-        <div className="mt-10 rounded-2xl border border-[#FFD9C2] bg-white/70 p-6 md:p-8">
-          <h2 className="text-[20px] md:text-[24px] font-semibold tracking-tight text-[#401B00]">
+        <div className="mt-10 rounded-3xl border border-[#FFD9C2] bg-gradient-to-b from-white/85 to-white/55 p-6 md:p-8 shadow-[0_18px_50px_-24px_rgba(242,128,68,0.45)] backdrop-blur-sm">
+          <h2 className="flex items-center gap-2.5 text-[20px] md:text-[24px] font-bold tracking-tight text-[#401B00]">
+            <span className="h-5 w-1.5 rounded-full bg-gradient-to-b from-[#FF955E] to-[#D9692E]" />
             Your privacy at a glance
           </h2>
           <div className="mt-4 space-y-4 text-[15px] md:text-[16px] leading-relaxed text-gray-600">
@@ -378,12 +404,27 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <div className="mt-12 border-t border-black/5 pt-8 text-sm text-gray-500">
+        <div className="mt-16 flex flex-col items-center gap-5 border-t border-[#F28044]/15 pt-12">
+          <p className="text-sm font-medium text-gray-400">
+            Questions? Reach us at{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="text-[#D9692E] underline-offset-2 hover:underline"
+            >
+              {CONTACT_EMAIL}
+            </a>
+          </p>
           <Link
             href="/"
-            className="font-medium text-[#D9692E] hover:text-[#F28044]"
+            className="group inline-flex items-center gap-2.5 rounded-full border border-white/40 bg-gradient-to-br from-[#FF955E] to-[#D9692E] px-7 py-3.5 text-xs font-black uppercase tracking-[0.18em] text-white shadow-[0_15px_35px_-8px_rgba(242,128,68,0.5)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-8px_rgba(242,128,68,0.65)]"
           >
-            ← Back to home
+            <span
+              aria-hidden="true"
+              className="inline-block transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1"
+            >
+              ←
+            </span>
+            Back to home
           </Link>
         </div>
       </article>
