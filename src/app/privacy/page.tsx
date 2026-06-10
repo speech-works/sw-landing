@@ -190,12 +190,13 @@ export default function PrivacyPolicyPage() {
 
         <Section title="2. Accounts & Sign-in">
           <p>
-            We use <strong>Supabase</strong> to manage authentication. You sign in
-            with a third-party provider (Google, Apple, or Facebook), and that
-            provider shares your basic profile details (such as name, email, and
-            avatar) with us. <strong>We do not create or store a password for your
-            Speechworks account</strong> — credentials are handled by your sign-in
-            provider.
+            We use a third-party authentication provider to manage sign-in. You
+            sign in with Google, Apple, or Facebook, and that provider shares your
+            basic profile details (such as name, email, and avatar) with us.{" "}
+            <strong>
+              We do not create or store a password for your Speechworks account
+            </strong>{" "}
+            — credentials are handled by your sign-in provider.
           </p>
         </Section>
 
@@ -219,46 +220,50 @@ export default function PrivacyPolicyPage() {
 
         <Section title="4. Service Providers & Third Parties">
           <p>
-            We share data with the following service providers only as needed to
-            operate the Services. Each processes data on our behalf under their own
-            terms and security obligations:
+            We share data with third-party service providers only as needed to
+            operate the Services. Each processes data on our behalf under its own
+            terms and security obligations. These include the following categories
+            of providers:
           </p>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              <strong className="text-gray-700">Supabase</strong> — authentication
-              and identity.
+              <strong className="text-gray-700">
+                Authentication &amp; identity providers
+              </strong>{" "}
+              — to create and secure your account.
             </li>
             <li>
-              <strong className="text-gray-700">Amazon Web Services (S3)</strong> —
-              storage of your voice recordings.
+              <strong className="text-gray-700">
+                Cloud hosting &amp; storage providers
+              </strong>{" "}
+              — to run the Services and store your data, including your voice
+              recordings.
             </li>
             <li>
-              <strong className="text-gray-700">Deepgram</strong> — real-time
-              speech-to-text and text-to-speech for AI-assisted speaking practice;
-              your audio and/or text is sent to Deepgram to power these features.
+              <strong className="text-gray-700">Speech &amp; AI providers</strong>{" "}
+              — to power AI-assisted speaking practice. Your voice audio and the
+              text of your practice conversations are processed by these providers
+              to provide real-time speech-to-text, text-to-speech, and
+              conversational responses.
             </li>
             <li>
-              <strong className="text-gray-700">Groq</strong> — the large language
-              model that powers AI conversation practice; the text of your practice
-              conversation is processed to generate responses.
+              <strong className="text-gray-700">
+                Payment &amp; subscription processors
+              </strong>{" "}
+              — to handle subscriptions and payments. Your full payment card
+              details are handled by these processors; we do not store them.
             </li>
             <li>
-              <strong className="text-gray-700">Stripe</strong> and{" "}
-              <strong className="text-gray-700">Qonversion</strong> — subscription
-              and payment processing. Your full payment card details are handled by
-              these processors; we do not store them.
+              <strong className="text-gray-700">Push notification providers</strong>{" "}
+              — to deliver the notifications you enable (using a device push token).
             </li>
             <li>
-              <strong className="text-gray-700">Expo</strong> — delivery of push
-              notifications (using a device push token).
+              <strong className="text-gray-700">Content delivery providers</strong>{" "}
+              — to deliver video and learning content.
             </li>
             <li>
-              <strong className="text-gray-700">Bunny.net</strong> — delivery of
-              video/learning content.
-            </li>
-            <li>
-              <strong className="text-gray-700">PostHog</strong> — product analytics
-              to understand how features are used and improve the app.
+              <strong className="text-gray-700">Analytics providers</strong> — to
+              understand how features are used and improve the app.
             </li>
           </ul>
           <p>
@@ -272,11 +277,11 @@ export default function PrivacyPolicyPage() {
         <Section title="5. Voice Recordings & AI Features">
           <p>
             Voice recordings you create during practice are uploaded to and stored
-            in our cloud storage (Amazon S3) so you can review your progress. For
-            AI-assisted speaking practice, your live microphone audio is streamed
-            to our speech provider (Deepgram) to convert speech to text and to
-            generate spoken responses, and the conversation text is processed by
-            our language-model provider (Groq). You choose when to use these
+            in our cloud storage so you can review your progress. For AI-assisted
+            speaking practice, your live microphone audio is streamed to a
+            third-party speech provider to convert speech to text and to generate
+            spoken responses, and the conversation text is processed by a
+            third-party AI (language-model) provider. You choose when to use these
             features and when to record.
           </p>
         </Section>
@@ -416,14 +421,8 @@ export default function PrivacyPolicyPage() {
           </p>
           <Link
             href="/"
-            className="group inline-flex items-center gap-2.5 rounded-full border border-white/40 bg-gradient-to-br from-[#FF955E] to-[#D9692E] px-7 py-3.5 text-xs font-black uppercase tracking-[0.18em] text-white shadow-[0_15px_35px_-8px_rgba(242,128,68,0.5)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-8px_rgba(242,128,68,0.65)]"
+            className="inline-flex items-center rounded-full border border-white/40 bg-gradient-to-br from-[#FF955E] to-[#D9692E] px-8 py-3.5 text-xs font-black uppercase tracking-[0.18em] text-white shadow-[0_15px_35px_-8px_rgba(242,128,68,0.5)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-8px_rgba(242,128,68,0.65)]"
           >
-            <span
-              aria-hidden="true"
-              className="inline-block transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1"
-            >
-              ←
-            </span>
             Back to home
           </Link>
         </div>
