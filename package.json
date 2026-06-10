@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node ./scripts/check-no-dashes.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:dashes": "node ./scripts/check-no-dashes.mjs",
     "export:mockups": "node ./scripts/export-mobile-mockups.mjs",
     "verify:mockups:alpha": "node ./scripts/verify-alpha-mockups.mjs"
   },
