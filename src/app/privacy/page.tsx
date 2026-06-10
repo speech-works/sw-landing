@@ -80,11 +80,14 @@ export default function PrivacyPolicyPage() {
           <div className="mt-4 space-y-4 text-[15px] md:text-[16px] leading-relaxed text-gray-600">
             <p>
               <strong className="text-gray-700">
-                Speechworks is a wellness and self-help tool
+                Speechworks is a practice and self-help tool
               </strong>{" "}
-              for people who stutter. It is not a medical provider, a diagnosis
-              service, or an emergency service. If you are in crisis, please
-              contact your local emergency services or a qualified professional.
+              for people who stutter. It is grounded in clinical research and
+              built with speech-language professionals — but it does not provide
+              medical advice, diagnosis, or treatment, and it is not a substitute
+              for care from a qualified professional. It is also not an emergency
+              service; if you are in crisis, please contact your local emergency
+              services.
             </p>
             <p>
               <strong className="text-gray-700">What Speechworks can&rsquo;t see.</strong>{" "}
