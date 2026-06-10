@@ -11,12 +11,12 @@ const CONTACT_EMAIL = "contact@speechworks.in";
 export const metadata: Metadata = {
   title: "Privacy Policy | Speechworks",
   description:
-    "How Speechworks collects, uses, protects, and shares your information, including speech practice and health-related data.",
+    "How the Speechworks app collects, uses, shares, and protects your information, including voice recordings and speech/health-related data.",
   alternates: { canonical: "https://speechworks.app/privacy" },
   openGraph: {
     title: "Privacy Policy | Speechworks",
     description:
-      "How Speechworks collects, uses, protects, and shares your information.",
+      "How the Speechworks app collects, uses, shares, and protects your information.",
     url: "https://speechworks.app/privacy",
     type: "website",
   },
@@ -81,184 +81,235 @@ export default function PrivacyPolicyPage() {
             This Privacy Policy explains how Speechworks (&ldquo;Speechworks,&rdquo;
             &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) collects,
             uses, shares, and protects your information when you use the
-            Speechworks mobile application and our website at{" "}
-            <a
-              href="https://speechworks.app"
-              className="text-[#D9692E] underline-offset-2 hover:underline"
-            >
-              speechworks.app
-            </a>{" "}
-            (together, the &ldquo;Services&rdquo;). Speechworks helps people who
-            stutter practice, track progress, and connect with speech-language
-            professionals.
+            Speechworks mobile application and related services (the
+            &ldquo;Services&rdquo;). Speechworks is a practice and support app for
+            people who stutter — it offers guided speech exercises, progress
+            tracking, mood check-ins, AI-assisted speaking practice, and optional
+            peer (&ldquo;buddy&rdquo;) connections.
           </p>
           <p>
-            By using the Services, you agree to the collection and use of
-            information in accordance with this policy.
+            Because the Services involve speech practice, voice recordings, and
+            related well-being information, some of the data we process may be
+            considered sensitive or health-related. This policy describes that
+            processing in detail. By using the Services, you agree to this policy.
           </p>
         </div>
 
         <Section title="1. Information We Collect">
-          <p>We collect the following categories of information:</p>
-          <ul className="list-disc space-y-2 pl-6">
-            <li>
-              <strong className="text-gray-700">Account information</strong> —
-              such as your name, email address, and password (or sign-in
-              identifiers if you use a third-party sign-in provider).
-            </li>
-            <li>
-              <strong className="text-gray-700">
-                Speech &amp; health-related data
-              </strong>{" "}
-              — voice and audio recordings you create during practice, speech
-              exercise results, progress metrics, mood or well-being check-ins,
-              and goals you set. This information may be considered sensitive or
-              health-related data.
-            </li>
-            <li>
-              <strong className="text-gray-700">
-                Therapy &amp; communication data
-              </strong>{" "}
-              — messages, notes, and information you share with clinicians or
-              that clinicians share with you when you connect through the
-              Services.
-            </li>
-            <li>
-              <strong className="text-gray-700">Usage &amp; device data</strong>{" "}
-              — app interactions, feature usage, device type, operating system,
-              app version, and diagnostic or crash data.
-            </li>
-            <li>
-              <strong className="text-gray-700">Support communications</strong> —
-              information you provide when you contact us.
-            </li>
-          </ul>
+          <p>
+            <strong className="text-gray-700">Account &amp; profile.</strong> When
+            you create an account, we collect your name, email address, and
+            profile photo provided through your chosen sign-in provider (see
+            &ldquo;Accounts &amp; Sign-in&rdquo; below). You may optionally add a
+            bio, phone number, date of birth, profile picture, and social links.
+          </p>
+          <p>
+            <strong className="text-gray-700">
+              Voice recordings &amp; speech data.
+            </strong>{" "}
+            When you complete practice exercises or record a voice note, the app
+            captures audio. For AI-assisted speaking practice (such as simulated
+            phone calls), your microphone audio is streamed in real time so the
+            feature can respond to you. We also derive and store speech-related
+            metrics such as fluency/ease scores, practice progress, the sounds you
+            identify as challenging (&ldquo;feared sounds&rdquo;), and tool usage.
+          </p>
+          <p>
+            <strong className="text-gray-700">
+              Well-being &amp; assessment data.
+            </strong>{" "}
+            We collect mood check-ins (a mood selection plus optional voice or text
+            notes), responses to onboarding and impact-assessment questionnaires,
+            goals, reminders, and derived progress/awareness scores.
+          </p>
+          <p>
+            <strong className="text-gray-700">
+              Camera &amp; motion (on-device).
+            </strong>{" "}
+            Some &ldquo;mirror work&rdquo; and awareness exercises use your camera
+            and device motion sensors to give you live feedback. This processing
+            happens on your device — <strong>no video is recorded, stored, or
+            transmitted</strong>; only the resulting practice metrics (for example,
+            head-movement or awareness scores) are saved.
+          </p>
+          <p>
+            <strong className="text-gray-700">
+              Community &amp; peer (&ldquo;buddy&rdquo;) data.
+            </strong>{" "}
+            If you connect with a buddy, we process the connection, invite codes,
+            and any activity or mood signals you choose to share. Sharing of
+            progress between buddies is controlled by consent settings.
+          </p>
+          <p>
+            <strong className="text-gray-700">Usage &amp; device data.</strong> We
+            collect product-analytics events (how features are used), device
+            information, time zone, app/level/streak progress, and push
+            notification tokens.
+          </p>
         </Section>
 
-        <Section title="2. How We Use Your Information">
-          <p>We use your information to:</p>
+        <Section title="2. Accounts & Sign-in">
+          <p>
+            We use <strong>Supabase</strong> to manage authentication. You sign in
+            with a third-party provider (Google, Apple, or Facebook), and that
+            provider shares your basic profile details (such as name, email, and
+            avatar) with us. <strong>We do not create or store a password for your
+            Speechworks account</strong> — credentials are handled by your sign-in
+            provider.
+          </p>
+        </Section>
+
+        <Section title="3. How We Use Your Information">
           <ul className="list-disc space-y-2 pl-6">
-            <li>Provide, maintain, and improve the Services;</li>
-            <li>
-              Deliver speech practice exercises and generate progress insights;
-            </li>
-            <li>
-              Connect you with clinicians and enable communication you initiate;
-            </li>
-            <li>Personalize your experience and recommendations;</li>
-            <li>
-              Diagnose technical issues, prevent abuse, and keep the Services
-              secure;
-            </li>
-            <li>Respond to your requests and provide customer support; and</li>
-            <li>Comply with legal obligations.</li>
+            <li>To provide speech practice, recordings, feedback, and AI-assisted exercises;</li>
+            <li>To generate progress insights, scores, and personalized recommendations;</li>
+            <li>To enable mood check-ins, reminders, and well-being tracking;</li>
+            <li>To support optional buddy connections and the sharing you enable;</li>
+            <li>To process subscriptions and payments;</li>
+            <li>To send notifications you have enabled;</li>
+            <li>To diagnose issues, improve the Services, and keep them secure; and</li>
+            <li>To comply with legal obligations.</li>
           </ul>
           <p>
             We do <strong>not</strong> sell your personal information, and we do
-            not use your voice recordings or health-related data for advertising.
+            not use your voice recordings or health-related data for third-party
+            advertising.
           </p>
         </Section>
 
-        <Section title="3. Voice &amp; Audio Recordings">
+        <Section title="4. Service Providers & Third Parties">
           <p>
-            Speech practice may involve recording your voice. These recordings
-            are used to provide feedback, measure progress, and improve your
-            experience. You control which exercises you record, and you can
-            delete recordings associated with your account. Where we process this
-            data, we do so to deliver the core functionality you request.
+            We share data with the following service providers only as needed to
+            operate the Services. Each processes data on our behalf under their own
+            terms and security obligations:
           </p>
-        </Section>
-
-        <Section title="4. How We Share Information">
-          <p>We share information only in the following circumstances:</p>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              <strong className="text-gray-700">With clinicians</strong> you
-              choose to connect with, to the extent needed to support your
-              therapy.
+              <strong className="text-gray-700">Supabase</strong> — authentication
+              and identity.
             </li>
             <li>
-              <strong className="text-gray-700">With service providers</strong>{" "}
-              who process data on our behalf (for example, hosting, analytics, and
-              infrastructure) under contractual confidentiality and security
-              obligations.
+              <strong className="text-gray-700">Amazon Web Services (S3)</strong> —
+              storage of your voice recordings.
             </li>
             <li>
-              <strong className="text-gray-700">For legal reasons</strong> — when
-              required by law, regulation, legal process, or to protect the
-              rights, safety, and security of users or the public.
+              <strong className="text-gray-700">Deepgram</strong> — real-time
+              speech-to-text and text-to-speech for AI-assisted speaking practice;
+              your audio and/or text is sent to Deepgram to power these features.
             </li>
             <li>
-              <strong className="text-gray-700">Business transfers</strong> — in
-              connection with a merger, acquisition, or sale of assets, subject to
-              this policy.
+              <strong className="text-gray-700">Groq</strong> — the large language
+              model that powers AI conversation practice; the text of your practice
+              conversation is processed to generate responses.
+            </li>
+            <li>
+              <strong className="text-gray-700">Stripe</strong> and{" "}
+              <strong className="text-gray-700">Qonversion</strong> — subscription
+              and payment processing. Your full payment card details are handled by
+              these processors; we do not store them.
+            </li>
+            <li>
+              <strong className="text-gray-700">Expo</strong> — delivery of push
+              notifications (using a device push token).
+            </li>
+            <li>
+              <strong className="text-gray-700">Bunny.net</strong> — delivery of
+              video/learning content.
+            </li>
+            <li>
+              <strong className="text-gray-700">PostHog</strong> — product analytics
+              to understand how features are used and improve the app.
             </li>
           </ul>
+          <p>
+            We may also disclose information when required by law or legal process,
+            to protect the rights and safety of users or the public, or in
+            connection with a business transfer (such as a merger or acquisition),
+            subject to this policy.
+          </p>
         </Section>
 
-        <Section title="5. Data Retention">
+        <Section title="5. Voice Recordings & AI Features">
+          <p>
+            Voice recordings you create during practice are uploaded to and stored
+            in our cloud storage (Amazon S3) so you can review your progress. For
+            AI-assisted speaking practice, your live microphone audio is streamed
+            to our speech provider (Deepgram) to convert speech to text and to
+            generate spoken responses, and the conversation text is processed by
+            our language-model provider (Groq). You choose when to use these
+            features and when to record.
+          </p>
+        </Section>
+
+        <Section title="6. Data Retention">
           <p>
             We retain your information for as long as your account is active or as
-            needed to provide the Services. We will delete or anonymize your
-            personal information when it is no longer required, unless we are
-            legally required to retain it.
+            needed to provide the Services. When you delete your account, we remove
+            your associated records from our active systems as described below.
+            Some information may persist for a limited period in backups or where
+            retention is required by law.
           </p>
         </Section>
 
-        <Section title="6. Data Security">
+        <Section title="7. Your Rights & Choices">
           <p>
-            We use administrative, technical, and physical safeguards designed to
-            protect your information, including encryption in transit. No method
-            of transmission or storage is completely secure, so we cannot
-            guarantee absolute security.
+            Depending on where you live, you may have rights to access, correct,
+            export, or delete your personal information, and to object to or
+            restrict certain processing. You can manage much of your profile and
+            content directly in the app, and you can contact us to exercise any of
+            these rights.
           </p>
         </Section>
 
-        <Section title="7. Your Rights &amp; Choices">
+        <Section title="8. Account & Data Deletion">
           <p>
-            Depending on where you live, you may have the right to access,
-            correct, export, or delete your personal information, and to object to
-            or restrict certain processing. To exercise these rights, contact us
-            at the address below.
-          </p>
-        </Section>
-
-        <Section title="8. Account &amp; Data Deletion">
-          <p>
-            You can request deletion of your account and associated personal data
-            at any time. From within the app you may delete recordings and
-            content, or you can email us at{" "}
+            You can request deletion of your account at any time from within the
+            app or by emailing us at{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="text-[#D9692E] underline-offset-2 hover:underline"
             >
               {CONTACT_EMAIL}
-            </a>{" "}
-            to request full account and data deletion. We will process verified
-            requests within a reasonable timeframe, subject to legal retention
-            requirements.
+            </a>
+            . When you delete your account, we delete your profile and associated
+            practice, assessment, mood, recording, and buddy records from our
+            databases. We will action verified requests within a reasonable
+            timeframe, subject to limited retention required by law or held
+            temporarily in backups.
           </p>
         </Section>
 
-        <Section title="9. Children's Privacy">
+        <Section title="9. Data Security">
           <p>
-            The Services are not directed to children under the age of 13 (or the
-            minimum age required in your jurisdiction). If you are a parent or
-            guardian and believe your child has provided us with personal
-            information, please contact us so we can take appropriate action.
+            We use reasonable technical and organizational safeguards to protect
+            your information. Data is transmitted over encrypted connections
+            (HTTPS/TLS), and authentication tokens are kept in your device&rsquo;s
+            secure storage. No method of transmission or storage is completely
+            secure, so we cannot guarantee absolute security.
           </p>
         </Section>
 
         <Section title="10. International Data Transfers">
           <p>
-            Your information may be processed and stored in countries other than
-            your own. Where we transfer personal data internationally, we take
-            steps to ensure it remains protected in accordance with this policy
-            and applicable law.
+            We and our service providers may process and store your information in
+            countries other than your own, including the United States, the
+            European Union, and India. Where we transfer personal data
+            internationally, we take steps designed to keep it protected in
+            accordance with this policy and applicable law.
           </p>
         </Section>
 
-        <Section title="11. Changes to This Policy">
+        <Section title="11. Children's Privacy">
+          <p>
+            The Services are intended for users aged 13 and older (or the minimum
+            age required in your jurisdiction). We do not knowingly collect
+            personal information from children under that age. If you believe a
+            child has provided us with personal information, please contact us so
+            we can take appropriate action.
+          </p>
+        </Section>
+
+        <Section title="12. Changes to This Policy">
           <p>
             We may update this Privacy Policy from time to time. When we do, we
             will revise the &ldquo;Last updated&rdquo; date above and, where
@@ -268,10 +319,10 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <Section title="12. Contact Us">
+        <Section title="13. Contact Us">
           <p>
-            If you have questions or requests regarding this Privacy Policy or
-            your data, contact us at{" "}
+            If you have questions or requests regarding this Privacy Policy or your
+            data, contact us at{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="text-[#D9692E] underline-offset-2 hover:underline"
