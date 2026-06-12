@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* The Navbar/Footer now come from @speech-works/web-chrome; let Tailwind generate
+   the utility classes they use. (Tokens/utilities below are still defined here.) */
+@source "../../node_modules/@speech-works/web-chrome/dist";
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", serif;
