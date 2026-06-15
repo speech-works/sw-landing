@@ -205,7 +205,6 @@ export default function PrivacyPolicyPage() {
             <li>To generate progress insights, scores, and personalized recommendations;</li>
             <li>To enable mood check-ins, reminders, and well-being tracking;</li>
             <li>To support optional buddy connections and the sharing you enable;</li>
-            <li>To process subscriptions and payments;</li>
             <li>To send notifications you have enabled;</li>
             <li>To diagnose issues, improve the Services, and keep them secure; and</li>
             <li>To comply with legal obligations.</li>
@@ -244,13 +243,6 @@ export default function PrivacyPolicyPage() {
               text of your practice conversations are processed by these providers
               to provide real-time speech-to-text, text-to-speech, and
               conversational responses.
-            </li>
-            <li>
-              <strong className="text-gray-700">
-                Payment &amp; subscription processors
-              </strong>{" "}
-              to handle subscriptions and payments. Your full payment card
-              details are handled by these processors; we do not store them.
             </li>
             <li>
               <strong className="text-gray-700">Push notification providers</strong>{" "}
@@ -339,13 +331,20 @@ export default function PrivacyPolicyPage() {
         <Section title="9. Account & Data Deletion">
           <p>
             You can request deletion of your account at any time from within the
-            app or by emailing us at{" "}
+            app (Settings → Delete Account) or by emailing us at{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="text-[#D9692E] underline-offset-2 hover:underline"
             >
               {CONTACT_EMAIL}
             </a>
+            . Step-by-step instructions are on our{" "}
+            <Link
+              href="/account/delete"
+              className="text-[#D9692E] underline-offset-2 hover:underline"
+            >
+              account deletion page
+            </Link>
             . When you delete your account, we delete your profile and associated
             practice, assessment, mood, recording, and buddy records from our
             databases. We will action verified requests within a reasonable
