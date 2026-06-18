@@ -63,7 +63,10 @@ export default function InviteOnlyModal({
   const [attemptedSubmit, setAttemptedSubmit] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
   const [submitError, setSubmitError] = useState(false);
+  const [showFastLane, setShowFastLane] = useState(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
+  const fastLanePhoneRef = useRef<HTMLInputElement>(null);
+  const submittedRef = useRef(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
   const physics = useRef({
@@ -93,6 +96,8 @@ export default function InviteOnlyModal({
       setAttemptedSubmit(false);
       setSubmitStatus("idle");
       setSubmitError(false);
+      setShowFastLane(false);
+      submittedRef.current = false;
       setForm(INITIAL_FORM);
       document.body.style.overflow = "hidden";
       physics.current = {
@@ -217,17 +222,26 @@ export default function InviteOnlyModal({
   }, [isMobileViewport, isOpen, step]);
 
   useEffect(() => {
+    if (!isOpen || !showFastLane) return;
+    const timeout = window.setTimeout(
+      () => fastLanePhoneRef.current?.focus(),
+      isMobileViewport ? 0 : 80
+    );
+    return () => window.clearTimeout(timeout);
+  }, [isMobileViewport, isOpen, showFastLane]);
+
+  useEffect(() => {
     if (!isOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose();
+        dismissRef.current();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   const isValid = useMemo(() => {
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
@@ -240,31 +254,110 @@ export default function InviteOnlyModal({
       setForm((current) => ({ ...current, [field]: event.target.value }));
     };
 
-  const handleSubmit = async () => {
-    setAttemptedSubmit(true);
-    setSubmitError(false);
-    if (!isValid) return;
+  const buildBody = (contactNumber: string) =>
+    JSON.stringify({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      countryCode: form.countryCode.trim(),
+      contactNumber: contactNumber.trim() || "N/A",
+      referralCode: form.referralCode.trim() || "N/A",
+    });
 
+  // Fires the single waitlist POST at most once, so the email-first /
+  // phone-after flow still lands as one row and one notification email.
+  // (The Apps Script appendRow has no dedupe, so a second POST would mean a
+  // duplicate row and a duplicate email.)
+  const postWaitlist = (contactNumber: string) => {
+    if (submittedRef.current) return Promise.resolve();
+    submittedRef.current = true;
+    return fetch(WAITLIST_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: buildBody(contactNumber),
+    });
+  };
+
+  const finalizeSubmit = async (contactNumber: string) => {
+    setSubmitError(false);
     setSubmitStatus("submitting");
     try {
-      await fetch(WAITLIST_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          email: form.email.trim(),
-          countryCode: form.countryCode.trim(),
-          contactNumber: form.contactNumber.trim() || "N/A",
-          referralCode: form.referralCode.trim() || "N/A",
-        }),
-      });
+      await postWaitlist(contactNumber);
       setSubmitStatus("success");
     } catch {
+      submittedRef.current = false;
       setSubmitStatus("idle");
       setSubmitError(true);
     }
   };
+
+  const handleSubmit = () => {
+    setAttemptedSubmit(true);
+    setSubmitError(false);
+    if (!isValid) return;
+
+    // Never block the signup. If they skipped the phone, offer the WhatsApp
+    // fast lane first and defer the single submit until they resolve it, so
+    // everything still arrives in one row / one email.
+    if (!form.contactNumber.trim()) {
+      setShowFastLane(true);
+      return;
+    }
+
+    void finalizeSubmit(form.contactNumber);
+  };
+
+  const handleSendNumber = () => {
+    void finalizeSubmit(form.contactNumber);
+  };
+
+  const handleSkipNumber = () => {
+    void finalizeSubmit("");
+  };
+
+  const handleDismiss = () => {
+    // If they opened the fast lane but closed without choosing, still capture
+    // the signup with whatever we have so the lead is never lost.
+    if (showFastLane && submitStatus !== "success" && !submittedRef.current) {
+      void postWaitlist(form.contactNumber);
+    }
+    onClose();
+  };
+  const dismissRef = useRef(handleDismiss);
+  dismissRef.current = handleDismiss;
+
+  // Safety net for silent drop-off: if they reached the WhatsApp step and the
+  // page is actually going away (tab close / navigate away) without choosing,
+  // flush the one submit via sendBeacon, which survives unload where fetch
+  // would be cancelled. Only fires when a deferred submit is genuinely pending,
+  // so it can never race a user who is still typing their number.
+  const flushOnExit = () => {
+    if (!showFastLane || submittedRef.current) return;
+    submittedRef.current = true;
+    try {
+      navigator.sendBeacon(
+        WAITLIST_URL,
+        new Blob([buildBody(form.contactNumber)], {
+          type: "text/plain;charset=UTF-8",
+        })
+      );
+    } catch {
+      submittedRef.current = false;
+    }
+  };
+  const flushRef = useRef(flushOnExit);
+  flushRef.current = flushOnExit;
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = () => flushRef.current();
+    window.addEventListener("pagehide", handler);
+    window.addEventListener("beforeunload", handler);
+    return () => {
+      window.removeEventListener("pagehide", handler);
+      window.removeEventListener("beforeunload", handler);
+    };
+  }, [isOpen]);
 
   if (!isOpen && !isRendered) return null;
 
@@ -309,7 +402,7 @@ export default function InviteOnlyModal({
     >
       <div
         className="absolute inset-0 bg-[#120c09]/74 backdrop-blur-xl"
-        onClick={onClose}
+        onClick={handleDismiss}
       />
 
       <div
@@ -342,7 +435,7 @@ export default function InviteOnlyModal({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_14%,rgba(255,133,64,0.18),transparent_24%),radial-gradient(circle_at_88%_16%,rgba(255,211,180,0.08),transparent_20%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_26%,transparent_100%)]" />
 
         <button
-          onClick={onClose}
+          onClick={handleDismiss}
           className={`absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 ${
             isMobileViewport
               ? ""
@@ -384,7 +477,9 @@ export default function InviteOnlyModal({
               className="text-[14px] sm:text-[15px] text-white/55 leading-relaxed max-w-[300px] mb-10"
               style={getFadeUpStyle(120)}
             >
-              All set. We&apos;ve received your details and will reach out to you personally, soon.
+              {form.contactNumber.trim()
+                ? "All set. We'll message you on WhatsApp the moment your access is ready."
+                : "All set. We've received your details and will reach out to you personally, soon."}
             </p>
             <button
               onClick={onClose}
@@ -393,6 +488,104 @@ export default function InviteOnlyModal({
             >
               Close
             </button>
+          </div>
+        ) : showFastLane ? (
+          <div className="relative z-10 flex min-h-[320px] flex-col justify-center p-6 sm:p-9 md:p-10">
+            <div className="mb-7 flex flex-col items-center text-center sm:mb-8">
+              <div
+                className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 shadow-inner"
+                style={getFadeUpStyle(0)}
+              >
+                <svg className="h-6 w-6 text-[#ff955e]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              <h2
+                className="mb-3 text-2xl font-black leading-tight tracking-tight text-white sm:text-[1.7rem]"
+                style={getFadeUpStyle(60)}
+              >
+                You&apos;re on the list.
+              </h2>
+              <p
+                className="max-w-[340px] text-[13px] leading-relaxed text-white/55 sm:text-[14px]"
+                style={getFadeUpStyle(120)}
+              >
+                Want in faster? Drop your WhatsApp number and we&apos;ll message
+                your access the moment it&apos;s live, instead of waiting on email.
+              </p>
+            </div>
+
+            <div className="mx-auto w-full max-w-[360px]" style={getFadeUpStyle(180)}>
+              <div className="grid grid-cols-[88px_minmax(0,1fr)] gap-2">
+                <input
+                  list="invite-fastlane-codes"
+                  value={form.countryCode}
+                  onChange={updateField("countryCode")}
+                  placeholder="+1"
+                  disabled={submitStatus === "submitting"}
+                  className="min-h-[46px] w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3 py-2.5 text-[13px] font-semibold text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] disabled:opacity-40 sm:min-h-[50px] sm:rounded-[1rem] sm:text-[14px]"
+                />
+                <datalist id="invite-fastlane-codes">
+                  {COUNTRY_CODES.map((option, index) => (
+                    <option
+                      key={`fl-${option.label}-${option.code}-${index}`}
+                      value={option.code}
+                    >
+                      {option.label}
+                    </option>
+                  ))}
+                </datalist>
+                <input
+                  ref={fastLanePhoneRef}
+                  type="tel"
+                  value={form.contactNumber}
+                  onChange={updateField("contactNumber")}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") handleSendNumber();
+                  }}
+                  placeholder="WhatsApp number"
+                  disabled={submitStatus === "submitting"}
+                  className="min-h-[46px] w-full rounded-[0.9rem] border border-white/10 bg-[#1a130f] px-3.5 py-2.5 text-[13px] text-white outline-none transition-all duration-300 placeholder:text-white/28 focus:border-[#ff9d67] focus:bg-[#1d1511] disabled:opacity-40 sm:min-h-[50px] sm:rounded-[1rem] sm:text-[14px]"
+                />
+              </div>
+
+              {submitError && (
+                <p className="mt-2.5 rounded-xl border border-[#ff955e]/20 bg-[#ff955e]/10 px-3.5 py-2.5 text-[11.5px] font-semibold text-[#ffb28a] sm:text-[12px]">
+                  Connection failed. Please try again.
+                </p>
+              )}
+
+              <button
+                type="button"
+                onClick={handleSendNumber}
+                disabled={submitStatus === "submitting"}
+                className={`mt-6 inline-flex min-h-[46px] w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ff955e] to-[#f28044] px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] text-white disabled:cursor-not-allowed disabled:opacity-60 sm:mt-7 ${
+                  isMobileViewport
+                    ? ""
+                    : "transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_34px_rgba(242,128,68,0.28)] active:translate-y-0 "
+                }sm:min-h-[50px] sm:text-[11px] sm:tracking-[0.16em]`}
+              >
+                {submitStatus === "submitting" ? (
+                  <>
+                    <svg className="h-3.5 w-3.5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                    </svg>
+                    Sending&hellip;
+                  </>
+                ) : (
+                  "Send it over"
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleSkipNumber}
+                disabled={submitStatus === "submitting"}
+                className="mx-auto mt-4 block text-[11px] font-black uppercase tracking-widest text-white/40 transition-colors duration-300 hover:text-white/70 disabled:opacity-40 sm:mt-5"
+              >
+                Skip for now
+              </button>
+            </div>
           </div>
         ) : (
           <div className="relative z-10 p-3.5 sm:p-5 md:p-6 max-h-[calc(100dvh-1.25rem)] overflow-y-auto sm:max-h-[min(820px,calc(100dvh-3rem))]">
