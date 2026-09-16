@@ -8,9 +8,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
-    "lint:dashes": "node ./scripts/check-no-dashes.mjs"
+    "lint:dashes": "node ./scripts/check-no-dashes.mjs",
+    "sync:mobile": "node scripts/sync-mobile-content.cjs",
+    "artwork:build": "node scripts/build-avatar-artwork.cjs"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "gsap": "^3.15.0",
+    "lucide-react": "^1.46.0",
     "next": "15.5.19",
     "react": "19.1.0",
     "react-dom": "19.1.0"
@@ -26,6 +31,7 @@
     "eslint-config-next": "15.5.19",
     "playwright-core": "^1.59.1",
     "postcss": "^8.5.6",
+    "qrcode": "^1.5.4",
     "tailwindcss": "^4.1.12",
     "typescript": "^5"
   }

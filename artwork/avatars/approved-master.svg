@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="#242329" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="avatar-title avatar-desc">
+  <title id="avatar-title">Speechworks listening avatar</title>
+  <desc id="avatar-desc">A smiling, brown-haired face looking right, wearing mint headphones and a navy open polo collar. Editable vector reconstruction of the concept sheet.</desc>
+  <defs>
+    <linearGradient id="skin" x1="84" y1="144" x2="251" y2="234" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F1BE80"/>
+      <stop offset=".55" stop-color="#F2BE80"/>
+      <stop offset="1" stop-color="#F4C386"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="151" y1="43" x2="158" y2="133" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#493225"/>
+      <stop offset=".5" stop-color="#533B2B"/>
+      <stop offset="1" stop-color="#33251E"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="155" y1="20" x2="162" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B5F3D6"/>
+      <stop offset=".55" stop-color="#AEF0D2"/>
+      <stop offset="1" stop-color="#ABEDCF"/>
+    </linearGradient>
+    <linearGradient id="ear-cushion" x1="35" y1="147" x2="62" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#309775"/>
+      <stop offset="1" stop-color="#349778"/>
+    </linearGradient>
+    <linearGradient id="collar-fabric" x1="99" y1="244" x2="112" y2="301" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18344F"/>
+      <stop offset="1" stop-color="#1D3959"/>
+    </linearGradient>
+    <clipPath id="hair-boundary">
+      <path d="M60.5 131.2C68.5 80.1 106.6 44 158.6 44.3C210.7 44.5 247.6 79.4 255.4 131.1C251.6 116.7 232 107 212.6 106.6C195.2 105.5 177.9 111 158.3 113.8C139 117 119.2 116.9 99.2 118.3C82 119.7 69.5 124.2 60.5 131.2Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Collar back and fabric: a separate wardrobe slot. -->
+  <g id="collar">
+    <path id="collar-left" d="M58.2 240.1L45.2 265.7C67.2 281.2 98.7 294.5 132.5 302.4L151.1 272.2C145.7 266.5 137.4 265.5 127 263C101.1 257.1 78.1 250.1 58.2 240.1Z" fill="url(#collar-fabric)" stroke-width="4"/>
+    <path id="collar-right" d="M256.5 240.1L268.7 265.5C246.7 281.4 215.8 294.2 182 302.6L162.5 272C167 266.9 176.8 264.9 188 262.5C214 256.6 235 249.3 256.5 240.1Z" fill="url(#collar-fabric)" stroke-width="4"/>
+    <path d="M51.8 256.4C76.2 271.7 103.2 282.7 135.2 289.7L131.9 295.1C101.2 288 72.3 276.2 49.4 262.1Z" fill="#FAFCF9" stroke="none"/>
+    <path d="M262.4 256.2C239.1 271.4 210.8 282.6 179.2 289.9L182.9 295.3C213.8 288 242.9 276.3 265.1 261.7Z" fill="#FAFCF9" stroke="none"/>
+    <path d="M154.1 274.5L161.1 274.5" stroke-width="3"/>
+    <ellipse cx="157" cy="296.4" rx="5.3" ry="5.5" fill="#BAB99D" stroke-width="3.4"/>
+  </g>
+
+  <!-- The full head remains behind hair and headphone shells. -->
+  <g id="head">
+    <path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z" fill="url(#skin)" stroke-width="4"/>
+  </g>
+
+  <g id="hair-front">
+    <path d="M60.5 131.2C68.5 80.1 106.6 44 158.6 44.3C210.7 44.5 247.6 79.4 255.4 131.1C251.6 116.7 232 107 212.6 106.6C195.2 105.5 177.9 111 158.3 113.8C139 117 119.2 116.9 99.2 118.3C82 119.7 69.5 124.2 60.5 131.2Z" fill="url(#hair)"/>
+    <g clip-path="url(#hair-boundary)" stroke="none">
+      <path d="M78 98C104 73 151 64 198 74C219 78 238 87 249 97C217 83 180 78 150 79C119 80 94 88 78 98Z" fill="#624531"/>
+      <path d="M67 117C97 92 135 83 177 84C209 85 240 95 254 108C225 97 193 91 163 91C126 91 94 100 67 117Z" fill="#654733"/>
+      <path d="M77 96C92 82 110 72 131 68C166 61 197 65 222 76C193 69 166 69 143 73C112 78 90 86 77 96Z" fill="#483123"/>
+      <path d="M103 66C128 49 153 45 179 50C195 53 214 61 227 73C209 65 190 61 173 60C147 58 124 62 103 66Z" fill="#533B2A"/>
+      <path d="M68 120C102 106 136 101 182 98C164 103 145 109 120 112C95 115 79 116 68 120Z" fill="#5B402D"/>
+    </g>
+  </g>
+
+  <!-- One connected headband and two outer ear shells. -->
+  <g id="headgear">
+    <path d="M35.7 131.8C40.4 100.6 53.6 73.3 76.8 52.4C98.7 32.3 127.4 20 156.1 20.1C187.7 19.2 216.7 31.7 239.1 52.3C262.1 73.5 276.2 101 281.2 131.7C290.1 136.6 294.3 145.8 294.1 155.7L294 187.1C293.9 206.8 282.8 219.1 267.2 219.1C250.4 219 240.4 207.2 240.3 187.3L240.4 155.4C240.5 144.5 245.8 136.4 255.4 131.5C248.1 81 210.1 44 158.5 44.3C107.2 44.4 68.3 80.9 60.5 131.4C69.9 136.9 75 145.2 75 155.3L75.1 185.9C75.2 206.2 65.3 218.7 49 218.7C33 218.9 21.2 207.6 21.2 187.8L21.1 156C20.9 145.1 25.8 136.7 35.7 131.8Z" fill="url(#mint)" stroke-width="3.5"/>
+    <path id="ear-pad-left" d="M48.4 143.3C40.3 143.3 34.4 149.7 34.4 159.1L34.4 185.6C34.4 195 40.1 202 48.1 202C56.3 202 61.9 195.6 61.9 185.8L61.9 159.6C61.9 150.4 56.6 143.4 48.4 143.3Z" fill="url(#ear-cushion)" stroke="none"/>
+    <path id="ear-pad-right" d="M267.8 143.4C259.5 143.4 253.8 149.8 253.8 159.4L253.8 186.1C253.8 195.4 259.3 202.3 267.4 202.3C275.9 202.3 281.5 195.8 281.5 185.8L281.5 159.8C281.5 150.4 276.1 143.5 267.8 143.4Z" fill="#339876" stroke="none"/>
+  </g>
+
+  <!-- Expression slot. Both pupils look right; the brows are asymmetric. -->
+  <g id="expression-listening">
+    <g id="eyebrows" fill="#242329" stroke="none">
+      <path d="M100 132.6C105.4 128.5 111.3 126.7 117.6 127.1C120.1 127.1 122 128.1 122 130.1C122.1 132.2 120.5 132.8 118 132.8C112.4 132.4 106.7 134.2 101.7 137C99 138.6 97.4 136 100 132.6Z"/>
+      <path d="M198 124.4C205.6 123.4 213.6 125.9 219.8 130.3C222.2 132 222.6 134 220.7 135.6C219.5 136.7 218.1 135.6 216.5 134.5C211.1 131.5 205.7 129.9 199.7 130.1C196.7 130.2 195.3 129.2 195.7 127.2C195.7 125.8 196.5 124.8 198 124.4Z"/>
+    </g>
+    <g id="eyes">
+      <path id="eye-white-left" d="M114.5 143.1C125.2 143 134.4 153.4 135.5 166.6C136.7 180.6 128.6 190.5 117.7 191.7C105.6 193.4 94 184.7 93.3 170.8C92.5 157.7 102.1 143.7 114.5 143.1Z" fill="#FEFEFD" stroke-width="3.5"/>
+      <path d="M123.7 153.8C128.5 152.2 132.3 154.8 133.8 158.2C136.4 166.2 135.4 174.6 132 180.1C130.8 182.1 129 183.8 125.9 184.3C118.7 184.9 114.8 177.4 114.6 167.7L114.5 164.2C118.6 164.3 117.9 160 115.4 159.5C117.1 156.9 120.1 154.7 123.7 153.8Z" fill="#19191F" stroke="none"/>
+      <path id="eye-white-right" d="M211.1 140.8C223.5 141 231.6 153 230.5 167.4C229.5 181.7 221.6 191.4 210.1 191.5C197.6 191.7 189 182.1 189.1 169C189 155.7 198.6 140.2 211.1 140.8Z" fill="#FEFEFD" stroke-width="3.5"/>
+      <path d="M222 152.1C224.4 152 227.2 153.2 228.8 155.4C231.2 164 229.9 174.5 225.4 181.1C224.9 181.4 224 182.2 222.3 182.3C214.6 182.6 210 174.8 210.1 166.1L210.2 161.2C214.1 161.4 214 157.5 211.7 156.7C214.1 153.8 217.8 152.2 222 152.1Z" fill="#19191F" stroke="none"/>
+    </g>
+    <g id="mouth">
+      <path d="M143.4 212.9C154.4 213.3 171.9 212.6 184.9 211.6C186.2 211.4 186.9 212.1 186.7 213.7C185.7 227.2 177.7 235.1 166 235.4C154.2 235.6 144.5 227.4 142.7 214.6C142.5 213.6 142.5 213.1 143.4 212.9Z" fill="#1B1A20" stroke-width="2.4"/>
+      <path d="M147.1 216C159.7 216.3 171.8 215.8 180.6 215C178.2 219.3 174.1 220.5 164.4 220.9C156.2 221.2 150 219.8 147.1 216Z" fill="#FFFFFF" stroke="none"/>
+      <path d="M154.2 229.9C158.9 224.6 168.8 223.6 175 230C169.5 233.9 160.2 234 154.2 229.9Z" fill="#F16C84" stroke="none"/>
+    </g>
+  </g>
+</svg>

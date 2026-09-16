@@ -1,55 +1,80 @@
 # Speechworks website
 
-A fresh starting point for the minimal, app-download-focused Speechworks website.
+A minimal, program-led website for adults who stutter. Built with Next.js 15,
+React 19, self-hosted Inter, and the mobile app's colors, logo, and avatars.
 
-## Branches
-
-- `main`: the new website foundation.
-- `codex/obsolete-website-2026-09-16`: the complete former website plus redesign research, preserved at `970b542a50479b665cc71e1e65640a616350c93e`.
-- `obsolete-sept-2026`: an earlier archive; left unchanged.
-
-The new foundation is deliberately small: Next.js 15, React 19, Tailwind 4,
-locally hosted Inter, app-aligned color tokens, a minimal homepage, and the
-existing privacy/account-deletion pages. Legal page text is unchanged.
-
-The old marketing components, clinical mockups, waitlist forms, media exports,
-scratch scripts, and accidentally tracked build cache live on the archive branch.
-
-## Run locally
+## Run and check
 
 ```sh
 npm ci
 npm run dev
-```
-
-## Check
-
-```sh
 npm run lint
 npm run build
 ```
 
 Production builds statically export to `out/`. The existing GitHub Pages workflow
-deploys on pushes to `main`; local commits do not change the public website.
+deploys on pushes to `main`. Local changes do not publish the site.
 
-## Next implementation slice
+## Pages and interactions
 
-The current homepage is a runnable foundation, not the completed design.
+- Home: rotating feature cards with manual controls, touch swipe, avatar picker,
+  featured programs, accessible FAQs, and app downloads.
+- Programs: topic filters and ten individually addressable program pages with
+  actual day-by-day outlines and expressive mascot portraits.
+- Our story, privacy, account deletion, and a custom 404.
+- Motion pauses when the hero leaves view, the tab is hidden, or the carousel is
+  hovered or focused. Reduced motion disables autoplay and movement. Keyboard
+  selections update immediately.
 
-1. Build a changing stack of four app feature cards: program, AI rehearsal,
-   practice, and a personal keepsake. Use readable excerpts of current app UI.
-2. Frame the stack with the actual illustrated avatars from `../sw-fe-m-2`.
-3. Place a short headline, audience explanation, and verified iOS/Android store
-   links below it. Include manual card controls and reduced-motion behavior.
-4. Compare paper and orange hero treatments; keep program discovery secondary
-   to app downloads.
+## Product sources
 
-See [the current brainstorm](docs/PROGRAMS-WEBSITE-RESTRUCTURE.md), particularly
-the 16 September direction update. `docs/OVERHAUL-BRIEF.md` is historical context.
+`src/content/programs.ts` contains website copy. `program-outlines.json` contains
+only public-facing day titles, extracted from the backend seeds. It does not
+include paid lesson content. To refresh the logo and outlines with both
+sibling repositories present:
 
-App references: `../sw-fe-m-2/app/design-system/`,
-`../sw-fe-m-2/app/components/UserAvatar.tsx`, and
-`../sw-fe-m-2/app/screens/Programs/`.
+```sh
+node scripts/sync-mobile-content.cjs
+```
 
-Font files are copied from the app's installed Inter distribution, under the
-SIL Open Font License included alongside them in `src/app/fonts/`.
+Program portraits live in `src/app/components/ProgramIllustration.tsx`. The
+twenty-character SVG cast is built from the approved illustration proof in
+`artwork/avatars/`. Every portrait uses the same head path and eye anchors, with
+separate hair, headwear, expression and collar layers. Portraits stop at the
+collar and shoulders. The art has transparent backgrounds and contains no
+embedded raster images.
+
+```sh
+npm run artwork:build
+```
+
+This exports the website's avatar and program SVGs plus a portable part catalogue
+at `artwork/avatars/export/parts.json`. Mobile sync also invokes this exporter,
+so it does not restore the former mobile artwork over the approved designs.
+The mobile app itself has not been migrated to this new cast yet. See
+`artwork/avatars/README.md` for the source structure and integration notes.
+
+Builds use the checked-in assets; sibling repositories are not required.
+The logo in `public/brand/mark.svg` and app icons come from
+`../sw-fe-m-2/app/assets/svg logos/` and the app's generated icon assets.
+The mark's viewBox is tightened for the website; path geometry is unchanged.
+Font licensing is included in `src/app/fonts/`.
+
+## Download configuration
+
+Google Play links use the verified `com.speechworks.app` listing. iOS is explicitly
+labelled coming soon until a verified public listing is configured. Set
+`NEXT_PUBLIC_APP_STORE_URL` to that URL before building to enable App Store links.
+The QR code points to `https://speechworks.app/#download` and is intended for the
+production domain after this redesign is published.
+
+## Archive
+
+- `main`: new program-led website.
+- `codex/obsolete-website-2026-09-16`: complete former website and redesign research,
+  preserved at `970b542a50479b665cc71e1e65640a616350c93e`.
+- `obsolete-sept-2026`: earlier archive, unchanged.
+
+The old clinical marketing components and forms remain on the archive branch.
+Privacy and account-deletion wording is preserved; those pages need a separate
+legal review if product-policy changes require updates.

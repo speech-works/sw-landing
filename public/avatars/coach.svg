@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="#242329" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="coach-encouraging-title coach-encouraging-description"><title id="coach-encouraging-title">Speechworks coach avatar</title><desc id="coach-encouraging-description">Football coach with a green cap, sideline headset and zipped training collar; encouraging expression. Head and collar only.</desc><defs>
+    <linearGradient id="coach-encouraging-skin" x1="84" y1="144" x2="251" y2="234" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#985F39" />
+      <stop offset=".55" stop-color="#A36A42" />
+      <stop offset="1" stop-color="#AC7249" />
+    </linearGradient>
+    <linearGradient id="coach-encouraging-hair" x1="151" y1="43" x2="158" y2="133" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#493225" />
+      <stop offset=".5" stop-color="#533B2B" />
+      <stop offset="1" stop-color="#33251E" />
+    </linearGradient>
+    <linearGradient id="coach-encouraging-mint" x1="155" y1="20" x2="162" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B5F3D6" />
+      <stop offset=".55" stop-color="#AEF0D2" />
+      <stop offset="1" stop-color="#ABEDCF" />
+    </linearGradient>
+    <linearGradient id="coach-encouraging-ear-cushion" x1="35" y1="147" x2="62" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#309775" />
+      <stop offset="1" stop-color="#349778" />
+    </linearGradient>
+    <linearGradient id="coach-encouraging-collar-fabric" x1="99" y1="244" x2="112" y2="301" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18344F" />
+      <stop offset="1" stop-color="#1D3959" />
+    </linearGradient>
+    <clipPath id="coach-encouraging-hair-boundary">
+      <path d="M60.5 131.2C68.5 80.1 106.6 44 158.6 44.3C210.7 44.5 247.6 79.4 255.4 131.1C251.6 116.7 232 107 212.6 106.6C195.2 105.5 177.9 111 158.3 113.8C139 117 119.2 116.9 99.2 118.3C82 119.7 69.5 124.2 60.5 131.2Z" />
+    </clipPath>
+  <clipPath id="coach-encouraging-head-clip"><path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z"/></clipPath><clipPath id="coach-encouraging-confident-eyes"><path d="M90 158L238 148L238 199L90 199Z"/></clipPath><clipPath id="coach-encouraging-soft-lids"><path d="M90 160Q114 149 139 157L139 199L90 199ZM185 157Q210 145 236 153L236 199L185 199Z"/></clipPath></defs>
+
+  
+  <g id="coach-encouraging-head">
+    <path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z" fill="url(#coach-encouraging-skin)" stroke-width="4" />
+  </g>
+
+  <g id="coach-encouraging-hair-front"><path d="M50 151C43 145 42 133 46 119L60 116C58 83 95 50 140 47C185 40 240 63 254 112L269 125L264 147L254 166L245 122C228 124 207 116 198 100C194 112 182 119 169 113C149 105 142 87 132 85C123 112 100 131 77 134L65 154L60 167L52 160Z" fill="#A9542E" stroke-width="3.5" /><path d="M77 124C109 110 119 88 128 72M194 86C211 103 227 110 243 113" fill="none" stroke-width="3" stroke="#733B28"/></g><g clip-path="url(#coach-encouraging-head-clip)"><g id="coach-encouraging-facial-hair"><path d="M28 187C57 195 73 220 97 230C124 237 136 247 159 249C180 247 193 237 216 230C247 214 263 190 290 185L290 295L28 295Z" fill="#745D4D" stroke-width="0" opacity=".28"/><path d="M78 226L81 230M97 239L100 243M119 250L122 254M210 245L207 249M231 231L228 235" fill="none" stroke-width="1.7" stroke="#715647" opacity=".5"/></g></g><g id="coach-encouraging-collar"><path d="M55 246L47 278C77 294 120 305 157 306C197 306 239 294 266 276L258 244C220 260 192 266 157 273C123 267 86 257 55 246Z" fill="#E7DDC4" stroke-width="3.5" /><path d="M55 254C85 266 120 277 151 280L150 296C113 291 84 281 53 269Z" fill="#31554E" stroke-width="0" /><path d="M258 252C226 267 194 277 164 279L165 295C200 290 233 279 262 267Z" fill="#31554E" stroke-width="0" /><path d="M158 276L158 305" fill="none" stroke-width="3" /><path d="M153 282L163 282L163 291L153 291Z" fill="#B5B7A8" stroke-width="2" /></g><g id="coach-encouraging-age-details"><path d="M141 132Q158 127 175 131M81 180L75 184M82 187L77 192M241 178L247 181M242 185L247 190" fill="none" stroke-width="1.7" stroke="#71584B" opacity=".55"/></g><g id="coach-encouraging-expression-encouraging"><g id="coach-encouraging-eyebrows"><path d="M98 125L124 130" fill="none" stroke-width="4.5" /><path d="M197 129Q212 119 225 122" fill="none" stroke-width="4.5" /></g><g id="coach-encouraging-eyes">
+      <path id="coach-encouraging-eye-white-left" d="M114.5 143.1C125.2 143 134.4 153.4 135.5 166.6C136.7 180.6 128.6 190.5 117.7 191.7C105.6 193.4 94 184.7 93.3 170.8C92.5 157.7 102.1 143.7 114.5 143.1Z" fill="#FEFEFD" stroke-width="3.5" />
+      <g transform="translate(-10 -1)"><path d="M123.7 153.8C128.5 152.2 132.3 154.8 133.8 158.2C136.4 166.2 135.4 174.6 132 180.1C130.8 182.1 129 183.8 125.9 184.3C118.7 184.9 114.8 177.4 114.6 167.7L114.5 164.2C118.6 164.3 117.9 160 115.4 159.5C117.1 156.9 120.1 154.7 123.7 153.8Z" fill="#19191F" stroke="none" /></g>
+      <path id="coach-encouraging-eye-white-right" d="M211.1 140.8C223.5 141 231.6 153 230.5 167.4C229.5 181.7 221.6 191.4 210.1 191.5C197.6 191.7 189 182.1 189.1 169C189 155.7 198.6 140.2 211.1 140.8Z" fill="#FEFEFD" stroke-width="3.5" />
+      <g transform="translate(-10 -1)"><path d="M222 152.1C224.4 152 227.2 153.2 228.8 155.4C231.2 164 229.9 174.5 225.4 181.1C224.9 181.4 224 182.2 222.3 182.3C214.6 182.6 210 174.8 210.1 166.1L210.2 161.2C214.1 161.4 214 157.5 211.7 156.7C214.1 153.8 217.8 152.2 222 152.1Z" fill="#19191F" stroke="none" /></g>
+    </g>
+    <path d="M141 214Q163 218 185 209C184 225 173 236 160 235C150 234 143 225 141 214Z" fill="#242127" stroke-width="2.5" /><path d="M147 218Q163 222 179 215L176 223Q161 227 149 222Z" fill="#FFF9EC" stroke-width="0" /><path d="M158 232Q167 225 177 228" fill="none" stroke-width="3" stroke="#DF8291"/></g><g transform="translate(0 -7)"><g id="coach-encouraging-headgear"><g id="coach-encouraging-coach-cap"><path d="M51 108C55 53 94 21 145 18C190 13 236 44 244 83L269 102C222 121 176 126 146 118C118 112 83 107 51 108Z" fill="#31554E" stroke-width="3.5" /><path d="M145 19L117 96L203 82C186 48 163 31 145 19Z" fill="#E3D9B9" stroke-width="3.5" /><path d="M40 108C78 80 131 79 171 86C211 61 257 67 276 85C285 95 279 111 265 119C274 98 251 90 223 99C191 112 181 128 157 131C122 134 72 120 40 108Z" fill="#416B60" stroke-width="3.5" /></g><path d="M261 147C275 143 282 155 281 171L278 191C275 202 266 203 259 197L256 158Z" fill="#393F42" stroke-width="3.5" /><path d="M275 190C268 215 245 226 221 227" fill="none" stroke-width="4.5" /><path d="M213 221C207 221 205 226 210 230C215 234 227 231 228 226C229 222 220 220 213 221Z" fill="#393F42" stroke-width="3.5" /></g></g></svg>

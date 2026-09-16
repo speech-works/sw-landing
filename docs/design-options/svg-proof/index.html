@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speechworks · SVG likeness proof</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #252529; background: #f6f4ef; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { max-width: 1060px; padding: 48px 28px 60px; margin: auto; }
+    header { margin-bottom: 32px; }
+    .eyebrow { margin: 0 0 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #61635d; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 42px); line-height: 1.15; letter-spacing: -.045em; font-weight: 650; }
+    header p:last-child { margin: 12px 0 0; max-width: 660px; color: #5a5b56; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    figure { margin: 0; background: white; border: 1px solid #e0dfd8; border-radius: 14px; padding: 22px; }
+    figcaption { display: flex; justify-content: space-between; gap: 10px; font-size: 15px; font-weight: 600; }
+    figcaption small { font-size: 12px; font-weight: 400; color: #6c6d68; }
+    .large { display: block; width: 100%; max-width: 400px; margin: 18px auto 0; aspect-ratio: 320/310; }
+    .sizes { display: flex; align-items: end; justify-content: center; gap: 28px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #edede7; }
+    .sample { display: grid; justify-items: center; gap: 8px; color: #666760; font-size: 11px; }
+    .sample img { display: block; height: auto; }
+    .lower { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; margin-top: 28px; }
+    h2 { font-size: 22px; letter-spacing: -.025em; margin: 0 0 10px; }
+    p { margin: 0 0 14px; }
+    .overlay { position: relative; max-width: 350px; margin: 16px auto 0; aspect-ratio: 320/310; }
+    .overlay img { position: absolute; width: 100%; height: 100%; inset: 0; }
+    #vector-overlay { opacity: .5; }
+    label { display: block; margin-top: 12px; font-size: 13px; color: #55564f; }
+    input { width: 100%; min-height: 36px; accent-color: #205849; }
+    input:focus-visible, a:focus-visible { outline: 3px solid #24786b; outline-offset: 4px; }
+    .ends { display: flex; justify-content: space-between; font-size: 11px; color: #686961; }
+    .notes { padding: 14px 12px; }
+    .notes p { color: #55564f; }
+    .notes ul { padding-left: 20px; color: #55564f; margin-bottom: 22px; }
+    .notes li { margin-bottom: 8px; }
+    a { color: #1e594a; text-underline-offset: 4px; }
+    .note { font-size: 13px; margin-top: 24px; }
+    @media(max-width: 620px) { main { padding: 30px 16px; } .pair, .lower { grid-template-columns: 1fr; } figure { padding: 18px; } }
+    @media(prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Speechworks · Artwork proof 01</p>
+    <h1>From concept to editable SVG.</h1>
+    <p>The same mint-headphone portrait, at the same scale. Compare the outline, expression and collar before choosing whether to extend the style.</p>
+  </header>
+  <section class="pair" aria-label="Side-by-side likeness comparison">
+    <figure>
+      <figcaption>Concept reference <small>PNG crop</small></figcaption>
+      <img class="large" src="reference.png" width="320" height="310" alt="Original generated avatar with mint headphones and navy collar">
+      <div class="sizes" aria-label="Reference at avatar sizes">
+        <div class="sample"><img src="reference.png" width="48" height="47" alt=""><span>48px</span></div>
+        <div class="sample"><img src="reference.png" width="96" height="93" alt=""><span>96px</span></div>
+      </div>
+    </figure>
+    <figure>
+      <figcaption>Vector reconstruction <small>Editable SVG</small></figcaption>
+      <img class="large" src="headset-listening.svg" width="320" height="310" alt="Hand-drawn SVG reconstruction of the same avatar">
+      <div class="sizes" aria-label="SVG at avatar sizes">
+        <div class="sample"><img src="headset-listening.svg" width="48" height="47" alt=""><span>48px</span></div>
+        <div class="sample"><img src="headset-listening.svg" width="96" height="93" alt=""><span>96px</span></div>
+      </div>
+    </figure>
+  </section>
+  <section class="lower" aria-label="Inspect the reconstruction">
+    <figure>
+      <figcaption>Overlay check <small>Matching coordinates</small></figcaption>
+      <div class="overlay">
+        <img src="reference.png" width="320" height="310" alt="Reference underneath the adjustable vector overlay">
+        <img id="vector-overlay" src="headset-listening.svg" width="320" height="310" alt="">
+      </div>
+      <label for="opacity">Vector opacity: <output id="opacity-value" for="opacity">50%</output></label>
+      <input type="range" id="opacity" min="0" max="100" value="50">
+      <div class="ends"><span>Reference only</span><span>Vector over reference</span></div>
+    </figure>
+    <div class="notes">
+      <h2>Real vector parts.</h2>
+      <p>The SVG contains paths, shapes and gradients. It has no embedded bitmap, external image, font or script.</p>
+      <ul>
+        <li>Separate head, hair, headgear, expression and collar groups.</li>
+        <li>Transparent background and a scalable viewBox.</li>
+        <li>Soft colour variation is approximated with simple gradients.</li>
+      </ul>
+      <a href="headset-listening.svg" download>Download the SVG</a>
+      <p class="note">This is a likeness proof. Minor curve and shading differences remain; it is not a pixel-identical copy of the generated image. App integration and the rest of the cast come after review.</p>
+    </div>
+  </section>
+</main>
+<script>
+  const slider = document.getElementById('opacity');
+  slider.addEventListener('input', () => {
+    document.getElementById('vector-overlay').style.opacity = slider.value / 100;
+    document.getElementById('opacity-value').value = slider.value + '%';
+  });
+</script>
+</body>
+</html>

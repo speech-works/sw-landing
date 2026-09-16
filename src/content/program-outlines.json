@@ -1,0 +1,382 @@
+[
+  {
+    "key": "panic_button",
+    "days": 7,
+    "outline": [
+      {
+        "day": 1,
+        "title": "What the alarm is doing"
+      },
+      {
+        "day": 2,
+        "title": "Back in the room"
+      },
+      {
+        "day": 3,
+        "title": "What the buzz is for"
+      },
+      {
+        "day": 4,
+        "title": "The sentence underneath"
+      },
+      {
+        "day": 5,
+        "title": "Meeting it on purpose"
+      },
+      {
+        "day": 6,
+        "title": "The line you say first"
+      },
+      {
+        "day": 7,
+        "title": "Your Panic Card"
+      }
+    ]
+  },
+  {
+    "key": "understanding_your_voice",
+    "days": 7,
+    "outline": [
+      {
+        "day": 1,
+        "title": "The whole iceberg"
+      },
+      {
+        "day": 2,
+        "title": "You did not cause this"
+      },
+      {
+        "day": 3,
+        "title": "Why it comes and goes"
+      },
+      {
+        "day": 4,
+        "title": "What you were told"
+      },
+      {
+        "day": 5,
+        "title": "Inside a block"
+      },
+      {
+        "day": 6,
+        "title": "What a swap costs you"
+      },
+      {
+        "day": 7,
+        "title": "What actually helps"
+      }
+    ]
+  },
+  {
+    "key": "breaking_thought_traps",
+    "days": 7,
+    "outline": [
+      {
+        "day": 1,
+        "title": "A thought is not a fact"
+      },
+      {
+        "day": 2,
+        "title": "Mind reading"
+      },
+      {
+        "day": 3,
+        "title": "The spotlight"
+      },
+      {
+        "day": 4,
+        "title": "One day is not a rule"
+      },
+      {
+        "day": 5,
+        "title": "Run the experiment"
+      },
+      {
+        "day": 6,
+        "title": "Drop one trick"
+      },
+      {
+        "day": 7,
+        "title": "When it doesn't work"
+      }
+    ]
+  },
+  {
+    "key": "art_of_disclosure",
+    "days": 7,
+    "outline": [
+      {
+        "day": 1,
+        "title": "The sentence that answers the question"
+      },
+      {
+        "day": 2,
+        "title": "Three shapes for saying it"
+      },
+      {
+        "day": 3,
+        "title": "Say it to someone who already knows"
+      },
+      {
+        "day": 4,
+        "title": "Tell one stranger"
+      },
+      {
+        "day": 5,
+        "title": "When the reply is clumsy"
+      },
+      {
+        "day": 6,
+        "title": "Open with it"
+      },
+      {
+        "day": 7,
+        "title": "The first name on your list"
+      }
+    ]
+  },
+  {
+    "key": "word_swap",
+    "days": 7,
+    "outline": [
+      {
+        "day": 1,
+        "title": "The word you did not say"
+      },
+      {
+        "day": 2,
+        "title": "The second before"
+      },
+      {
+        "day": 3,
+        "title": "One word"
+      },
+      {
+        "day": 4,
+        "title": "The run-up"
+      },
+      {
+        "day": 5,
+        "title": "On purpose"
+      },
+      {
+        "day": 6,
+        "title": "Three of your five"
+      },
+      {
+        "day": 7,
+        "title": "Your word card"
+      }
+    ]
+  },
+  {
+    "key": "bouncing_back",
+    "days": 7,
+    "outline": [
+      {
+        "day": 1,
+        "title": "The going over"
+      },
+      {
+        "day": 2,
+        "title": "What the body is still doing"
+      },
+      {
+        "day": 3,
+        "title": "What actually happened"
+      },
+      {
+        "day": 4,
+        "title": "Not the only one in the room"
+      },
+      {
+        "day": 5,
+        "title": "What you would say to a friend"
+      },
+      {
+        "day": 6,
+        "title": "One review, with an end on it"
+      },
+      {
+        "day": 7,
+        "title": "Your reset routine"
+      }
+    ]
+  },
+  {
+    "key": "dating_intimacy",
+    "days": 7,
+    "outline": [
+      {
+        "day": 1,
+        "title": "When you cannot plan what to say"
+      },
+      {
+        "day": 2,
+        "title": "Saying it out loud"
+      },
+      {
+        "day": 3,
+        "title": "Say it your way, or not at all"
+      },
+      {
+        "day": 4,
+        "title": "The rejection you're picturing"
+      },
+      {
+        "day": 5,
+        "title": "What you think they're thinking"
+      },
+      {
+        "day": 6,
+        "title": "When they finish it for you"
+      },
+      {
+        "day": 7,
+        "title": "Past the first date"
+      }
+    ]
+  },
+  {
+    "key": "interview_ready",
+    "days": 14,
+    "outline": [
+      {
+        "day": 1,
+        "title": "The interview you're actually facing"
+      },
+      {
+        "day": 2,
+        "title": "The first call"
+      },
+      {
+        "day": 3,
+        "title": "\"Tell me about yourself\""
+      },
+      {
+        "day": 4,
+        "title": "Do you tell them?"
+      },
+      {
+        "day": 5,
+        "title": "Hearing yourself say it"
+      },
+      {
+        "day": 6,
+        "title": "The hiring manager"
+      },
+      {
+        "day": 7,
+        "title": "The whole thing, once"
+      },
+      {
+        "day": 8,
+        "title": "The long answers"
+      },
+      {
+        "day": 9,
+        "title": "What you think they are thinking"
+      },
+      {
+        "day": 10,
+        "title": "The word you nearly swapped"
+      },
+      {
+        "day": 11,
+        "title": "The one who is in a hurry"
+      },
+      {
+        "day": 12,
+        "title": "The second full run"
+      },
+      {
+        "day": 13,
+        "title": "The panel"
+      },
+      {
+        "day": 14,
+        "title": "The first one on your list"
+      }
+    ]
+  },
+  {
+    "key": "hard_conversations",
+    "days": 9,
+    "outline": [
+      {
+        "day": 1,
+        "title": "The calls you put off"
+      },
+      {
+        "day": 2,
+        "title": "Explaining the problem"
+      },
+      {
+        "day": 3,
+        "title": "When the first answer is no"
+      },
+      {
+        "day": 4,
+        "title": "Saying no"
+      },
+      {
+        "day": 5,
+        "title": "A friendly call with no plan"
+      },
+      {
+        "day": 6,
+        "title": "Halfway"
+      },
+      {
+        "day": 7,
+        "title": "The call that matters"
+      },
+      {
+        "day": 8,
+        "title": "The awkward one"
+      },
+      {
+        "day": 9,
+        "title": "Your one real call"
+      }
+    ]
+  },
+  {
+    "key": "speech_toolkit",
+    "days": 8,
+    "outline": [
+      {
+        "day": 1,
+        "title": "What you already do"
+      },
+      {
+        "day": 2,
+        "title": "Start soft"
+      },
+      {
+        "day": 3,
+        "title": "Keep it moving"
+      },
+      {
+        "day": 4,
+        "title": "The pause is yours"
+      },
+      {
+        "day": 5,
+        "title": "One chunk at a time"
+      },
+      {
+        "day": 6,
+        "title": "When it happens anyway"
+      },
+      {
+        "day": 7,
+        "title": "The extra moves you don't need"
+      },
+      {
+        "day": 8,
+        "title": "Your kit"
+      }
+    ]
+  }
+]

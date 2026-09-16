@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="#242329" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="pigtails-gleeful-title pigtails-gleeful-description"><title id="pigtails-gleeful-title">Speechworks pigtails avatar</title><desc id="pigtails-gleeful-description">Jolly blonde girl with high pigtails, rose ribbons and a rounded collar; gleeful expression. Head and collar only.</desc><defs>
+    <linearGradient id="pigtails-gleeful-skin" x1="84" y1="144" x2="251" y2="234" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F1D3BA" />
+      <stop offset=".55" stop-color="#F3D9C4" />
+      <stop offset="1" stop-color="#F5DECD" />
+    </linearGradient>
+    <linearGradient id="pigtails-gleeful-hair" x1="151" y1="43" x2="158" y2="133" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#493225" />
+      <stop offset=".5" stop-color="#533B2B" />
+      <stop offset="1" stop-color="#33251E" />
+    </linearGradient>
+    <linearGradient id="pigtails-gleeful-mint" x1="155" y1="20" x2="162" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B5F3D6" />
+      <stop offset=".55" stop-color="#AEF0D2" />
+      <stop offset="1" stop-color="#ABEDCF" />
+    </linearGradient>
+    <linearGradient id="pigtails-gleeful-ear-cushion" x1="35" y1="147" x2="62" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#309775" />
+      <stop offset="1" stop-color="#349778" />
+    </linearGradient>
+    <linearGradient id="pigtails-gleeful-collar-fabric" x1="99" y1="244" x2="112" y2="301" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18344F" />
+      <stop offset="1" stop-color="#1D3959" />
+    </linearGradient>
+    <clipPath id="pigtails-gleeful-hair-boundary">
+      <path d="M60.5 131.2C68.5 80.1 106.6 44 158.6 44.3C210.7 44.5 247.6 79.4 255.4 131.1C251.6 116.7 232 107 212.6 106.6C195.2 105.5 177.9 111 158.3 113.8C139 117 119.2 116.9 99.2 118.3C82 119.7 69.5 124.2 60.5 131.2Z" />
+    </clipPath>
+  <clipPath id="pigtails-gleeful-head-clip"><path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z"/></clipPath><clipPath id="pigtails-gleeful-confident-eyes"><path d="M90 158L238 148L238 199L90 199Z"/></clipPath><clipPath id="pigtails-gleeful-soft-lids"><path d="M90 160Q114 149 139 157L139 199L90 199ZM185 157Q210 145 236 153L236 199L185 199Z"/></clipPath></defs>
+
+  
+  <g id="pigtails-gleeful-hair-back"><path d="M80 100C61 116 31 108 21 82C13 62 15 30 28 23C44 14 61 30 65 48C69 64 90 68 94 86Z" fill="#F4D375" stroke-width="3.5" /><path d="M234 100C254 116 284 107 296 82C305 62 305 33 294 25C279 14 260 29 256 48C252 65 230 68 223 86Z" fill="#F4D375" stroke-width="3.5" /><path d="M30 43C26 65 43 89 62 96M48 42C49 63 59 72 73 83M288 45C291 66 274 89 252 96M272 44C269 63 258 74 247 84" fill="none" stroke-width="3" stroke="#CAAA56"/></g><g id="pigtails-gleeful-head">
+    <path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z" fill="url(#pigtails-gleeful-skin)" stroke-width="4" />
+  </g>
+
+  <g id="pigtails-gleeful-hair-front"><path d="M50 144C44 93 76 51 118 37C143 25 178 28 203 42C241 48 266 90 265 143C241 131 225 113 214 96C204 115 189 123 174 115C160 105 151 86 147 70C133 105 114 129 95 126L72 119L58 148Z" fill="#F4D375" stroke-width="3.5" /><path d="M72 113C103 93 122 69 127 49M163 48C176 79 192 97 205 103M216 57C233 71 246 95 251 117" fill="none" stroke-width="2.7" stroke="#CCAB55"/></g><g id="pigtails-gleeful-collar"><path d="M54 246C94 260 125 267 155 272C181 268 221 259 255 245L272 276C240 295 190 305 157 306C114 303 71 291 40 274Z" fill="#D987A2" stroke-width="3.5" /><path d="M62 248C89 258 124 266 156 272C145 294 123 295 98 282L51 263Z" fill="#FFF4E4" stroke-width="3.5" /><path d="M156 272C188 267 222 257 247 248L261 263C227 288 189 300 156 272Z" fill="#FFF4E4" stroke-width="3.5" /><circle cx="158" cy="299" r="3" fill="#F4D6C8"/></g><g id="pigtails-gleeful-expression-gleeful"><g id="pigtails-gleeful-eyebrows"><path d="M98 124Q112 115 126 122" fill="none" stroke-width="4.5" /><path d="M197 119Q211 108 224 118" fill="none" stroke-width="4.5" /></g><g id="pigtails-gleeful-eyes">
+      <path id="pigtails-gleeful-eye-white-left" d="M114.5 143.1C125.2 143 134.4 153.4 135.5 166.6C136.7 180.6 128.6 190.5 117.7 191.7C105.6 193.4 94 184.7 93.3 170.8C92.5 157.7 102.1 143.7 114.5 143.1Z" fill="#FEFEFD" stroke-width="3.5" />
+      <g transform="translate(-5 -4)"><path d="M123.7 153.8C128.5 152.2 132.3 154.8 133.8 158.2C136.4 166.2 135.4 174.6 132 180.1C130.8 182.1 129 183.8 125.9 184.3C118.7 184.9 114.8 177.4 114.6 167.7L114.5 164.2C118.6 164.3 117.9 160 115.4 159.5C117.1 156.9 120.1 154.7 123.7 153.8Z" fill="#19191F" stroke="none" /></g>
+      <path id="pigtails-gleeful-eye-white-right" d="M211.1 140.8C223.5 141 231.6 153 230.5 167.4C229.5 181.7 221.6 191.4 210.1 191.5C197.6 191.7 189 182.1 189.1 169C189 155.7 198.6 140.2 211.1 140.8Z" fill="#FEFEFD" stroke-width="3.5" />
+      <g transform="translate(-5 -4)"><path d="M222 152.1C224.4 152 227.2 153.2 228.8 155.4C231.2 164 229.9 174.5 225.4 181.1C224.9 181.4 224 182.2 222.3 182.3C214.6 182.6 210 174.8 210.1 166.1L210.2 161.2C214.1 161.4 214 157.5 211.7 156.7C214.1 153.8 217.8 152.2 222 152.1Z" fill="#19191F" stroke="none" /></g>
+    </g>
+    <path d="M95 151L90 145M96 147L94 140M228 149L234 143M226 144L230 137" fill="none" stroke-width="2.6" /><path d="M137 211C151 217 173 213 190 202C190 227 178 243 164 244C149 244 138 228 137 211Z" fill="#252129" stroke-width="2.5" /><path d="M144 217C158 222 173 215 182 211L181 220C169 226 156 228 146 222Z" fill="#FFF8EB" stroke-width="0" /><path d="M154 237C162 229 174 228 182 232C175 243 163 246 154 237Z" fill="#EE86A0" stroke-width="0" /></g><g id="pigtails-gleeful-headgear"><path d="M74 88C55 74 46 70 43 79L46 96C49 104 63 98 74 95Z" fill="#E985A3" stroke-width="3.5" /><path d="M75 88C89 72 99 75 97 87L89 103Z" fill="#ED9CB4" stroke-width="3.5" /><circle cx="76" cy="91" r="7" fill="#F5B0C5"/><path d="M242 86C224 73 214 79 220 91L231 103Z" fill="#E985A3" stroke-width="3.5" /><path d="M244 87C258 72 274 73 271 88L264 101Z" fill="#ED9CB4" stroke-width="3.5" /><circle cx="242" cy="91" r="7" fill="#F5B0C5"/></g></svg>

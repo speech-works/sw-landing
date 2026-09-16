@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="#242329" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="panic_button-relieved-title panic_button-relieved-description"><title id="panic_button-relieved-title">Speechworks beanie avatar</title><desc id="panic_button-relieved-description">Blue beanie and moss roll neck; relieved expression. Head and collar only.</desc><defs>
+    <linearGradient id="panic_button-relieved-skin" x1="84" y1="144" x2="251" y2="234" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5BC91" />
+      <stop offset=".55" stop-color="#F7C197" />
+      <stop offset="1" stop-color="#F8C79F" />
+    </linearGradient>
+    <linearGradient id="panic_button-relieved-hair" x1="151" y1="43" x2="158" y2="133" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#493225" />
+      <stop offset=".5" stop-color="#533B2B" />
+      <stop offset="1" stop-color="#33251E" />
+    </linearGradient>
+    <linearGradient id="panic_button-relieved-mint" x1="155" y1="20" x2="162" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B5F3D6" />
+      <stop offset=".55" stop-color="#AEF0D2" />
+      <stop offset="1" stop-color="#ABEDCF" />
+    </linearGradient>
+    <linearGradient id="panic_button-relieved-ear-cushion" x1="35" y1="147" x2="62" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#309775" />
+      <stop offset="1" stop-color="#349778" />
+    </linearGradient>
+    <linearGradient id="panic_button-relieved-collar-fabric" x1="99" y1="244" x2="112" y2="301" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18344F" />
+      <stop offset="1" stop-color="#1D3959" />
+    </linearGradient>
+    <clipPath id="panic_button-relieved-hair-boundary">
+      <path d="M60.5 131.2C68.5 80.1 106.6 44 158.6 44.3C210.7 44.5 247.6 79.4 255.4 131.1C251.6 116.7 232 107 212.6 106.6C195.2 105.5 177.9 111 158.3 113.8C139 117 119.2 116.9 99.2 118.3C82 119.7 69.5 124.2 60.5 131.2Z" />
+    </clipPath>
+  <clipPath id="panic_button-relieved-head-clip"><path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z"/></clipPath><clipPath id="panic_button-relieved-confident-eyes"><path d="M90 158L238 148L238 199L90 199Z"/></clipPath><clipPath id="panic_button-relieved-soft-lids"><path d="M90 160Q114 149 139 157L139 199L90 199ZM185 157Q210 145 236 153L236 199L185 199Z"/></clipPath></defs>
+
+  
+  <g id="panic_button-relieved-head">
+    <path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z" fill="url(#panic_button-relieved-skin)" stroke-width="4" />
+  </g>
+
+  <g id="panic_button-relieved-hair-front"><path d="M50 151C43 145 42 133 46 119L60 116C58 83 95 50 140 47C185 40 240 63 254 112L269 125L264 147L254 166L245 122C228 124 207 116 198 100C194 112 182 119 169 113C149 105 142 87 132 85C123 112 100 131 77 134L65 154L60 167L52 160Z" fill="#A9542E" stroke-width="3.5" /><path d="M77 124C109 110 119 88 128 72M194 86C211 103 227 110 243 113" fill="none" stroke-width="3" stroke="#733B28"/></g><g id="panic_button-relieved-collar"><path d="M53 248C120 258 203 257 261 247L270 289C210 309 107 310 44 288Z" fill="#718247" stroke-width="3.5" /><path d="M61 252L59 290M82 256L82 296M107 257L107 301M133 259L133 303M159 259L159 303M185 258L185 303M211 256L212 299M235 253L238 294M256 251L262 288" fill="none" stroke-width="2.5" stroke="#47572F"/></g><g id="panic_button-relieved-expression-relieved"><g id="panic_button-relieved-eyebrows"><path d="M101 130Q111 124 122 128" fill="none" stroke-width="4.5" /><path d="M197 126Q210 122 221 128" fill="none" stroke-width="4.5" /></g><g id="panic_button-relieved-eyes"><path d="M95 170C101 151 124 150 134 167M191 168C200 150 221 150 232 166" fill="none" stroke-width="5" /></g><g id="panic_button-relieved-mouth"><path d="M143 221C152 232 172 234 181 218" fill="none" stroke-width="4.7" /></g></g><g transform="translate(0 -6)"><g id="panic_button-relieved-headgear"><path d="M43 117C43 49 88 17 152 17C214 17 265 57 271 118L259 143C223 114 191 99 163 95C124 101 87 117 49 148Z" fill="#377CB5" stroke-width="3.5" /><path d="M58 112L53 142M86 51L90 126M127 25L135 108M166 21L181 104M211 39L222 118M249 73L257 137" fill="none" stroke-width="3.2" stroke="#24527F"/><path d="M43 118C119 72 193 72 270 119L266 146C183 101 122 106 47 151Z" fill="#3D82BC" stroke-width="3.5" /><path d="M83 103L85 130M126 89L130 113M171 88L175 113M216 100L219 128" fill="none" stroke-width="3" stroke="#24527F"/></g></g></svg>

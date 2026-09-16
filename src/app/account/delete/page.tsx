@@ -7,7 +7,7 @@ import Footer from "@/app/components/Footer";
 const CONTACT_EMAIL = "contact@speechworks.in";
 
 export const metadata: Metadata = {
-  title: "Delete Your Account & Data | Speechworks",
+  title: "Delete Your Account & Data",
   description:
     "How to delete your Speechworks account and all associated data, including voice recordings, progress, and assessments, from inside the app or by request.",
   alternates: { canonical: "https://speechworks.app/account/delete" },
@@ -16,15 +16,11 @@ export const metadata: Metadata = {
 
 export default function DeleteAccountPage() {
   return (
-    <main className="relative min-h-dvh overflow-clip bg-[#FFF5F0]">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(70%_100%_at_50%_0%,rgba(242,128,68,0.12),transparent_70%)]"
-      />
+    <main className="relative min-h-dvh overflow-clip bg-[var(--paper)]">
 
       <Navbar />
 
-      <article className="relative mx-auto max-w-3xl px-6 pt-28 pb-12 md:pt-36 md:pb-16">
+      <article id="main-content" className="relative mx-auto max-w-3xl px-6 pt-12 pb-12 md:pt-16 md:pb-16">
         <span className="inline-flex items-center gap-2 rounded-full border border-[#F28044]/20 bg-white/70 px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.22em] text-[#D9692E] shadow-sm backdrop-blur">
           Account &amp; Data Deletion
         </span>

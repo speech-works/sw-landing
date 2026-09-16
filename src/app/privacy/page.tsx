@@ -9,7 +9,7 @@ const LAST_UPDATED = "June 11, 2026";
 const CONTACT_EMAIL = "contact@speechworks.in";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Speechworks",
+  title: "Privacy Policy",
   description:
     "How the Speechworks app collects, uses, shares, and protects your information, including voice recordings and speech/health-related data.",
   alternates: { canonical: "https://speechworks.app/privacy" },
@@ -54,19 +54,13 @@ function Section({
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="relative min-h-dvh overflow-clip bg-[#FFF5F0]">
-      {/* Ambient brand glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(70%_100%_at_50%_0%,rgba(242,128,68,0.12),transparent_70%)]"
-      />
+    <main className="relative min-h-dvh overflow-clip bg-[var(--paper)]">
 
       <Navbar />
 
-      <article className="relative mx-auto max-w-3xl px-6 pt-28 pb-12 md:pt-36 md:pb-16">
+      <article id="main-content" className="relative mx-auto max-w-3xl px-6 pt-12 pb-12 md:pt-16 md:pb-16">
         <span className="inline-flex items-center gap-2 rounded-full border border-[#F28044]/20 bg-white/70 px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.22em] text-[#D9692E] shadow-sm backdrop-blur">
           <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F28044] opacity-60" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#F28044]" />
           </span>
           Privacy

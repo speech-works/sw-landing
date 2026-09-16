@@ -1,0 +1,45 @@
+/* GSAP owns entrance opacity and independent translation. CSS owns feedback. */
+[data-motion-ready="true"] { translate: 0 var(--reveal-y, 0px); }
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-input="keyboard"]) { scroll-behavior: smooth; }
+  .site-shell :is(a, button, summary) {
+    transition: scale 140ms var(--ease-out), transform 180ms var(--ease-out),
+      background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+  }
+  .site-shell :is(a, button, summary):active { scale: .97; }
+  .site-shell .pressable:active { transform: none; }
+  .faq-list summary svg { transition: transform 220ms var(--ease-out); }
+  .faq-list details[data-expanded="true"] summary svg { transform: rotate(45deg); }
+  .faq-list details[data-expanded="false"] summary svg { transform: rotate(0); }
+  .site-shell :is(.text-link, .button, .hero-explore, .breadcrumb) svg {
+    transition: transform 180ms var(--ease-out);
+  }
+  .choice-dot { transition: transform 180ms var(--ease-out), background-color 180ms ease; }
+  .deck-choice[aria-pressed="true"] .choice-dot { transform: scale(1.2); }
+  .avatar-option { transition: transform 180ms var(--ease-out), scale 140ms var(--ease-out), background-color 180ms ease, border-color 180ms ease; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .site-shell .nav-link { position: relative; }
+  .site-shell .nav-link::after {
+    content: ""; position: absolute; bottom: 7px; left: 0; right: 0;
+    height: 1.5px; background: currentColor;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 180ms var(--ease-out);
+  }
+  .site-shell .nav-link:hover::after { transform: scaleX(1); }
+  .site-shell :is(.text-link, .button, .hero-explore):hover svg { transform: translate(2px, -2px); }
+  .site-shell .breadcrumb:hover svg { transform: translateX(-3px); }
+  .site-shell .store-badge[href]:hover { transform: translateY(-3px); }
+  .site-shell .filter-button:hover { border-color: var(--ink); }
+}
+/* Keyboard activation stays immediate, including content reached with Tab. */
+html[data-input="keyboard"] .site-shell :is(a, button, summary, summary svg) {
+  transition: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-motion-ready] { opacity: 1 !important; translate: none !important; }
+  .site-shell :is(a, button, summary) { scale: 1 !important; }
+}
+@media print {
+  [data-motion-ready] { opacity: 1 !important; translate: none !important; }
+}

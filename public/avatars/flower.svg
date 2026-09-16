@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="#242329" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="flower-laughing-title flower-laughing-description"><title id="flower-laughing-title">Speechworks flower avatar</title><desc id="flower-laughing-description">Wavy hair, coral bandana and navy bow tie; laughing expression. Head and collar only.</desc><defs>
+    <linearGradient id="flower-laughing-skin" x1="84" y1="144" x2="251" y2="234" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F1BE80" />
+      <stop offset=".55" stop-color="#F2BE80" />
+      <stop offset="1" stop-color="#F4C386" />
+    </linearGradient>
+    <linearGradient id="flower-laughing-hair" x1="151" y1="43" x2="158" y2="133" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#493225" />
+      <stop offset=".5" stop-color="#533B2B" />
+      <stop offset="1" stop-color="#33251E" />
+    </linearGradient>
+    <linearGradient id="flower-laughing-mint" x1="155" y1="20" x2="162" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B5F3D6" />
+      <stop offset=".55" stop-color="#AEF0D2" />
+      <stop offset="1" stop-color="#ABEDCF" />
+    </linearGradient>
+    <linearGradient id="flower-laughing-ear-cushion" x1="35" y1="147" x2="62" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#309775" />
+      <stop offset="1" stop-color="#349778" />
+    </linearGradient>
+    <linearGradient id="flower-laughing-collar-fabric" x1="99" y1="244" x2="112" y2="301" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18344F" />
+      <stop offset="1" stop-color="#1D3959" />
+    </linearGradient>
+    <clipPath id="flower-laughing-hair-boundary">
+      <path d="M60.5 131.2C68.5 80.1 106.6 44 158.6 44.3C210.7 44.5 247.6 79.4 255.4 131.1C251.6 116.7 232 107 212.6 106.6C195.2 105.5 177.9 111 158.3 113.8C139 117 119.2 116.9 99.2 118.3C82 119.7 69.5 124.2 60.5 131.2Z" />
+    </clipPath>
+  <clipPath id="flower-laughing-head-clip"><path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z"/></clipPath><clipPath id="flower-laughing-confident-eyes"><path d="M90 158L238 148L238 199L90 199Z"/></clipPath><clipPath id="flower-laughing-soft-lids"><path d="M90 160Q114 149 139 157L139 199L90 199ZM185 157Q210 145 236 153L236 199L185 199Z"/></clipPath></defs>
+
+  
+  <g id="flower-laughing-hair-back"><path d="M56 250C34 261 18 246 26 233C7 223 17 211 25 200C10 188 19 174 25 164C12 149 29 134 32 124C18 109 37 96 42 88C39 71 56 62 71 64C77 42 103 44 119 39C159 25 224 38 246 61C268 65 278 85 271 101C290 114 288 128 280 140C298 157 286 171 281 183C299 201 288 216 286 224C302 242 281 254 258 250Z" fill="#573C2E" stroke-width="3.5" /><path d="M47 95C64 122 36 139 45 161C60 185 40 201 45 223M261 108C245 134 277 146 264 165C251 185 279 202 267 229" fill="none" stroke-width="4" stroke="#372A24"/></g><g id="flower-laughing-head">
+    <path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z" fill="url(#flower-laughing-skin)" stroke-width="4" />
+  </g>
+
+  <g id="flower-laughing-hair-front"><path d="M50 147C47 86 91 43 155 42C218 41 265 83 265 142C239 120 228 104 224 91C188 119 152 109 143 86C132 112 112 134 88 132L67 153Z" fill="#573C2E" stroke-width="3.5" /></g><g id="flower-laughing-collar"><path d="M54 245L41 273L111 301L155 272Z" fill="#FFF9EF" stroke-width="3.5" /><path d="M255 245L271 274L200 301L155 272Z" fill="#FFF9EF" stroke-width="3.5" /><path d="M151 279C138 271 123 268 120 276L121 295C123 303 142 295 151 290Z" fill="#1B3C57" stroke-width="3.5" /><path d="M162 279C175 271 190 268 192 276L191 295C189 303 172 295 162 290Z" fill="#1B3C57" stroke-width="3.5" /><path d="M152 276C147 276 146 282 147 289C147 296 153 298 159 296C166 295 167 289 166 282C166 277 159 274 152 276Z" fill="#234660" stroke-width="3.5" /></g><g id="flower-laughing-expression-laughing"><g id="flower-laughing-eyebrows"><path d="M101 126Q111 120 123 122" fill="none" stroke-width="4.5" /><path d="M196 123Q210 116 222 122" fill="none" stroke-width="4.5" /></g><g id="flower-laughing-eyes"><path d="M95 170C101 151 124 150 134 167M191 168C200 150 221 150 232 166" fill="none" stroke-width="5" /></g><path d="M139 208C151 212 177 208 190 201C191 223 179 241 164 243C149 244 140 230 139 208Z" fill="#201D24" stroke-width="3" /><path d="M145 214C159 216 172 212 183 209L180 217C168 223 154 223 148 219Z" fill="#FFFFFF" stroke-width="0" /><path d="M151 234C159 223 172 225 182 233C175 242 161 245 151 234Z" fill="#EF7890" stroke-width="0" /></g><g id="flower-laughing-headgear"><path d="M48 104C79 51 176 33 247 91L255 108C185 57 105 66 48 122Z" fill="#EF7A61" stroke-width="3.5" /><path d="M219 72C206 56 196 34 196 15C221 22 237 43 239 64Z" fill="#EC755B" stroke-width="3.5" /><path d="M239 66C251 40 278 34 298 42C288 59 268 72 248 75Z" fill="#EF8066" stroke-width="3.5" /><path d="M240 66C256 75 270 99 269 113C251 108 237 91 233 76Z" fill="#E56B55" stroke-width="3.5" /><circle cx="235" cy="70" r="13" fill="#EF8066"/></g></svg>
