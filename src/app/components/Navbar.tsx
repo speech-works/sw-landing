@@ -1,10 +1,11 @@
-"use client";
+import Link from "next/link";
 
-import { Navbar as ChromeNavbar } from "@speech-works/web-chrome";
-import { useChromeConfig } from "./useChromeConfig";
-
-// Thin wrapper around the shared @speech-works/web-chrome Navbar. Kept at this path
-// + as a default export so existing call sites need no changes.
 export default function Navbar() {
-  return <ChromeNavbar config={useChromeConfig()} />;
+  return (
+    <header className="site-header">
+      <Link href="/" className="wordmark" aria-label="Speechworks home">
+        Speechworks<span aria-hidden="true">.</span>
+      </Link>
+    </header>
+  );
 }

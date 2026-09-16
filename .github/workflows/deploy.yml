@@ -21,17 +21,9 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        # NODE_AUTH_TOKEN authenticates to GitHub Packages so the private
-        # @speech-works/web-chrome dependency (see .npmrc) can be installed in CI.
-        run: npm install
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+        run: npm ci
 
       - name: Build and export
-        env:
-          NEXT_PUBLIC_GOOGLE_FORM_ACTION_URL: ${{ vars.NEXT_PUBLIC_GOOGLE_FORM_ACTION_URL }}
-          NEXT_PUBLIC_GOOGLE_FORM_EMAIL_ENTRY_ID: ${{ vars.NEXT_PUBLIC_GOOGLE_FORM_EMAIL_ENTRY_ID }}
-          NEXT_PUBLIC_GOOGLE_FORM_SOURCE_ENTRY_ID: ${{ vars.NEXT_PUBLIC_GOOGLE_FORM_SOURCE_ENTRY_ID }}
         run: npm run build
 
       - name: Deploy to GitHub Pages

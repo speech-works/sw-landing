@@ -7,13 +7,10 @@
     "prebuild": "node ./scripts/check-no-dashes.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "lint:dashes": "node ./scripts/check-no-dashes.mjs",
-    "export:mockups": "node ./scripts/export-mobile-mockups.mjs",
-    "verify:mockups:alpha": "node ./scripts/verify-alpha-mockups.mjs"
+    "lint": "eslint src",
+    "lint:dashes": "node ./scripts/check-no-dashes.mjs"
   },
   "dependencies": {
-    "@speech-works/web-chrome": "^0.2.0",
     "next": "15.5.19",
     "react": "19.1.0",
     "react-dom": "19.1.0"

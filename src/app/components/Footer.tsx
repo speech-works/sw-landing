@@ -1,10 +1,14 @@
-"use client";
+import Link from "next/link";
 
-import { Footer as ChromeFooter } from "@speech-works/web-chrome";
-import { useChromeConfig } from "./useChromeConfig";
-
-// Thin wrapper around the shared @speech-works/web-chrome Footer. Kept at this path
-// + as a default export so existing call sites need no changes.
 export default function Footer() {
-  return <ChromeFooter config={useChromeConfig()} />;
+  return (
+    <footer className="site-footer">
+      <p>Speechworks</p>
+      <nav aria-label="Support and legal">
+        <a href="mailto:contact@speechworks.in">Contact</a>
+        <Link href="/privacy/">Privacy</Link>
+        <Link href="/account/delete/">Delete account</Link>
+      </nav>
+    </footer>
+  );
 }

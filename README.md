@@ -1,59 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Speechworks website
 
-## Getting Started
+A fresh starting point for the minimal, app-download-focused Speechworks website.
 
-First, run the development server:
+## Branches
 
-```bash
+- `main`: the new website foundation.
+- `codex/obsolete-website-2026-09-16`: the complete former website plus redesign research, preserved at `970b542a50479b665cc71e1e65640a616350c93e`.
+- `obsolete-sept-2026`: an earlier archive; left unchanged.
+
+The new foundation is deliberately small: Next.js 15, React 19, Tailwind 4,
+locally hosted Inter, app-aligned color tokens, a minimal homepage, and the
+existing privacy/account-deletion pages. Legal page text is unchanged.
+
+The old marketing components, clinical mockups, waitlist forms, media exports,
+scratch scripts, and accidentally tracked build cache live on the archive branch.
+
+## Run locally
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Check
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run lint
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Production builds statically export to `out/`. The existing GitHub Pages workflow
+deploys on pushes to `main`; local commits do not change the public website.
 
-## Learn More
+## Next implementation slice
 
-To learn more about Next.js, take a look at the following resources:
+The current homepage is a runnable foundation, not the completed design.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Build a changing stack of four app feature cards: program, AI rehearsal,
+   practice, and a personal keepsake. Use readable excerpts of current app UI.
+2. Frame the stack with the actual illustrated avatars from `../sw-fe-m-2`.
+3. Place a short headline, audience explanation, and verified iOS/Android store
+   links below it. Include manual card controls and reduced-motion behavior.
+4. Compare paper and orange hero treatments; keep program discovery secondary
+   to app downloads.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See [the current brainstorm](docs/PROGRAMS-WEBSITE-RESTRUCTURE.md), particularly
+the 16 September direction update. `docs/OVERHAUL-BRIEF.md` is historical context.
 
-## Deploy on Vercel
+App references: `../sw-fe-m-2/app/design-system/`,
+`../sw-fe-m-2/app/components/UserAvatar.tsx`, and
+`../sw-fe-m-2/app/screens/Programs/`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## Launch updates capture
-
-The `Get launch updates` section submits directly to Google Forms from the browser. This works with the site's GitHub Pages static export.
-
-- Set `NEXT_PUBLIC_GOOGLE_FORM_ACTION_URL` to your form's `formResponse` URL.
-- Set `NEXT_PUBLIC_GOOGLE_FORM_EMAIL_ENTRY_ID` to the Google Forms email field key such as `entry.380438183`.
-- Optional: set `NEXT_PUBLIC_GOOGLE_FORM_SOURCE_ENTRY_ID` if your form also has a source field.
-- See `.env.example` for the expected variables.
-
-### Google Form setup
-
-- Create a Google Form with an email field.
-- Copy the form's `formResponse` URL into `NEXT_PUBLIC_GOOGLE_FORM_ACTION_URL`.
-- To get the email entry ID, use Google Form's "Get pre-filled link" flow and copy the parameter name that looks like `entry.123456789`.
-
-### GitHub Pages via Actions
-
-- In GitHub, go to `Settings` → `Secrets and variables` → `Actions` → `Variables`.
-- Add `NEXT_PUBLIC_GOOGLE_FORM_ACTION_URL`
-- Add `NEXT_PUBLIC_GOOGLE_FORM_EMAIL_ENTRY_ID`
-- Optionally add `NEXT_PUBLIC_GOOGLE_FORM_SOURCE_ENTRY_ID`
-- The deploy workflow reads those variables at build time and bakes them into the static site.
+Font files are copied from the app's installed Inter distribution, under the
+SIL Open Font License included alongside them in `src/app/fonts/`.
