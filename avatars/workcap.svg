@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="#242329" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="workcap-easygoing-title workcap-easygoing-description"><title id="workcap-easygoing-title">Speechworks workcap avatar</title><desc id="workcap-easygoing-description">Sage cap, stubble and an open polo collar; easygoing expression. Head and collar only.</desc><defs>
+    <linearGradient id="workcap-easygoing-skin" x1="84" y1="144" x2="251" y2="234" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#CFA477" />
+      <stop offset=".55" stop-color="#D6AD81" />
+      <stop offset="1" stop-color="#DBB78D" />
+    </linearGradient>
+    <linearGradient id="workcap-easygoing-hair" x1="151" y1="43" x2="158" y2="133" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#493225" />
+      <stop offset=".5" stop-color="#533B2B" />
+      <stop offset="1" stop-color="#33251E" />
+    </linearGradient>
+    <linearGradient id="workcap-easygoing-mint" x1="155" y1="20" x2="162" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B5F3D6" />
+      <stop offset=".55" stop-color="#AEF0D2" />
+      <stop offset="1" stop-color="#ABEDCF" />
+    </linearGradient>
+    <linearGradient id="workcap-easygoing-ear-cushion" x1="35" y1="147" x2="62" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#309775" />
+      <stop offset="1" stop-color="#349778" />
+    </linearGradient>
+    <linearGradient id="workcap-easygoing-collar-fabric" x1="99" y1="244" x2="112" y2="301" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18344F" />
+      <stop offset="1" stop-color="#1D3959" />
+    </linearGradient>
+    <clipPath id="workcap-easygoing-hair-boundary">
+      <path d="M60.5 131.2C68.5 80.1 106.6 44 158.6 44.3C210.7 44.5 247.6 79.4 255.4 131.1C251.6 116.7 232 107 212.6 106.6C195.2 105.5 177.9 111 158.3 113.8C139 117 119.2 116.9 99.2 118.3C82 119.7 69.5 124.2 60.5 131.2Z" />
+    </clipPath>
+  <clipPath id="workcap-easygoing-head-clip"><path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z"/></clipPath><clipPath id="workcap-easygoing-confident-eyes"><path d="M90 158L238 148L238 199L90 199Z"/></clipPath><clipPath id="workcap-easygoing-soft-lids"><path d="M90 160Q114 149 139 157L139 199L90 199ZM185 157Q210 145 236 153L236 199L185 199Z"/></clipPath></defs>
+
+  
+  <g id="workcap-easygoing-collar">
+    <path id="workcap-easygoing-collar-left" d="M58.2 240.1L45.2 265.7C67.2 281.2 98.7 294.5 132.5 302.4L151.1 272.2C145.7 266.5 137.4 265.5 127 263C101.1 257.1 78.1 250.1 58.2 240.1Z" fill="url(#workcap-easygoing-collar-fabric)" stroke-width="4" />
+    <path id="workcap-easygoing-collar-right" d="M256.5 240.1L268.7 265.5C246.7 281.4 215.8 294.2 182 302.6L162.5 272C167 266.9 176.8 264.9 188 262.5C214 256.6 235 249.3 256.5 240.1Z" fill="url(#workcap-easygoing-collar-fabric)" stroke-width="4" />
+    <path d="M51.8 256.4C76.2 271.7 103.2 282.7 135.2 289.7L131.9 295.1C101.2 288 72.3 276.2 49.4 262.1Z" fill="#FAFCF9" stroke="none" />
+    <path d="M262.4 256.2C239.1 271.4 210.8 282.6 179.2 289.9L182.9 295.3C213.8 288 242.9 276.3 265.1 261.7Z" fill="#FAFCF9" stroke="none" />
+    <path d="M154.1 274.5L161.1 274.5" stroke-width="3" />
+    <ellipse cx="157" cy="296.4" rx="5.3" ry="5.5" fill="#BAB99D" stroke-width="3.4" />
+  </g>
+
+  
+  <g id="workcap-easygoing-head">
+    <path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z" fill="url(#workcap-easygoing-skin)" stroke-width="4" />
+  </g>
+
+  <g id="workcap-easygoing-hair-front"><path d="M50 151C43 145 42 133 46 119L60 116C58 83 95 50 140 47C185 40 240 63 254 112L269 125L264 147L254 166L245 122C228 124 207 116 198 100C194 112 182 119 169 113C149 105 142 87 132 85C123 112 100 131 77 134L65 154L60 167L52 160Z" fill="#A9542E" stroke-width="3.5" /><path d="M77 124C109 110 119 88 128 72M194 86C211 103 227 110 243 113" fill="none" stroke-width="3" stroke="#733B28"/></g><g clip-path="url(#workcap-easygoing-head-clip)"><g id="workcap-easygoing-facial-hair"><path d="M28 187C57 195 73 220 97 230C124 237 136 247 159 249C180 247 193 237 216 230C247 214 263 190 290 185L290 295L28 295Z" fill="#745D4D" stroke-width="0" opacity=".28"/><path d="M78 226L81 230M97 239L100 243M119 250L122 254M210 245L207 249M231 231L228 235" fill="none" stroke-width="1.7" stroke="#715647" opacity=".5"/></g></g><g id="workcap-easygoing-age-details"><path d="M141 132Q158 127 175 131M81 180L75 184M82 187L77 192M241 178L247 181M242 185L247 190" fill="none" stroke-width="1.7" stroke="#71584B" opacity=".55"/></g><g id="workcap-easygoing-expression-easygoing"><g id="workcap-easygoing-eyebrows"><path d="M99 128Q111 124 123 130" fill="none" stroke-width="4.5" /><path d="M196 133Q210 126 223 129" fill="none" stroke-width="4.5" /></g><g clip-path="url(#workcap-easygoing-soft-lids)"><g id="workcap-easygoing-eyes">
+      <path id="workcap-easygoing-eye-white-left" d="M114.5 143.1C125.2 143 134.4 153.4 135.5 166.6C136.7 180.6 128.6 190.5 117.7 191.7C105.6 193.4 94 184.7 93.3 170.8C92.5 157.7 102.1 143.7 114.5 143.1Z" fill="#FEFEFD" stroke-width="3.5" />
+      <g transform="translate(-16 2)"><path d="M123.7 153.8C128.5 152.2 132.3 154.8 133.8 158.2C136.4 166.2 135.4 174.6 132 180.1C130.8 182.1 129 183.8 125.9 184.3C118.7 184.9 114.8 177.4 114.6 167.7L114.5 164.2C118.6 164.3 117.9 160 115.4 159.5C117.1 156.9 120.1 154.7 123.7 153.8Z" fill="#19191F" stroke="none" /></g>
+      <path id="workcap-easygoing-eye-white-right" d="M211.1 140.8C223.5 141 231.6 153 230.5 167.4C229.5 181.7 221.6 191.4 210.1 191.5C197.6 191.7 189 182.1 189.1 169C189 155.7 198.6 140.2 211.1 140.8Z" fill="#FEFEFD" stroke-width="3.5" />
+      <g transform="translate(-16 2)"><path d="M222 152.1C224.4 152 227.2 153.2 228.8 155.4C231.2 164 229.9 174.5 225.4 181.1C224.9 181.4 224 182.2 222.3 182.3C214.6 182.6 210 174.8 210.1 166.1L210.2 161.2C214.1 161.4 214 157.5 211.7 156.7C214.1 153.8 217.8 152.2 222 152.1Z" fill="#19191F" stroke="none" /></g>
+    </g>
+    </g><path d="M94 158Q115 151 136 156M189 156Q210 147 232 153" fill="none" stroke-width="3.5" /><path d="M142 222C151 218 161 234 178 221" fill="none" stroke-width="4" /></g><g transform="translate(0 -7)"><g id="workcap-easygoing-headgear"><path d="M51 108C55 53 94 21 145 18C190 13 236 44 244 83L269 102C222 121 176 126 146 118C118 112 83 107 51 108Z" fill="#586E70" stroke-width="3.5" /><path d="M145 19L117 96L203 82C186 48 163 31 145 19Z" fill="#D8C8AA" stroke-width="3.5" /><path d="M40 108C78 80 131 79 171 86C211 61 257 67 276 85C285 95 279 111 265 119C274 98 251 90 223 99C191 112 181 128 157 131C122 134 72 120 40 108Z" fill="#6A8280" stroke-width="3.5" /></g></g></svg>

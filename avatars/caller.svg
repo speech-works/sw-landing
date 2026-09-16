@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="#242329" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="caller-speaking-title caller-speaking-description"><title id="caller-speaking-title">Speechworks communicator avatar</title><desc id="caller-speaking-description">Green microphone headset and shawl collar; speaking expression. Head and collar only.</desc><defs>
+    <linearGradient id="caller-speaking-skin" x1="84" y1="144" x2="251" y2="234" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#53382D" />
+      <stop offset=".55" stop-color="#5A3C30" />
+      <stop offset="1" stop-color="#654738" />
+    </linearGradient>
+    <linearGradient id="caller-speaking-hair" x1="151" y1="43" x2="158" y2="133" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#493225" />
+      <stop offset=".5" stop-color="#533B2B" />
+      <stop offset="1" stop-color="#33251E" />
+    </linearGradient>
+    <linearGradient id="caller-speaking-mint" x1="155" y1="20" x2="162" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B5F3D6" />
+      <stop offset=".55" stop-color="#AEF0D2" />
+      <stop offset="1" stop-color="#ABEDCF" />
+    </linearGradient>
+    <linearGradient id="caller-speaking-ear-cushion" x1="35" y1="147" x2="62" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#309775" />
+      <stop offset="1" stop-color="#349778" />
+    </linearGradient>
+    <linearGradient id="caller-speaking-collar-fabric" x1="99" y1="244" x2="112" y2="301" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18344F" />
+      <stop offset="1" stop-color="#1D3959" />
+    </linearGradient>
+    <clipPath id="caller-speaking-hair-boundary">
+      <path d="M60.5 131.2C68.5 80.1 106.6 44 158.6 44.3C210.7 44.5 247.6 79.4 255.4 131.1C251.6 116.7 232 107 212.6 106.6C195.2 105.5 177.9 111 158.3 113.8C139 117 119.2 116.9 99.2 118.3C82 119.7 69.5 124.2 60.5 131.2Z" />
+    </clipPath>
+  <clipPath id="caller-speaking-head-clip"><path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z"/></clipPath><clipPath id="caller-speaking-confident-eyes"><path d="M90 158L238 148L238 199L90 199Z"/></clipPath><clipPath id="caller-speaking-soft-lids"><path d="M90 160Q114 149 139 157L139 199L90 199ZM185 157Q210 145 236 153L236 199L185 199Z"/></clipPath></defs>
+
+  
+  <g id="caller-speaking-head">
+    <path d="M61 130.5C63 83 104 44 159 44C212 44 252 82 255 129L263.8 204.5C265 218.8 261.2 233.7 255.1 240.6C235 251.5 207.9 258.5 179.9 264.2C167.5 266.7 164.8 269.8 160.3 275C158.7 277.4 156.1 277.2 154.1 275C150.9 271 147 267.3 135.3 264.8C101.9 257.7 76.3 250.6 58.4 241.8C50.3 237.4 48.8 227.7 48.1 214.7L50.5 155Z" fill="url(#caller-speaking-skin)" stroke-width="4" />
+  </g>
+
+  <g id="caller-speaking-hair-front"><path d="M53 156C35 156 34 139 40 130C25 120 33 102 44 100C36 86 48 74 61 76C58 59 74 50 86 58C89 41 107 39 118 49C127 33 146 35 153 46C165 32 183 35 190 46C204 35 222 43 223 56C241 52 254 67 248 79C266 79 275 95 266 106C282 115 277 132 265 136C276 150 270 165 258 167L250 125C244 104 227 87 209 83C202 100 186 99 177 89C169 111 150 114 134 101C124 121 103 122 88 111C81 134 68 144 53 156Z" fill="#242123" stroke-width="3.5" /></g><g id="caller-speaking-collar"><path d="M55 245C80 255 111 262 139 268C150 274 155 290 151 306C115 304 69 291 42 276Z" fill="#E2D1A8" stroke-width="3.5" /><path d="M256 245C222 257 194 265 175 269C159 276 157 291 151 306C194 306 239 292 269 277Z" fill="#E9DABC" stroke-width="3.5" /><circle cx="168" cy="294" r="4.3" fill="#A99168"/></g><g id="caller-speaking-expression-speaking"><g id="caller-speaking-eyebrows"><path d="M98 128Q110 119 123 124" fill="none" stroke-width="4.5" /><path d="M198 121Q212 117 224 124" fill="none" stroke-width="4.5" /></g><g id="caller-speaking-eyes">
+      <path id="caller-speaking-eye-white-left" d="M114.5 143.1C125.2 143 134.4 153.4 135.5 166.6C136.7 180.6 128.6 190.5 117.7 191.7C105.6 193.4 94 184.7 93.3 170.8C92.5 157.7 102.1 143.7 114.5 143.1Z" fill="#FEFEFD" stroke-width="3.5" />
+      <path d="M123.7 153.8C128.5 152.2 132.3 154.8 133.8 158.2C136.4 166.2 135.4 174.6 132 180.1C130.8 182.1 129 183.8 125.9 184.3C118.7 184.9 114.8 177.4 114.6 167.7L114.5 164.2C118.6 164.3 117.9 160 115.4 159.5C117.1 156.9 120.1 154.7 123.7 153.8Z" fill="#19191F" stroke="none" />
+      <path id="caller-speaking-eye-white-right" d="M211.1 140.8C223.5 141 231.6 153 230.5 167.4C229.5 181.7 221.6 191.4 210.1 191.5C197.6 191.7 189 182.1 189.1 169C189 155.7 198.6 140.2 211.1 140.8Z" fill="#FEFEFD" stroke-width="3.5" />
+      <path d="M222 152.1C224.4 152 227.2 153.2 228.8 155.4C231.2 164 229.9 174.5 225.4 181.1C224.9 181.4 224 182.2 222.3 182.3C214.6 182.6 210 174.8 210.1 166.1L210.2 161.2C214.1 161.4 214 157.5 211.7 156.7C214.1 153.8 217.8 152.2 222 152.1Z" fill="#19191F" stroke="none" />
+    </g>
+    <path d="M144 208C153 210 170 210 183 206C184 224 174 239 163 239C152 239 144 224 144 208Z" fill="#201D24" stroke-width="2.5" /><path d="M153 229C159 221 170 223 176 231C169 240 159 238 153 229Z" fill="#F47E91" stroke-width="0" /></g><g id="caller-speaking-headgear"><path d="M42 147C36 77 83 28 157 27C230 27 278 76 276 149L263 153C263 81 223 42 158 42C93 42 52 81 54 150Z" fill="#427449" stroke-width="3.5" /><path d="M40 146C25 147 22 159 23 180L24 198C25 216 33 227 49 226L66 220L65 149Z" fill="#3C7659" stroke-width="3.5" /><path d="M272 145C288 146 293 159 292 179L291 201C290 218 282 227 266 227L250 220L250 149Z" fill="#487E59" stroke-width="3.5" /><path d="M40 156C31 159 32 196 38 208L48 208L48 157Z" fill="#2D6049" stroke-width="0" /><path d="M264 156L276 156C283 163 282 199 276 209L264 209Z" fill="#2D6049" stroke-width="0" /><path d="M281 205C274 226 254 237 223 239" fill="none" stroke-width="7" stroke="#242329"/><path d="M281 205C274 226 254 235 225 237" fill="none" stroke-width="3.3" stroke="#4D7656"/><path d="M217 231C211 230 205 234 206 239C207 246 216 248 223 244L229 240C232 234 225 230 217 231Z" fill="#242329" stroke-width="3.5" /></g></svg>

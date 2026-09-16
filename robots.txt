@@ -1,5 +1,4 @@
 User-Agent: *
 Allow: /
-Disallow: /capture/
 
 Sitemap: https://speechworks.app/sitemap.xml
