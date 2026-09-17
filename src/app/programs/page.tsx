@@ -2,14 +2,12 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProgramCatalog from "../components/ProgramCatalog";
 import DownloadSection from "../components/DownloadSection";
+import { socialMetadata } from "@/lib/site-metadata";
 export const metadata = {
-  title: "Find your program",
+  title: "Guided Programs for Adults Who Stutter",
   description:
     "Find your next step with guided programs for adults who stutter. Compare daily plans for interviews, phone calls, relationships, and understanding your speech, with new expert-curated tracks added regularly.",
-  openGraph: {
-    title: "Find your program | Speechworks",
-    description: "Compare guided programs for adults who stutter. Find a daily plan for interviews, phone calls, relationships, or understanding your speech, with new expert-curated tracks in active development.",
-  },
+  ...socialMetadata("Guided Programs for Adults Who Stutter | Speechworks", "Compare daily plans for interviews, phone calls, relationships, and understanding your stuttering. Read the outlines before you choose.", "/programs/", "programs"),
   alternates: { canonical: "/programs/" },
 };
 export default function Programs() {

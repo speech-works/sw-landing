@@ -7,6 +7,8 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ProgramIllustration from "../../components/ProgramIllustration";
 import DownloadSection from "../../components/DownloadSection";
+import ProgramTakeaway from "../../components/ProgramTakeaway";
+import { socialMetadata } from "@/lib/site-metadata";
 export const dynamicParams = false;
 export function generateStaticParams() {
   return programs.map(({ slug }) => ({ slug }));
@@ -17,13 +19,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const program = programs.find((item) => item.slug === slug);
   if (!program) return {};
   return {
-    title: program.title,
+    title: program.searchTitle,
     description: program.description,
     alternates: { canonical: `/programs/${slug}/` },
-    openGraph: {
-      title: `${program.title} | Speechworks`,
-      description: program.description,
-    },
+    ...socialMetadata(`${program.searchTitle} | Speechworks`, program.description, `/programs/${slug}/`, slug),
   };
 }
 export default async function ProgramPage({ params }: Props) {
@@ -48,6 +47,7 @@ export default async function ProgramPage({ params }: Props) {
               <a href="#download" className="button button-ink pressable">
                 Get this program in the app <ArrowUpRight size={17} />
               </a>
+              <p className="detail-purchase-note">Buy this program once. No subscription required. See current pricing in the app.</p>
             </div>
             <div className={`detail-art tone-${program.color}`}>
               <ProgramIllustration program={program.key} />
@@ -82,8 +82,9 @@ export default async function ProgramPage({ params }: Props) {
               ))}
             </ol>
           </section>
+          <ProgramTakeaway programKey={program.key} />
         </div>
-        <DownloadSection />
+        <DownloadSection programTitle={program.title} />
       </main>
       <Footer />
     </div>

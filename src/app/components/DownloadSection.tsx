@@ -1,8 +1,9 @@
 import Image from "next/image";
 import StoreButtons from "./StoreButtons";
 import Avatar from "./Avatar";
+import Link from "next/link";
 
-export default function DownloadSection() {
+export default function DownloadSection({ programTitle }: { programTitle?: string }) {
   return (
     <section
       className="download-section"
@@ -17,12 +18,19 @@ export default function DownloadSection() {
         </div>
         <h2 id="download-title">Get ready for your next conversation.</h2>
         <p>
-          Choose a conversation you want to prepare for. Download Speechworks to find your program and start the first lesson.
+          {programTitle
+            ? `Download Speechworks, then find ${programTitle} in the app. Check the current price and what is included before you buy.`
+            : "Choose a conversation you want to prepare for. Download Speechworks to find your program and see the current price before you buy."}
         </p>
         <StoreButtons />
         <p className="download-note">
           Download the app for free. Buy programs separately.
         </p>
+        <div className="download-reassurance">
+          <p>No subscription required to buy a program. Membership and extra AI call credits are optional purchases.</p>
+          <p>Miss a day? Continue when you return. New days open over time; completed lessons stay available.</p>
+          <Link href="/privacy/">Read how your data is handled <span aria-hidden="true">↗</span></Link>
+        </div>
       </div>
       <div className="download-qr" data-reveal>
         <div className="qr-paper">

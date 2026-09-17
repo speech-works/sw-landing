@@ -107,6 +107,122 @@
 .home-page .program-card-description { color: #24231f; opacity: 1; font-size: 14px; line-height: 1.6; }
 .home-page .program-card-link { font-size: 12px; }
 .home-page .programs-footnote { margin-top: 32px; font-size: 12px; color: #4d493d; }
+.home-page .program-steps { padding-block: 36px 24px; }
+.program-steps-heading h2 {
+  margin-top: 18px;
+  font-size: clamp(36px, 4.3vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -.055em;
+  font-weight: 800;
+}
+.program-steps-intro {
+  max-width: 66ch;
+  margin-top: 24px;
+  color: var(--ink-muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
+.program-steps-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  border-top: 1px solid #14131135;
+  padding: 24px 0 40px;
+}
+.program-steps-next p { max-width: 44ch; font-size: 16px; line-height: 1.75; color: var(--ink-muted); }
+.program-steps-next .button { flex-shrink: 0; gap: 22px; padding: 20px 28px; font-size: 15px; }
+.program-steps-list {
+  --road-gap: 56px;
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: var(--road-gap);
+  list-style: none;
+  margin: 70px 0 64px;
+  padding: 0;
+  isolation: isolate;
+}
+.program-steps-list li {
+  --milestone-color: #c6f35b;
+  position: relative;
+  display: grid;
+  grid-template-columns: 12% minmax(0, 1fr) 12%;
+  column-gap: 2%;
+  align-items: center;
+  min-width: 0;
+}
+.program-steps-list li:nth-child(2) { --milestone-color: #c3a3f3; }
+.program-steps-list li:nth-child(3) { --milestone-color: #94baff; }
+.program-steps-list .step-number {
+  position: relative;
+  z-index: 1;
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  width: min(100%, 116px);
+  aspect-ratio: .92;
+  font-size: clamp(30px, 3.6vw, 48px);
+  font-weight: 800;
+  letter-spacing: -.06em;
+  line-height: 1;
+}
+.program-steps-list .step-number::before,
+.program-steps-list .step-number::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  clip-path: polygon(50% 0, 100% 24%, 100% 76%, 50% 100%, 0 76%, 0 24%);
+}
+.program-steps-list .step-number::after { inset: 3px; background: var(--milestone-color); }
+.program-steps-list .step-number > span { position: relative; z-index: 1; }
+.program-steps-list li:nth-child(2) .step-number { grid-column: 3; }
+.program-step-card {
+  position: relative;
+  z-index: 1;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 170px;
+  border: 1.5px solid var(--ink);
+  border-radius: 25px;
+  padding: 28px 34px;
+  background: #fff9e9;
+  box-shadow: 5px 6px 0 var(--ink);
+}
+.program-step-card h3 { margin: 0; font-size: clamp(24px, 2.5vw, 34px); line-height: 1.15; font-weight: 800; letter-spacing: -.05em; }
+.program-step-card p { margin: 14px 0 0; color: var(--ink-muted); font-size: 18px; line-height: 1.7; }
+.program-road { position: absolute; z-index: 0; top: 50%; left: 0; width: 100%; height: calc(100% + var(--road-gap)); overflow: visible; pointer-events: none; }
+.program-road path { fill: none; vector-effect: non-scaling-stroke; }
+.program-road-outline { stroke: var(--ink); stroke-width: 34px; }
+.program-road-fill { stroke: var(--hero-colour); stroke-width: 30px; }
+.program-road-dashes { stroke: var(--ink); stroke-width: 1.5px; stroke-dasharray: 8 11; }
+.program-road-mobile { display: none; }
+.home-page .download-reassurance { margin-inline: auto; }
+@media (max-width: 700px) {
+  .program-steps-list { --road-gap: 28px; grid-auto-rows: auto; margin: 34px 0 38px; }
+  .program-steps-list li { grid-template-columns: 56px minmax(0, 1fr); gap: 16px; }
+  .program-steps-list .step-number { width: 56px; font-size: 26px; }
+  .program-steps-list .step-number::after { inset: 2px; }
+  .program-steps-list li:nth-child(2) .step-number { grid-column: 1; }
+  .program-step-card { padding: 22px; min-height: 0; border-radius: 18px; box-shadow: 3px 4px 0 var(--ink); }
+  .program-step-card h3 { font-size: 24px; }
+  .program-step-card p { font-size: 15px; line-height: 1.7; margin-top: 12px; }
+  .program-road-desktop { display: none; }
+  .program-road-mobile { display: block; left: 27.5px; width: 1px; }
+  .program-road-outline { stroke-width: 18px; }
+  .program-road-fill { stroke-width: 15px; }
+  .program-road-dashes { stroke-dasharray: 5 8; }
+  .home-page .program-steps { padding-block: 16px 24px; }
+  .program-steps-next { flex-direction: column; align-items: flex-start; gap: 20px; padding-bottom: 16px; }
+  .program-steps-next p { font-size: 14px; }
+  .program-steps-next .button { font-size: 13px; padding: 16px 20px; gap: 16px; }
+}
 /* One generous rounded frame gives the cast a distinct, contained home. */
 .home-page .personality-section {
   width: calc(100% - 64px);
@@ -242,21 +358,12 @@
   stroke: var(--ink);
   stroke-width: 48;
 }
-.home-page .download-ribbon-lettering {
-  fill: #fff9e9;
-  font-family: var(--font-inter), Arial, sans-serif;
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: -.35px;
-  transform: translateY(10px);
-}
 .home-page .download-ribbon + .download-section { padding-top: 40px; }
 @media (max-width: 640px) {
   .home-page .download-ribbon { background: var(--ink); }
   .home-page .download-ribbon svg { height: auto; width: 100%; }
   .home-page .download-ribbon .download-ribbon-wide { display: none; }
   .home-page .download-ribbon .download-ribbon-compact { display: block; }
-  .home-page .download-ribbon-lettering { font-size: 16px; letter-spacing: -.2px; transform: translateY(5px); }
   .home-page .download-ribbon-band { stroke-width: 34; }
   .home-page .download-ribbon + .download-section { padding-top: 20px; }
 }

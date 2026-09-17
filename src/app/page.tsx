@@ -12,6 +12,7 @@ import DownloadRibbon from "./components/DownloadRibbon";
 import SectionEdge from "./components/SectionEdge";
 import SceneDepth from "./components/SceneDepth";
 import Faq from "./components/Faq";
+import HowProgramsWork from "./components/HowProgramsWork";
 import { programs } from "@/content/programs";
 
 export const metadata = { alternates: { canonical: "/" } };
@@ -70,6 +71,7 @@ export default function Home() {
             <span>New expert-curated tracks continually in development</span>
           </div>
         </section>
+        <HowProgramsWork />
         <section
           className="personality-section"
           data-depth-scene

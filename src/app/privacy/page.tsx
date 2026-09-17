@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
+import { socialMetadata } from "@/lib/site-metadata";
 
 // NOTE: Update this whenever the policy text changes.
 const LAST_UPDATED = "June 11, 2026";
@@ -12,14 +13,8 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "How the Speechworks app collects, uses, shares, and protects your information, including voice recordings and speech/health-related data.",
-  alternates: { canonical: "https://speechworks.app/privacy" },
-  openGraph: {
-    title: "Privacy Policy | Speechworks",
-    description:
-      "How the Speechworks app collects, uses, shares, and protects your information.",
-    url: "https://speechworks.app/privacy",
-    type: "website",
-  },
+  alternates: { canonical: "/privacy/" },
+  ...socialMetadata("Privacy Policy | Speechworks", "How the Speechworks app collects, uses, shares, and protects your information.", "/privacy/"),
   robots: { index: true, follow: true },
 };
 

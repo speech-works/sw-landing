@@ -68,6 +68,21 @@ labelled coming soon until a verified public listing is configured. Set
 The QR code points to `https://speechworks.app/#download` and is intended for the
 production domain after this redesign is published.
 
+## Search and sharing
+
+Program search titles live beside the public copy in `src/content/programs.ts`.
+`src/lib/site-metadata.ts` supplies consistent Open Graph and Twitter metadata.
+The production build exports twelve 1200 × 630 PNG sharing images under
+`out/social/`, using the checked-in fonts and character artwork. No image service
+or runtime server is required. Deploy the complete `out/` directory, including
+these images, with the pages.
+
+The homepage explains how guided practice can become an approach the user adapts
+for themselves. The first three program pages show examples connecting a personal
+situation to practice and a possible next step. These are labelled illustrations,
+not customer quotes, app screenshots, or excerpts of paid lessons. See
+`docs/PROGRAM-POSITIONING-2026-09-17.md` for the reasoning and claims boundaries.
+
 ## Archive
 
 - `main`: new program-led website.

@@ -3,6 +3,7 @@ import outlines from "./program-outlines.json";
 const copy = [
   {
     key: "interview_ready",
+    searchTitle: "Interview Practice for Adults Who Stutter",
     title: "Interview Ready",
     category: "Conversations",
     color: "blue",
@@ -20,6 +21,7 @@ const copy = [
   },
   {
     key: "hard_conversations",
+    searchTitle: "Phone Call Practice for Adults Who Stutter",
     title: "The Hard Conversations",
     category: "Conversations",
     color: "orange",
@@ -37,6 +39,7 @@ const copy = [
   },
   {
     key: "art_of_disclosure",
+    searchTitle: "Talking About Your Stutter: A Disclosure Program",
     title: "The Art of Disclosure",
     category: "Connection",
     color: "purple",
@@ -54,6 +57,7 @@ const copy = [
   },
   {
     key: "panic_button",
+    searchTitle: "Prepare for Difficult Speaking Moments",
     title: "The Panic Button",
     category: "Everyday moments",
     color: "lime",
@@ -71,6 +75,7 @@ const copy = [
   },
   {
     key: "bouncing_back",
+    searchTitle: "After a Difficult Conversation: Bouncing Back",
     title: "Bouncing Back",
     category: "Everyday moments",
     color: "peach",
@@ -88,6 +93,7 @@ const copy = [
   },
   {
     key: "breaking_thought_traps",
+    searchTitle: "Questioning Thoughts About Stuttering",
     title: "Breaking Thought Traps",
     category: "Everyday moments",
     color: "blue",
@@ -105,6 +111,7 @@ const copy = [
   },
   {
     key: "dating_intimacy",
+    searchTitle: "Dating and Relationships When You Stutter",
     title: "Dating, Intimacy & Vulnerability",
     category: "Connection",
     color: "pink",
@@ -122,6 +129,7 @@ const copy = [
   },
   {
     key: "word_swap",
+    searchTitle: "Practice Words You Avoid When You Stutter",
     title: "The Word Swap",
     category: "Your voice",
     color: "orange",
@@ -139,6 +147,7 @@ const copy = [
   },
   {
     key: "speech_toolkit",
+    searchTitle: "Speech Tools for Adults Who Stutter",
     title: "The Speech Toolkit",
     category: "Your voice",
     color: "lime",
@@ -156,6 +165,7 @@ const copy = [
   },
   {
     key: "understanding_your_voice",
+    searchTitle: "Understanding Stuttering: A Guided Program",
     title: "Understanding Your Voice",
     category: "Your voice",
     color: "purple",

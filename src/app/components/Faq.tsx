@@ -8,7 +8,11 @@ const questions = [
   ],
   [
     "What happens in a program?",
-    "Each program has 7 to 14 days of lessons and activities for a specific goal. Read the daily outline on the program page to see what you will do.",
+    "Each program has 7 to 14 days of lessons and activities around a topic. The lessons explain ideas you can try; the activities help you explore them in relation to your own experience. Read the daily outline on the program page to see what you will do.",
+  ],
+  [
+    "What happens after I finish a program?",
+    "You can keep trying and adapting what was useful in your everyday life. Your notes and completed lessons stay available to revisit. You do not need a new program for every conversation. Choose another only if there is something else you want to work on.",
   ],
   [
     "Do I need a subscription?",

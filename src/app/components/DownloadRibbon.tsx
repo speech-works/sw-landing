@@ -1,5 +1,3 @@
-const message = "Buy a program once. Revisit the lessons anytime.";
-
 const curves = [
   {
     size: "wide",
@@ -18,19 +16,14 @@ const curves = [
 /** The black fill continues directly into the app-download section below. */
 export default function DownloadRibbon() {
   return (
-    <div className="download-ribbon" role="img" aria-label={message}>
+    <div className="download-ribbon" aria-hidden="true">
       {curves.map(({ size, viewBox, path, close }) => (
-        <svg key={size} className={`download-ribbon-${size}`} viewBox={viewBox} preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <svg key={size} className={`download-ribbon-${size}`} viewBox={viewBox} preserveAspectRatio="none" focusable="false">
           <defs>
             <path id={`download-ribbon-${size}-curve`} d={path} />
           </defs>
           <path className="download-ribbon-fill" d={`${path}${close}`} />
           <use href={`#download-ribbon-${size}-curve`} className="download-ribbon-band" />
-          <text className="download-ribbon-lettering" textAnchor="middle">
-            <textPath href={`#download-ribbon-${size}-curve`} startOffset="50%">
-              {message}
-            </textPath>
-          </text>
         </svg>
       ))}
     </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
+import { socialMetadata } from "@/lib/site-metadata";
 
 const CONTACT_EMAIL = "contact@speechworks.in";
 
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
   title: "Delete Your Account & Data",
   description:
     "How to delete your Speechworks account and all associated data, including voice recordings, progress, and assessments, from inside the app or by request.",
-  alternates: { canonical: "https://speechworks.app/account/delete" },
+  alternates: { canonical: "/account/delete/" },
+  ...socialMetadata("Delete Your Account & Data | Speechworks", "How to delete your Speechworks account and associated data from inside the app or by request.", "/account/delete/"),
   robots: { index: true, follow: true },
 };
 

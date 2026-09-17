@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import "./motion.css";
 import SiteMotion from "./components/SiteMotion";
+import { socialMetadata } from "@/lib/site-metadata";
 
 const inter = localFont({
   src: [
@@ -16,16 +17,14 @@ const inter = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://speechworks.app"),
-  title: { default: "Speechworks | Say what you want to say", template: "%s | Speechworks" },
+  title: { default: "Speaking Practice for Adults Who Stutter | Speechworks", template: "%s | Speechworks" },
   description:
     "Prepare for the conversations you want to have. Speechworks offers expert-curated guided programs for adults who stutter, with lessons and speaking practice.",
-  openGraph: {
-    title: "Speechworks | Say what you want to say",
-    description: "Prepare for interviews, phone calls, and conversations you want to have. Guided programs and speaking practice for adults who stutter.",
-    type: "website",
-    locale: "en_IN",
-    siteName: "Speechworks",
-  },
+  ...socialMetadata(
+    "Speaking Practice for Adults Who Stutter | Speechworks",
+    "Prepare for interviews, phone calls, and conversations you want to have. Guided programs and speaking practice for adults who stutter.",
+    "/",
+  ),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

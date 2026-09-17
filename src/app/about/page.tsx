@@ -3,14 +3,12 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Avatar from "../components/Avatar";
 import DownloadSection from "../components/DownloadSection";
+import { socialMetadata } from "@/lib/site-metadata";
 export const metadata = {
   title: "About",
   description:
     "Your words deserve to be heard. See how Speechworks helps adults who stutter prepare for interviews, phone calls, and personal conversations.",
-  openGraph: {
-    title: "About Speechworks | Your words deserve to be heard",
-    description: "See how Speechworks helps adults who stutter prepare for interviews, phone calls, and personal conversations.",
-  },
+  ...socialMetadata("About Speechworks | Your words deserve to be heard", "See how Speechworks helps adults who stutter prepare for interviews, phone calls, and personal conversations.", "/about/"),
   alternates: { canonical: "/about/" },
 };
 export default function About() {
