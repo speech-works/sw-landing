@@ -4,6 +4,44 @@ import { categories, programs } from "@/content/programs";
 import { gsap, ScrollTrigger, useGSAP, instantMotion } from "@/lib/motion";
 import ProgramCard from "./ProgramCard";
 
+const upcomingByTopic: Record<string, {
+  situation: string;
+  title: string;
+  description: string;
+  tags: string[];
+}> = {
+  "All programs": {
+    situation: "Expanding our catalog",
+    title: "More expert tracks in curation.",
+    description: "Speech-language pathologists and adults who stutter are actively creating new daily programs for real-world speaking moments.",
+    tags: ["Workplace standups", "Presentations", "Social banter"],
+  },
+  "Conversations": {
+    situation: "In clinical review",
+    title: "More conversation tracks coming.",
+    description: "New guided pathways for team standups, difficult professional feedback, and everyday conversation flow.",
+    tags: ["Workplace meetings", "Giving feedback", "Group dinners"],
+  },
+  "Connection": {
+    situation: "In clinical review",
+    title: "More connection tracks coming.",
+    description: "Practical modules for reconnecting with friends, family gatherings, and speaking with ease around loved ones.",
+    tags: ["Meeting new people", "Family conversations", "Deep chats"],
+  },
+  "Everyday moments": {
+    situation: "In clinical review",
+    title: "More everyday tracks coming.",
+    description: "New daily drills for quick drive-thru orders, asking clerks for help, and impromptu interactions.",
+    tags: ["Drive-thrus", "Retail inquiries", "Public transport"],
+  },
+  "Your voice": {
+    situation: "In clinical review",
+    title: "More voice & mindset tracks coming.",
+    description: "Specialized clinical modules on vocal tension release, desensitization techniques, and self-advocacy.",
+    tags: ["Tension release", "Self-advocacy", "Vocal freedom"],
+  },
+};
+
 export default function ProgramCatalog() {
   const [selected, setSelected] = useState<string>(categories[0]);
   const [requested, setRequested] = useState<string>(categories[0]);
@@ -11,6 +49,8 @@ export default function ProgramCatalog() {
   const outgoing = useRef<gsap.core.Tween | null>(null);
   const immediate = useRef(false);
   const shown = programs.filter((program) => selected === categories[0] || program.category === selected);
+  const upcoming = upcomingByTopic[selected] || upcomingByTopic["All programs"];
+
   const { contextSafe } = useGSAP(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const finish = () => { if (preference.matches) outgoing.current?.progress(1); };
@@ -20,8 +60,7 @@ export default function ProgramCatalog() {
 
   useGSAP(() => {
     outgoing.current?.kill();
-    gsap.set(grid.current, { clearProps: "opacity" });
-    const cards = Array.from(grid.current!.querySelectorAll<HTMLElement>(".program-card"));
+    const cards = Array.from(grid.current!.querySelectorAll<HTMLElement>(".program-card.pressable"));
     const media = gsap.matchMedia();
     media.add("(prefers-reduced-motion: no-preference)", () => {
       const removeListeners: (() => void)[] = [];
@@ -64,15 +103,15 @@ export default function ProgramCatalog() {
     setRequested(category);
     immediate.current = instant || instantMotion();
     if (category === selected) {
-      gsap.set(grid.current, { clearProps: "opacity" });
+      gsap.set(grid.current!.querySelectorAll(".program-card.pressable"), { opacity: 1 });
       return;
     }
     if (immediate.current) {
       setSelected(category);
       return;
     }
-    // Only the grid fades out; its cards exclusively own their entrance animations.
-    outgoing.current = gsap.to(grid.current, {
+    // Fade available programs only. The upcoming card always stays static.
+    outgoing.current = gsap.to(grid.current!.querySelectorAll(".program-card.pressable"), {
       opacity: 0, duration: 0.1, ease: "power2.out",
       onComplete: () => setSelected(category),
     });
@@ -88,9 +127,39 @@ export default function ProgramCatalog() {
           </button>
         ))}
       </div>
-      <p className="catalog-count" role="status">{shown.length} {shown.length === 1 ? "program" : "programs"} to choose from</p>
+      <div className="catalog-status-bar" data-reveal>
+        <p className="catalog-count" role="status">
+          {selected === categories[0]
+            ? `Showing all current programs · ${shown.length} available`
+            : `Showing ${shown.length} ${shown.length === 1 ? "program" : "programs"} in ${selected}`}
+        </p>
+        <div className="catalog-status-badge">
+          <span className="curation-dot" aria-hidden="true" />
+          <span>New expert-curated tracks in development</span>
+        </div>
+      </div>
       <div ref={grid} className="catalog-grid" aria-busy={requested !== selected}>
         {shown.map((program) => <ProgramCard program={program} key={program.key} />)}
+        <div className="program-card program-card-upcoming">
+          <div className="program-card-top">
+            <span className="curation-pill">
+              <span className="curation-dot" aria-hidden="true" /> In curation
+            </span>
+            <span className="curation-expert-label">SLP-curated</span>
+          </div>
+          <div className="curation-portrait" aria-hidden="true">
+            <div className="curation-avatar-silhouette" />
+          </div>
+          <p className="program-situation">{upcoming.situation}</p>
+          <h3>{upcoming.title}</h3>
+          <p className="program-card-description">{upcoming.description}</p>
+          <div className="upcoming-teaser-tags" aria-label="Upcoming topics">
+            {upcoming.tags.map((tag) => (
+              <span key={tag}>{tag}</span>
+            ))}
+          </div>
+
+        </div>
       </div>
     </div>
   );

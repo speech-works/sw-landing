@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://speechworks.app"),
   title: { default: "Speechworks | Say what you want to say", template: "%s | Speechworks" },
   description:
-    "Prepare for the conversations you want to have. Speechworks offers 10 guided programs for adults who stutter, with lessons and speaking practice.",
+    "Prepare for the conversations you want to have. Speechworks offers expert-curated guided programs for adults who stutter, with lessons and speaking practice.",
   openGraph: {
     title: "Speechworks | Say what you want to say",
     description: "Prepare for interviews, phone calls, and conversations you want to have. Guided programs and speaking practice for adults who stutter.",

@@ -26,6 +26,10 @@ const questions = [
     "What if I miss a day?",
     "You can continue when you return. New days become available over time, and completed lessons stay available. The app shows when you can start the next day.",
   ],
+  [
+    "Are more programs coming?",
+    "Yes. We collaborate with speech-language pathologists and adults who stutter to develop new daily programs. New real-world conversation topics and clinical guides are regularly added to the app.",
+  ],
 ];
 
 export default function Faq() {

@@ -55,7 +55,7 @@ export default function Home() {
                 Introduce yourself in an interview. Make a difficult call. Tell someone you stutter. Choose a program for the conversation you want to have.
               </p>
               <Link href="/programs/" className="text-link">
-                Compare all 10 programs{" "}
+                Explore programs & upcoming tracks{" "}
                 <ArrowUpRight size={17} aria-hidden="true" />
               </Link>
             </div>
@@ -67,6 +67,7 @@ export default function Home() {
           </div>
           <div className="programs-footnote" data-reveal>
             <span>Buy a program once. Return to the lessons when you need them.</span>
+            <span>New expert-curated tracks continually in development</span>
           </div>
         </section>
         <section
