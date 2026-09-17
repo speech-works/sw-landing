@@ -17,7 +17,7 @@
   background: var(--hero-colour);
   padding: 24px 24px 48px;
 }
-.home-page .feature-showcase { max-width: 960px; height: 360px; }
+.home-page .feature-showcase { max-width: 960px; height: 453px; }
 .home-page .feature-card {
   border: 2px solid var(--ink);
   box-shadow: 0 5px 0 #141311;
@@ -50,7 +50,7 @@
 .home-page .hero h1 {
   font-size: clamp(48px, 6.7vw, 86px);
   line-height: .98;
-  letter-spacing: -.072em;
+  letter-spacing: -.045em;
 }
 .home-page .hero h1 > span {
   color: var(--ink);
@@ -168,11 +168,10 @@
 @media (max-width: 640px) {
   .home-page .site-header { padding: 20px; }
   .home-page .hero { padding: 16px 24px 33px; }
-  .home-page .feature-showcase { height: 328px; }
+  .home-page .feature-showcase { height: 410px; }
   .home-page .feature-card { border-radius: 23px; }
-  .home-page .hero-avatar-one { left: -11px; top: -2px; width: 70px; }
-  .home-page .hero-avatar-two { right: -10px; top: 209px; width: 73px; }
-  .home-page .hero-avatar-three,.home-page .hero-avatar-four { display: none; }
+  /* Keep decorative portraits clear of card text on small screens. */
+  .home-page .hero-avatar { display: none; }
   .home-page .hero h1 { font-size: clamp(36px, 10vw, 59px); line-height: 1.04; }
   .home-page .hero-audience { font-size: 10px; padding: 5px 10px; margin-bottom: 18px; }
   .home-page .hero-description { font-size: 14px; line-height: 1.6; margin: 18px auto 22px; }
@@ -201,7 +200,7 @@
   .home-page .faq-section { padding-block: 58px 46px; }
   .home-page .faq-section h2 { max-width: 12ch; font-size: 42px; }
   .home-page .download-section { padding: 53px 24px; }
-  .home-page .download-copy h2 { font-size: 55px; max-width: 12ch; }
+  .home-page .download-copy h2 { font-size: clamp(38px, 10.5vw, 55px); max-width: 15ch; }
   .home-page .download-copy > p { font-size: 14px; }
   .home-page .download-copy .download-note { font-size: 10px; }
   .home-page .site-footer { padding: 28px 24px; }

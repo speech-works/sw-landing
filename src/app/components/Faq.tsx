@@ -4,15 +4,19 @@ import AnimatedDetails from "./AnimatedDetails";
 const questions = [
   [
     "Who is Speechworks for?",
-    "Speechworks is for adults who stutter, also called stammering. Its programs cover speaking situations such as interviews and everyday phone calls, as well as topics like talking about stuttering.",
+    "Speechworks is for adults who stutter, also called stammering. You can prepare for interviews and phone calls, explore speech tools, or learn more about your stuttering.",
   ],
   [
     "What happens in a program?",
-    "You work through daily lessons and activities over 7 to 14 days. The outline on each program page shows what you will do.",
+    "Each program has 7 to 14 days of lessons and activities for a specific goal. Read the daily outline on the program page to see what you will do.",
   ],
   [
     "Do I need a subscription?",
-    "Programs are one-time purchases. Optional membership and extra AI call credits are separate. The app shows the price before you buy.",
+    "No subscription is required to buy a program. Pay once for the program you choose. Optional membership and extra AI call credits cost extra. The app shows the price before you buy.",
+  ],
+  [
+    "How does AI call practice work?",
+    "AI means artificial intelligence. You speak with an AI character in the app, and it responds to what you say. This lets you prepare for a real conversation. The AI caller is designed to give you time to answer, including when you stutter.",
   ],
   [
     "Does every program include AI calls?",
@@ -20,7 +24,7 @@ const questions = [
   ],
   [
     "What if I miss a day?",
-    "You can return to your program. New days unlock over time, and you can revisit completed lessons. The app shows which day is available and any next-day waiting time.",
+    "You can continue when you return. New days become available over time, and completed lessons stay available. The app shows when you can start the next day.",
   ],
 ];
 

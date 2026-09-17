@@ -1,153 +1,122 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import {
-  ArrowRight,
   ArrowUpRight,
-  BookOpen,
-  Check,
-  Mic,
+  Briefcase,
+  Heart,
   Pause,
-  Phone,
+  PhoneIncoming,
   Play,
-  Volume2,
-  Wind,
+  ScanFace,
+  Users,
 } from "lucide-react";
+import Link from "next/link";
 import Avatar from "./Avatar";
+import CharacterPortrait from "./CharacterPortrait";
 import { gsap, useGSAP } from "@/lib/motion";
-import { programs } from "@/content/programs";
 
-const features = ["Programs", "Rehearse", "Practise", "Keep"];
+const features = ["Interview", "AI calls", "Mirror", "Partner"];
 const poses = [
   { x: 0, y: 0, xPercent: 0, rotation: -3 },
   { x: 12, y: -7, xPercent: 0, rotation: 5 },
   { x: -9, y: 0, xPercent: 0, rotation: -8 },
   { x: 5, y: -9, xPercent: 0, rotation: 10 },
 ];
-const bringForward = (order: number[], next: number) =>
-  next === order[0] ? order : [next, ...order.slice(1).filter(index => index !== next), order[0]];
+// Rotate the whole stack so previous and next remain inverse operations.
+const bringForward = (order: number[], next: number) => {
+  const slot = order.indexOf(next);
+  return slot <= 0 ? order : [...order.slice(slot), ...order.slice(0, slot)];
+};
+
+function MirrorFace() {
+  return (
+    <div className="mirror-visual" aria-hidden="true">
+      <div className="mirror-face">
+        <CharacterPortrait name="mirror" actor="mirror" />
+        <svg className="mirror-overlay" viewBox="0 0 320 310" focusable="false">
+          <g className="mirror-mesh">
+            <path d="M76 147L113 134L159 144L207 133L246 147L254 189L241 226L215 247L160 267L104 246L75 224L65 189Z" />
+            <path d="M76 147L91 177L65 189L107 205L75 224L130 234L104 246M113 134L91 177L132 181L159 144L188 181L226 177L207 133M246 147L226 177L254 189L212 205L241 226L191 234L215 247" />
+            <path d="M91 177L107 205L132 181L151 207L159 144M226 177L212 205L188 181L171 207L159 144M107 205L151 207L130 234L160 251L191 234L171 207L212 205M75 224L104 246L130 234L160 267L191 234L215 247M151 207L160 216L171 207M130 234L160 216L191 234M160 251V267" />
+          </g>
+          <path className="mirror-scan" d="M65 147H254" />
+          <g className="mirror-detection">
+            <rect x="125" y="139" width="10" height="10" rx="1" />
+            <rect x="185" y="139" width="10" height="10" rx="1" />
+            <rect x="71" y="218" width="10" height="10" rx="1" />
+            <rect x="235" y="218" width="10" height="10" rx="1" />
+          </g>
+          <path className="mirror-frame" d="M24 48V22H50M270 22H296V48M24 262V288H50M270 288H296V262" />
+        </svg>
+      </div>
+      <span className="mirror-legend"><i /> Jaw &amp; eye tension</span>
+
+    </div>
+  );
+}
+
+function FeatureLink({ href, children, note }: { href: string; children: ReactNode; note?: string }) {
+  return (
+    <Link className="feature-action" href={href}>
+      <span><strong>{children}</strong>{note && <small>{note}</small>}</span>
+      <span className="feature-action-arrow"><ArrowUpRight size={18} aria-hidden="true" /></span>
+    </Link>
+  );
+}
 
 function Preview({ index }: { index: number }) {
   if (index === 0)
     return (
       <>
-        <div className="preview-top">
-          <span className="preview-brand">14-day program</span>
-          <BookOpen size={18} />
+        <div className="preview-top"><span>Interview practice</span><Briefcase size={18} aria-hidden="true" /></div>
+        <h2 className="feature-headline">Go for the job<br />you really want.</h2>
+        <div className="character-scene interview-scene" aria-hidden="true">
+          <CharacterPortrait name="interview" actor="interview-man" />
         </div>
-        <div className="program-preview-title">
-          <div>
-            <h2>
-              Interview
-              <br />
-              Ready.
-            </h2>
-          </div>
-          <span className="preview-medallion">
-            <Mic size={32} strokeWidth={1.8} />
-          </span>
-        </div>
-        <div className="lesson-preview">
-          <span className="lesson-number">01</span>
-          <span>
-            <small>Start here</small>
-            <strong>{programs[0].outline[0].title}</strong>
-          </span>
-          <ArrowUpRight size={17} />
-        </div>
-        <div className="preview-bottom">
-          <span>See the daily outline</span>
-          <ArrowRight size={16} />
-        </div>
+        <FeatureLink href="/programs/interview-ready/">Get interview-ready</FeatureLink>
       </>
     );
   if (index === 1)
     return (
       <>
-        <div className="preview-top">
-          <span>AI conversation practice</span>
-          <Phone size={18} />
+        <div className="preview-top"><span>AI call practice</span><PhoneIncoming size={18} aria-hidden="true" /></div>
+        <h2 className="feature-headline">Make the call<br />you keep putting off.</h2>
+        <div className="character-scene call-scene" aria-hidden="true">
+          <span className="character-ring" />
+          <svg className="character-connection" viewBox="0 0 350 180" focusable="false">
+            <path className="call-line-base" d="M177 96C194 78 212 121 234 103" />
+            <path className="call-line-pulse call-line-out" pathLength="100" d="M177 96C194 78 212 121 234 103" />
+            <path className="call-line-pulse call-line-back" pathLength="100" d="M177 96C194 78 212 121 234 103" />
+          </svg>
+          <CharacterPortrait name="communicator" actor="maya" />
+          <CharacterPortrait name="beanie" actor="caller" />
         </div>
-        <div className="call-preview-person">
-          <Avatar name="caller" size={78} />
-          <div>
-            <small>Let&apos;s rehearse</small>
-            <h2>
-              The call you
-              <br />
-              want to make.
-            </h2>
-          </div>
-        </div>
-        <div className="voice-bars" aria-hidden="true">
-          {[
-            16, 28, 42, 22, 36, 48, 26, 18, 34, 44, 22, 38, 16, 28, 42, 18, 32,
-            24, 40, 18, 28, 14,
-          ].map((height, i) => (
-            <i key={i} style={{ height, animationDelay: `${i * -83}ms` }} />
-          ))}
-        </div>
-        <div className="call-preview-controls">
-          <span>
-            <Volume2 size={19} />
-          </span>
-          <span className="call-mic">
-            <Mic size={22} />
-          </span>
-          <span>
-            <Phone size={19} />
-          </span>
-        </div>
+        <FeatureLink href="/programs/hard-conversations/">Build call confidence</FeatureLink>
       </>
     );
   if (index === 2)
     return (
       <>
-        <div className="preview-top">
-          <span>Breathing practice</span>
-          <Wind size={20} />
+        <div className="preview-top"><span>Mirror practice</span><ScanFace size={18} aria-hidden="true" /></div>
+        <div className="mirror-preview">
+          <div className="mirror-copy"><h2>See where<br />you tense up.</h2></div>
+          <MirrorFace />
         </div>
-        <div className="practice-preview">
-          <div className="breathing-disc">
-            <div>
-              <Wind size={39} strokeWidth={1.6} />
-            </div>
-          </div>
-          <h2>
-            A moment
-            <br />
-            for yourself.
-          </h2>
-          <p>Explore breathing practice in the app.</p>
-        </div>
+        <FeatureLink href="#download" note="Your video stays on your phone">Try the mirror</FeatureLink>
       </>
     );
   return (
     <>
-      <div className="preview-top">
-        <span>Saved notes</span>
-        <span className="small-check">
-          <Check size={16} />
-        </span>
+      <div className="preview-top"><span>Partner practice</span><Users size={18} aria-hidden="true" /></div>
+      <h2 className="feature-headline">Find a friend<br />who understands.</h2>
+      <div className="partner-preview" aria-hidden="true">
+        <div className="partner-person"><CharacterPortrait name="curly" actor="partner-one" /></div>
+        <div className="partner-connection"><span /><Heart size={22} /><span /></div>
+        <div className="partner-person"><CharacterPortrait name="hijab" actor="partner-two" /></div>
       </div>
-      <div className="keepsake-preview">
-        <span className="note-label">My call plan</span>
-        <h2>
-          “I&apos;ll start with
-          <br />
-          what I need.”
-        </h2>
-        <div className="note-rule" />
-        <p>
-          The repair. A time that works.
-          <br />
-          One thing at a time.
-        </p>
-      </div>
-      <div className="preview-bottom">
-        <span>Example of a personal keepsake</span>
-        <BookOpen size={16} />
-      </div>
+      <p className="partner-caption">Someone who stutters too.</p>
+      <FeatureLink href="#download">Find your partner</FeatureLink>
     </>
   );
 }
@@ -157,6 +126,8 @@ export default function FeatureDeck() {
   const [requested, setRequested] = useState(0);
   const active = order[0];
   const [playing, setPlaying] = useState(true);
+  const [autoRotate, setAutoRotate] = useState(true);
+  const [keyboardInput, setKeyboardInput] = useState(false);
   const [reduced, setReduced] = useState(true);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -270,18 +241,21 @@ export default function FeatureDeck() {
   }
 
   const running =
-    playing && !reduced && !hovered && !focused && visible && inView;
+    playing && autoRotate && !reduced && !hovered && !focused && visible && inView;
+  const illustrating = playing && !reduced && !keyboardInput && visible && inView;
   useEffect(() => {
     if (!running || requested !== active) return;
     const timer = window.setTimeout(() => {
       direction.current = 1;
       setRequested(order[1]);
-    }, 4800);
+    }, 7500);
     return () => window.clearTimeout(timer);
   }, [active, order, requested, running]);
 
   return (
-    <div ref={root} className="feature-showcase" data-running={running} data-reveal>
+    <div ref={root} className="feature-showcase" data-running={running} data-illustrating={illustrating}
+      onKeyDownCapture={() => setKeyboardInput(true)}
+      onPointerDownCapture={() => setKeyboardInput(false)} data-reveal>
       <div className="hero-avatar hero-avatar-one">
         <div className="depth-portrait" data-depth="1.15"><Avatar name="turban" size={114} priority /></div>
       </div>
@@ -315,7 +289,7 @@ export default function FeatureDeck() {
           if (
             !event.isPrimary ||
             event.button !== 0 ||
-            (event.target as HTMLElement).closest("button")
+            (event.target as HTMLElement).closest("button, a")
           )
             return;
           pointer.current = {
@@ -337,8 +311,8 @@ export default function FeatureDeck() {
             Math.abs(distance) > 45 &&
             Math.abs(distance) > Math.abs(event.clientY - start.y)
           ) {
-            setPlaying(false);
-            change(order[distance < 0 ? 1 : 3], false, Math.sign(distance));
+            setAutoRotate(false);
+            change((requested + (distance < 0 ? 1 : features.length - 1)) % features.length, false, Math.sign(distance));
           }
         }}
         role="region"
@@ -357,6 +331,7 @@ export default function FeatureDeck() {
                 className={`feature-card feature-card-${index}`}
                 data-slot={slot}
                 aria-hidden={slot !== 0}
+                inert={slot !== 0}
                 aria-label={`${name}, ${index + 1} of 4`}
               >
                 <Preview index={index} />
@@ -372,7 +347,8 @@ export default function FeatureDeck() {
                 className="deck-choice"
                 aria-pressed={index === requested}
                 onClick={(event) => {
-                  setPlaying(false);
+                  setAutoRotate(false);
+                  setKeyboardInput(event.detail === 0);
                   change(index, event.detail === 0);
                 }}
               >
@@ -390,7 +366,7 @@ export default function FeatureDeck() {
             }
             aria-pressed={playing && !reduced}
             disabled={reduced}
-            onClick={() => setPlaying((value) => !value)}
+            onClick={() => { setKeyboardInput(false); setPlaying((value) => !value); }}
           >
             {playing && !reduced ? (
               <Pause size={14} fill="currentColor" />

@@ -59,7 +59,7 @@ anchors as the approved proof.
 
 ## Website use
 
-`public/avatars/` contains twenty cast portraits and four hero aliases.
+`public/avatars/` contains twenty cast portraits and five hero aliases.
 `public/characters/` contains expressions selected for each program. These files
 are generated; change the kit rather than editing individual outputs. Their
 IDs are namespaced per portrait. If rendering multiple identical portraits
@@ -81,3 +81,24 @@ not silently overwrite saved user selections with a website illustration mood.
 
 The generated part catalogue records geometry and cast configurations. Its
 version is the artwork format version, not an app AvatarManifest version.
+
+
+The `mirror` alias uses the bob portrait with no hat and the `effort`
+expression. The pupils face forward; brows and mouth show restrained speaking
+pressure. The website adds a fine SVG mesh and four green square markers in
+`FeatureDeck.tsx`. This is an illustrated feature preview, not a live reading.
+
+## Animated landing-page portraits
+
+Run `npm run artwork:characters` to regenerate the inline character artwork in
+`src/lib/character-artwork.generated.ts`. `character-rig.cjs` adds the gentle
+facial rig to the approved kit. `interview-candidate.cjs` builds the single
+young, clean-shaven interview character, with a separately posed head, collar,
+and tie knot and a highlight clipped to the face. It uses the approved head
+outline verbatim and the standard 320 × 310 collar-only crop. There are no
+hand, arm, or torso layers. The small knot stays inside the collar boundary.
+
+Animation timing lives in `src/app/globals.css`. The interview tie slides up
+and straightens as the chin lifts, while a highlight passes across the face. The call pulses
+follow the facial speaking turns and stay still while the caller pauses.
+All these layers follow the card's shared Pause and reduced-motion controls.

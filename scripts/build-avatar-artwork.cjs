@@ -8,8 +8,8 @@ for (const directory of ['public/avatars', 'public/characters', 'artwork/avatars
 for (const name of Object.keys(cast)) {
   fs.writeFileSync(path.join(root, `public/avatars/${name}.svg`), renderAvatar(name));
 }
-for (const [alias, { name, mood }] of Object.entries(aliases)) {
-  fs.writeFileSync(path.join(root, `public/avatars/${alias}.svg`), renderAvatar(name, { mood, id: alias }));
+for (const [alias, { name, ...options }] of Object.entries(aliases)) {
+  fs.writeFileSync(path.join(root, `public/avatars/${alias}.svg`), renderAvatar(name, { ...options, id: alias }));
 }
 for (const [program, { name, mood }] of Object.entries(programCast)) {
   fs.writeFileSync(path.join(root, `public/characters/${program}.svg`), renderAvatar(name, { mood, id: program }));

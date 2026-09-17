@@ -128,6 +128,17 @@ moods.gleeful = group('expression-gleeful', brow('M98 124Q112 115 126 122', 'M19
 moods.composed = group('expression-composed', brow('M99 128Q111 123 125 127', 'M197 126Q211 121 225 125') + gaze(-13, 1) + path('M147 226C154 227 164 229 175 223', 'none', 3.8));
 moods.encouraging = group('expression-encouraging', brow('M98 125L124 130', 'M197 129Q212 119 225 122') + gaze(-10, -1) + path('M141 214Q163 218 185 209C184 225 173 236 160 235C150 234 143 225 141 214Z', '#242127', 2.5) + path('M147 218Q163 222 179 215L176 223Q161 227 149 222Z', '#FFF9EC', 0) + path('M158 232Q167 225 177 228', 'none', 3, 'stroke="#DF8291"'));
 
+// A restrained speaking-effort expression for the mirror illustration.
+// Centered pupils retain the approved eye shapes and head construction.
+moods.effort = group('expression-effort',
+  brow('M96 133Q113 126 133 142', 'M192 142Q211 125 229 133') +
+  gaze(-10, 1) +
+  path('M146 133L149 144M174 133L171 144', 'none', 2.2, 'opacity=".6"') +
+  path('M137 217Q159 205 185 217L184 228Q160 224 138 229Z', '#FFF9EC', 3.5) +
+  path('M140 221Q161 216 182 221', 'none', 2.2) +
+  path('M128 211Q123 221 129 232M193 211Q199 221 193 232', 'none', 2.2, 'opacity=".65"')
+);
+
 const cast = {
   headphones: { label: 'Mint headphones and open polo collar', skin: 'tan', hair: 'swoop', headwear: 'headphones', collar: 'polo', mood: 'listening' },
   curly: { label: 'Curly hair, orange beret and Peter Pan collar', skin: 'deep', hair: 'curls', headwear: 'beret', collar: 'peterpan', mood: 'amused' },
@@ -208,6 +219,7 @@ const programCast = {
   understanding_your_voice: { name: 'headphones', mood: 'attentive' },
 };
 const aliases = {
+  mirror: { name: 'bob', mood: 'effort', headwear: 'none', label: 'Front-facing bob haircut and mandarin collar' },
   guide: { name: 'turban', mood: 'determined' },
   caller: { name: 'communicator', mood: 'speaking' },
   pause: { name: 'beanie', mood: 'relieved' },

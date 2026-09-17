@@ -46,7 +46,7 @@ export default async function ProgramPage({ params }: Props) {
               <h1>{program.title}</h1>
               <p className="detail-description">{program.detail}</p>
               <a href="#download" className="button button-ink pressable">
-                Explore in the app <ArrowUpRight size={17} />
+                Get this program in the app <ArrowUpRight size={17} />
               </a>
             </div>
             <div className={`detail-art tone-${program.color}`}>
@@ -63,15 +63,14 @@ export default async function ProgramPage({ params }: Props) {
           </ul>
           <section className="outline-section" aria-labelledby="outline-title">
             <div data-reveal>
-              <p className="section-kicker">A look at what is inside</p>
+              <p className="section-kicker">Your daily plan</p>
               <h2 id="outline-title">
-                One day
+                See your
                 <br />
-                <span className="serif-word">at a time.</span>
+                <span className="serif-word">daily plan.</span>
               </h2>
               <p>
-                New days unlock over time. Come back to completed lessons
-                whenever you need them. See current pricing in the app.
+                Each day gives you a lesson or activity to work through. New days become available over time. Return to completed lessons when you need them. Check the price in the app before you buy.
               </p>
             </div>
             <ol className="program-outline">

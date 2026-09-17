@@ -7,15 +7,15 @@ const copy = [
     category: "Conversations",
     color: "blue",
     avatar: "scholar",
-    situation: "For the interview ahead.",
+    situation: "Show employers what you can do.",
     description:
-      "Prepare answers using your own experience, then rehearse with an AI interviewer. Includes 10 call credits.",
+      "Build answers from your own experience. Practice with an AI interviewer before the real interview. Includes 10 call credits.",
     detail:
-      "Work through the questions, pauses, and follow-ups that come with an interview. Build your answers around your own experience, practise them out loud, and decide what you want to try next.",
+      "Give your experience the attention it deserves. Prepare answers about your work, practice follow-up questions with AI, and decide how to talk about stuttering. Save your notes for the interview ahead.",
     includes: [
-      "A day-by-day interview practice plan",
-      "AI interview rehearsals with 10 included call credits",
-      "Your own interview notes and next steps",
+      "A daily plan to prepare your answers",
+      "AI interview practice with 10 call credits",
+      "Your interview notes and next steps",
     ],
   },
   {
@@ -24,15 +24,15 @@ const copy = [
     category: "Conversations",
     color: "orange",
     avatar: "headphones",
-    situation: "For the call you've put off.",
+    situation: "Feel ready to make the call.",
     description:
-      "Practise explaining a problem or saying no with an AI conversation partner. Includes 8 call credits.",
+      "Prepare to explain a problem, ask for help, or say no. Practice with an AI caller before your real call. Includes 8 call credits.",
     detail:
-      "Start with the calls that matter to you. Practise explaining a problem, handling a no, and holding your side of an everyday conversation. The program builds toward a real call you choose.",
+      "Prepare for the call you want to make. Practice explaining a problem, responding when someone says no, and asking for what you need. Use AI calls to try your words before you make a real call you choose.",
     includes: [
-      "Everyday call scenarios and guided preparation",
-      "AI rehearsals with 8 included call credits",
-      "A personal call plan to keep",
+      "A plan for everyday phone calls",
+      "AI call practice with 8 call credits",
+      "Your own call plan to use again",
     ],
   },
   {
@@ -41,15 +41,15 @@ const copy = [
     category: "Connection",
     color: "purple",
     avatar: "flower",
-    situation: "For saying it on your terms.",
+    situation: "Choose how to talk about stuttering.",
     description:
-      "Decide whether you want to tell someone you stutter. If you do, try out the words you would use and prepare for their response.",
+      "Decide who to tell and what to share. If you choose to talk about your stuttering, prepare the words you want to use.",
     detail:
-      "Try different ways to talk about stuttering, prepare for an awkward response, and decide what you want to share. Disclosure is a choice, and the words are yours.",
+      "Make the choice that feels right for you. Try ways to tell someone you stutter and prepare for their response. Build a plan in your own words. You decide whether to use it.",
     includes: [
-      "Examples and guided writing",
-      "Speaking activities with choices",
-      "A disclosure plan in your own words",
+      "Examples to help you find your words",
+      "Practice for telling someone and responding",
+      "Your own plan for what to share",
     ],
   },
   {
@@ -58,15 +58,15 @@ const copy = [
     category: "Everyday moments",
     color: "lime",
     avatar: "beanie",
-    situation: "For the minutes before.",
+    situation: "Have a plan before you speak.",
     description:
-      "Explore the build-up before a speaking moment and put together a personal card for those minutes.",
+      "Prepare for the minutes before a difficult conversation. Try activities to focus on the present and save useful steps in your own Panic Card.",
     detail:
-      "Learn about anticipation, try grounding activities, and work on the first line you want to say. Bring what you find useful into a card you can come back to.",
+      "Give yourself a plan for the moments before you speak. Learn about the worry you may feel and try activities to focus on the present. Choose your first sentence and save the steps you want to use.",
     includes: [
-      "Lessons about anticipation",
-      "Grounding and speaking preparation",
-      "Your own Panic Card",
+      "Lessons about worry before speaking",
+      "Activities to prepare for the first sentence",
+      "Your Panic Card to use when you need it",
     ],
   },
   {
@@ -75,15 +75,15 @@ const copy = [
     category: "Everyday moments",
     color: "peach",
     avatar: "bob",
-    situation: "For the hours after.",
+    situation: "Find your next step after a hard moment.",
     description:
-      "Look at what happens after a difficult speaking moment. Build a way to reflect and choose what comes next.",
+      "A difficult conversation does not have to decide your next one. Review what happened and create a routine to help you move on.",
     detail:
-      "Separate what happened from the story you keep replaying. Work with practical examples, short activities, and a structured review, then write your own reset routine.",
+      "Give yourself a way to finish reviewing a difficult conversation. Separate what happened from what you fear it meant. Use short activities to choose your next step and write a routine you can use again.",
     includes: [
-      "Guided reflection with a clear stopping point",
-      "Practical activities and daily records",
-      "A personal reset routine",
+      "A guided review with a clear stopping point",
+      "Short activities to choose your next step",
+      "Your own routine for after a difficult moment",
     ],
   },
   {
@@ -92,15 +92,15 @@ const copy = [
     category: "Everyday moments",
     color: "blue",
     avatar: "curly",
-    situation: "For the story in your head.",
+    situation: "A thought is not a fact.",
     description:
-      "Notice the thinking patterns around speaking. Try ways to examine predictions and decide your next action.",
+      "Question the predictions that stop you from speaking. Try a small activity and compare what you expected with what happened.",
     detail:
-      "Work through examples of familiar thought patterns, make your own predictions, and record what actually happens. Explore what to do when recognising a thought is only the beginning.",
+      "Give yourself more information before you decide what to do. Notice thoughts about how a conversation will go. Test a prediction in a small activity, record what happens, and use that experience to choose your next step.",
     includes: [
-      "Worked examples of thinking patterns",
-      "Your own predictions and observations",
-      "Questions, activities, and reflection",
+      "Examples of common thinking patterns",
+      "Activities to test your predictions",
+      "Your own record of what actually happened",
     ],
   },
   {
@@ -109,15 +109,15 @@ const copy = [
     category: "Connection",
     color: "pink",
     avatar: "flower",
-    situation: "For getting to know someone.",
+    situation: "Let someone get to know you.",
     description:
-      "Explore speaking, disclosure, and boundaries in conversations where there is no script.",
+      "Prepare to share what matters to you. Explore dating conversations, talking about stuttering, and setting personal boundaries.",
     detail:
-      "Work through the moments around meeting someone, deciding what to share, and handling a response. Make room for your own preferences and boundaries in a conversation.",
+      "Make space for what you want from a relationship. Explore how to meet someone, share personal things, and respond when a conversation feels difficult. Decide what you want to say and where to set your boundaries.",
     includes: [
-      "Examples of personal conversations",
-      "Activities around choice and boundaries",
-      "Space to record your own plans",
+      "Examples of dating and personal conversations",
+      "Practice for sharing and setting boundaries",
+      "Your own plans for conversations that matter",
     ],
   },
   {
@@ -126,15 +126,15 @@ const copy = [
     category: "Your voice",
     color: "orange",
     avatar: "scholar",
-    situation: "For the word you meant to say.",
+    situation: "Say the words you choose.",
     description:
-      "Explore the words you swap for easier ones. Notice the moment of choice and experiment on your terms.",
+      "Work with five words you often replace. Try them in small speaking activities and decide which words you want to use.",
     detail:
-      "Start with five words from your own life. Notice when you change them, try small speaking activities, and decide what you want to keep doing. Swapping a word can still be a choice.",
+      "Start with five words that matter in your life. Notice when you replace them and try using them in small speaking activities. You choose the next step. Changing a word remains an option.",
     includes: [
-      "Your own list of five words",
-      "Speaking experiments with options",
-      "A personal word card",
+      "Five words from your own life",
+      "Speaking activities with choices at each step",
+      "Your word card to use again",
     ],
   },
   {
@@ -143,15 +143,15 @@ const copy = [
     category: "Your voice",
     color: "lime",
     avatar: "beanie",
-    situation: "For finding what fits you.",
+    situation: "Find the tools you want to use.",
     description:
-      "Explore six speech tools. Try each one, notice the effort involved, and decide what is useful to you.",
+      "Try six speech tools and choose what helps you. Notice the effort each tool takes before you use it in everyday conversations.",
     detail:
-      "Learn what each tool asks you to do before you try it. Record what it was like and what it cost in attention or effort. You decide which tools, if any, belong in your day.",
+      "Build a toolkit around your own experience. Learn how each of six speech tools works, try it privately, and record what you notice. Consider the effort it takes. You decide which tools to keep using.",
     includes: [
-      "Explanations of six speech tools",
-      "Private practice and observation",
-      "Your own choices about what to keep",
+      "Clear instructions for six speech tools",
+      "Private practice to find what helps you",
+      "Your own choice of tools to keep using",
     ],
   },
   {
@@ -160,15 +160,15 @@ const copy = [
     category: "Your voice",
     color: "purple",
     avatar: "curly",
-    situation: "For making sense of it.",
+    situation: "Make sense of your stuttering.",
     description:
-      "Learn about stuttering, its variability, and the parts of the experience other people may never see.",
+      "Learn why stuttering can change from one situation to another. Explore the parts other people may not see and connect them to your experience.",
     detail:
-      "A learning program about stuttering and your own experience of it. Explore explanations, examine common ideas, and connect what you learn to everyday life.",
+      "Understand more of what you experience when you stutter. Learn why speech can vary, examine common beliefs, and explore the thoughts and feelings other people may not see. Connect each lesson to your own life.",
     includes: [
-      "Seven days of learning and examples",
-      "Questions to check your understanding",
-      "Private activities and reflection",
+      "Seven days of lessons and examples",
+      "Questions to check what you have learned",
+      "Private activities about your own experience",
     ],
   },
 ];

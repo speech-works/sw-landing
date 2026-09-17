@@ -15,13 +15,13 @@ export default function DownloadSection() {
           <Avatar name="turban" size={60} />
           <Avatar name="silver" size={60} />
         </div>
-        <h2 id="download-title">Find your program in the app.</h2>
+        <h2 id="download-title">Get ready for your next conversation.</h2>
         <p>
-          You can read the program outlines here before downloading Speechworks.
+          Choose a conversation you want to prepare for. Download Speechworks to find your program and start the first lesson.
         </p>
         <StoreButtons />
         <p className="download-note">
-          Free to download. Programs purchased separately.
+          Download the app for free. Buy programs separately.
         </p>
       </div>
       <div className="download-qr" data-reveal>

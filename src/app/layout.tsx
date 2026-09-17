@@ -16,12 +16,12 @@ const inter = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://speechworks.app"),
-  title: { default: "Speechworks | Got a conversation on your mind?", template: "%s | Speechworks" },
+  title: { default: "Speechworks | Say what you want to say", template: "%s | Speechworks" },
   description:
-    "Guided programs for adults who stutter, with lessons and activities for interviews, phone calls and talking about stuttering.",
+    "Prepare for the conversations you want to have. Speechworks offers 10 guided programs for adults who stutter, with lessons and speaking practice.",
   openGraph: {
-    title: "Speechworks | Got a conversation on your mind?",
-    description: "Guided programs for adults who stutter, with lessons and activities to help you prepare for interviews and everyday calls.",
+    title: "Speechworks | Say what you want to say",
+    description: "Prepare for interviews, phone calls, and conversations you want to have. Guided programs and speaking practice for adults who stutter.",
     type: "website",
     locale: "en_IN",
     siteName: "Speechworks",

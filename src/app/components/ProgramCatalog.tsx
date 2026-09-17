@@ -88,7 +88,7 @@ export default function ProgramCatalog() {
           </button>
         ))}
       </div>
-      <p className="catalog-count" role="status">{shown.length} programs to explore</p>
+      <p className="catalog-count" role="status">{shown.length} {shown.length === 1 ? "program" : "programs"} to choose from</p>
       <div ref={grid} className="catalog-grid" aria-busy={requested !== selected}>
         {shown.map((program) => <ProgramCard program={program} key={program.key} />)}
       </div>

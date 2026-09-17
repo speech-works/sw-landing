@@ -64,10 +64,10 @@ export default function AvatarPlayground() {
           )
         }
       >
-        <Shuffle size={16} aria-hidden="true" /> Mix it up
+        <Shuffle size={16} aria-hidden="true" /> Try another face
       </button>
       <p className="playground-caption">
-        Meet the Speechworks cast.
+        Choose a face above to preview it.
       </p>
     </div>
   );

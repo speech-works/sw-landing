@@ -8,10 +8,10 @@ export default function NotFound() {
       <Navbar />
       <main className="not-found" id="main-content">
         <Avatar name="beanie" size={110} />
-        <h1>A little off track.</h1>
-        <p>We could not find that page. Let us get you back.</p>
-        <Link href="/" className="button button-ink pressable">
-          Back to Speechworks
+        <h1>We cannot find this page.</h1>
+        <p>Find a program for the conversation you want to prepare for.</p>
+        <Link href="/programs/" className="button button-ink pressable">
+          Find a program
         </Link>
       </main>
       <Footer />

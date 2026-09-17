@@ -28,15 +28,15 @@ export default function Home() {
               For adults who stutter
             </p>
             <h1 id="hero-title">
-              Got a conversation<br />on your mind<span>?</span>
+              Say what you<br />want to say<span>.</span>
             </h1>
             <p className="hero-description">
-              You might have an interview coming up, or a call you&apos;ve been putting off. Speechworks has guided programs for adults who stutter, with lessons and activities to help you prepare.
+              Prepare for interviews, phone calls, and conversations you want to have. Speechworks gives adults who stutter a plan and a place to practice.
             </p>
             <StoreButtons />
-            <p className="hero-purchase-note">Free to download. Programs purchased separately.</p>
+            <p className="hero-purchase-note">Download the app for free. Buy programs separately.</p>
             <Link href="/programs/" className="hero-explore">
-              Explore the programs <ArrowUpRight size={15} aria-hidden="true" />
+              Find your program <ArrowUpRight size={15} aria-hidden="true" />
             </Link>
           </div>
         </section>
@@ -48,14 +48,14 @@ export default function Home() {
         >
           <div className="section-heading" data-reveal>
             <div>
-              <h2 id="programs-title">Start with the situation.</h2>
+              <h2 id="programs-title">What do you want to say?</h2>
             </div>
             <div className="section-heading-aside">
               <p>
-                You might want to practise an interview, prepare for a call, or work out how to tell someone you stutter. There&apos;s a program for each.
+                Introduce yourself in an interview. Make a difficult call. Tell someone you stutter. Choose a program for the conversation you want to have.
               </p>
               <Link href="/programs/" className="text-link">
-                Explore all 10 programs{" "}
+                Compare all 10 programs{" "}
                 <ArrowUpRight size={17} aria-hidden="true" />
               </Link>
             </div>
@@ -66,7 +66,7 @@ export default function Home() {
             ))}
           </div>
           <div className="programs-footnote" data-reveal>
-            <span>10 programs. Each is a one-time purchase in the app.</span>
+            <span>Buy a program once. Return to the lessons when you need them.</span>
           </div>
         </section>
         <section
@@ -76,9 +76,9 @@ export default function Home() {
         >
           <div className="personality-inner section-wrap">
             <div className="personality-copy" data-reveal>
-              <h2 id="personality-title">Who are you going with?</h2>
+              <h2 id="personality-title">Choose a face that feels like you.</h2>
               <p>
-                Have a look through the cast. The star glasses are an option.
+                Try the faces below. Find your favorite, from a sunhat to star glasses.
               </p>
               <Link href="/about/" className="text-link">
                 About Speechworks <ArrowUpRight size={17} aria-hidden="true" />

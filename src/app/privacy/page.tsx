@@ -168,7 +168,7 @@ export default function PrivacyPolicyPage() {
           </p>
           <p>
             <strong className="text-gray-700">
-              Community &amp; peer (&ldquo;buddy&rdquo;) data.
+              Peer (&ldquo;buddy&rdquo;) data.
             </strong>{" "}
             If you connect with a buddy, we process the connection, invite codes,
             and any activity or mood signals you choose to share. Sharing of
