@@ -46,7 +46,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ ima
         </div>
       </div>
       <div style={{ display: "flex", borderTop: "2px solid #141311", paddingTop: 20, fontSize: 20 }}>
-        {program ? `${program.days} days · Pay once` : "Programs · Lessons · Speaking practice"}
+        {program ? `${program.days} days · Pay once` : "Programs · Daily plans · Speaking practice"}
       </div>
     </div>,
     { width: 1200, height: 630, fonts: [

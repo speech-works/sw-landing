@@ -412,42 +412,58 @@ svg {
 @media (prefers-reduced-motion: reduce) {
   .feature-card *, .feature-card *::before { animation: none !important; transition: none !important; }
 }
-.deck-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  position: relative;
-  margin: 21px -30px 0;
-}
-.deck-choices {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
+/* Minimal progress pills: one dot per card in its colour. The active one becomes a bar
+   that fills in the next card's colour, showing how long until that card comes up. */
+.deck-controls { display: flex; justify-content: center; margin-top: 22px; }
+.deck-choices { display: flex; align-items: center; }
 .deck-choice {
-  display: flex;
+  position: relative;
+  display: grid;
   align-items: center;
-  gap: 5px;
-  min-height: 44px;
+  width: 24px;
+  height: 28px;
   padding: 0 7px;
-  font-size: 10px;
-  color: var(--ink-muted);
   border: 0;
   background: none;
+  transition: width 400ms var(--ease-out);
 }
-.choice-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #c7c0b5;
+/* The visible pill sits inside a larger tap area. */
+.deck-choice::before {
+  content: "";
+  grid-area: 1 / 1;
+  height: 10px;
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  background: var(--pill);
 }
-.deck-choice[aria-pressed="true"] {
+.deck-choice[aria-pressed="true"] { width: 72px; }
+.deck-choice[aria-pressed="true"]::before { background: #fff9e9; }
+.deck-choice-fill {
+  grid-area: 1 / 1;
+  align-self: stretch;
+  margin: 10.5px 1.5px;
+  border-radius: 99px;
+  background: var(--deck-next);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+/* Fill like a progress bar over the rotation time; hold still while hover or focus pauses the deck. */
+.deck-controls[data-counting="true"] .deck-choice-fill {
+  animation: deck-fill var(--deck-interval) linear both;
+  animation-play-state: paused;
+}
+.deck-controls[data-running="true"] .deck-choice-fill { animation-play-state: running; }
+@keyframes deck-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (hover: hover) and (pointer: fine) {
+  .deck-choice:not([aria-pressed="true"]):hover::before { scale: 1.2; }
+  .deck-choice::before { transition: scale 160ms var(--ease-out); }
+}
+.icon-button {
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--ink);
+  background: #fff9e9;
   color: var(--ink);
-  font-weight: 700;
-}
-.deck-choice[aria-pressed="true"] .choice-dot {
-  background: #b54d0b;
 }
 .icon-button {
   border: 0;
@@ -1563,7 +1579,7 @@ svg {
     display: none;
   }
   .deck-controls {
-    margin-top: 17px;
+    margin-top: 14px;
   }
   .hero h1 {
     font-size: clamp(41px, 10.5vw, 66px);
@@ -1877,9 +1893,6 @@ svg {
   .hero h1 {
     font-size: 41px;
   }
-  .deck-choice {
-    padding-inline: 5px;
-  }
   .store-badge {
     width: 150px;
     min-width: 150px;
@@ -1973,7 +1986,7 @@ svg {
     height: 120px;
   }
   .program-card-top {
-    margin-bottom: 128px;
+    margin-bottom: 142px;
   }
   .program-situation {
     max-width: 16ch;
@@ -2024,102 +2037,117 @@ svg {
   .feature-action-arrow { width: 27px; height: 27px; }
 }
 
-/* Launch-offer price sticker on program cards. It sits in the top row, clear of the portrait. */
-.program-card-top > .price-badge {
-  margin: -12px auto -12px 10px;
-}
-.price-badge {
-  position: relative;
-  z-index: 2;
+/* The launch offer arrives as a small chat in the corner of the screen. */
+.offer-chat {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 50;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  padding: 8px 12px 9px;
+  align-items: flex-end;
+  gap: 8px;
+  /* The container animation only times the exit; the parts below move on their own. */
+  animation: offer-chat-hold 1ms both;
+}
+.offer-chat.is-leaving { animation: offer-chat-leave 420ms both; pointer-events: none; }
+.offer-chat-bubble {
+  position: relative;
+  width: 232px;
+  margin-bottom: 30px;
+  padding: 14px 16px 12px;
+  border: 2px solid var(--ink);
+  border-radius: 20px 20px 4px 20px;
+  background: #fff9e9;
+  box-shadow: 3px 4px 0 var(--ink);
+  color: var(--ink);
+}
+.offer-chat-bubble p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+.offer-chat mark {
   background: var(--lime);
   color: var(--ink);
-  border: 2px solid var(--ink);
-  border-radius: 14px;
-  box-shadow: 3px 3px 0 var(--ink);
-  transform: rotate(7deg);
-  line-height: 1;
-  transition: transform 350ms var(--ease-out);
+  border-radius: 40% 45% 40% 50%;
+  padding: 0 4px;
+  white-space: nowrap;
 }
-.price-badge small {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-}
-.price-badge-amounts {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-.price-badge s {
-  font-size: 12px;
-  opacity: 0.6;
-  text-decoration-thickness: 2px;
-}
-.price-badge strong {
-  font-size: 20px;
+.offer-chat-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  margin-top: 6px;
+  font-size: 13px;
   font-weight: 800;
-  letter-spacing: -0.5px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--hero-colour);
 }
-.price-badge-plain {
-  background: var(--paper);
+.offer-chat-face {
+  position: relative;
+  flex-shrink: 0;
+  width: 76px;
+  height: 76px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 4px 0 var(--ink);
+  overflow: hidden;
+  isolation: isolate;
 }
-@media (hover: hover) and (pointer: fine) {
-  .program-card:hover .price-badge {
-    transform: rotate(-3deg) scale(1.06);
-  }
+/* The collar (y 307 of the 310-unit art) runs just past the circle's bottom edge, so no lime shows below it. */
+.offer-chat-portrait {
+  position: absolute;
+  left: -6%;
+  top: -9.9%;
+  width: 112%;
+  height: 112%;
 }
+.offer-chat-portrait > svg { display: block; width: 100%; height: 100%; }
+
+/* In: the face springs up, then the bubble grows out of its tail toward it. */
+.offer-chat-face { animation: offer-face-in 520ms cubic-bezier(.34, 1.56, .64, 1) both; transform-origin: 50% 100%; }
+.offer-chat-bubble { animation: offer-bubble-in 480ms 140ms cubic-bezier(.34, 1.45, .64, 1) both; transform-origin: 100% 100%; }
+/* Out: the bubble folds back into its tail, then the face sinks away. */
+.offer-chat.is-leaving .offer-chat-bubble { animation: offer-bubble-out 240ms cubic-bezier(.4, 0, 1, 1) both; }
+.offer-chat.is-leaving .offer-chat-face { animation: offer-face-out 300ms 110ms cubic-bezier(.4, 0, 1, 1) both; }
+@keyframes offer-chat-hold { to { opacity: 1; } }
+/* A separate name so switching to it restarts the timer and fires animationend. */
+@keyframes offer-chat-leave { to { opacity: 1; } }
+@keyframes offer-face-in { from { opacity: 0; transform: translateY(24px) scale(.5); } }
+@keyframes offer-bubble-in { from { opacity: 0; transform: translate(10px, 8px) scale(.4) rotate(4deg); } }
+@keyframes offer-bubble-out { to { opacity: 0; transform: translate(10px, 8px) scale(.5) rotate(4deg); } }
+@keyframes offer-face-out { to { opacity: 0; transform: translateY(20px) scale(.6); } }
+
+/* The face looks straight at the visitor, says the line softly, then settles into a wide smile. */
+.offer-chat-face .rig-eyes { transform-origin: 162px 167px; animation: offer-blink 4.2s 1.6s linear infinite; }
+.offer-chat-face .rig-smile { animation: offer-smile 2.9s 500ms linear both; }
+.offer-chat-face .rig-speech { opacity: 0; animation: offer-speak 2.9s 500ms linear both; }
+.offer-chat-face .rig-mouth { transform-origin: 162px 217px; animation: offer-mouth 760ms 500ms ease-in-out 3; }
+.offer-chat-portrait > svg { transform-origin: 50% 90%; animation: offer-nod 2.9s 500ms cubic-bezier(.45, 0, .55, 1) both; }
+@keyframes offer-blink { 0%, 46%, 50%, 100% { transform: scaleY(1); } 48% { transform: scaleY(.08); } }
+@keyframes offer-speak { 0%, 94% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes offer-smile { 0%, 94% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes offer-mouth { 0%, 100% { transform: scaleY(.35); } 30% { transform: scaleY(.62); } 55% { transform: scaleY(.3); } 78% { transform: scaleY(.55); } }
+@keyframes offer-nod { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-2deg); } 50% { transform: rotate(1deg); } 75% { transform: rotate(-1deg); } }
 @media (prefers-reduced-motion: reduce) {
-  .price-badge {
-    transition: none;
-  }
+  .offer-chat-face,
+  .offer-chat-bubble,
+  .offer-chat.is-leaving .offer-chat-bubble,
+  .offer-chat.is-leaving .offer-chat-face { animation-name: offer-fade; animation-duration: 200ms; animation-delay: 0s; }
+  .offer-chat.is-leaving .offer-chat-bubble,
+  .offer-chat.is-leaving .offer-chat-face { animation-direction: reverse; }
+  .offer-chat.is-leaving { animation-duration: 220ms; }
+  .offer-chat-portrait > svg,
+  .offer-chat-face .rig-mouth,
+  .offer-chat-face .rig-eyes { animation: none; }
 }
-@media (max-width: 900px) and (min-width: 641px) {
-  /* Three narrow columns: the footer link already carries the arrow. */
-  .program-card-top:has(.price-badge) > svg {
-    display: none;
-  }
-  .program-card-top > .price-badge {
-    margin-left: 7px;
-    padding: 6px 8px 7px;
-  }
-  .price-badge small {
-    font-size: 8px;
-  }
-  .price-badge s {
-    font-size: 10px;
-  }
-  .price-badge strong {
-    font-size: 16px;
-  }
-}
-/* On phones the portrait sits top right, so the sticker fills the open space to its left. */
+@keyframes offer-fade { from { opacity: 0; } }
 @media (max-width: 640px) {
-  .program-card-top > .price-badge {
-    position: absolute;
-    top: 88px;
-    left: 24px;
-    margin: 0;
-    transform: rotate(-5deg);
-  }
-}
-@media (max-width: 360px) {
-  .program-card-top > .price-badge {
-    left: 18px;
-    padding: 6px 8px 7px;
-  }
-  .price-badge small {
-    font-size: 8px;
-  }
-  .price-badge s {
-    font-size: 10px;
-  }
-  .price-badge strong {
-    font-size: 16px;
-  }
+  .offer-chat { right: 12px; bottom: 12px; gap: 6px; }
+  .offer-chat-bubble { width: 200px; margin-bottom: 24px; padding: 12px 14px 10px; }
+  .offer-chat-bubble p { font-size: 13px; }
+  .offer-chat-face { width: 62px; height: 62px; }
 }

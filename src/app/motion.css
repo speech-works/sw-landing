@@ -14,8 +14,6 @@
   .site-shell :is(.text-link, .button, .hero-explore, .breadcrumb) svg {
     transition: transform 180ms var(--ease-out);
   }
-  .choice-dot { transition: transform 180ms var(--ease-out), background-color 180ms ease; }
-  .deck-choice[aria-pressed="true"] .choice-dot { transform: scale(1.2); }
   .avatar-option { transition: transform 180ms var(--ease-out), scale 140ms var(--ease-out), background-color 180ms ease, border-color 180ms ease; }
 }
 @media (hover: hover) and (pointer: fine) {

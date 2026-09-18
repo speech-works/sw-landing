@@ -4,6 +4,10 @@ import "./globals.css";
 import "./motion.css";
 import "./home.css";
 import SiteMotion from "./components/SiteMotion";
+import OfferChat from "./components/OfferChat";
+import { programs } from "@/content/programs";
+import { launchOfferSummary } from "@/content/pricing";
+import { visorChatFace } from "@/lib/chat-face";
 import { socialMetadata } from "@/lib/site-metadata";
 
 const inter = localFont({
@@ -28,12 +32,19 @@ export const metadata: Metadata = {
   ),
 };
 
+const offer = launchOfferSummary(programs.map((program) => program.key));
+const chatFace = offer ? visorChatFace() : "";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
       {/* Extensions such as ClickUp add body attributes before hydration.
           Limit suppression to this element; descendant mismatches still warn. */}
-      <body suppressHydrationWarning>{children}<SiteMotion /></body>
+      <body suppressHydrationWarning>
+        {children}
+        <SiteMotion />
+        {offer && <OfferChat percent={offer.percent} same={offer.same} face={chatFace} />}
+      </body>
     </html>
   );
 }

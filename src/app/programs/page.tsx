@@ -7,8 +7,8 @@ import { socialMetadata } from "@/lib/site-metadata";
 export const metadata = {
   title: "Programs for Adults Who Stammer or Stutter",
   description:
-    "Choose a program for interviews, phone calls, or talking about your stammer or stutter. See the lessons and what is included.",
-  ...socialMetadata("Programs for Adults Who Stammer or Stutter | Speechworks", "Choose a program for interviews, phone calls, or talking about your stammer or stutter. See the lessons before you choose.", "/programs/", "programs"),
+    "Choose a program for interviews, phone calls, or talking about your stammer or stutter. See the daily plan and what is included.",
+  ...socialMetadata("Programs for Adults Who Stammer or Stutter | Speechworks", "Choose a program for interviews, phone calls, or talking about your stammer or stutter. See the daily plan before you choose.", "/programs/", "programs"),
   alternates: { canonical: "/programs/" },
 };
 export default function Programs() {

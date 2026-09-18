@@ -17,7 +17,7 @@ const copy = [
     detail:
       "Prepare answers about your work. Practice interview questions with an AI interviewer. You decide whether to talk about your stutter.",
     includes: [
-      "Lessons to help you prepare your answers",
+      "Daily steps to help you prepare your answers",
       "10 AI practice calls",
       "Your notes to use before an interview",
     ],
@@ -77,7 +77,7 @@ const copy = [
     detail:
       "Notice what happens when you feel worried before speaking. Try activities to focus on what is around you. Choose your first sentence and save your steps.",
     includes: [
-      "Lessons about worry before speaking",
+      "Daily steps for worry before speaking",
       "Activities to prepare to speak",
       "A card with your steps to use again",
     ],
@@ -197,7 +197,7 @@ const copy = [
     detail:
       "Learn about stuttering, including the thoughts and feelings other people may not see. Use examples and activities to understand your own experience.",
     includes: [
-      "Seven days of lessons and examples",
+      "Seven days of reading and examples",
       "Questions about what you learned",
       "Private activities about your experience",
     ],

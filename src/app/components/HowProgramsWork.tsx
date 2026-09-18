@@ -7,8 +7,8 @@ const steps = [
     description: "Pick what you want to practice, such as an interview or a phone call.",
   },
   {
-    title: "Follow the lessons.",
-    description: "Read a lesson and try the activity. New lessons open over time.",
+    title: "Follow the daily plan.",
+    description: "Do one day at a time and try the activity. New days open over time.",
   },
   {
     title: "Use what helps.",
@@ -38,8 +38,8 @@ function JourneyRoad({ reverse = false }: { reverse?: boolean }) {
 }
 
 const outcomeSteps = [
-  { title: "Pick a topic.", description: "Each program has a daily plan. Check its lessons and price in the app." },
-  { title: "Follow the lessons.", description: "Read, write, or speak, depending on the activity. New days open over time." },
+  { title: "Pick a topic.", description: "Each program has a daily plan. Check what is inside and the price in the app." },
+  { title: "Follow the daily plan.", description: "Read, write, or speak, depending on the activity. New days open over time." },
   { title: "Use what you learned.", description: "Try an idea in a conversation. Notice what helps and what you would change." },
 ];
 
@@ -63,7 +63,7 @@ export default function HowProgramsWork({ outcome = false }: { outcome?: boolean
         ))}
       </ol>
       <div className="program-steps-next">
-        {!outcome && <p>Come back to your notes and completed lessons when you need them.</p>}
+        {!outcome && <p>Come back to your notes and completed days when you need them.</p>}
         <Link className="button button-ink pressable" href="/programs/">See programs <ArrowUpRight size={20} aria-hidden="true" /></Link>
       </div>
     </section>

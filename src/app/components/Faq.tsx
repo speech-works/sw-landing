@@ -16,11 +16,11 @@ const questions = [
   ],
   [
     "How long is a program?",
-    "Programs have 7 to 14 days of lessons and activities. New lessons open over time. See the lessons on each program page before you choose."
+    "Programs have 7 to 14 days of reading, writing, and speaking activities. New days open over time. See the daily plan on each program page before you choose."
   ],
   [
     "What if I miss a day?",
-    "Continue when you return. The app shows when the next lesson opens. Your notes and completed lessons stay available after you finish."
+    "Continue when you return. The app shows when the next day opens. Your notes and completed days stay available after you finish."
   ],
   [
     "How do AI calls work?",

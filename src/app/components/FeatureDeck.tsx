@@ -1,13 +1,11 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   Briefcase,
   Heart,
-  Pause,
   PhoneIncoming,
-  Play,
   ScanFace,
   Users,
 } from "lucide-react";
@@ -17,6 +15,10 @@ import CharacterPortrait from "./CharacterPortrait";
 import { gsap, useGSAP } from "@/lib/motion";
 
 const features = ["Interview", "AI calls", "Mirror", "Partner"];
+// How long each card stays up before the deck turns; the progress pill fills over the same time.
+const ROTATE_MS = 7500;
+// Pill colours match the cards; the countdown fills in the colour of the card coming up next.
+const cardColours = ["#3b3a36", "#c6f35b", "#94baff", "#c3a3f3"];
 const poses = [
   { x: 0, y: 0, xPercent: 0, rotation: -3 },
   { x: 12, y: -7, xPercent: 0, rotation: 5 },
@@ -74,7 +76,7 @@ function Preview({ index, outcome }: { index: number; outcome: boolean }) {
         <div className="character-scene interview-scene" aria-hidden="true">
           <CharacterPortrait name="interview" actor="interview-man" />
         </div>
-        <FeatureLink href="/programs/interview-ready/">See interview lessons</FeatureLink>
+        <FeatureLink href="/programs/interview-ready/">See the interview program</FeatureLink>
       </>
     );
   if (index === 1)
@@ -92,7 +94,7 @@ function Preview({ index, outcome }: { index: number; outcome: boolean }) {
           <CharacterPortrait name="communicator" actor="maya" />
           <CharacterPortrait name="beanie" actor="caller" />
         </div>
-        <FeatureLink href="/programs/hard-conversations/">See phone call lessons</FeatureLink>
+        <FeatureLink href="/programs/hard-conversations/">See the phone call program</FeatureLink>
       </>
     );
   if (index === 2)
@@ -247,7 +249,7 @@ export default function FeatureDeck({ outcome = false, paused = false }: { outco
     const timer = window.setTimeout(() => {
       direction.current = 1;
       setRequested(order[1]);
-    }, 7500);
+    }, ROTATE_MS);
     return () => window.clearTimeout(timer);
   }, [active, order, requested, running]);
 
@@ -338,12 +340,19 @@ export default function FeatureDeck({ outcome = false, paused = false }: { outco
             );
           })}
         </div>
-        <div className="deck-controls">
-          <div className="deck-choices" aria-label="Choose an app feature">
+        <div
+          className="deck-controls"
+          data-counting={playing && autoRotate && !reduced}
+          data-running={running}
+          style={{ "--deck-interval": `${ROTATE_MS}ms`, "--deck-next": cardColours[order[1]] } as CSSProperties}
+        >
+          <div className="deck-choices" role="group" aria-label="Choose an app feature">
             {features.map((name, index) => (
               <button
                 key={name}
                 className="deck-choice"
+                style={{ "--pill": cardColours[index] } as CSSProperties}
+                aria-label={name}
                 aria-pressed={index === requested}
                 onClick={(event) => {
                   setAutoRotate(false);
@@ -351,28 +360,11 @@ export default function FeatureDeck({ outcome = false, paused = false }: { outco
                   change(index, event.detail === 0);
                 }}
               >
-                <span className="choice-dot" aria-hidden="true" />
-                <span>{name}</span>
+                {/* Keyed by card so the progress bar restarts each time the deck turns. */}
+                {index === requested && <span key={requested} className="deck-choice-fill" aria-hidden="true" />}
               </button>
             ))}
           </div>
-          <button
-            className="deck-play icon-button pressable"
-            aria-label={
-              playing && !reduced
-                ? "Pause feature animation"
-                : "Play feature animation"
-            }
-            aria-pressed={playing && !reduced}
-            disabled={reduced}
-            onClick={() => { setKeyboardInput(false); setPlaying((value) => !value); }}
-          >
-            {playing && !reduced ? (
-              <Pause size={14} fill="currentColor" />
-            ) : (
-              <Play size={14} fill="currentColor" />
-            )}
-          </button>
         </div>
       </div>
     </div>

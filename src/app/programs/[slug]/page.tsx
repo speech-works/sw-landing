@@ -10,7 +10,7 @@ import DownloadSection from "../../components/DownloadSection";
 import ProgramTakeaway from "../../components/ProgramTakeaway";
 import SectionEdge from "../../components/SectionEdge";
 import { socialMetadata } from "@/lib/site-metadata";
-import { programPrice, rupees } from "@/content/pricing";
+import { launchDiscount } from "@/content/pricing";
 export const dynamicParams = false;
 export function generateStaticParams() {
   return programs.map(({ slug }) => ({ slug }));
@@ -31,7 +31,7 @@ export default async function ProgramPage({ params }: Props) {
   const { slug } = await params;
   const program = programs.find((item) => item.slug === slug);
   if (!program) notFound();
-  const price = programPrice(program.key);
+  const discount = launchDiscount(program.key);
   return (
     <div className="site-shell">
       <Navbar />
@@ -53,9 +53,8 @@ export default async function ProgramPage({ params }: Props) {
                   Get the app <ArrowUpRight size={17} />
                 </a>
                 <p className="detail-purchase-note">
-                  {price.onOffer
-                    ? <>Launch offer: <strong>{rupees(price.now)}</strong> <s>{rupees(price.regular)}</s>. Pay once for this program. No subscription needed.</>
-                    : <>{rupees(price.now)}. Pay once for this program. No subscription needed.</>}
+                  {discount !== null && <>Launch offer: <strong>{discount}% off</strong>. </>}
+                  Pay once for this program. No subscription needed.
                 </p>
               </div>
               <div className={`detail-art tone-${program.color}`}>
@@ -77,10 +76,10 @@ export default async function ProgramPage({ params }: Props) {
           <section className="outline-section" aria-labelledby="outline-title">
             <div data-reveal>
               <h2 id="outline-title">
-                Your lessons
+                Your daily plan
               </h2>
               <p>
-                New lessons open over time. The app shows when you can start the next day. You can return to completed lessons.
+                New days open over time. The app shows when you can start the next day. You can return to completed days.
               </p>
             </div>
             <ol className="program-outline">

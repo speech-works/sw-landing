@@ -39,7 +39,7 @@ export default function HomePage({ outcome = false, preview = false }: { outcome
             </h1>
             <p className="hero-description">
               {outcome
-                ? "Prepare for a job interview, a phone call, or talking about your stutter. Get lessons and speaking practice in the Speechworks app."
+                ? "Prepare for a job interview, a phone call, or talking about your stutter. Get programs and speaking practice in the Speechworks app."
                 : "For adults who stammer or stutter. Practice a job interview or a phone call with an AI caller that waits for you."}
             </p>
             <StoreButtons />
@@ -76,7 +76,7 @@ export default function HomePage({ outcome = false, preview = false }: { outcome
             ))}
           </div>
           <div className="programs-footnote" data-reveal>
-            <span>Pay once for a program. Keep your notes and completed lessons.</span>
+            <span>Pay once for a program. Keep your notes and completed days.</span>
           </div>
         </section>
         <HowProgramsWork outcome={outcome} />

@@ -23,6 +23,7 @@ const BANNED = [
   [/\bfluen(t|cy|tly)\b/i, "fluency outcome"],
   [/\byou will (feel|be|sound|speak)\b/i, "promised outcome"],
   [/\b(battle|conquer|defeat|mastery|overcome)\b/i, "fight framing"],
+  [/[₹$€£¥]\s?[0-9]/, "prices vary by country, show a % discount instead"],
   [/\b(scores?|streaks?|leaderboards?|waitlist|free trial|forum|therapist directory)\b/i, "feature the app does not have"],
 ];
 
@@ -43,11 +44,10 @@ const APPROVED_NUMBERS = new Set([
   "8 ai practice calls", "8 calls",
   "seven days", "six speech tools",
   "10 programs", "ten programs",
-  "₹499", "₹999", "₹1999", "₹1,999",
 ]);
 const NUMBER_WORDS = "[0-9]+|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|fourteen|twenty";
 const NUMBER_CLAIM = new RegExp(
-  `₹ ?[0-9]+(?:,[0-9]{3})*|\\b(?:${NUMBER_WORDS})(?: to (?:${NUMBER_WORDS}))? (?:programs?|days?|ai call credits?|ai (?:practice )?calls?|calls|call credits|speech tools?|techniques?|scenarios?|minutes?)\\b`,
+  `\\b(?:${NUMBER_WORDS})(?: to (?:${NUMBER_WORDS}))? (?:programs?|days?|ai call credits?|ai (?:practice )?calls?|calls|call credits|speech tools?|techniques?|scenarios?|minutes?)\\b`,
   "gi",
 );
 // "one" is left out so singular phrases ("one AI call") pass.
