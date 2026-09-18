@@ -13,10 +13,10 @@ const curves = [
   },
 ];
 
-/** The black fill continues directly into the app-download section below. */
-export default function DownloadRibbon() {
+/** The black fill continues directly into the dark section below it. */
+export default function DownloadRibbon({ fromHero = false }: { fromHero?: boolean }) {
   return (
-    <div className="download-ribbon" aria-hidden="true">
+    <div className={`download-ribbon${fromHero ? " download-ribbon-from-hero" : ""}`} aria-hidden="true">
       {curves.map(({ size, viewBox, path, close }) => (
         <svg key={size} className={`download-ribbon-${size}`} viewBox={viewBox} preserveAspectRatio="none" focusable="false">
           <defs>

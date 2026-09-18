@@ -1,4 +1,3 @@
-import "../home.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Link from "next/link";
@@ -7,7 +6,6 @@ import FeatureDeck from "./FeatureDeck";
 import StoreButtons from "./StoreButtons";
 import ProgramCard from "./ProgramCard";
 import DownloadSection from "./DownloadSection";
-import DownloadRibbon from "./DownloadRibbon";
 import SectionEdge from "./SectionEdge";
 import SceneDepth from "./SceneDepth";
 import Faq from "./Faq";
@@ -83,7 +81,6 @@ export default function HomePage({ outcome = false, preview = false }: { outcome
         </section>
         <HowProgramsWork outcome={outcome} />
         <Faq />
-        <DownloadRibbon />
         <DownloadSection outcome={outcome} />
       </main>
       <Footer />

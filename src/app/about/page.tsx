@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Avatar from "../components/Avatar";
 import DownloadSection from "../components/DownloadSection";
+import SectionEdge from "../components/SectionEdge";
 import { socialMetadata } from "@/lib/site-metadata";
 export const metadata = {
   title: "About",
@@ -16,18 +17,21 @@ export default function About() {
     <div className="site-shell">
       <Navbar />
       <main id="main-content">
-        <section className="about-intro section-wrap" data-reveal>
-          <p className="section-kicker">About Speechworks</p>
-          <h1>A place to practice speaking.</h1>
-          <div className="about-faces" aria-hidden="true">
-            {["braids", "workcap", "silver", "hijab"].map((name) => (
-              <Avatar key={name} name={name} size={115} />
-            ))}
-          </div>
-          <p>
-            Speechworks is an app for adults who stutter. It has lessons and activities to help you prepare for interviews, phone calls, and personal conversations.
-          </p>
-        </section>
+        <div className="page-hero">
+          <section className="about-intro section-wrap" data-reveal>
+            <p className="section-kicker">About Speechworks</p>
+            <h1>A place to practice speaking.</h1>
+            <div className="about-faces" aria-hidden="true">
+              {["braids", "workcap", "silver", "hijab"].map((name) => (
+                <Avatar key={name} name={name} size={115} />
+              ))}
+            </div>
+            <p>
+              Speechworks is an app for adults who stutter. It has lessons and activities to help you prepare for interviews, phone calls, and personal conversations.
+            </p>
+          </section>
+        </div>
+        <SectionEdge kind="hero" />
         <section className="about-principles section-wrap" aria-label="How the programs work">
           <article data-reveal>
             <h2>Choose what to practice.</h2>

@@ -4,9 +4,28 @@
     {
       "name": "sw-landing-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000,
       "autoPort": true
+    },
+    {
+      "name": "sw-landing-static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4173",
+        "-d",
+        "out"
+      ],
+      "port": 4173
+    },
+    {
+      "name": "sw-landing-attach",
+      "url": "http://localhost:3000"
     }
   ]
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import "./motion.css";
+import "./home.css";
 import SiteMotion from "./components/SiteMotion";
 import { socialMetadata } from "@/lib/site-metadata";
 

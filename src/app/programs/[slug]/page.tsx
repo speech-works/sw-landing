@@ -8,6 +8,7 @@ import Footer from "../../components/Footer";
 import ProgramIllustration from "../../components/ProgramIllustration";
 import DownloadSection from "../../components/DownloadSection";
 import ProgramTakeaway from "../../components/ProgramTakeaway";
+import SectionEdge from "../../components/SectionEdge";
 import { socialMetadata } from "@/lib/site-metadata";
 import { programPrice, rupees } from "@/content/pricing";
 export const dynamicParams = false;
@@ -35,31 +36,36 @@ export default async function ProgramPage({ params }: Props) {
     <div className="site-shell">
       <Navbar />
       <main id="main-content">
+        <div className="page-hero">
+          <div className="section-wrap">
+            <Link className="breadcrumb" href="/programs/">
+              <ArrowLeft size={15} /> All programs
+            </Link>
+            <section className="detail-hero" data-reveal>
+              <div>
+                <p className="section-kicker">
+                  {program.days} days · Pay once
+                </p>
+                <h1>{program.label}</h1>
+                <p className="program-app-name">In the app: {program.title}</p>
+                <p className="detail-description">{program.detail}</p>
+                <a href="#download" className="button button-ink pressable">
+                  Get the app <ArrowUpRight size={17} />
+                </a>
+                <p className="detail-purchase-note">
+                  {price.onOffer
+                    ? <>Launch offer: <strong>{rupees(price.now)}</strong> <s>{rupees(price.regular)}</s>. Pay once for this program. No subscription needed.</>
+                    : <>{rupees(price.now)}. Pay once for this program. No subscription needed.</>}
+                </p>
+              </div>
+              <div className={`detail-art tone-${program.color}`}>
+                <ProgramIllustration program={program.key} />
+              </div>
+            </section>
+          </div>
+        </div>
+        <SectionEdge kind="hero" />
         <div className="section-wrap">
-          <Link className="breadcrumb" href="/programs/">
-            <ArrowLeft size={15} /> All programs
-          </Link>
-          <section className="detail-hero" data-reveal>
-            <div>
-              <p className="section-kicker">
-                {program.days} days · Pay once
-              </p>
-              <h1>{program.label}</h1>
-              <p className="program-app-name">In the app: {program.title}</p>
-              <p className="detail-description">{program.detail}</p>
-              <a href="#download" className="button button-ink pressable">
-                Get the app <ArrowUpRight size={17} />
-              </a>
-              <p className="detail-purchase-note">
-                {price.onOffer
-                  ? <>Launch offer: <strong>{rupees(price.now)}</strong> <s>{rupees(price.regular)}</s>. Pay once for this program. No subscription needed.</>
-                  : <>{rupees(price.now)}. Pay once for this program. No subscription needed.</>}
-              </p>
-            </div>
-            <div className={`detail-art tone-${program.color}`}>
-              <ProgramIllustration program={program.key} />
-            </div>
-          </section>
           <ul className="detail-includes" aria-label="What is included">
             {program.includes.map((item) => (
               <li key={item} data-reveal>

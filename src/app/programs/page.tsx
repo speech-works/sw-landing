@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProgramCatalog from "../components/ProgramCatalog";
 import DownloadSection from "../components/DownloadSection";
+import SectionEdge from "../components/SectionEdge";
 import { socialMetadata } from "@/lib/site-metadata";
 export const metadata = {
   title: "Programs for Adults Who Stammer or Stutter",
@@ -15,12 +16,15 @@ export default function Programs() {
     <div className="site-shell">
       <Navbar />
       <main id="main-content">
-        <header className="page-intro section-wrap" data-reveal>
-          <h1>Choose a program.</h1>
-          <p>
-            Practice for an interview or a phone call. Learn about your stutter. See what each program includes.
-          </p>
-        </header>
+        <div className="page-hero">
+          <header className="page-intro section-wrap" data-reveal>
+            <h1>Choose a program.</h1>
+            <p>
+              Practice for an interview or a phone call. Learn about your stutter. See what each program includes.
+            </p>
+          </header>
+        </div>
+        <SectionEdge kind="hero" />
         <ProgramCatalog />
         <DownloadSection />
       </main>
