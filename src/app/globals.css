@@ -666,7 +666,7 @@ svg {
   align-items: center;
   font-size: 11px;
 }
-.program-card-top > span {
+.program-card-top > span:first-child {
   border: 1px solid #14131130;
   border-radius: 50px;
   padding: 6px 12px;
@@ -1203,6 +1203,12 @@ svg {
 .detail-hero h1 {
   font-size: clamp(40px, 5.4vw, 74px);
   overflow-wrap: anywhere;
+}
+.program-app-name {
+  margin-top: 16px;
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 1.5;
 }
 .detail-description {
   max-width: 47ch;
@@ -1844,10 +1850,15 @@ svg {
     font-size: 26px;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 640px) {
+  .nav-cta-free {
+    display: none;
+  }
   .site-header nav > .nav-link {
     display: none;
   }
+}
+@media (max-width: 360px) {
   .hero {
     padding-inline: 12px;
   }
@@ -1954,7 +1965,7 @@ svg {
     width: 136px;
     height: 136px;
     right: 17px;
-    top: 57px;
+    top: 52px;
     margin: 0;
   }
   .program-card-art .program-portrait {
@@ -1962,7 +1973,7 @@ svg {
     height: 120px;
   }
   .program-card-top {
-    margin-bottom: 112px;
+    margin-bottom: 128px;
   }
   .program-situation {
     max-width: 16ch;
@@ -2011,4 +2022,104 @@ svg {
   .partner-person { width: 65px; height: 65px; }
   .partner-connection > span { width: 12px; }
   .feature-action-arrow { width: 27px; height: 27px; }
+}
+
+/* Launch-offer price sticker on program cards. It sits in the top row, clear of the portrait. */
+.program-card-top > .price-badge {
+  margin: -12px auto -12px 10px;
+}
+.price-badge {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 8px 12px 9px;
+  background: var(--lime);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transform: rotate(7deg);
+  line-height: 1;
+  transition: transform 350ms var(--ease-out);
+}
+.price-badge small {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.price-badge-amounts {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.price-badge s {
+  font-size: 12px;
+  opacity: 0.6;
+  text-decoration-thickness: 2px;
+}
+.price-badge strong {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.price-badge-plain {
+  background: var(--paper);
+}
+@media (hover: hover) and (pointer: fine) {
+  .program-card:hover .price-badge {
+    transform: rotate(-3deg) scale(1.06);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .price-badge {
+    transition: none;
+  }
+}
+@media (max-width: 900px) and (min-width: 641px) {
+  /* Three narrow columns: the footer link already carries the arrow. */
+  .program-card-top:has(.price-badge) > svg {
+    display: none;
+  }
+  .program-card-top > .price-badge {
+    margin-left: 7px;
+    padding: 6px 8px 7px;
+  }
+  .price-badge small {
+    font-size: 8px;
+  }
+  .price-badge s {
+    font-size: 10px;
+  }
+  .price-badge strong {
+    font-size: 16px;
+  }
+}
+/* On phones the portrait sits top right, so the sticker fills the open space to its left. */
+@media (max-width: 640px) {
+  .program-card-top > .price-badge {
+    position: absolute;
+    top: 88px;
+    left: 24px;
+    margin: 0;
+    transform: rotate(-5deg);
+  }
+}
+@media (max-width: 360px) {
+  .program-card-top > .price-badge {
+    left: 18px;
+    padding: 6px 8px 7px;
+  }
+  .price-badge small {
+    font-size: 8px;
+  }
+  .price-badge s {
+    font-size: 10px;
+  }
+  .price-badge strong {
+    font-size: 16px;
+  }
 }

@@ -7,8 +7,8 @@ import { socialMetadata } from "@/lib/site-metadata";
 export const metadata = {
   title: "About",
   description:
-    "Your words deserve to be heard. See how Speechworks helps adults who stutter prepare for interviews, phone calls, and personal conversations.",
-  ...socialMetadata("About Speechworks | Your words deserve to be heard", "See how Speechworks helps adults who stutter prepare for interviews, phone calls, and personal conversations.", "/about/"),
+    "Speechworks gives adults who stammer or stutter lessons and speaking practice for everyday conversations.",
+  ...socialMetadata("About Speechworks", "Lessons and speaking practice for adults who stammer or stutter.", "/about/"),
   alternates: { canonical: "/about/" },
 };
 export default function About() {
@@ -18,28 +18,28 @@ export default function About() {
       <main id="main-content">
         <section className="about-intro section-wrap" data-reveal>
           <p className="section-kicker">About Speechworks</p>
-          <h1>Your words deserve to be heard.</h1>
+          <h1>A place to practice speaking.</h1>
           <div className="about-faces" aria-hidden="true">
             {["braids", "workcap", "silver", "hijab"].map((name) => (
               <Avatar key={name} name={name} size={115} />
             ))}
           </div>
           <p>
-            You may want to introduce yourself, ask for something, or tell someone how you feel. Speechworks helps adults who stutter prepare for these moments. Each program gives you lessons and activities for a goal you choose.
+            Speechworks is an app for adults who stutter. It has lessons and activities to help you prepare for interviews, phone calls, and personal conversations.
           </p>
         </section>
         <section className="about-principles section-wrap" aria-label="How the programs work">
           <article data-reveal>
-            <h2>Start with what matters to you.</h2>
-            <p>Choose the conversation you want to prepare for. You decide what to say and what to share. The Art of Disclosure, for example, helps you decide whether to tell someone you stutter.</p>
+            <h2>Choose what to practice.</h2>
+            <p>Start with a conversation you want to have. You decide what to say and whether to talk about your stutter.</p>
           </article>
           <article data-reveal>
-            <h2>Know what you are choosing.</h2>
-            <p>Read the daily outline on each <Link href="/programs/" className="underline">program page</Link> before you choose. Interview Ready and The Hard Conversations include AI calls. Other programs use activities such as writing and speaking practice.</p>
+            <h2>See what is included.</h2>
+            <p>See the lessons on each <Link href="/programs/" className="underline">program page</Link> before you choose. Interview and phone call programs include AI calls. Other programs use writing and speaking activities.</p>
           </article>
           <article data-reveal>
-            <h2>Keep what helps you.</h2>
-            <p>Save your notes and return to completed lessons. Use them to prepare for another conversation. If you miss a day, you can continue your program when you return.</p>
+            <h2>Come back when you need to.</h2>
+            <p>Your notes and completed lessons stay available. If you miss a day, continue when you return.</p>
           </article>
         </section>
         <DownloadSection />

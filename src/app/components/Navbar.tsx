@@ -22,7 +22,7 @@ export default function Navbar() {
           href="/#download"
           className="button button-small button-ink pressable"
         >
-          Get the app <ArrowUpRight size={15} aria-hidden="true" />
+          <span>Get the <span className="nav-cta-free">free </span>app</span> <ArrowUpRight size={15} aria-hidden="true" />
         </Link>
       </nav>
     </header>

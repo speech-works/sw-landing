@@ -15,7 +15,7 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Journal
+          Blog
         </a>
         <a href="mailto:contact@speechworks.in">Contact</a>
         <Link href="/privacy/">Privacy</Link>

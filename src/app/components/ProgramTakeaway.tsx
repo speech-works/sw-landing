@@ -10,39 +10,66 @@ type Example = {
 };
 
 const examples: Record<string, Example> = {
-  interview_ready: {
-    title: "Practice that starts with your experience.",
-    description: "Interview Ready gives you questions and AI rehearsals to work with. You build answers from your own experience and consider how to use them when an interviewer asks something differently.",
-    programName: "Interview Ready",
-    slug: "interview-ready",
-    stages: [
-      { label: "Something to work on", text: "I want to explain what I contributed to a project." },
-      { label: "A way to practise", text: "Try an answer in an AI interview, respond to follow-up questions, and reflect on what you want to explain more clearly." },
-      { label: "Something to take forward", text: "Choose examples from your work that you can adapt to the questions you are asked." },
-    ],
+  "interview_ready": {
+    "title": "Try an interview question.",
+    "description": "Practice an answer based on your work.",
+    "programName": "Interview Ready",
+    "slug": "interview-ready",
+    "stages": [
+      {
+        "label": "Your situation",
+        "text": "I want to explain my work on a project."
+      },
+      {
+        "label": "Your practice",
+        "text": "Answer a question from the AI interviewer. Try the questions it asks next."
+      },
+      {
+        "label": "Your next step",
+        "text": "Choose the examples you want to use in your interview."
+      }
+    ]
   },
-  hard_conversations: {
-    title: "From putting off a call to trying an approach.",
-    description: "The Hard Conversations gives you AI calls to practise explaining a problem, asking for help, and responding when the answer is no. You can try different responses before deciding what to use on a real call.",
-    programName: "The Hard Conversations",
-    slug: "hard-conversations",
-    stages: [
-      { label: "Something to work on", text: "There is a repair I need to call about." },
-      { label: "A way to practise", text: "Explain a problem in an AI call. Afterwards, notice what you said and what you would try differently." },
-      { label: "Something to take forward", text: "Choose an opening and the details you need for your call. Afterwards, use what happened to prepare for the next one." },
-    ],
+  "hard_conversations": {
+    "title": "Prepare for a phone call.",
+    "description": "Try what you want to say before a real call.",
+    "programName": "The Hard Conversations",
+    "slug": "hard-conversations",
+    "stages": [
+      {
+        "label": "Your situation",
+        "text": "I need to call someone about a repair."
+      },
+      {
+        "label": "Your practice",
+        "text": "Explain the problem to an AI caller. Notice what you want to say more clearly."
+      },
+      {
+        "label": "Your next step",
+        "text": "Choose your first sentence and write down the details you need."
+      }
+    ]
   },
-  art_of_disclosure: {
-    title: "Decide what feels right for you.",
-    description: "The Art of Disclosure offers ways to think about talking about stuttering. You decide whether to share, with whom, and how much. Your choice can be different in another situation.",
-    programName: "The Art of Disclosure",
-    slug: "art-of-disclosure",
-    stages: [
-      { label: "Something to work on", text: "I am thinking about telling a new colleague that I stutter." },
-      { label: "A way to practise", text: "Explore examples and try saying what you would want this person to know, in your own words." },
-      { label: "Something to take forward", text: "Decide whether to have the conversation. You can change what you share as the person or situation changes." },
-    ],
-  },
+  "art_of_disclosure": {
+    "title": "Practice telling someone.",
+    "description": "You decide whether to talk about your stutter.",
+    "programName": "The Art of Disclosure",
+    "slug": "art-of-disclosure",
+    "stages": [
+      {
+        "label": "Your situation",
+        "text": "I am thinking about telling someone at work that I stutter."
+      },
+      {
+        "label": "Your practice",
+        "text": "Read examples and try saying what you want them to know."
+      },
+      {
+        "label": "Your next step",
+        "text": "Decide whether to tell them and what to share."
+      }
+    ]
+  }
 };
 
 export default function ProgramTakeaway({ programKey, linkToProgram = false }: { programKey: string; linkToProgram?: boolean }) {
@@ -51,13 +78,12 @@ export default function ProgramTakeaway({ programKey, linkToProgram = false }: {
   return (
     <section className="program-takeaway" aria-labelledby={`takeaway-${programKey}`}>
       <div className="takeaway-copy">
-        <p className="section-kicker">What that can look like</p>
         <h2 id={`takeaway-${programKey}`}>{example.title}</h2>
         <p>{example.description}</p>
         {linkToProgram && <Link href={`/programs/${example.slug}/`} className="text-link">See inside {example.programName} <ArrowUpRight size={16} aria-hidden="true" /></Link>}
       </div>
       <figure className="takeaway-note">
-        <p className="takeaway-label">One possible starting point</p>
+        <p className="takeaway-label">An example</p>
         <dl className="takeaway-stages">
           {example.stages.map((stage) => (
             <div key={stage.label}>
@@ -66,7 +92,7 @@ export default function ProgramTakeaway({ programKey, linkToProgram = false }: {
             </div>
           ))}
         </dl>
-        <figcaption>Illustrative example. Your situation and next steps are yours to choose.</figcaption>
+        <figcaption>You choose what to try.</figcaption>
       </figure>
     </section>
   );

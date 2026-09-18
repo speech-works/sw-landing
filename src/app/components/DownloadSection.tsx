@@ -3,7 +3,7 @@ import StoreButtons from "./StoreButtons";
 import Avatar from "./Avatar";
 import Link from "next/link";
 
-export default function DownloadSection({ programTitle }: { programTitle?: string }) {
+export default function DownloadSection({ programTitle, outcome = false }: { programTitle?: string; outcome?: boolean }) {
   return (
     <section
       className="download-section"
@@ -16,20 +16,21 @@ export default function DownloadSection({ programTitle }: { programTitle?: strin
           <Avatar name="turban" size={60} />
           <Avatar name="silver" size={60} />
         </div>
-        <h2 id="download-title">Get ready for your next conversation.</h2>
+        <h2 id="download-title">Get Speechworks.</h2>
         <p>
           {programTitle
-            ? `Download Speechworks, then find ${programTitle} in the app. Check the current price and what is included before you buy.`
-            : "Choose a conversation you want to prepare for. Download Speechworks to find your program and see the current price before you buy."}
+            ? `Download the app and look for ${programTitle}. See the price before you buy.`
+            : outcome
+              ? "Download Speechworks and choose a program. You can check the price before you buy."
+              : "Start with free daily practice and a free AI call. Buy a program when you are ready."}
         </p>
         <StoreButtons />
         <p className="download-note">
-          Download the app for free. Buy programs separately.
+          Free to download, with free daily practice. Pay once for each program.
         </p>
         <div className="download-reassurance">
-          <p>No subscription required to buy a program. Membership and extra AI call credits are optional purchases.</p>
-          <p>Miss a day? Continue when you return. New days open over time; completed lessons stay available.</p>
-          <Link href="/privacy/">Read how your data is handled <span aria-hidden="true">↗</span></Link>
+          <p>Pay once for a program. Membership and extra AI call credits cost extra and are optional.</p>
+          <Link href="/privacy/">How we use your data <span aria-hidden="true">↗</span></Link>
         </div>
       </div>
       <div className="download-qr" data-reveal>
@@ -40,9 +41,9 @@ export default function DownloadSection({ programTitle }: { programTitle?: strin
             width={176}
             height={176}
           />
-          <span>Scan to get Speechworks.</span>
+          <span>Get the app on your phone.</span>
         </div>
-        <span className="qr-caption">Scan with your camera</span>
+        <span className="qr-caption">Scan with your phone camera</span>
       </div>
     </section>
   );

@@ -3,16 +3,16 @@ import { ArrowUpRight } from "lucide-react";
 
 const steps = [
   {
-    title: "Bring something real.",
-    description: "A call. An interview. Something you want to understand about your stuttering. Start with what matters to you.",
+    title: "Choose a program.",
+    description: "Pick what you want to practice, such as an interview or a phone call.",
   },
   {
-    title: "Try it and reflect.",
-    description: "Explore an approach, try an activity, and notice what was useful and what you would change.",
+    title: "Follow the lessons.",
+    description: "Read a lesson and try the activity. New lessons open over time.",
   },
   {
-    title: "Find your own way.",
-    description: "Try it in a conversation you choose. Use the experience to decide what to keep practising and what to adapt.",
+    title: "Use what helps.",
+    description: "Try what you learned in a conversation. You choose what to use again.",
   },
 ];
 
@@ -37,18 +37,23 @@ function JourneyRoad({ reverse = false }: { reverse?: boolean }) {
   );
 }
 
-export default function HowProgramsWork() {
+const outcomeSteps = [
+  { title: "Pick a topic.", description: "Each program has a daily plan. Check its lessons and price in the app." },
+  { title: "Follow the lessons.", description: "Read, write, or speak, depending on the activity. New days open over time." },
+  { title: "Use what you learned.", description: "Try an idea in a conversation. Notice what helps and what you would change." },
+];
+
+export default function HowProgramsWork({ outcome = false }: { outcome?: boolean }) {
+  const shownSteps = outcome ? outcomeSteps : steps;
   return (
     <section className="program-steps section-wrap" id="how-it-works" aria-labelledby="steps-title">
       <div className="program-steps-heading">
-        <p className="section-kicker">A place to begin</p>
-        <h2 id="steps-title">Start with guidance.<br />Make it your own.</h2>
-        <p className="program-steps-intro">A program gives you lessons and activities to explore. You bring your own situation and decide what to take into everyday life.</p>
+        <h2 id="steps-title">How it works</h2>
       </div>
       <ol className="program-steps-list">
-        {steps.map((step, index) => (
+        {shownSteps.map((step, index) => (
           <li key={step.title}>
-            {index < steps.length - 1 && <JourneyRoad reverse={index === 1} />}
+            {index < shownSteps.length - 1 && <JourneyRoad reverse={index === 1} />}
             <span className="step-number" aria-hidden="true"><span>0{index + 1}</span></span>
             <div className="program-step-card">
               <h3>{step.title}</h3>
@@ -58,8 +63,8 @@ export default function HowProgramsWork() {
         ))}
       </ol>
       <div className="program-steps-next">
-        <p>Return to your notes and completed lessons whenever you want a reminder.</p>
-        <Link className="button button-ink pressable" href="/programs/">See what you could work on <ArrowUpRight size={20} aria-hidden="true" /></Link>
+        {!outcome && <p>Come back to your notes and completed lessons when you need them.</p>}
+        <Link className="button button-ink pressable" href="/programs/">See programs <ArrowUpRight size={20} aria-hidden="true" /></Link>
       </div>
     </section>
   );

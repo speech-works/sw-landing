@@ -4,36 +4,32 @@ import AnimatedDetails from "./AnimatedDetails";
 const questions = [
   [
     "Who is Speechworks for?",
-    "Speechworks is for adults who stutter, also called stammering. You can prepare for interviews and phone calls, explore speech tools, or learn more about your stuttering.",
+    "Adults who stammer. Stammering is also called stuttering. You can practice speaking or learn about your stammer."
   ],
   [
-    "What happens in a program?",
-    "Each program has 7 to 14 days of lessons and activities around a topic. The lessons explain ideas you can try; the activities help you explore them in relation to your own experience. Read the daily outline on the program page to see what you will do.",
+    "Is the app free?",
+    "The app is free to download. Daily practice and one short AI call a week are free. Programs cost extra: pay once for each program. You do not need a subscription. Membership and extra AI call credits are optional purchases. See prices in the app."
   ],
   [
-    "What happens after I finish a program?",
-    "You can keep trying and adapting what was useful in your everyday life. Your notes and completed lessons stay available to revisit. You do not need a new program for every conversation. Choose another only if there is something else you want to work on.",
+    "Will this cure my stammer?",
+    "No. Speechworks is practice for real situations, like an interview or a phone call. It does not treat stammering or replace a speech therapist. There is no fluency score."
   ],
   [
-    "Do I need a subscription?",
-    "No subscription is required to buy a program. Pay once for the program you choose. Optional membership and extra AI call credits cost extra. The app shows the price before you buy.",
-  ],
-  [
-    "How does AI call practice work?",
-    "AI means artificial intelligence. You speak with an AI character in the app, and it responds to what you say. This lets you prepare for a real conversation. The AI caller is designed to give you time to answer, including when you stutter.",
-  ],
-  [
-    "Does every program include AI calls?",
-    "Interview Ready and The Hard Conversations include AI call practice and bundled credits. Other programs use activities such as writing and speaking practice.",
+    "How long is a program?",
+    "Programs have 7 to 14 days of lessons and activities. New lessons open over time. See the lessons on each program page before you choose."
   ],
   [
     "What if I miss a day?",
-    "You can continue when you return. New days become available over time, and completed lessons stay available. The app shows when you can start the next day.",
+    "Continue when you return. The app shows when the next lesson opens. Your notes and completed lessons stay available after you finish."
   ],
   [
-    "Are more programs coming?",
-    "Yes. We collaborate with speech-language pathologists and adults who stutter to develop new daily programs. New real-world conversation topics and clinical guides are regularly added to the app.",
+    "How do AI calls work?",
+    "You talk to an AI character in the app. It responds to what you say. It is not a real person. The caller is designed to give you time to answer, including when you stutter. One call credit pays for one AI call."
   ],
+  [
+    "Which programs include AI calls?",
+    "Job interview practice (Interview Ready in the app) includes 10 AI call credits. Phone call practice (The Hard Conversations) includes 8. Other programs use activities such as writing and speaking practice."
+  ]
 ];
 
 export default function Faq() {

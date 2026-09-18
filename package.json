@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node ./scripts/check-no-dashes.mjs",
+    "prebuild": "node ./scripts/check-no-dashes.mjs && node ./scripts/check-copy-rules.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
     "lint:dashes": "node ./scripts/check-no-dashes.mjs",
+    "lint:copy": "node ./scripts/check-copy-rules.mjs",
     "sync:mobile": "node scripts/sync-mobile-content.cjs",
     "artwork:build": "node scripts/build-avatar-artwork.cjs",
     "artwork:characters": "node scripts/build-character-artwork.cjs"

@@ -9,6 +9,7 @@ import ProgramIllustration from "../../components/ProgramIllustration";
 import DownloadSection from "../../components/DownloadSection";
 import ProgramTakeaway from "../../components/ProgramTakeaway";
 import { socialMetadata } from "@/lib/site-metadata";
+import { programPrice, rupees } from "@/content/pricing";
 export const dynamicParams = false;
 export function generateStaticParams() {
   return programs.map(({ slug }) => ({ slug }));
@@ -20,15 +21,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!program) return {};
   return {
     title: program.searchTitle,
-    description: program.description,
+    description: program.searchDescription,
     alternates: { canonical: `/programs/${slug}/` },
-    ...socialMetadata(`${program.searchTitle} | Speechworks`, program.description, `/programs/${slug}/`, slug),
+    ...socialMetadata(`${program.searchTitle} | Speechworks`, program.searchDescription, `/programs/${slug}/`, slug),
   };
 }
 export default async function ProgramPage({ params }: Props) {
   const { slug } = await params;
   const program = programs.find((item) => item.slug === slug);
   if (!program) notFound();
+  const price = programPrice(program.key);
   return (
     <div className="site-shell">
       <Navbar />
@@ -40,14 +42,19 @@ export default async function ProgramPage({ params }: Props) {
           <section className="detail-hero" data-reveal>
             <div>
               <p className="section-kicker">
-                {program.days} days · One-time purchase
+                {program.days} days · Pay once
               </p>
-              <h1>{program.title}</h1>
+              <h1>{program.label}</h1>
+              <p className="program-app-name">In the app: {program.title}</p>
               <p className="detail-description">{program.detail}</p>
               <a href="#download" className="button button-ink pressable">
-                Get this program in the app <ArrowUpRight size={17} />
+                Get the app <ArrowUpRight size={17} />
               </a>
-              <p className="detail-purchase-note">Buy this program once. No subscription required. See current pricing in the app.</p>
+              <p className="detail-purchase-note">
+                {price.onOffer
+                  ? <>Launch offer: <strong>{rupees(price.now)}</strong> <s>{rupees(price.regular)}</s>. Pay once for this program. No subscription needed.</>
+                  : <>{rupees(price.now)}. Pay once for this program. No subscription needed.</>}
+              </p>
             </div>
             <div className={`detail-art tone-${program.color}`}>
               <ProgramIllustration program={program.key} />
@@ -63,14 +70,11 @@ export default async function ProgramPage({ params }: Props) {
           </ul>
           <section className="outline-section" aria-labelledby="outline-title">
             <div data-reveal>
-              <p className="section-kicker">Your daily plan</p>
               <h2 id="outline-title">
-                See your
-                <br />
-                <span className="serif-word">daily plan.</span>
+                Your lessons
               </h2>
               <p>
-                Each day gives you a lesson or activity to work through. New days become available over time. Return to completed lessons when you need them. Check the price in the app before you buy.
+                New lessons open over time. The app shows when you can start the next day. You can return to completed lessons.
               </p>
             </div>
             <ol className="program-outline">

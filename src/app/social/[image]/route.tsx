@@ -20,8 +20,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ ima
   const slug = image.replace(/\.png$/, "");
   const program = programs.find((item) => item.slug === slug);
   if (!program && slug !== "home" && slug !== "programs") return new Response("Not found", { status: 404 });
-  const title = program?.title ?? (slug === "programs" ? "Find your next program." : "Say what you want to say.");
-  const description = program?.situation ?? "Speaking practice for adults who stutter.";
+  const title = program?.label ?? (slug === "programs" ? "Choose a program." : "Say what you want to say.");
+  const description = program?.title ?? "Speaking practice for adults who stammer or stutter.";
   const [regular, bold, portrait] = await Promise.all([
     readFile(path.join(process.cwd(), "src/app/fonts/Inter-Regular.ttf")),
     readFile(path.join(process.cwd(), "src/app/fonts/Inter-ExtraBold.ttf")),
@@ -46,7 +46,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ ima
         </div>
       </div>
       <div style={{ display: "flex", borderTop: "2px solid #141311", paddingTop: 20, fontSize: 20 }}>
-        {program ? `${program.days} days · One-time program purchase` : "Guided programs · Lessons · Speaking practice"}
+        {program ? `${program.days} days · Pay once` : "Programs · Lessons · Speaking practice"}
       </div>
     </div>,
     { width: 1200, height: 630, fonts: [

@@ -1,184 +1,205 @@
 import outlines from "./program-outlines.json";
+import { lessonLabels } from "./program-lesson-labels";
 
 const copy = [
   {
     key: "interview_ready",
-    searchTitle: "Interview Practice for Adults Who Stutter",
+    searchTitle: "Interview Practice If You Stammer or Stutter",
+    searchDescription:
+      "Practice job and placement interviews with an AI interviewer that waits for you. For adults who stammer or stutter. Includes 10 AI practice calls.",
     title: "Interview Ready",
     category: "Conversations",
     color: "blue",
     avatar: "scholar",
-    situation: "Show employers what you can do.",
+    label: "Job interview practice",
     description:
-      "Build answers from your own experience. Practice with an AI interviewer before the real interview. Includes 10 call credits.",
+      "Prepare your answers. Practice with an AI interviewer. Includes 10 AI practice calls.",
     detail:
-      "Give your experience the attention it deserves. Prepare answers about your work, practice follow-up questions with AI, and decide how to talk about stuttering. Save your notes for the interview ahead.",
+      "Prepare answers about your work. Practice interview questions with an AI interviewer. You decide whether to talk about your stutter.",
     includes: [
-      "A daily plan to prepare your answers",
-      "AI interview practice with 10 call credits",
-      "Your interview notes and next steps",
+      "Lessons to help you prepare your answers",
+      "10 AI practice calls",
+      "Your notes to use before an interview",
     ],
   },
   {
     key: "hard_conversations",
-    searchTitle: "Phone Call Practice for Adults Who Stutter",
+    searchTitle: "Phone Call Practice If You Stammer or Stutter",
+    searchDescription:
+      "Practice phone calls with an AI caller that gives you time to speak. For adults who stutter or stammer. Includes 8 AI practice calls.",
     title: "The Hard Conversations",
     category: "Conversations",
     color: "orange",
     avatar: "headphones",
-    situation: "Feel ready to make the call.",
+    label: "Phone call practice",
     description:
-      "Prepare to explain a problem, ask for help, or say no. Practice with an AI caller before your real call. Includes 8 call credits.",
+      "Practice explaining a problem, asking for help, or saying no. Includes 8 AI practice calls.",
     detail:
-      "Prepare for the call you want to make. Practice explaining a problem, responding when someone says no, and asking for what you need. Use AI calls to try your words before you make a real call you choose.",
+      "Prepare what you want to say on a phone call. Practice with an AI caller before you call a real person.",
     includes: [
-      "A plan for everyday phone calls",
-      "AI call practice with 8 call credits",
-      "Your own call plan to use again",
+      "Practice for everyday phone calls",
+      "8 AI practice calls",
+      "Your plan for a real call",
     ],
   },
   {
     key: "art_of_disclosure",
-    searchTitle: "Talking About Your Stutter: A Disclosure Program",
+    searchTitle: "Talking About Your Stammer or Stutter",
+    searchDescription:
+      "Decide whether to tell someone you stammer, and practice what you want to say. For adults who stutter or stammer.",
     title: "The Art of Disclosure",
-    category: "Connection",
+    category: "Relationships",
     color: "purple",
     avatar: "flower",
-    situation: "Choose how to talk about stuttering.",
+    label: "Talking about your stutter",
     description:
-      "Decide who to tell and what to share. If you choose to talk about your stuttering, prepare the words you want to use.",
+      "Decide whether to tell someone you stutter. Practice what you want to say.",
     detail:
-      "Make the choice that feels right for you. Try ways to tell someone you stutter and prepare for their response. Build a plan in your own words. You decide whether to use it.",
+      "Choose who to tell and what to share. Try ways to talk about your stutter and respond to questions. You decide whether to use them.",
     includes: [
-      "Examples to help you find your words",
+      "Examples of what you could say",
       "Practice for telling someone and responding",
-      "Your own plan for what to share",
+      "Your plan for what to share",
     ],
   },
   {
     key: "panic_button",
-    searchTitle: "Prepare for Difficult Speaking Moments",
+    searchTitle: "Before a Hard Conversation When You Stammer",
+    searchDescription:
+      "Activities for the moments you feel worried about speaking. For adults who stutter or stammer. Save the steps that help.",
     title: "The Panic Button",
-    category: "Everyday moments",
+    category: "Thoughts and feelings",
     color: "lime",
     avatar: "beanie",
-    situation: "Have a plan before you speak.",
+    label: "Before a difficult conversation",
     description:
-      "Prepare for the minutes before a difficult conversation. Try activities to focus on the present and save useful steps in your own Panic Card.",
+      "Try activities for the moments when you feel worried about speaking. Save the steps that help.",
     detail:
-      "Give yourself a plan for the moments before you speak. Learn about the worry you may feel and try activities to focus on the present. Choose your first sentence and save the steps you want to use.",
+      "Notice what happens when you feel worried before speaking. Try activities to focus on what is around you. Choose your first sentence and save your steps.",
     includes: [
       "Lessons about worry before speaking",
-      "Activities to prepare for the first sentence",
-      "Your Panic Card to use when you need it",
+      "Activities to prepare to speak",
+      "A card with your steps to use again",
     ],
   },
   {
     key: "bouncing_back",
-    searchTitle: "After a Difficult Conversation: Bouncing Back",
+    searchTitle: "After a Hard Conversation When You Stutter",
+    searchDescription:
+      "Look back at a hard conversation without going over it again and again, then choose your next step. For adults who stammer or stutter.",
     title: "Bouncing Back",
-    category: "Everyday moments",
+    category: "Thoughts and feelings",
     color: "peach",
     avatar: "bob",
-    situation: "Find your next step after a hard moment.",
+    label: "After a difficult conversation",
     description:
-      "A difficult conversation does not have to decide your next one. Review what happened and create a routine to help you move on.",
+      "Look back at what happened. Choose what to do next.",
     detail:
-      "Give yourself a way to finish reviewing a difficult conversation. Separate what happened from what you fear it meant. Use short activities to choose your next step and write a routine you can use again.",
+      "Review a difficult conversation without going over it again and again. Write down what happened, try short activities, and choose your next step.",
     includes: [
-      "A guided review with a clear stopping point",
-      "Short activities to choose your next step",
-      "Your own routine for after a difficult moment",
+      "A short review of what happened",
+      "Activities to choose your next step",
+      "Your plan for after a difficult conversation",
     ],
   },
   {
     key: "breaking_thought_traps",
-    searchTitle: "Questioning Thoughts About Stuttering",
+    searchTitle: "Thoughts About Stammering and Stuttering",
+    searchDescription:
+      "Look at the thoughts that stop you from speaking and compare them with what really happens. For adults who stammer or stutter.",
     title: "Breaking Thought Traps",
-    category: "Everyday moments",
+    category: "Thoughts and feelings",
     color: "blue",
     avatar: "curly",
-    situation: "A thought is not a fact.",
+    label: "When thoughts stop you speaking",
     description:
-      "Question the predictions that stop you from speaking. Try a small activity and compare what you expected with what happened.",
+      "Look at the thoughts that stop you from speaking. Compare what you expect with what happens.",
     detail:
-      "Give yourself more information before you decide what to do. Notice thoughts about how a conversation will go. Test a prediction in a small activity, record what happens, and use that experience to choose your next step.",
+      "Notice what you think will happen when you speak. Try a small activity and record what happens. Use that experience to decide what to try next.",
     includes: [
-      "Examples of common thinking patterns",
-      "Activities to test your predictions",
-      "Your own record of what actually happened",
+      "Examples of thoughts about speaking",
+      "Activities to check what you expect",
+      "Your notes on what happened",
     ],
   },
   {
     key: "dating_intimacy",
-    searchTitle: "Dating and Relationships When You Stutter",
+    searchTitle: "Dating When You Stammer or Stutter",
+    searchDescription:
+      "Practice talking about your stammer on dates and in relationships, and saying what you are comfortable with.",
     title: "Dating, Intimacy & Vulnerability",
-    category: "Connection",
+    category: "Relationships",
     color: "pink",
     avatar: "flower",
-    situation: "Let someone get to know you.",
+    label: "Dating and relationships",
     description:
-      "Prepare to share what matters to you. Explore dating conversations, talking about stuttering, and setting personal boundaries.",
+      "Practice talking about your stutter, sharing personal things, and saying what you are comfortable with.",
     detail:
-      "Make space for what you want from a relationship. Explore how to meet someone, share personal things, and respond when a conversation feels difficult. Decide what you want to say and where to set your boundaries.",
+      "Prepare for conversations with someone you like. Decide what to share about your stutter. Practice saying what you want and what you are comfortable with.",
     includes: [
-      "Examples of dating and personal conversations",
-      "Practice for sharing and setting boundaries",
-      "Your own plans for conversations that matter",
+      "Examples of dating conversations",
+      "Practice sharing and saying what you need",
+      "Your plans for personal conversations",
     ],
   },
   {
     key: "word_swap",
-    searchTitle: "Practice Words You Avoid When You Stutter",
+    searchTitle: "Practice Words You Avoid When You Stammer",
+    searchDescription:
+      "Choose five words you swap or avoid because of your stutter, and try saying them in small speaking activities.",
     title: "The Word Swap",
-    category: "Your voice",
+    category: "Your speech",
     color: "orange",
     avatar: "scholar",
-    situation: "Say the words you choose.",
+    label: "Practice words you avoid",
     description:
-      "Work with five words you often replace. Try them in small speaking activities and decide which words you want to use.",
+      "Choose five words you often replace. Try saying them in small speaking activities.",
     detail:
-      "Start with five words that matter in your life. Notice when you replace them and try using them in small speaking activities. You choose the next step. Changing a word remains an option.",
+      "Start with five words from your own life. Notice when you replace them and try saying them in speaking activities. You can still choose a different word.",
     includes: [
-      "Five words from your own life",
-      "Speaking activities with choices at each step",
-      "Your word card to use again",
+      "Practice with five words you choose",
+      "Speaking activities to try those words",
+      "A card with your words to use again",
     ],
   },
   {
     key: "speech_toolkit",
-    searchTitle: "Speech Tools for Adults Who Stutter",
+    searchTitle: "Speech Tools for People Who Stammer or Stutter",
+    searchDescription:
+      "Try six speech tools for stuttering and stammering. Notice the effort each takes and choose what helps you.",
     title: "The Speech Toolkit",
-    category: "Your voice",
+    category: "Your speech",
     color: "lime",
     avatar: "beanie",
-    situation: "Find the tools you want to use.",
+    label: "Try ways to help you speak",
     description:
-      "Try six speech tools and choose what helps you. Notice the effort each tool takes before you use it in everyday conversations.",
+      "Try six speech tools. Notice the effort each takes and choose what helps you.",
     detail:
-      "Build a toolkit around your own experience. Learn how each of six speech tools works, try it privately, and record what you notice. Consider the effort it takes. You decide which tools to keep using.",
+      "Learn six ways to work with your speech. Try each one in private and note how it feels. You decide which ones to use again.",
     includes: [
-      "Clear instructions for six speech tools",
-      "Private practice to find what helps you",
-      "Your own choice of tools to keep using",
+      "Instructions for six speech tools",
+      "Private speaking practice",
+      "Your notes on what helps you",
     ],
   },
   {
     key: "understanding_your_voice",
-    searchTitle: "Understanding Stuttering: A Guided Program",
+    searchTitle: "Understanding Stammering and Stuttering",
+    searchDescription:
+      "Learn why your stutter or stammer can change in different situations, and explore how it affects you.",
     title: "Understanding Your Voice",
-    category: "Your voice",
+    category: "Your speech",
     color: "purple",
     avatar: "curly",
-    situation: "Make sense of your stuttering.",
+    label: "Understanding your stutter",
     description:
-      "Learn why stuttering can change from one situation to another. Explore the parts other people may not see and connect them to your experience.",
+      "Learn why your stutter can change in different situations. Explore how it affects you.",
     detail:
-      "Understand more of what you experience when you stutter. Learn why speech can vary, examine common beliefs, and explore the thoughts and feelings other people may not see. Connect each lesson to your own life.",
+      "Learn about stuttering, including the thoughts and feelings other people may not see. Use examples and activities to understand your own experience.",
     includes: [
       "Seven days of lessons and examples",
-      "Questions to check what you have learned",
-      "Private activities about your own experience",
+      "Questions about what you learned",
+      "Private activities about your experience",
     ],
   },
 ];
@@ -186,18 +207,22 @@ const copy = [
 export const programs = copy.map((program) => {
   const brochure = outlines.find((item) => item.key === program.key);
   if (!brochure) throw new Error(`Missing program outline: ${program.key}`);
+  const labels = lessonLabels[program.key];
+  if (!labels || labels.length !== brochure.outline.length || labels.some((label) => !label.trim())) {
+    throw new Error(`Missing lesson labels for ${program.key}`);
+  }
   return {
     ...program,
     slug: program.key.replaceAll("_", "-"),
     days: brochure.days,
-    outline: brochure.outline,
+    outline: brochure.outline.map((day, index) => ({ ...day, title: labels[index] })),
   };
 });
 export type Program = (typeof programs)[number];
 export const categories = [
   "All programs",
   "Conversations",
-  "Connection",
-  "Everyday moments",
-  "Your voice",
+  "Relationships",
+  "Thoughts and feelings",
+  "Your speech",
 ] as const;

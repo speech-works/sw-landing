@@ -17,12 +17,12 @@ const inter = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://speechworks.app"),
-  title: { default: "Speaking Practice for Adults Who Stutter | Speechworks", template: "%s | Speechworks" },
+  title: { default: "Stammering & Stuttering Practice App | Speechworks", template: "%s | Speechworks" },
   description:
-    "Prepare for the conversations you want to have. Speechworks offers expert-curated guided programs for adults who stutter, with lessons and speaking practice.",
+    "Practice job interviews and phone calls with an AI caller that waits for you. For adults who stammer or stutter. Free daily practice.",
   ...socialMetadata(
-    "Speaking Practice for Adults Who Stutter | Speechworks",
-    "Prepare for interviews, phone calls, and conversations you want to have. Guided programs and speaking practice for adults who stutter.",
+    "Stammering & Stuttering Practice App | Speechworks",
+    "Practice job interviews and phone calls with an AI caller that waits for you. For adults who stammer or stutter. Free daily practice.",
     "/",
   ),
 };

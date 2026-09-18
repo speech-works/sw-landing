@@ -65,23 +65,23 @@ function FeatureLink({ href, children, note }: { href: string; children: ReactNo
   );
 }
 
-function Preview({ index }: { index: number }) {
+function Preview({ index, outcome }: { index: number; outcome: boolean }) {
   if (index === 0)
     return (
       <>
-        <div className="preview-top"><span>Interview practice</span><Briefcase size={18} aria-hidden="true" /></div>
-        <h2 className="feature-headline">Go for the job<br />you really want.</h2>
+        <div className="preview-top"><span>{outcome ? "Job interviews" : "Interview practice"}</span><Briefcase size={18} aria-hidden="true" /></div>
+        <h2 className="feature-headline">{outcome ? <>Show what<br />you can do.</> : <>Practice for<br />your job interview.</>}</h2>
         <div className="character-scene interview-scene" aria-hidden="true">
           <CharacterPortrait name="interview" actor="interview-man" />
         </div>
-        <FeatureLink href="/programs/interview-ready/">Get interview-ready</FeatureLink>
+        <FeatureLink href="/programs/interview-ready/">See interview lessons</FeatureLink>
       </>
     );
   if (index === 1)
     return (
       <>
-        <div className="preview-top"><span>AI call practice</span><PhoneIncoming size={18} aria-hidden="true" /></div>
-        <h2 className="feature-headline">Make the call<br />you keep putting off.</h2>
+        <div className="preview-top"><span>{outcome ? "Phone calls" : "AI call practice"}</span><PhoneIncoming size={18} aria-hidden="true" /></div>
+        <h2 className="feature-headline">{outcome ? <>Ask for what<br />you need.</> : <>Practice the call<br />before you make it.</>}</h2>
         <div className="character-scene call-scene" aria-hidden="true">
           <span className="character-ring" />
           <svg className="character-connection" viewBox="0 0 350 180" focusable="false">
@@ -92,15 +92,15 @@ function Preview({ index }: { index: number }) {
           <CharacterPortrait name="communicator" actor="maya" />
           <CharacterPortrait name="beanie" actor="caller" />
         </div>
-        <FeatureLink href="/programs/hard-conversations/">Build call confidence</FeatureLink>
+        <FeatureLink href="/programs/hard-conversations/">See phone call lessons</FeatureLink>
       </>
     );
   if (index === 2)
     return (
       <>
-        <div className="preview-top"><span>Mirror practice</span><ScanFace size={18} aria-hidden="true" /></div>
+        <div className="preview-top"><span>{outcome ? "On-screen mirror" : "Mirror practice"}</span><ScanFace size={18} aria-hidden="true" /></div>
         <div className="mirror-preview">
-          <div className="mirror-copy"><h2>See where<br />you tense up.</h2></div>
+          <div className="mirror-copy"><h2>Notice tension<br />as you speak.</h2></div>
           <MirrorFace />
         </div>
         <FeatureLink href="#download" note="Your video stays on your phone">Try the mirror</FeatureLink>
@@ -108,24 +108,23 @@ function Preview({ index }: { index: number }) {
     );
   return (
     <>
-      <div className="preview-top"><span>Partner practice</span><Users size={18} aria-hidden="true" /></div>
-      <h2 className="feature-headline">Find a friend<br />who understands.</h2>
+      <div className="preview-top"><span>{outcome ? "Speaking partner" : "Partner practice"}</span><Users size={18} aria-hidden="true" /></div>
+      <h2 className="feature-headline">{outcome ? <>Talk with someone<br />who stutters too.</> : <>Practice with someone<br />who stutters too.</>}</h2>
       <div className="partner-preview" aria-hidden="true">
         <div className="partner-person"><CharacterPortrait name="curly" actor="partner-one" /></div>
         <div className="partner-connection"><span /><Heart size={22} /><span /></div>
         <div className="partner-person"><CharacterPortrait name="hijab" actor="partner-two" /></div>
       </div>
-      <p className="partner-caption">Someone who stutters too.</p>
-      <FeatureLink href="#download">Find your partner</FeatureLink>
+      <FeatureLink href="#download">Get the app</FeatureLink>
     </>
   );
 }
 
-export default function FeatureDeck() {
+export default function FeatureDeck({ outcome = false, paused = false }: { outcome?: boolean; paused?: boolean }) {
   const [order, setOrder] = useState([0, 1, 2, 3]);
   const [requested, setRequested] = useState(0);
   const active = order[0];
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(!paused);
   const [autoRotate, setAutoRotate] = useState(true);
   const [keyboardInput, setKeyboardInput] = useState(false);
   const [reduced, setReduced] = useState(true);
@@ -334,7 +333,7 @@ export default function FeatureDeck() {
                 inert={slot !== 0}
                 aria-label={`${name}, ${index + 1} of 4`}
               >
-                <Preview index={index} />
+                <Preview index={index} outcome={outcome} />
               </article>
             );
           })}

@@ -17,7 +17,7 @@
   background: var(--hero-colour);
   padding: 24px 24px 48px;
 }
-.home-page .feature-showcase { max-width: 960px; height: 453px; }
+.home-page .feature-showcase { max-width: 960px; height: 453px; margin-top: 40px; }
 .home-page .feature-card {
   border: 2px solid var(--ink);
   box-shadow: 0 5px 0 #141311;
@@ -35,18 +35,6 @@
 .home-page .deck-choice { color: #29261f; font-size: 11px; }
 .home-page .choice-dot { background: #77402c; }
 .home-page .deck-choice[aria-pressed="true"] .choice-dot { background: #141311; }
-.home-page .hero-audience {
-  display: inline-block;
-  background: #fff9e9;
-  color: var(--ink);
-  border: 1.5px solid var(--ink);
-  padding: 6px 14px;
-  margin: 2px 0 20px;
-  border-radius: 5px;
-  transform: rotate(-3deg);
-  font-size: 12px;
-  font-weight: 700;
-}
 .home-page .hero h1 {
   font-size: clamp(48px, 6.7vw, 86px);
   line-height: .98;
@@ -102,7 +90,7 @@
 .home-page .tone-blue { background: #92bcf2; }
 .home-page .tone-orange { background: #ffbc81; }
 .home-page .tone-purple { background: #c7aaf3; }
-.home-page .program-card-top > span { border-color: var(--ink); font-weight: 700; }
+.home-page .program-card-top > span:first-child { border-color: var(--ink); font-weight: 700; }
 .home-page .program-card h3 { font-weight: 800; font-size: 31px; letter-spacing: -.045em; }
 .home-page .program-card-description { color: #24231f; opacity: 1; font-size: 14px; line-height: 1.6; }
 .home-page .program-card-link { font-size: 12px; }
@@ -289,13 +277,13 @@
   /* Keep decorative portraits clear of card text on small screens. */
   .home-page .hero-avatar { display: none; }
   .home-page .hero h1 { font-size: clamp(36px, 10vw, 59px); line-height: 1.04; }
-  .home-page .hero-audience { font-size: 10px; padding: 5px 10px; margin-bottom: 18px; }
   .home-page .hero-description { font-size: 14px; line-height: 1.6; margin: 18px auto 22px; }
   .home-page .hero-purchase-note { font-size: 10px; }
   .home-page .section-edge .section-edge-wide { display: none; }
   .home-page .section-edge .section-edge-compact { display: block; }
-  .home-page .section-edge-hero { height: 76px; background: var(--hero-colour); }
-  .home-page .section-edge svg { width: 100%; }
+  /* Split the backdrop above the curve so no contrasting colour peeks out at the edges. */
+  .home-page .section-edge-hero { height: 76px; background: linear-gradient(to bottom, var(--hero-colour) 18px, #fff9e9 18px); }
+  .home-page .section-edge svg { width: 100%; background: none; }
   .home-page .personality-section { width: calc(100% - 32px); border-radius: 36px 36px 36px 12px; margin-top: 8px; }
   .home-page .programs-section { padding-block: 32px 36px; }
   .home-page .section-heading { margin-bottom: 32px; }
@@ -360,7 +348,7 @@
 }
 .home-page .download-ribbon + .download-section { padding-top: 40px; }
 @media (max-width: 640px) {
-  .home-page .download-ribbon { background: var(--ink); }
+  .home-page .download-ribbon { background: #fff9e9; }
   .home-page .download-ribbon svg { height: auto; width: 100%; }
   .home-page .download-ribbon .download-ribbon-wide { display: none; }
   .home-page .download-ribbon .download-ribbon-compact { display: block; }
