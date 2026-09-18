@@ -19,12 +19,14 @@
 @media (hover: hover) and (pointer: fine) {
   .site-shell .nav-link { position: relative; }
   .site-shell .nav-link::after {
-    content: ""; position: absolute; bottom: 7px; left: 0; right: 0;
-    height: 1.5px; background: currentColor;
+    content: ""; position: absolute; bottom: 8px; left: 0; right: 0;
+    height: 2px; background: currentColor; border-radius: 1px;
     transform: scaleX(0); transform-origin: left;
     transition: transform 180ms var(--ease-out);
   }
-  .site-shell .nav-link:hover::after { transform: scaleX(1); }
+  .site-shell .nav-link:hover::after,
+  .site-shell .nav-link.is-active::after,
+  .site-shell .nav-link[aria-current="page"]::after { transform: scaleX(1); }
   .site-shell :is(.text-link, .button, .hero-explore):hover svg { transform: translate(2px, -2px); }
   .site-shell .breadcrumb:hover svg { transform: translateX(-3px); }
   .site-shell .store-badge[href]:hover { transform: translateY(-3px); }

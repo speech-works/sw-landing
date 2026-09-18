@@ -95,6 +95,33 @@ svg {
   display: flex;
   align-items: center;
   min-height: 44px;
+  position: relative;
+  opacity: 0.72;
+  text-decoration: none;
+  transition: opacity 180ms var(--ease-out);
+}
+.nav-link:hover,
+.nav-link.is-active,
+.nav-link[aria-current="page"] {
+  opacity: 1;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms var(--ease-out);
+}
+.nav-link:hover::after,
+.nav-link.is-active::after,
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
 }
 .button {
   display: inline-flex;
@@ -1418,7 +1445,6 @@ svg {
   }
   .text-link:hover,
   .hero-explore:hover,
-  .nav-link:hover,
   .site-footer nav a:hover {
     text-decoration: underline;
   }

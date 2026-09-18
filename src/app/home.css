@@ -404,37 +404,55 @@
 .program-outline span { font-weight: 700; color: var(--ink); }
 .about-intro { padding-block: 40px 24px; }
 .about-intro > p:last-child { text-wrap: balance; }
-.about-principles { gap: 28px; padding: 56px 0 104px; align-items: start; }
-/* Principles sit as three tilted cards, like the program art cards. */
-.about-principles .principle-card {
+/* The principles sit as an overlapping collage of flat cards over a loose squiggle. */
+.about-principles { position: relative; z-index: 1; display: block; padding: 72px 0 128px; }
+.principles-band { position: relative; overflow-x: clip; }
+.principles-squiggle { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.principles-squiggle path { fill: none; stroke: var(--hero-colour); stroke-opacity: .22; stroke-width: 64px; stroke-linecap: round; }
+.about-principles .principles-title {
   position: relative;
-  border: 2px solid var(--ink);
-  border-radius: 24px;
-  box-shadow: 0 6px 0 var(--ink);
-  padding: 30px 28px 32px;
-  transition: rotate .3s var(--ease-out), translate .3s var(--ease-out);
-}
-.about-principles .principle-card:nth-child(1) { rotate: -2deg; }
-.about-principles .principle-card:nth-child(2) { rotate: 1.5deg; translate: 0 18px; }
-.about-principles .principle-card:nth-child(3) { rotate: -1deg; }
-@media (hover: hover) {
-  .about-principles .principle-card:hover { rotate: 0deg; translate: 0 -4px; }
-}
-.principle-num {
-  display: inline-grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 22px;
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  background: #fff9e9;
-  font-size: 14px;
+  margin-bottom: 56px;
+  font-size: clamp(36px, 4.3vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -.055em;
   font-weight: 800;
 }
-.about-principles .principle-card h2 { font-size: 26px; margin-bottom: 12px; text-wrap: balance; }
-.about-principles .principle-card p { color: #29231e; font-size: 15px; line-height: 1.7; }
-.about-principles .principle-card .underline { font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.principles-stack { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); align-items: start; }
+.about-principles .principle-card {
+  position: relative;
+  border: 0;
+  border-radius: 30px;
+  padding: 36px 38px 40px;
+  transition: rotate .35s var(--ease-out), translate .35s var(--ease-out);
+}
+.principle-lime { background: #c6f35b; rotate: -4deg; margin-top: 34px; z-index: 1; }
+.principle-ink { background: var(--ink); color: #fff9e9; rotate: 3deg; margin: 96px -30px 0; z-index: 2; }
+.principle-orange { background: var(--hero-colour); rotate: -2.5deg; margin-top: 8px; z-index: 1; }
+/* Extra room on the sides the middle card overlaps. */
+.about-principles .principle-lime { padding-right: 62px; }
+.about-principles .principle-orange { padding-left: 62px; }
+@media (hover: hover) {
+  .about-principles .principle-card:hover { rotate: 0deg; translate: 0 -6px; z-index: 4; }
+}
+.principle-num { display: block; margin-bottom: 22px; font-size: 92px; font-weight: 800; letter-spacing: -.07em; line-height: .8; }
+.principle-lime .principle-num { color: var(--ink); }
+.principle-ink .principle-num { color: var(--hero-colour); }
+.principle-orange .principle-num { color: #fff9e9; }
+.about-principles .principle-card h3 { margin-bottom: 16px; }
+.principle-lead { display: block; font-size: 21px; font-weight: 400; letter-spacing: -.02em; }
+.principle-key { display: block; font-size: 46px; font-weight: 800; letter-spacing: -.055em; line-height: 1; }
+.principle-ink .principle-key { color: var(--hero-colour); }
+.about-principles .principle-card p { color: inherit; opacity: .86; font-size: 16px; line-height: 1.6; }
+.about-principles .principle-card .underline { color: inherit; font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.principle-ink .underline { text-decoration-color: var(--hero-colour); }
+@media (max-width: 900px) {
+  .principles-stack { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+  .about-principles .principle-lime,
+  .about-principles .principle-orange { padding-inline: 38px; }
+  .principle-lime { margin-top: 0; rotate: -3deg; }
+  .principle-ink { margin: -14px 0 0 12px; rotate: 2.5deg; }
+  .principle-orange { margin: -14px 6px 0 -4px; rotate: -1.5deg; }
+}
 .not-found h1 { font-size: clamp(38px, 6vw, 56px); line-height: 1.02; max-width: 14ch; text-wrap: balance; }
 /* The missing page spells 404 with the site's cards and a speech bubble. */
 .not-found { min-height: 0; padding-block: 48px 24px; gap: 20px; }
@@ -495,9 +513,15 @@
   .detail-hero { padding: 8px 0 28px; }
   .detail-art { transform: rotate(2deg); margin-inline: 4px; }
   .about-intro { padding-block: 20px 28px; }
-  .about-principles { gap: 22px; padding: 36px 4px 64px; }
-  .about-principles .principle-card:nth-child(2) { translate: none; }
-  .about-principles .principle-card { padding: 24px 22px 26px; }
+  .about-principles { padding: 40px 4px 80px; }
+  .about-principles .principles-title { margin-bottom: 36px; }
+  .about-principles .principle-lime,
+  .about-principles .principle-orange { padding-inline: 26px; }
+  .about-principles .principle-card { padding: 28px 26px 30px; border-radius: 24px; }
+  .principle-num { font-size: 64px; margin-bottom: 16px; }
+  .principle-lead { font-size: 18px; }
+  .principle-key { font-size: 36px; }
+  .about-principles .principle-card p { font-size: 15px; }
   .legal-intro { padding-block: 16px 28px; }
   .legal-page { padding: 4px 20px 56px; }
   .legal-card { padding: 22px; border-radius: 18px; }

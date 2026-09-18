@@ -32,23 +32,31 @@ export default function About() {
           </section>
         </div>
         <SectionEdge kind="hero" />
-        <section className="about-principles section-wrap" aria-label="How the programs work">
-          <article className="principle-card tone-lime" data-reveal>
-            <span className="principle-num" aria-hidden="true">01</span>
-            <h2>Choose what to practice.</h2>
-            <p>Start with a conversation you want to have. You decide what to say and whether to talk about your stutter.</p>
-          </article>
-          <article className="principle-card tone-peach" data-reveal>
-            <span className="principle-num" aria-hidden="true">02</span>
-            <h2>See what is included.</h2>
-            <p>See the daily plan on each <Link href="/programs/" className="underline">program page</Link> before you choose. Interview and phone call programs include AI calls. Other programs use writing and speaking activities.</p>
-          </article>
-          <article className="principle-card tone-pink" data-reveal>
-            <span className="principle-num" aria-hidden="true">03</span>
-            <h2>Come back when you need to.</h2>
-            <p>Your notes and completed days stay available. If you miss a day, continue when you return.</p>
-          </article>
-        </section>
+        <div className="principles-band">
+          <svg className="principles-squiggle" viewBox="0 0 1440 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+            <path d="M -80 300 C 160 180 280 560 520 520 S 820 160 1020 260 S 1300 620 1540 380" />
+          </svg>
+          <section className="about-principles section-wrap" aria-labelledby="principles-title">
+            <h2 className="principles-title" id="principles-title" data-reveal>About programs</h2>
+            <div className="principles-stack">
+              <article className="principle-card principle-lime" data-reveal>
+                <span className="principle-num" aria-hidden="true">01</span>
+                <h3><span className="principle-lead">Choose what to</span> <span className="principle-key">practice.</span></h3>
+                <p>Start with a conversation you want to have. You decide what to say and whether to talk about your stutter.</p>
+              </article>
+              <article className="principle-card principle-ink" data-reveal>
+                <span className="principle-num" aria-hidden="true">02</span>
+                <h3><span className="principle-lead">See what is</span> <span className="principle-key">included.</span></h3>
+                <p>See the daily plan on each <Link href="/programs/" className="underline">program page</Link> before you choose. Interview and phone call programs include AI calls. Other programs use writing and speaking activities.</p>
+              </article>
+              <article className="principle-card principle-orange" data-reveal>
+                <span className="principle-num" aria-hidden="true">03</span>
+                <h3><span className="principle-lead">Come back when</span> <span className="principle-key">you need to.</span></h3>
+                <p>Your notes and completed days stay available. If you miss a day, continue when you return.</p>
+              </article>
+            </div>
+          </section>
+        </div>
         <DownloadSection />
       </main>
       <Footer />
