@@ -332,7 +332,7 @@
 .site-shell .download-ribbon {
   overflow: hidden;
   background: linear-gradient(to bottom, #fff9e9 56px, var(--ink) 56px);
-  margin-bottom: -1px;
+  margin-bottom: -2px;
 }
 .site-shell .download-ribbon svg {
   display: block;
@@ -348,7 +348,8 @@
   stroke: var(--ink);
   stroke-width: 48;
 }
-.site-shell .download-ribbon + .download-section { padding-top: 40px; }
+/* Paint above the SVG so the 2px overlap hides its antialiased bottom row on phones. */
+.site-shell .download-ribbon + .download-section { position: relative; padding-top: 40px; }
 @media (max-width: 640px) {
   .site-shell .download-ribbon { background: #fff9e9; }
   .site-shell .download-ribbon svg { height: auto; width: 100%; }
