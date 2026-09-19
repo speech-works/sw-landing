@@ -17,7 +17,7 @@ export default function Footer() {
         >
           Blog
         </a>
-        <a href="mailto:contact@speechworks.in">Contact</a>
+        <a href="mailto:contact@speechworks.app">Contact</a>
         <Link href="/privacy/">Privacy</Link>
         <Link href="/account/delete/">Delete account</Link>
       </nav>

@@ -6,7 +6,7 @@ import Footer from "@/app/components/Footer";
 import SectionEdge from "@/app/components/SectionEdge";
 import { socialMetadata } from "@/lib/site-metadata";
 
-const CONTACT_EMAIL = "contact@speechworks.in";
+const CONTACT_EMAIL = "contact@speechworks.app";
 
 export const metadata: Metadata = {
   title: "Delete Your Account & Data",

@@ -7,8 +7,8 @@ import SectionEdge from "@/app/components/SectionEdge";
 import { socialMetadata } from "@/lib/site-metadata";
 
 // NOTE: Update this whenever the policy text changes.
-const LAST_UPDATED = "June 11, 2026";
-const CONTACT_EMAIL = "contact@speechworks.in";
+const LAST_UPDATED = "September 19, 2026";
+const CONTACT_EMAIL = "contact@speechworks.app";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
