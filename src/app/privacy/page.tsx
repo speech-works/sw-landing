@@ -7,7 +7,7 @@ import SectionEdge from "@/app/components/SectionEdge";
 import { socialMetadata } from "@/lib/site-metadata";
 
 // NOTE: Update this whenever the policy text changes.
-const LAST_UPDATED = "September 19, 2026";
+const LAST_UPDATED = "September 27, 2026";
 const CONTACT_EMAIL = "contact@speechworks.app";
 
 export const metadata: Metadata = {
@@ -96,9 +96,9 @@ export default function PrivacyPolicyPage() {
                 <strong className="text-[var(--ink)]">
                   Speechworks is a practice and self-help tool
                 </strong>{" "}
-                for people who stutter. It is grounded in clinical research and
-                built with speech-language professionals, but it does not provide
-                medical advice, diagnosis, or treatment, and it is not a substitute
+                for people who stutter. It draws on published research, but it
+                does not provide medical advice, diagnosis, or treatment, and it
+                is not a substitute
                 for care from a qualified professional. It is also not an emergency
                 service; if you are in crisis, please contact your local emergency
                 services.
@@ -138,9 +138,39 @@ export default function PrivacyPolicyPage() {
               When you complete practice exercises or record a voice note, the app
               captures audio. For AI-assisted speaking practice (such as simulated
               phone calls), your microphone audio is streamed in real time so the
-              feature can respond to you. We also derive and store speech-related
-              metrics such as fluency/ease scores, practice progress, the sounds you
-              identify as challenging (&ldquo;feared sounds&rdquo;), and tool usage.
+              feature can respond to you. We also store practice records: which
+              exercises and program days you completed and for how long, the
+              sounds you identify as challenging (&ldquo;feared sounds&rdquo;),
+              which speech tools you used, quiz results, your answers to short
+              follow-up questions after a practice (for example, whether a call
+              felt too short), and, for practice calls, their length and number
+              of turns. We do{" "}
+              <strong>not</strong> measure, score, or store how fluently you speak,
+              and we do not count stutters.
+            </p>
+            <p>
+              <strong className="text-[var(--ink)]">
+                Safety check in practice calls.
+              </strong>{" "}
+              During an AI practice call, the app checks what you say for words
+              that may mean you are in crisis, such as thoughts of harming
+              yourself. If it finds them, the call shows you helpline contacts and
+              we save a short record: the date and time, which practice it
+              happened in, and a snippet of what you said at that moment (at most
+              160 characters). The same snippet is also written to our server
+              logs. We keep this record so we can confirm that support was offered
+              and check that the safety check works as it should. Our team gets an
+              alert that the check was triggered, but the alert does not include
+              the snippet. This is not an emergency service. See &ldquo;Data
+              Retention&rdquo; below for how long we keep it.
+            </p>
+            <p>
+              <strong className="text-[var(--ink)]">Purchases.</strong> If you buy a
+              program, a membership, or credits in the app, we keep a record of
+              each purchase: the product, the store&rsquo;s transaction ID, what
+              the purchase unlocked and until when, and a history of the credits
+              added to and spent from your account. Apple or Google takes the
+              payment. We never see or store your card or bank details.
             </p>
             <p>
               <strong className="text-[var(--ink)]">
@@ -193,6 +223,8 @@ export default function PrivacyPolicyPage() {
               <li>To generate progress insights, scores, and personalized recommendations;</li>
               <li>To enable mood check-ins, reminders, and well-being tracking;</li>
               <li>To support optional buddy connections and the sharing you enable;</li>
+              <li>To process purchases and unlock what you bought;</li>
+              <li>To show you helpline contacts if something you say in a practice call suggests you may be in crisis;</li>
               <li>To send notifications you have enabled;</li>
               <li>To diagnose issues, improve the Services, and keep them secure; and</li>
               <li>To comply with legal obligations.</li>
@@ -241,6 +273,15 @@ export default function PrivacyPolicyPage() {
                 to deliver video and learning content.
               </li>
               <li>
+                <strong className="text-[var(--ink)]">
+                  Payment &amp; subscription providers
+                </strong>{" "}
+                (Apple App Store, Google Play, and RevenueCat) to process in-app
+                purchases. Apple or Google takes the payment. RevenueCat tells us
+                which of your purchases are active. We receive the product and the
+                transaction ID, never your card or bank details.
+              </li>
+              <li>
                 <strong className="text-[var(--ink)]">Analytics providers</strong> to
                 understand how features are used and improve the app.
               </li>
@@ -272,6 +313,21 @@ export default function PrivacyPolicyPage() {
               your associated records from our active systems as described below.
               Some information may persist for a limited period in backups or where
               retention is required by law.
+            </p>
+            <p>
+              <strong className="text-[var(--ink)]">Safety check records.</strong>{" "}
+              We keep the record of a safety check (described in section 1) for as
+              long as your account exists. We have not yet set a fixed time limit
+              for it. When you delete your account, we erase the snippet of what
+              you said. We keep only the date and time of the check, as a record
+              that support was offered.
+            </p>
+            <p>
+              <strong className="text-[var(--ink)]">Purchase records.</strong> We
+              keep your purchase records for as long as your account exists, so
+              the app knows what you have unlocked. When you delete your account,
+              we delete them. Apple, Google, and RevenueCat keep their own records
+              of the transaction under their own policies.
             </p>
           </Section>
 
@@ -334,8 +390,9 @@ export default function PrivacyPolicyPage() {
                 account deletion page
               </Link>
               . When you delete your account, we delete your profile and associated
-              practice, assessment, mood, recording, and buddy records from our
-              databases. We will action verified requests within a reasonable
+              practice, assessment, mood, recording, buddy, and purchase records
+              from our databases, and we erase the snippet from any safety check
+              record. We will action verified requests within a reasonable
               timeframe, subject to limited retention required by law or held
               temporarily in backups.
             </p>

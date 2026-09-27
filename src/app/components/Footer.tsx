@@ -19,6 +19,7 @@ export default function Footer() {
         </a>
         <a href="mailto:contact@speechworks.app">Contact</a>
         <Link href="/privacy/">Privacy</Link>
+        <Link href="/terms/">Terms</Link>
         <Link href="/account/delete/">Delete account</Link>
       </nav>
     </footer>
