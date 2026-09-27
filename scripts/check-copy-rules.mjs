@@ -6,7 +6,7 @@
  * 2. Every product number (days, AI calls, tools, prices...) must be on the
  *    approved list below, and program day ranges must match program-outlines.json.
  *
- * Legal pages (privacy, account deletion) are skipped: their wording is a
+ * Legal pages (privacy, terms, account deletion) are skipped: their wording is a
  * legal decision, not marketing copy. Runs on `npm run lint:copy` and `prebuild`.
  */
 import { readdirSync, readFileSync } from "node:fs";
@@ -14,7 +14,7 @@ import { join, extname } from "node:path";
 
 const ROOT = "src";
 const EXTS = new Set([".ts", ".tsx", ".json", ".md", ".mdx"]);
-const SKIP = [/^src\/app\/privacy\//, /^src\/app\/account\/delete\//];
+const SKIP = [/^src\/app\/privacy\//, /^src\/app\/terms\//, /^src\/app\/account\/delete\//];
 
 const BANNED = [
   [/\b(treatments?|therap(y|ies|ist|ists|eutic)|clinical(ly)?|interventions?|diagnos\w*|assessments?)\b/i, "medical wording"],
