@@ -84,6 +84,9 @@ function freeze(refs: MorphRefs) {
   const pad = rect.height - viewH; // padding + border around the content
   card.style.setProperty("--notify-cw", `${cw}px`);
   card.classList.add("is-morphing");
+  // Hold the form's height steady. When the sign-up succeeds the form hides itself,
+  // and without this the whole column would shrink and the mailman would jump.
+  formView.style.height = `${viewH}px`;
   gsap.set(card, { width: rect.width, height: rect.height });
   gsap.set(doneView, { opacity: 0, visibility: "hidden" });
   return { w: rect.width, pad };
@@ -142,9 +145,10 @@ function toGlobe(refs: MorphRefs, sfx?: Sfx) {
     .add(() => sfx?.boing(), 1.07)
     .to(card, { backgroundColor: LIME, duration: 0.22, ease: "power1.out" }, 0.98)
     .to(card, { width: GLOBE, height: GLOBE, ...round(GLOBE / 2), backgroundColor: LIME, boxShadow: `0px 6px 0 ${INK}`, scale: 1, duration: 0.75, ease: "elastic.out(1,.55)" }, 1.07)
-    .to(face.k, { scale: 0.6, opacity: 0, duration: 0.16, ease: "power2.in" }, 0.95)
-    .set(globe, { opacity: 1 }, 1.15)
-    .add(drawIn(globe), 1.17);
+    // The mailman stays visible while the ball opens, then cross-fades into the globe.
+    .to(face.k, { scale: 0.7, opacity: 0, duration: 0.3, ease: "power2.in" }, 1.2)
+    .to(globe, { opacity: 1, duration: 0.3, ease: "power1.out" }, 1.15)
+    .add(drawIn(globe), 1.3);
   return tl;
 }
 
@@ -153,6 +157,8 @@ function toCard(refs: MorphRefs, target: "form" | "done", w: number, pad: number
   const view = target === "done" ? doneView : formView;
   const other = target === "done" ? formView : doneView;
   gsap.set(other, { opacity: 0, visibility: "hidden" });
+  // Back to the form (the sign-up failed): let it grow again so the error line fits.
+  if (target === "form") formView.style.removeProperty("height");
   gsap.set(view, { display: "block", opacity: 1, visibility: "visible" });
   const kids = offsets(card, target === "done" ? doneKids(view) : formKids(view));
   const face = kids[0];
@@ -165,8 +171,8 @@ function toCard(refs: MorphRefs, target: "form" | "done", w: number, pad: number
   tl.add(drawOut(globe), 0)
     .add(() => (target === "done" ? sfx?.pwip() : sfx?.bwomp()), target === "done" ? 0.5 : 0)
     .to(card, { width: SEED, height: SEED, ...round(SEED / 2), backgroundColor: CREAM, boxShadow: `0px 4px 0 ${INK}`, duration: 0.55, ease: "power3.inOut" }, 0.2)
-    .set(globe, { opacity: 0 }, 0.32)
-    .to(face.k, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.8)" }, 0.4)
+    .to(globe, { opacity: 0, duration: 0.3, ease: "power1.in" }, 0.2)
+    .to(face.k, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.8)" }, 0.28)
     .to(card, { scale: 0.92, duration: 0.1, ease: "power2.out" }, 0.78)
     .add(() => { if (target === "done") { sfx?.boing(); } }, 0.86)
     .add(() => { if (target === "done") { sfx?.tada(); } }, 1.0)
