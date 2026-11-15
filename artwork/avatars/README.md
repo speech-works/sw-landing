@@ -102,3 +102,23 @@ Animation timing lives in `src/app/globals.css`. The interview tie slides up
 and straightens as the chin lifts, while a highlight passes across the face. The call pulses
 follow the facial speaking turns and stay still while the caller pauses.
 All these layers follow the card's shared Pause and reduced-motion controls.
+
+## Finishing pass and new parts (November 2026)
+
+`renderAvatar` in `kit.cjs` applies one finishing pass to every character, so the cast stays consistent:
+
+- Flat colour with one hard-edged shadow on the far (lower right) side of the face, hats and collars.
+  No gradients, blur or gloss. Each eye has a small catchlight.
+- An even outline: interior strokes are 4, the head is 4.6.
+- Hair drawn in two pieces (back hair and front hair) shows one outline only where hair meets the face
+  or the background. The front hair's outline is hidden where it sits on back hair, and the back hair's
+  texture lines stop short of the front hair. A brimmed hat hides hair above its brim (`hatBrimCut`).
+
+New parts: a front-view baseball cap (`frontCap`, used by `coach` and `workcap`), a layered postal cap
+(`postalCap`), a postal collar and the `mailman` character, and a rebuilt `sunhat` (brim, crown that sits
+on it, band that wraps the crown base).
+
+Run `npm run artwork:build` after editing. It rewrites every SVG in `public/avatars` and `public/characters`.
+
+`recraft-reference/` holds study images made with Recraft's free plan. They are reference only and are not
+licensed for commercial use, so do not ship or commit them.
