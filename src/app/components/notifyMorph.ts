@@ -58,7 +58,7 @@ function formKids(view: HTMLElement) {
     .filter((e): e is HTMLElement => Boolean(e));
 }
 function doneKids(view: HTMLElement) {
-  return [".notify-face", "h2", ".notify-sentto", ".notify-done"]
+  return [".notify-face", "h2", ".notify-sentto", ".notify-help", ".notify-done"]
     .map((s) => q<HTMLElement>(view, s))
     .filter((e): e is HTMLElement => Boolean(e));
 }

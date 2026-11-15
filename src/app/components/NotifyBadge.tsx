@@ -234,6 +234,9 @@ export default function NotifyBadge({ placement }: { placement: string }) {
                 <p className="notify-sentto">
                   Click the link we sent to <strong>{sentTo}</strong> to confirm.
                 </p>
+                <p className="notify-help">
+                  No email? Check spam, or you may already be signed up.
+                </p>
                 <button
                   type="button"
                   className="button button-ink pressable notify-done"
