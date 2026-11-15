@@ -693,6 +693,7 @@
 .notify-view-done h2 { margin-bottom: 12px; }
 .notify-sentto { margin: 0 auto; max-width: 34ch; font-size: 17px; line-height: 1.5; color: var(--ink); text-wrap: balance; overflow-wrap: anywhere; }
 .notify-sentto strong { font-weight: 700; }
+.notify-help { margin: 10px auto 0; max-width: 34ch; font-size: 13px; line-height: 1.45; color: var(--ink-muted); text-wrap: balance; }
 .notify-thanks { margin: 10px auto 0; max-width: 31ch; font-size: 15px; line-height: 1.55; color: var(--ink-muted); text-wrap: balance; }
 .notify-done { margin-top: 22px; width: 100%; }
 /* Notify animation: the card turns into a globe and back (see notifyMorph.ts). */
