@@ -678,6 +678,7 @@
   box-shadow: 0 4px 0 var(--ink);
 }
 .notify-face img { display: block; width: 103%; max-width: none; height: 100%; margin: 0 0 0 -1.5%; object-fit: cover; object-position: 50% 0; }
+.notify-face svg { display: block; width: 103%; max-width: none; height: 100%; margin: 0 0 0 -1.5%; }
 .notify-card h2 {
   font-size: 26px;
   line-height: 1.15;
@@ -699,13 +700,13 @@
 /* Notify animation: the card turns into a globe and back (see notifyMorph.ts). */
 .notify-card { z-index: 3; }
 .notify-view[data-off] { display: none; }
-.notify-card.is-morphing { overflow: hidden; }
+.notify-card.is-morphing { overflow: hidden; max-width: calc(100vw - 8px); }
 .notify-card.is-morphing .notify-view {
   position: absolute;
   left: 50%;
   top: 50%;
   width: var(--notify-cw);
-  transform: translate(-50%, calc(-50% + 3px));
+  transform: translate(-50%, calc(-50% + var(--notify-dy, 3px)));
 }
 .notify-card.is-morphing .notify-view-done { display: block; }
 .notify-globe { position: absolute; left: 50%; top: 50%; width: 250px; height: 250px; margin: -125px 0 0 -125px; opacity: 0; pointer-events: none; }

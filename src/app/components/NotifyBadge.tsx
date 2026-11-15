@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Volume2, VolumeX, X } from "lucide-react";
-import Avatar from "./Avatar";
+import MailmanFace, { loadMorph, type FaceHandle, type IdleHandle } from "./MailmanFace";
 import LaunchList from "./LaunchList";
 import { instantMotion } from "@/lib/motion";
 import { cleanup, playMorph, type MorphRefs, type MorphResult } from "./notifyMorph";
@@ -59,6 +59,9 @@ export default function NotifyBadge({ placement }: { placement: string }) {
   const [announce, setAnnounce] = useState("");
   const [soundOn, setSoundOn] = useState(true);
   const sfx = useRef<Sfx | null>(null);
+  const faceForm = useRef<FaceHandle>(null);
+  const faceDone = useRef<FaceHandle>(null);
+  const idle = useRef<IdleHandle | null>(null);
   // One animation run at a time. `run` changes whenever a run starts or is cancelled.
   const run = useRef(0);
   const settle = useRef<((r: MorphResult) => void) | null>(null);
@@ -80,8 +83,24 @@ export default function NotifyBadge({ placement }: { placement: string }) {
     return r.card && r.formView && r.doneView && r.globe && r.orbit ? (r as MorphRefs) : null;
   };
 
+  // While the dialog waits for an email, the mailman blinks and glances between the box and the visitor.
+  const startIdle = () => {
+    idle.current?.stop();
+    idle.current = instantMotion() ? null : (faceForm.current?.idle() ?? null);
+  };
+  const stopIdle = () => {
+    idle.current?.stop();
+    idle.current = null;
+  };
+  const resetFaces = () => {
+    faceForm.current?.set("steady");
+    faceDone.current?.set("joyful");
+  };
+
   const open = () => {
+    void loadMorph();
     dialog.current?.showModal();
+    if (view === "form") startIdle();
     // Start on the card, not on a control, so no focus ring shows for mouse users.
     // Keyboard users press Tab to reach the email field.
     card.current?.focus();
@@ -90,11 +109,13 @@ export default function NotifyBadge({ placement }: { placement: string }) {
 
   // Closing the dialog stops any animation and puts the card back as it was.
   const onClosed = () => {
+    stopIdle();
     run.current += 1;
     animating.current = false;
     settle.current = null;
     const r = refs();
     if (r) cleanup(r);
+    resetFaces();
   };
 
   const handleSending = () => {
@@ -102,6 +123,7 @@ export default function NotifyBadge({ placement }: { placement: string }) {
     if (!r || instantMotion()) return;
     const mine = ++run.current;
     animating.current = true;
+    stopIdle();
     // This runs from the click on "Notify me", so the browser allows sound.
     sfx.current ??= createSfx();
     sfx.current.unlock();
@@ -110,7 +132,13 @@ export default function NotifyBadge({ placement }: { placement: string }) {
     const result = new Promise<MorphResult>((resolve) => {
       settle.current = resolve;
     });
-    void playMorph(r, result, () => run.current !== mine, sfx.current ?? undefined).then((outcome) => {
+    void playMorph(
+      r,
+      result,
+      () => run.current !== mine,
+      sfx.current ?? undefined,
+      { form: faceForm.current, done: faceDone.current },
+    ).then((outcome) => {
       if (outcome === "cancelled" || run.current !== mine) return;
       animating.current = false;
       if (outcome === "ok") {
@@ -122,7 +150,9 @@ export default function NotifyBadge({ placement }: { placement: string }) {
         requestAnimationFrame(() => {
           if (run.current !== mine) return;
           cleanup(r);
+          resetFaces();
           if (outcome === "ok") doneView.current?.querySelector<HTMLElement>(".notify-done")?.focus();
+          else if (dialog.current?.open) startIdle();
         }),
       );
     });
@@ -210,9 +240,20 @@ export default function NotifyBadge({ placement }: { placement: string }) {
               >
                 <X size={20} aria-hidden="true" />
               </button>
-              <div className="notify-view notify-view-form" ref={formView} data-off={view !== "form" ? "" : undefined}>
+              <div
+                className="notify-view notify-view-form"
+                ref={formView}
+                data-off={view !== "form" ? "" : undefined}
+                onFocus={(event) => {
+                  // He looks down at the box while the visitor types in it.
+                  if ((event.target as HTMLElement).matches('input[type="email"]')) idle.current?.lookAtInput();
+                }}
+                onBlur={(event) => {
+                  if ((event.target as HTMLElement).matches('input[type="email"]')) idle.current?.resume();
+                }}
+              >
                 <div className="notify-face" aria-hidden="true">
-                  <Avatar name="mailman" size={112} priority />
+                  <MailmanFace ref={faceForm} initial="steady" />
                 </div>
                 <h2 id={`${id}-form-title`}>{HEADLINE}</h2>
                 <LaunchList
@@ -228,7 +269,7 @@ export default function NotifyBadge({ placement }: { placement: string }) {
               </div>
               <div className="notify-view notify-view-done" ref={doneView} data-off={view !== "done" ? "" : undefined}>
                 <div className="notify-face" aria-hidden="true">
-                  <Avatar name="mailman-happy" size={112} priority />
+                  <MailmanFace ref={faceDone} initial="joyful" />
                 </div>
                 <h2 id={`${id}-done-title`}>Check your email.</h2>
                 <p className="notify-sentto">

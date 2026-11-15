@@ -2,6 +2,7 @@
 
 import { gsap } from "@/lib/motion";
 import type { Sfx } from "./notifySfx";
+import type { FaceHandle } from "./MailmanFace";
 
 // The "Notify me" animation. The dialog card folds into the mailman's face
 // circle, pops open into a globe, three envelopes circle the globe while the
@@ -30,6 +31,9 @@ export type MorphRefs = {
 };
 
 export type MorphResult = "ok" | "fail";
+
+/** The two mailman faces (the form one and the thank-you one), when the expressions can animate. */
+export type Faces = { form: FaceHandle | null; done: FaceHandle | null };
 
 const corners = (a: number, b: number, c: number, d: number) => ({
   borderTopLeftRadius: a,
@@ -78,18 +82,31 @@ function offsets(card: HTMLElement, kids: HTMLElement[]) {
 /** Take the card out of normal flow so it can change size without its text reflowing. */
 function freeze(refs: MorphRefs) {
   const { card, formView, doneView } = refs;
+  // On a short screen the card scrolls. Start from the top so nothing is shifted.
+  card.scrollTop = 0;
   const rect = card.getBoundingClientRect();
   const viewH = formView.offsetHeight;
   const cw = formView.offsetWidth;
-  const pad = rect.height - viewH; // padding + border around the content
+  // Where the form sits now, measured from the card's centre. The animation keeps it exactly
+  // there (so nothing jumps), whatever the screen size or whether the card is scrolling.
+  const vr = formView.getBoundingClientRect();
+  const dy0 = vr.top + vr.height / 2 - (rect.top + rect.height / 2);
+  // Padding and border around the content, read from the styles. (Subtracting the content
+  // height from the card height is wrong when the card is cut short by a small screen.)
+  const cs = getComputedStyle(card);
+  const px = (v: string) => parseFloat(v) || 0;
+  const pad = px(cs.paddingTop) + px(cs.paddingBottom) + px(cs.borderTopWidth) + px(cs.borderBottomWidth);
+  const maxH = Number.isFinite(px(cs.maxHeight)) && px(cs.maxHeight) > 0 ? px(cs.maxHeight) : Infinity;
   card.style.setProperty("--notify-cw", `${cw}px`);
+  card.style.setProperty("--notify-dy", `${dy0}px`);
   card.classList.add("is-morphing");
   // Hold the form's height steady. When the sign-up succeeds the form hides itself,
   // and without this the whole column would shrink and the mailman would jump.
   formView.style.height = `${viewH}px`;
   gsap.set(card, { width: rect.width, height: rect.height });
   gsap.set(doneView, { opacity: 0, visibility: "hidden" });
-  return { w: rect.width, pad };
+  const padTop = px(cs.paddingTop) + px(cs.borderTopWidth);
+  return { w: rect.width, pad, maxH, padTop };
 }
 
 export function cleanup(refs: MorphRefs) {
@@ -108,6 +125,7 @@ export function cleanup(refs: MorphRefs) {
   gsap.set(all, { clearProps: "all" });
   card.classList.remove("is-morphing");
   card.style.removeProperty("--notify-cw");
+  card.style.removeProperty("--notify-dy");
   orbit.querySelectorAll(".notify-burst").forEach((e) => e.remove());
 }
 
@@ -126,7 +144,7 @@ const drawOut = (globe: SVGSVGElement) =>
     ease: "power2.in",
   });
 
-function toGlobe(refs: MorphRefs, sfx?: Sfx) {
+function toGlobe(refs: MorphRefs, sfx?: Sfx, faces?: Faces) {
   const { card, formView, globe } = refs;
   const kids = offsets(card, formKids(formView));
   const face = kids[0];
@@ -138,6 +156,10 @@ function toGlobe(refs: MorphRefs, sfx?: Sfx) {
   tl.to(rest, { y: -14, scale: 0.8, opacity: 0, duration: 0.2, stagger: { each: 0.025, from: "end" }, ease: "power2.in" }, 0)
     .to(close, { opacity: 0, duration: 0.2 }, 0)
     .add(() => sfx?.whoosh(), 0.12)
+    // His face follows the story: "huh?", squeezed, then "wow!" at the pop.
+    .add(faces?.form?.to("inquisitive", 0.22) ?? gsap.timeline(), 0.05)
+    .add(faces?.form?.to("effort", 0.28) ?? gsap.timeline(), 0.34)
+    .add(faces?.form?.to("excited", 0.24) ?? gsap.timeline(), 1.02)
     .to(face.k, { x: face.dx, y: face.dy, duration: 0.38, ease: "power3.inOut" }, 0.12)
     .to(card, { width: SEED, height: SEED, ...round(SEED / 2), boxShadow: `0px 4px 0 ${INK}`, duration: 0.5, ease: "power3.inOut" }, 0.34)
     .add(() => sfx?.pwip(), 0.82)
@@ -152,7 +174,7 @@ function toGlobe(refs: MorphRefs, sfx?: Sfx) {
   return tl;
 }
 
-function toCard(refs: MorphRefs, target: "form" | "done", w: number, pad: number, sfx?: Sfx) {
+function toCard(refs: MorphRefs, target: "form" | "done", w: number, pad: number, maxH: number, padTop: number, sfx?: Sfx, faces?: Faces) {
   const { card, formView, doneView, globe } = refs;
   const view = target === "done" ? doneView : formView;
   const other = target === "done" ? formView : doneView;
@@ -160,12 +182,18 @@ function toCard(refs: MorphRefs, target: "form" | "done", w: number, pad: number
   // Back to the form (the sign-up failed): let it grow again so the error line fits.
   if (target === "form") formView.style.removeProperty("height");
   gsap.set(view, { display: "block", opacity: 1, visibility: "visible" });
+  // The card is never taller than the screen allows (it scrolls instead), as in its normal layout.
+  const h = Math.min(view.offsetHeight + pad, maxH);
+  // Place the content the way the finished card will lay it out (top-aligned when the card is
+  // cut short by a small screen), so nothing moves when the animation hands over to the page.
+  card.style.setProperty("--notify-dy", `${padTop + view.offsetHeight / 2 - h / 2}px`);
   const kids = offsets(card, target === "done" ? doneKids(view) : formKids(view));
   const face = kids[0];
   const rest = kids.slice(1).map((o) => o.k);
   const close = Array.from(card.querySelectorAll<HTMLElement>(".notify-close, .notify-sound"));
-  const h = view.offsetHeight + pad;
   gsap.set(face.k, { x: face.dx, y: face.dy, scale: 0.6, opacity: 0 });
+  // Back from the globe: still thrilled, then laughing, then the smile.
+  if (target === "done") faces?.done?.set("excited");
   gsap.set(rest, { y: -14, scale: 0.8, opacity: 0 });
   const tl = gsap.timeline();
   tl.add(drawOut(globe), 0)
@@ -179,6 +207,9 @@ function toCard(refs: MorphRefs, target: "form" | "done", w: number, pad: number
     .to(card, { width: w, height: h, ...corners(...CARD_RADII), boxShadow: CARD_SHADOW, scale: 1, duration: 0.8, ease: "elastic.out(1,.6)" }, 0.86)
     .to(face.k, { x: 0, y: 0, duration: 0.6, ease: "back.out(1.5)" }, 0.9)
     .to(rest, { y: 0, scale: 1, opacity: 1, duration: 0.5, stagger: 0.06, ease: "back.out(1.6)" }, 1.0)
+    .add(target === "done" ? (faces?.done?.to("gleeful", 0.3) ?? gsap.timeline()) : (faces?.form?.to("inquisitive", 0.3) ?? gsap.timeline()), 0.5)
+    .add(target === "done" ? (faces?.done?.to("laughing", 0.3) ?? gsap.timeline()) : (faces?.form?.to("steady", 0.4) ?? gsap.timeline()), 0.95)
+    .add(target === "done" ? (faces?.done?.to("joyful", 0.4) ?? gsap.timeline()) : gsap.timeline(), 1.4)
     .to(close, { opacity: 1, duration: 0.3 }, 1.3);
   return tl;
 }
@@ -187,7 +218,8 @@ function toCard(refs: MorphRefs, target: "form" | "done", w: number, pad: number
 
 function createOrbit(refs: MorphRefs, sfx?: Sfx) {
   const { orbit, globe } = refs;
-  const s = Math.min(1, (window.innerWidth - 16) / 470);
+  // Shrink the orbit on narrow or short screens so the envelopes stay on screen.
+  const s = Math.max(0.35, Math.min(1, (window.innerWidth - 16) / 470, (window.innerHeight - 16) / 400));
   const envs = Array.from(orbit.querySelectorAll<HTMLElement>(".notify-env"));
   const rings = Array.from(orbit.querySelectorAll<SVGSVGElement>(".notify-ring"));
   const merid = Array.from(globe.querySelectorAll<SVGEllipseElement>(".notify-merid"));
@@ -283,10 +315,11 @@ export async function playMorph(
   result: Promise<MorphResult>,
   cancelled: () => boolean,
   sfx?: Sfx,
+  faces?: Faces,
 ): Promise<MorphResult | "cancelled"> {
-  const { w, pad } = freeze(refs);
+  const { w, pad, maxH, padTop } = freeze(refs);
   const orbit = createOrbit(refs, sfx);
-  const g = toGlobe(refs, sfx);
+  const g = toGlobe(refs, sfx, faces);
   orbit.start();
   // The globe takes about 1.3 s to form; keep it orbiting for about one loop after that.
   const [res] = await Promise.all([result, wait(1300 + LOOP * 1000), g.then()]);
@@ -295,6 +328,6 @@ export async function playMorph(
   else await orbit.leave().then();
   orbit.stop();
   if (cancelled()) return "cancelled";
-  await toCard(refs, res === "ok" ? "done" : "form", w, pad, sfx).then();
+  await toCard(refs, res === "ok" ? "done" : "form", w, pad, maxH, padTop, sfx, faces).then();
   return res;
 }
