@@ -12,7 +12,8 @@
     "lint:copy": "node ./scripts/check-copy-rules.mjs",
     "sync:mobile": "node scripts/sync-mobile-content.cjs",
     "artwork:build": "node scripts/build-avatar-artwork.cjs",
-    "artwork:characters": "node scripts/build-character-artwork.cjs"
+    "artwork:characters": "node scripts/build-character-artwork.cjs",
+    "artwork:face": "node scripts/build-mailman-face.cjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
