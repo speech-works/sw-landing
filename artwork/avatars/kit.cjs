@@ -199,6 +199,9 @@ const steadyMouths = {
 };
 const steadyMood = mouth => group('expression-steady', `<clipPath id="steady-lids"><path d="M90 152L238 152L238 199L90 199Z"/></clipPath>` + `<g clip-path="url(#steady-lids)">${gaze(-10.5, -1.5)}</g>` + path('M93 152L137 152M187 152L233 152', 'none', 5.5) + (steadyMouths[mouth] || steadyMouths.calm));
 moods.steady = steadyMood('tiny');
+
+// Happy face (eyes shut in a smile, warm smile) used for the mailman.
+moods.joyful = group('expression-joyful', brow('M100 128Q111 122 123 127', 'M197 126Q210 121 222 127') + eyesClosed + path('M138 223Q161 243 184 223', 'none', 4.4));
 moods.warm = group('expression-warm', brow('M100 129Q111 123 124 128', 'M198 130Q211 124 223 129') + gaze(-9, 2) + path('M142 218C151 221 169 221 181 216C177 229 170 233 161 232C153 232 146 228 142 218Z', '#262229', 2.5) + path('M148 222Q162 226 176 221', 'none', 3.5, 'stroke="#FFF8ED"'));
 moods.pleased = group('expression-pleased', brow('M99 132Q111 128 123 130', 'M198 128Q211 122 224 125') + `<g clip-path="url(#soft-lids)">${gaze(-15, 1)}</g>` + path('M94 158Q115 151 136 156M189 156Q210 147 232 153', 'none', 3.5) + path('M148 223C157 235 173 238 183 222', 'none', 4));
 moods.reflective = group('expression-reflective', brow('M100 127Q112 134 125 128', 'M197 124Q210 129 222 126') + gaze(-16, 4) + path('M148 226Q162 222 175 226', 'none', 3.8));
@@ -395,6 +398,7 @@ const programCast = {
   understanding_your_voice: { name: 'headphones', mood: 'attentive' },
 };
 const aliases = {
+  'mailman-happy': { name: 'mailman', mood: 'joyful', label: 'Weathered postal worker with a blue dome cap, a chevron moustache and a happy, smiling look' },
   mirror: { name: 'bob', mood: 'effort', headwear: 'none', label: 'Front-facing bob haircut and mandarin collar' },
   guide: { name: 'turban', mood: 'determined' },
   caller: { name: 'communicator', mood: 'speaking' },
