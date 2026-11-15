@@ -9,6 +9,7 @@ import DownloadSection from "./DownloadSection";
 import SectionEdge from "./SectionEdge";
 import SceneDepth from "./SceneDepth";
 import Faq from "./Faq";
+import ConfirmedModal from "./ConfirmedModal";
 import HowProgramsWork from "./HowProgramsWork";
 import { programs } from "@/content/programs";
 
@@ -31,6 +32,7 @@ export default function HomePage({ outcome = false, preview = false }: { outcome
   return (
     <div className="site-shell home-page">
       <Navbar />
+      <ConfirmedModal />
       <main id="main-content">
         <section className="hero" aria-labelledby="hero-title" data-depth-scene>
           <div className="hero-copy" data-reveal>

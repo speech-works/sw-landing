@@ -588,6 +588,7 @@
   color: var(--ll-fg);
 }
 .launch-list-consent input { flex: none; width: 22px; height: 22px; margin: 0; accent-color: var(--ll-fg); }
+.launch-list-error { margin: 0 0 10px; font-size: 13px; font-weight: 600; line-height: 1.4; color: #b3261e; }
 .launch-list-note { font-size: 12px; line-height: 1.6; color: var(--ll-muted); }
 .launch-list-note a { color: var(--ll-fg); text-decoration: underline; }
 .launch-list-thanks {
@@ -646,7 +647,23 @@
   background: transparent;
   color: var(--ink);
 }
+.notify-sound {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.notify-sound:hover,
 .notify-close:hover { background: #14131114; }
+.notify-sound:focus-visible { outline: 3px solid #a64508; outline-offset: 3px; }
 .notify-card:focus { outline: none; }
 .notify-close:focus-visible,
 .notify-done:focus-visible { outline: 3px solid #a64508; outline-offset: 3px; }
@@ -667,13 +684,39 @@
   letter-spacing: -1px;
   font-weight: 700;
   text-wrap: balance;
+  margin-bottom: 22px;
 }
-.notify-lead { margin: 12px auto 22px; max-width: 32ch; font-size: 15px; line-height: 1.55; color: var(--ink-muted); }
 .notify-card .launch-list { margin: 0; max-width: none; text-align: left; }
 .notify-card .launch-list-row { grid-template-columns: 1fr; grid-template-areas: "label" "field" "button"; }
 .notify-card .launch-list-row .button { width: 100%; min-height: 52px; }
 .notify-card .launch-list-thanks { margin-top: 20px; text-align: left; }
-.notify-done { margin-top: 18px; width: 100%; }
+.notify-view-done h2 { margin-bottom: 12px; }
+.notify-sentto { margin: 0 auto; max-width: 34ch; font-size: 17px; line-height: 1.5; color: var(--ink); text-wrap: balance; overflow-wrap: anywhere; }
+.notify-sentto strong { font-weight: 700; }
+.notify-thanks { margin: 10px auto 0; max-width: 31ch; font-size: 15px; line-height: 1.55; color: var(--ink-muted); text-wrap: balance; }
+.notify-done { margin-top: 22px; width: 100%; }
+/* Notify animation: the card turns into a globe and back (see notifyMorph.ts). */
+.notify-card { z-index: 3; }
+.notify-view[data-off] { display: none; }
+.notify-card.is-morphing { overflow: hidden; }
+.notify-card.is-morphing .notify-view {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--notify-cw);
+  transform: translate(-50%, calc(-50% + 3px));
+}
+.notify-card.is-morphing .notify-view-done { display: block; }
+.notify-globe { position: absolute; left: 50%; top: 50%; width: 250px; height: 250px; margin: -125px 0 0 -125px; opacity: 0; pointer-events: none; }
+.notify-globe .draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.notify-orbit { position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; }
+.notify-ring { position: absolute; width: 720px; height: 720px; left: -360px; top: -360px; opacity: 0; overflow: visible; }
+.notify-ring-back { z-index: 2; }
+.notify-ring-front { z-index: 4; }
+.notify-env { position: absolute; left: 0; top: 0; width: 64px; height: 46px; margin: -23px 0 0 -32px; opacity: 0; will-change: transform; }
+.notify-env svg { display: block; }
+.notify-burst { position: absolute; left: 0; top: 0; width: 12px; height: 12px; margin: -6px 0 0 -6px; border: 2px solid var(--ink); border-radius: 50%; z-index: 6; }
+.notify-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 body:has(.notify-dialog[open]) { overflow: hidden; }
 @keyframes notify-in { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
 @keyframes notify-fade { from { opacity: 0; } to { opacity: 1; } }
