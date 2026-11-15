@@ -42,7 +42,7 @@ export default function HomePage({ outcome = false, preview = false }: { outcome
                 ? "Prepare for a job interview, a phone call, or talking about your stutter. Get programs and speaking practice in the Speechworks app."
                 : "For adults who stammer or stutter. Practice a job interview or a phone call with an AI caller that waits for you."}
             </p>
-            <StoreButtons />
+            <StoreButtons placement="home" />
             <p className="hero-purchase-note">Free to download, with free daily practice. Pay once for each program.</p>
             <Link href="/programs/" className="hero-explore">
               See programs <ArrowUpRight size={15} aria-hidden="true" />
