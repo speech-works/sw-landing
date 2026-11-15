@@ -151,7 +151,8 @@ export default function NotifyBadge({ placement }: { placement: string }) {
           if (run.current !== mine) return;
           cleanup(r);
           resetFaces();
-          if (outcome === "ok") doneView.current?.querySelector<HTMLElement>(".notify-done")?.focus();
+          if (outcome === "ok") // preventScroll: on a short screen the browser would otherwise scroll the card to show the button.
+          doneView.current?.querySelector<HTMLElement>(".notify-done")?.focus({ preventScroll: true });
           else if (dialog.current?.open) startIdle();
         }),
       );

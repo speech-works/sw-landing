@@ -82,8 +82,6 @@ function offsets(card: HTMLElement, kids: HTMLElement[]) {
 /** Take the card out of normal flow so it can change size without its text reflowing. */
 function freeze(refs: MorphRefs) {
   const { card, formView, doneView } = refs;
-  // On a short screen the card scrolls. Start from the top so nothing is shifted.
-  card.scrollTop = 0;
   const rect = card.getBoundingClientRect();
   const viewH = formView.offsetHeight;
   const cw = formView.offsetWidth;
@@ -100,6 +98,9 @@ function freeze(refs: MorphRefs) {
   card.style.setProperty("--notify-cw", `${cw}px`);
   card.style.setProperty("--notify-dy", `${dy0}px`);
   card.classList.add("is-morphing");
+  // On a short screen the card may be scrolled. The position above already includes that, so the
+  // content stays where the visitor sees it. Now reset the scroll (the layout no longer uses it).
+  card.scrollTop = 0;
   // Hold the form's height steady. When the sign-up succeeds the form hides itself,
   // and without this the whole column would shrink and the mailman would jump.
   formView.style.height = `${viewH}px`;
