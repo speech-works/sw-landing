@@ -1,6 +1,6 @@
 // A young, clean-shaven interview character, using the brand's eyes, palette,
 // outlines and SVG construction. Head, collar and tie are independently posed.
-const { parts } = require('./kit.cjs');
+const { parts, finish } = require('./kit.cjs');
 const path = (d, fill = 'none', extra = '') => `<path d="${d}" fill="${fill}" ${extra}/>`;
 
 function renderInterviewCandidate() {
@@ -11,13 +11,13 @@ function renderInterviewCandidate() {
   const original = parts.moods.listening;
   const eyes = original.slice(original.indexOf('<g id="eyes">'), original.indexOf('<g id="mouth">'))
     .replace('<g id="eyes">', '<g class="rig-eyes">')
-    .replace(/<path d="M123\.7[\s\S]*?\/>/, p => `<g transform="translate(-10 0)">${p}</g>`)
-    .replace(/<path d="M222[\s\S]*?\/>/, p => `<g transform="translate(-10 0)">${p}</g>`);
+    .replace(/<path d="M123\.7[\s\S]*?\/>/, p => `<g transform="translate(-10 0)">${p}<circle cx="125.5" cy="163" r="3.6" fill="#FFFFFF" stroke="none"/></g>`)
+    .replace(/<path d="M222[\s\S]*?\/>/, p => `<g transform="translate(-10 0)">${p}<circle cx="221" cy="161" r="3.4" fill="#FFFFFF" stroke="none"/></g>`);
   let defs = parts.defs;
   ['#F1BE80', '#F2BE80', '#F4C386'].forEach((color, i) => {
     defs = defs.replace(color, ['#F1CEB3', '#F5D6BE', '#F9DDC8'][i]);
   });
-  defs = defs.replace('</defs>', `<clipPath id="face-clip">${path(head)}</clipPath><clipPath id="collar-cut"><path d="M20 240H300V306H20Z" /></clipPath>
+  defs = defs.replace('</defs>', `${finish.finishDefs}<clipPath id="head-clip">${path(head)}</clipPath><clipPath id="face-clip">${path(head)}</clipPath><clipPath id="collar-cut"><path d="M20 240H300V306H20Z" /></clipPath>
     <linearGradient id="shine" x1="0" x2="1"><stop stop-color="#FFFEF0" stop-opacity="0"/><stop offset=".46" stop-color="#FFFEF0" stop-opacity=".06"/><stop offset=".6" stop-color="#FFFEF0" stop-opacity=".3"/><stop offset="1" stop-color="#FFFEF0" stop-opacity="0"/></linearGradient></defs>`);
   // A short textured quiff and tapered sides, with no grey temples or beard.
   const hair = `<g class="candidate-hair">
@@ -27,7 +27,7 @@ function renderInterviewCandidate() {
     ${path('M86 101L111 88M134 87L156 72M202 88L217 82', 'none', 'stroke="#775334" stroke-width="2.5"')}
   </g>`;
   const face = `<g class="candidate-head">
-    ${path(head, 'url(#skin)', 'stroke-width="4"')}${hair}
+    ${path(head, 'url(#skin)', 'stroke-width="4.6"')}${finish.faceFinish}${hair}
     <g class="candidate-expression">
       ${path('M98 131Q110 125 126 129M194 130Q210 119 225 125', 'none', 'stroke="#644A35" stroke-width="4.4"')}
       ${eyes}
@@ -42,12 +42,15 @@ function renderInterviewCandidate() {
     ${path('M135 270L155 276L146 287Z', '#FFFFFF', 'stroke-width="2"')}
     ${path('M180 270L155 276L168 287Z', '#FFFFFF', 'stroke-width="2"')}
   </g>`;
+  const collarShade = finish.finishLayer('collar', collar, 1);
   const tie = `<g clip-path="url(#collar-cut)"><g class="candidate-tie">
     ${path('M154 287L164 288L169 306L151 306Z', '#527FC1', 'stroke-width="2.6"')}
     ${path('M146 276Q157 273 169 277L173 283L161 295L152 291L143 283Z', '#608ECE', 'stroke-width="2.8"')}
     ${path('M148 279L157 284L167 279M157 284L160 291', 'none', 'stroke="#A2BDE0" stroke-width="1.8"')}
   </g></g>`;
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="${ink}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${defs}${face}${collar}${tie}</svg>`;
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="${ink}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${defs.replace('</defs>', `${collarShade.defs}</defs>`)}${face}${collar}${collarShade.layer}${tie}</svg>`;
+  // Even outline, as on the other characters.
+  svg = svg.replace(/stroke-width="3\.5"/g, 'stroke-width="4"');
   const prefix = 'character-id-interview-';
   svg = svg.replace(/id="([^"]+)"/g, (_, id) => `id="${prefix}${id}"`)
     .replace(/url\(#([^)]+)\)/g, (_, id) => `url(#${prefix}${id})`);

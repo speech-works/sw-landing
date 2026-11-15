@@ -27,7 +27,8 @@ const edits: [from: string, to: string][] = [
 ];
 
 // The pupils sit toward the right in the source; centre each one on its eye white.
-const PUPILS = /<path d="M(?:123\.7 153\.8|222 152\.1)[^"]*" fill="#19191F" stroke="none" \/>/g;
+// The catchlight that follows each pupil moves with it.
+const PUPILS = /<path d="M(?:123\.7 153\.8|222 152\.1)[^"]*" fill="#19191F" stroke="none" \/>(?:<circle[^>]*\/>)?/g;
 
 export function visorChatFace(): string {
   let svg = readFileSync(join(process.cwd(), "public/avatars/cap.svg"), "utf8");
