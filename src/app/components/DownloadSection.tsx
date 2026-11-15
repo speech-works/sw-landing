@@ -4,7 +4,7 @@ import Avatar from "./Avatar";
 import Link from "next/link";
 import DownloadRibbon from "./DownloadRibbon";
 
-export default function DownloadSection({ programTitle, outcome = false }: { programTitle?: string; outcome?: boolean }) {
+export default function DownloadSection({ programTitle, outcome = false, placement }: { programTitle?: string; outcome?: boolean; placement?: string }) {
   return (
     <>
       <DownloadRibbon />
@@ -27,7 +27,7 @@ export default function DownloadSection({ programTitle, outcome = false }: { pro
                 ? "Download Speechworks and choose a program. You can check the price before you buy."
                 : "Start with free daily practice and a free AI call. Buy a program when you are ready."}
           </p>
-          <StoreButtons />
+          <StoreButtons placement={placement ?? "home-download"} />
           <p className="download-note">
             Free to download, with free daily practice. Pay once for each program.
           </p>

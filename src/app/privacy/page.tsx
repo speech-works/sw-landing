@@ -7,7 +7,7 @@ import SectionEdge from "@/app/components/SectionEdge";
 import { socialMetadata } from "@/lib/site-metadata";
 
 // NOTE: Update this whenever the policy text changes.
-const LAST_UPDATED = "September 27, 2026";
+const LAST_UPDATED = "November 15, 2026";
 const CONTACT_EMAIL = "contact@speechworks.app";
 
 export const metadata: Metadata = {
@@ -21,16 +21,18 @@ export const metadata: Metadata = {
 
 function Section({
   title,
+  id,
   children,
 }: {
   title: string;
+  id?: string;
   children: React.ReactNode;
 }) {
   const match = title.match(/^(\d+)\.\s+(.*)$/);
   const num = match?.[1];
   const heading = match?.[2] ?? title;
   return (
-    <section className="mt-12 scroll-mt-28">
+    <section id={id} className="mt-12 scroll-mt-28">
       <div className="flex items-center gap-3">
         {num && (
           <span className="inline-flex h-7 min-w-[28px] items-center justify-center rounded-lg border-[1.5px] border-[var(--ink)] bg-[var(--cast-colour)] px-2 font-mono text-[11px] font-bold tracking-wider text-[var(--ink)]">
@@ -72,7 +74,8 @@ export default function PrivacyPolicyPage() {
               &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) collects,
               uses, shares, and protects your information when you use the
               Speechworks mobile application and related services (the
-              &ldquo;Services&rdquo;). Speechworks is a practice and support app for
+              &ldquo;Services&rdquo;), and when you sign up for an email on this
+              website (see section 14). Speechworks is a practice and support app for
               people who stutter. It offers guided speech exercises, progress
               tracking, mood check-ins, AI-assisted speaking practice, and optional
               peer (&ldquo;buddy&rdquo;) connections.
@@ -438,7 +441,21 @@ export default function PrivacyPolicyPage() {
             </p>
           </Section>
 
-          <Section title="14. Contact Us">
+          <Section id="launch-list" title="14. Email Sign-up on This Website">
+            <p>
+              If you ask us to email you when the iPhone app is live, we collect
+              your email address and the time you signed up. We use Kit (kit.com),
+              a US email service, to confirm your sign-up and send that one email.
+              Every email has an unsubscribe link, and you can also write to{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="legal-link">
+                {CONTACT_EMAIL}
+              </a>{" "}
+              to have your email deleted. We keep it until you unsubscribe or ask
+              us to delete it. We do not sell it or use it for advertising.
+            </p>
+          </Section>
+
+          <Section title="15. Contact Us">
             <p>
               If you have questions or requests regarding this Privacy Policy or your
               data, contact us at{" "}

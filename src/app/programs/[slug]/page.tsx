@@ -93,7 +93,7 @@ export default async function ProgramPage({ params }: Props) {
           </section>
           <ProgramTakeaway programKey={program.key} />
         </div>
-        <DownloadSection programTitle={program.title} />
+        <DownloadSection programTitle={program.title} placement={`program-${slug}`} />
       </main>
       <Footer />
     </div>

@@ -29,6 +29,7 @@ hair.coils = group('hair-front', path('M48 157C25 157 24 135 33 122C15 108 28 89
 hair.braids = group('hair-back', path('M55 246C25 232 38 208 37 189C20 172 34 151 33 133C19 107 41 83 50 66C48 46 68 35 83 40C112 16 201 22 230 43C252 32 272 49 266 68C290 86 286 110 277 128C295 149 280 169 281 189C294 213 280 236 262 245Z', '#282024') + path('M45 103L58 117L42 132L55 149L41 167L53 185L41 203L53 223M271 99L259 115L278 132L263 152L278 170L265 188L277 207L262 225', 'none', 3, 'stroke="#4D3831"'));
 hair.pigtails = group('hair-back', path('M80 100C61 116 31 108 21 82C13 62 15 30 28 23C44 14 61 30 65 48C69 64 90 68 94 86Z', '#F4D375') + path('M234 100C254 116 284 107 296 82C305 62 305 33 294 25C279 14 260 29 256 48C252 65 230 68 223 86Z', '#F4D375') + path('M30 43C26 65 43 89 62 96M48 42C49 63 59 72 73 83M288 45C291 66 274 89 252 96M272 44C269 63 258 74 247 84', 'none', 3, 'stroke="#CAAA56"'));
 hair.sidepart = group('hair-front', path('M51 151C39 106 57 58 105 39C142 19 194 27 219 45C255 54 273 97 262 149L246 129C237 109 222 98 200 86C175 110 137 124 95 119L69 138L62 159Z', '#34363C') + path('M177 49C151 86 116 101 68 105M190 57C218 66 238 89 249 108', 'none', 4, 'stroke="#5A5D62"') + path('M53 125L67 127L65 153L54 163Z', '#A9AFAC', 0) + path('M247 127L261 130L259 153L251 158Z', '#A9AFAC', 0));
+hair.sidehair = group('hair-front', path('M58 80L88 104C86 128 82 150 76 170L50 172C48 148 52 112 58 80Z', '#242123') + path('M260 80L234 104C236 128 240 150 244 170L268 172C270 148 266 112 260 80Z', '#242123'));
 
 const headwear = {
   none: '',
@@ -44,14 +45,78 @@ const headwear = {
 
 headwear.hijab = group('headgear', path('M31 269C42 238 26 178 31 127C36 65 86 24 151 23C216 18 270 59 283 126C291 171 273 226 290 275C260 295 222 307 157 305C96 304 59 292 31 269ZM62 137C57 166 57 208 66 232C85 249 127 258 158 265C193 257 232 247 252 230C261 208 261 165 251 134C220 122 194 104 177 84C148 107 103 120 62 137Z', '#6E708F', 3.5, 'fill-rule="evenodd"') + path('M33 267C82 266 137 280 184 292M251 244C221 270 194 284 157 305M39 132C49 62 115 25 167 35', 'none', 3, 'stroke="#9A9DB4"'));
 headwear.turban = group('headgear', path('M47 132C35 101 42 66 73 48C85 23 123 10 155 18C191 6 229 25 246 49C278 68 283 105 266 135C225 132 189 114 159 87C121 117 86 133 47 132Z', '#427E86') + path('M49 128C116 112 177 64 230 42M51 105C100 92 142 59 182 20M58 79C100 61 126 37 140 18M266 131C218 107 191 74 156 38M274 108C229 88 207 58 183 23', 'none', 3.5, 'stroke="#A4C4BF"'));
-headwear.workcap = headwear.cap.replaceAll('#BBA8DF', '#586E70').replaceAll('#C1AFE1', '#6A8280').replaceAll('#F3EDDC', '#D8C8AA');
+// Caps are drawn with form shading so they read as 3D: a light-to-dark gradient on the
+// crown, a soft shadow on the far side, gloss highlights, and a visor with a darker underside.
+const hexToRgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const mix = (a, b, t) => {
+  const [x, y] = [hexToRgb(a), hexToRgb(b)];
+  return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, '0')).join('').toUpperCase();
+};
+const lighten = (c, t) => mix(c, '#FFFFFF', t);
+const darken = (c, t) => mix(c, '#000000', t);
+const gradient = (id, from, to, [x1, y1, x2, y2] = [0.1, 0, 0.9, 1]) =>
+  `<linearGradient id="${id}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"><stop offset="0" stop-color="${from}"/><stop offset="1" stop-color="${to}"/></linearGradient>`;
+const gloss = (cx, cy, rx, ry, rot, op = 0.38) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${cx} ${cy})" fill="#FFFFFF" fill-opacity="${(op * 0.75).toFixed(2)}" stroke="none" filter="url(#${Math.min(rx, ry) < 5 ? 'fin-blur-sm' : 'fin-blur'})"/>`;
+
+// A front-view baseball cap on the approved head: six panels with seams meeting at a button,
+// and a curved visor that juts past the crown and sags in the middle.
+const frontCap = ({ crown, panel, visor, seam }, extra = '') => {
+  const body = 'M58 94C52 58 84 28 160 28C236 28 268 58 262 94C224 102 96 102 58 94Z';
+  const visorShape = 'M50 96C98 104 222 104 270 96C277 106 266 119 250 123C210 134 110 134 70 123C54 119 43 106 50 96Z';
+  const underside = 'M62 116C102 126 218 126 258 116C256 119 253 121 250 123C210 134 110 134 70 123C67 121 64 119 62 116Z';
+  return group('headgear',
+    path(body, crown) +
+    path('M160 29C149 52 133 76 127 99C150 102 170 102 193 99C187 76 171 52 160 29Z', panel, 2.6, `stroke="${seam}"`) +
+    path('M160 29C122 36 86 58 68 90M160 29C198 36 234 58 252 90', 'none', 2.6, `stroke="${seam}"`) +
+    circle(160, 28, 4.6, darken(crown, 0.06)) +
+    path('M76 118C112 130 208 130 244 118C232 134 198 142 160 142C122 142 88 134 76 118Z', '#000000', 0, 'opacity=".14"') +
+    path(visorShape, visor) +
+    path(underside, darken(visor, 0.3), 0) +
+    path(visorShape, 'none') +
+    extra);
+};
+const capColors = {
+  sage: { crown: '#586E70', panel: '#D8C8AA', visor: '#6A8280', seam: '#33403F' },
+  coach: { crown: '#31554E', panel: '#E3D9B9', visor: '#416B60', seam: '#1E3530' },
+};
+
+// Postal cap: a flared peaked cap with a gold band and badge, a domed peak and a glossy finish.
+const postalCap = (extra = '') => {
+  const navy = '#3347B5', gold = '#F2B93A', visor = '#1B2038', rim = '#2D3A78', sheen = '#7088EA';
+  // A smooth, wide blue dome, a big gold badge on top, a thick gold band that is tallest in the middle
+  // and flat along the bottom, and a wide dark visor slab under it.
+  const crown = 'M18 92C14 56 52 22 108 12C138 7 182 7 212 12C268 22 306 56 302 92C300 100 288 104 276 104L44 104C32 104 20 100 18 92Z';
+  const band = 'M48 104C60 80 108 70 160 70C212 70 260 80 272 104Z';
+  const visorShape = 'M42 106C60 100 110 98 160 98C210 98 260 100 278 106C284 122 266 138 240 138L80 138C54 138 36 122 42 106Z';
+  const visorRim = 'M42 106C60 100 110 98 160 98C210 98 260 100 278 106L276 112C250 106 210 105 160 105C110 105 70 106 44 112Z';
+  return group('headgear',
+    path(crown, navy) +
+    `<ellipse cx="96" cy="38" rx="22" ry="8" transform="rotate(-26 96 38)" fill="${sheen}" stroke="none"/>` +
+    path('M236 16C280 32 304 58 302 92C300 100 288 104 276 104L262 104C286 84 282 46 236 16Z', '#2A3C9A', 0) +
+    path(band, gold, 3) +
+    path(visorShape, visor) +
+    path(visorRim, rim, 0) +
+    `<ellipse cx="162" cy="44" rx="21" ry="18" fill="${gold}"/>` +
+    extra);
+};
+headwear.workcap = frontCap(capColors.sage);
 headwear.cowboy = group('headgear', path('M75 82L91 23C99 12 117 26 135 24C154 29 176 12 190 18L223 83Z', '#B98550') + path('M94 34C114 40 133 52 147 64C161 48 178 35 194 31', 'none', 3, 'stroke="#78502F"') + path('M76 72C121 84 177 87 221 72L226 91C176 105 120 103 71 88Z', '#725035') + path('M17 80C31 70 49 83 75 93C124 112 186 113 234 95C257 86 278 70 302 77C299 92 282 108 259 116C202 134 110 130 53 109C35 103 22 91 17 80Z', '#C59158') + path('M39 89C110 121 211 125 283 88', 'none', 2.6, 'stroke="#E2B678"'));
 headwear.ribbons = group('headgear', path('M74 88C55 74 46 70 43 79L46 96C49 104 63 98 74 95Z', '#E985A3') + path('M75 88C89 72 99 75 97 87L89 103Z', '#ED9CB4') + circle(76, 91, 7, '#F5B0C5') + path('M242 86C224 73 214 79 220 91L231 103Z', '#E985A3') + path('M244 87C258 72 274 73 271 88L264 101Z', '#ED9CB4') + circle(242, 91, 7, '#F5B0C5'));
-headwear.coach = group('headgear', headwear.cap.replace('id="headgear"', 'id="coach-cap"').replaceAll('#BBA8DF', '#31554E').replaceAll('#C1AFE1', '#416B60').replaceAll('#F3EDDC', '#E3D9B9') + path('M261 147C275 143 282 155 281 171L278 191C275 202 266 203 259 197L256 158Z', '#393F42') + path('M275 190C268 215 245 226 221 227', 'none', 4.5) + path('M213 221C207 221 205 226 210 230C215 234 227 231 228 226C229 222 220 220 213 221Z', '#393F42'));
+headwear.coach = frontCap(capColors.coach, `<g transform="translate(0 -7)">${path('M261 147C275 143 282 155 281 171L278 191C275 202 266 203 259 197L256 158Z', '#393F42') + path('M275 190C268 215 245 226 221 227', 'none', 4.5) + path('M213 221C207 221 205 226 210 230C215 234 227 231 228 226C229 222 220 220 213 221Z', '#393F42')}</g>`);
+
+headwear.postcap = postalCap();
 
 // Accessories are drawn for these eye anchors, with open lenses for expression.
 headwear.visor = group('headgear', path('M50 98C106 71 196 72 254 97L252 116C196 97 103 94 54 117Z', '#BDAADE') + path('M38 113C97 90 178 88 231 101C261 106 275 119 279 129C232 143 197 140 162 129C119 115 82 121 38 113Z', '#CBBBDF') + path('M61 114C120 102 182 104 234 119', 'none', 2.5, 'stroke="#EEE6F5"'));
-headwear.sunhat = group('headgear', path('M74 88L91 30C124 12 194 15 225 37L245 92Z', '#E8BD64') + path('M75 74C128 88 191 87 240 77L245 94C193 108 121 104 71 90Z', '#72998C') + path('M20 114C53 95 83 94 111 99C164 110 209 100 245 101C268 101 288 111 302 125C238 145 83 142 20 114Z', '#F3CF80') + path('M46 117C113 134 223 133 278 122', 'none', 2.5, 'stroke="#C79C4E"') + path('M236 91C222 78 218 74 212 79C208 85 215 96 231 99L214 116L229 114L236 102L248 118L254 118L248 99C265 95 272 84 265 80C258 76 249 84 241 92Z', '#7FA89A', 2.5) + circle(239, 96, 5, '#ADC7AE'));
+// Sun hat, built the way a hat is: one wide brim, a crown that sits on it with its base curving into the
+// brim, and a band that wraps the base of the crown. The bow sits on the band.
+headwear.sunhat = group('headgear',
+  path('M18 112C18 96 80 86 161 86C242 86 304 96 304 112C304 128 242 140 161 140C80 140 18 128 18 112Z', '#F3CF80') +
+  path('M42 114C84 134 238 136 282 114', 'none', 2.5, 'stroke="#C79C4E"') +
+  path('M78 100L96 40C110 22 140 18 161 20C182 18 212 22 226 40L244 100C214 118 108 118 78 100Z', '#E8BD64') +
+  path('M121 42C146 56 176 56 201 42', 'none', 2.5, 'stroke="#BD9444"') +
+  path('M84.5 82C108 96 214 96 238 82L244 100C214 118 108 118 78 100Z', '#72998C') +
+  path('M236 91C222 78 218 74 212 79C208 85 215 96 231 99L214 116L229 114L236 102L248 118L254 118L248 99C265 95 272 84 265 80C258 76 249 84 241 92Z', '#7FA89A', 2.5) + circle(239, 96, 5, '#ADC7AE'));
 const starFrame = (cx, cy) => {
   const points = Array.from({length: 10}, (_, i) => {
     const angle = -Math.PI / 2 + i * Math.PI / 5;
@@ -90,18 +155,26 @@ collars.western = { back: '', front: group('collar', path('M53 244L39 275L120 29
 collars.rose = { back: '', front: group('collar', path('M54 246C94 260 125 267 155 272C181 268 221 259 255 245L272 276C240 295 190 305 157 306C114 303 71 291 40 274Z', '#D987A2') + path('M62 248C89 258 124 266 156 272C145 294 123 295 98 282L51 263Z', '#FFF4E4') + path('M156 272C188 267 222 257 247 248L261 263C227 288 189 300 156 272Z', '#FFF4E4') + circle(158, 299, 3, '#F4D6C8')) };
 collars.banker = { back: '', front: group('collar', path('M54 244L36 272L67 279L54 288L144 306L157 273L174 306L260 288L247 279L276 272L256 243C220 261 192 268 157 273C121 265 85 254 54 244Z', '#293A50') + path('M125 267L155 276L184 267L164 306L150 306Z', '#F7F2E6') + path('M135 270L155 276L146 287Z', '#FFFFFF', 2) + path('M180 270L155 276L168 287Z', '#FFFFFF', 2) + path('M151 278L160 277L166 285L159 293L151 285Z', '#944F59', 2) + path('M155 291L162 291L166 305L151 305Z', '#944F59', 2)) };
 collars.training = { back: '', front: group('collar', path('M55 246L47 278C77 294 120 305 157 306C197 306 239 294 266 276L258 244C220 260 192 266 157 273C123 267 86 257 55 246Z', '#E7DDC4') + path('M55 254C85 266 120 277 151 280L150 296C113 291 84 281 53 269Z', '#31554E', 0) + path('M258 252C226 267 194 277 164 279L165 295C200 290 233 279 262 267Z', '#31554E', 0) + path('M158 276L158 305', 'none', 3) + path('M153 282L163 282L163 291L153 291Z', '#B5B7A8', 2)) };
+// Jacket collar: the banker's lapels and tie, recoloured to postal blue, with gold buttons.
+// The jacket body runs to the bottom of the artwork, so a round crop closes it off at its border.
+collars.postal = { back: group('collar-back', path('M30 262C64 246 118 262 160 272C202 262 256 246 290 262L318 310L2 310Z', '#34568C')), front: collars.banker.front.replaceAll('#293A50', '#3A5F94').replaceAll('#944F59', '#22344F') };
+collars.postal.front = collars.postal.front.replace('</g>', circle(86, 288, 4.5, '#E7BE55') + circle(226, 288, 4.5, '#E7BE55') + '</g>');
 
 const openEyes = (() => {
   const expression = master['expression-listening'];
-  return expression.slice(expression.indexOf('<g id="eyes">'), expression.indexOf('<g id="mouth">'));
+  const eyes = expression.slice(expression.indexOf('<g id="eyes">'), expression.indexOf('<g id="mouth">'));
+  // A small catchlight in each pupil gives the eyes life. It moves with the pupil.
+  return eyes
+    .replace(/(<path d="M123\.7[\s\S]*?\/>)/, '$1<circle cx="125.5" cy="163" r="3.6" fill="#FFFFFF" stroke="none"/>')
+    .replace(/(<path d="M222[\s\S]*?\/>)/, '$1<circle cx="221" cy="161" r="3.4" fill="#FFFFFF" stroke="none"/>');
 })();
 const smile = master['expression-listening'].slice(master['expression-listening'].indexOf('<g id="mouth">')).replace(/\s*<\/g>\s*$/, '');
 const brow = (left, right) => group('eyebrows', line(left) + line(right));
 const eyesClosed = group('eyes', path('M95 170C101 151 124 150 134 167M191 168C200 150 221 150 232 166', 'none', 5));
 const softSmile = group('mouth', path('M143 221C152 232 172 234 181 218', 'none', 4.7));
 const gaze = (dx, dy = 0) => openEyes
-  .replace(/<path d="M123\.7[\s\S]*?\/>/, pupil => `<g transform="translate(${dx} ${dy})">${pupil}</g>`)
-  .replace(/<path d="M222[\s\S]*?\/>/, pupil => `<g transform="translate(${dx} ${dy})">${pupil}</g>`);
+  .replace(/<path d="M123\.7[\s\S]*?\/>\s*<circle[^>]*\/>/, pupil => `<g transform="translate(${dx} ${dy})">${pupil}</g>`)
+  .replace(/<path d="M222[\s\S]*?\/>\s*<circle[^>]*\/>/, pupil => `<g transform="translate(${dx} ${dy})">${pupil}</g>`);
 const moods = {
   listening: master['expression-listening'],
   amused: group('expression-amused', brow('M98 127C107 126 117 124 121 118', 'M199 123C209 120 219 124 224 128') + openEyes + path('M149 229C166 233 180 225 183 215', 'none', 4.5)),
@@ -113,6 +186,22 @@ const moods = {
   laughing: group('expression-laughing', brow('M101 126Q111 120 123 122', 'M196 123Q210 116 222 122') + eyesClosed + path('M139 208C151 212 177 208 190 201C191 223 179 241 164 243C149 244 140 230 139 208Z', '#201D24', 3) + path('M145 214C159 216 172 212 183 209L180 217C168 223 154 223 148 219Z', '#FFFFFF', 0) + path('M151 234C159 223 172 225 182 233C175 242 161 245 151 234Z', '#EF7890', 0)),
 };
 
+// Mouth styles for the "steady" (neutral, looking straight out) expression.
+const steadyMouths = {
+  calm: path('M146 228Q161 232 178 227', 'none', 4),
+  soft: path('M143 226Q161 238 180 226', 'none', 4.2),
+  warm: path('M138 224Q161 244 184 224', 'none', 4.4),
+  tiny: path('M149 228Q161 234 173 228', 'none', 4),
+  smirk: path('M142 229Q160 232 172 227Q180 224 184 219', 'none', 4.2),
+  grin: path('M140 224Q161 238 182 224Q161 232 140 224Z', '#FFF9EC', 3.6),
+  open: path('M142 224C150 223 172 223 180 224C178 236 170 242 161 242C152 242 144 236 142 224Z', '#241F27', 3.4) + path('M147 226Q161 229 176 226L174 231Q161 234 149 231Z', '#FFF9EC', 0),
+  laugh: path('M138 222Q161 226 186 220C184 238 174 248 161 248C148 248 140 236 138 222Z', '#241F27', 3.4) + path('M144 225Q161 229 181 223L179 230Q161 235 146 231Z', '#FFF9EC', 0) + path('M152 240C157 234 167 234 172 240C167 246 157 246 152 240Z', '#EC798C', 0),
+};
+const steadyMood = mouth => group('expression-steady', `<clipPath id="steady-lids"><path d="M90 152L238 152L238 199L90 199Z"/></clipPath>` + `<g clip-path="url(#steady-lids)">${gaze(-10.5, -1.5)}</g>` + path('M93 152L137 152M187 152L233 152', 'none', 5.5) + (steadyMouths[mouth] || steadyMouths.calm));
+moods.steady = steadyMood('tiny');
+
+// Happy face (eyes shut in a smile, warm smile) used for the mailman.
+moods.joyful = group('expression-joyful', brow('M100 128Q111 122 123 127', 'M197 126Q210 121 222 127') + eyesClosed + path('M138 223Q161 243 184 223', 'none', 4.4));
 moods.warm = group('expression-warm', brow('M100 129Q111 123 124 128', 'M198 130Q211 124 223 129') + gaze(-9, 2) + path('M142 218C151 221 169 221 181 216C177 229 170 233 161 232C153 232 146 228 142 218Z', '#262229', 2.5) + path('M148 222Q162 226 176 221', 'none', 3.5, 'stroke="#FFF8ED"'));
 moods.pleased = group('expression-pleased', brow('M99 132Q111 128 123 130', 'M198 128Q211 122 224 125') + `<g clip-path="url(#soft-lids)">${gaze(-15, 1)}</g>` + path('M94 158Q115 151 136 156M189 156Q210 147 232 153', 'none', 3.5) + path('M148 223C157 235 173 238 183 222', 'none', 4));
 moods.reflective = group('expression-reflective', brow('M100 127Q112 134 125 128', 'M197 124Q210 129 222 126') + gaze(-16, 4) + path('M148 226Q162 222 175 226', 'none', 3.8));
@@ -143,7 +232,7 @@ const cast = {
   headphones: { label: 'Mint headphones and open polo collar', skin: 'tan', hair: 'swoop', headwear: 'headphones', collar: 'polo', mood: 'listening' },
   curly: { label: 'Curly hair, orange beret and Peter Pan collar', skin: 'deep', hair: 'curls', headwear: 'beret', collar: 'peterpan', mood: 'amused' },
   beanie: { label: 'Blue beanie and moss roll neck', skin: 'light', hair: 'crop', headwear: 'beanie', collar: 'rollneck', mood: 'relieved' },
-  bob: { label: 'Bob haircut, ribboned sunhat and mandarin collar', skin: 'brown', hair: 'bob', headwear: 'sunhat', collar: 'mandarin', mood: 'curious' },
+  bob: { label: 'Bob haircut, ribboned sunhat and mandarin collar', skin: 'brown', hair: 'bob', headwear: 'sunhat', collar: 'mandarin', mood: 'curious'  },
   cap: { label: 'Lilac sun visor and coral sailor collar', skin: 'tan', hair: 'curls', headwear: 'visor', collar: 'sailor', mood: 'confident' },
   scholar: { label: 'Cream newsboy cap and blue notched collar', skin: 'deep', hair: 'curls', headwear: 'newsboy', collar: 'notched', mood: 'thoughtful', age: 'middle' },
   communicator: { label: 'Green microphone headset and shawl collar', skin: 'dark', hair: 'curls', headwear: 'communicator', collar: 'shawl', mood: 'speaking' },
@@ -154,12 +243,13 @@ const cast = {
   turban: { label: 'Teal turban, beard and a mandarin collar', skin: 'tan', hair: 'none', headwear: 'turban', collar: 'mandarin', mood: 'determined', beard: 'dark' },
   bald: { label: 'Bald head, silver temples and a notched collar', skin: 'fair', hair: 'bald', headwear: 'none', collar: 'notched', mood: 'inquisitive', age: 'older' },
   coils: { label: 'Natural coils, mint star glasses and a coral sailor collar', skin: 'dark', hair: 'coils', headwear: 'none', collar: 'sailor', mood: 'excited', eyewear: 'stars' },
-  braids: { label: 'Braided hair, rose cat-eye glasses and a Peter Pan collar', skin: 'deep', hair: 'braids', headwear: 'none', collar: 'peterpan', mood: 'welcoming', eyewear: 'cateye' },
+  braids: { label: 'Braided hair, rose cat-eye glasses and a Peter Pan collar', skin: 'deep', hair: 'braids', headwear: 'none', collar: 'peterpan', mood: 'welcoming', eyewear: 'cateye'  },
   workcap: { label: 'Sage cap, stubble and an open polo collar', skin: 'olive', hair: 'crop', headwear: 'workcap', collar: 'polo', mood: 'easygoing', beard: 'stubble', age: 'middle' },
   cowboy: { label: 'Older cowboy with a weathered hat, silver moustache and neckerchief', skin: 'olive', hair: 'bald', headwear: 'cowboy', collar: 'western', mood: 'wry', beard: 'cowboy', age: 'older' },
   pigtails: { label: 'Jolly blonde girl with high pigtails, rose ribbons and a rounded collar', skin: 'fair', hair: 'pigtails', headwear: 'ribbons', collar: 'rose', mood: 'gleeful' },
   banker: { label: 'Middle-aged banker with a neat side part, glasses, navy lapels and burgundy tie', skin: 'brown', hair: 'sidepart', headwear: 'none', collar: 'banker', mood: 'composed', age: 'middle', eyewear: 'banker' },
   coach: { label: 'Football coach with a green cap, sideline headset and zipped training collar', skin: 'deep', hair: 'crop', headwear: 'coach', collar: 'training', mood: 'encouraging', age: 'middle', beard: 'stubble' },
+  mailman: { label: 'Weathered postal worker with a blue dome cap, gold band and badge, black temple hair, stubble, a chevron moustache and a calm, neutral look', skin: 'olive', hair: 'sidehair', headwear: 'postcap', collar: 'postal', mood: 'steady', age: 'middle', beard: 'stubble', mustache: 'chevron' },
 };
 
 const skinColors = {
@@ -179,25 +269,114 @@ const hairFrontOverrides = {
   braids: group('hair-front', path('M48 141C45 83 91 37 154 36C218 35 264 81 267 144L246 133C210 121 183 90 160 67C133 95 104 121 68 135Z', '#282024') + path('M65 112C92 105 126 81 151 52M88 84C108 73 128 57 138 43M169 49C199 76 226 100 250 111M190 43C214 62 237 81 249 85', 'none', 3, 'stroke="#514039"')),
   pigtails: group('hair-front', path('M50 144C44 93 76 51 118 37C143 25 178 28 203 42C241 48 266 90 265 143C241 131 225 113 214 96C204 115 189 123 174 115C160 105 151 86 147 70C133 105 114 129 95 126L72 119L58 148Z', '#F4D375') + path('M72 113C103 93 122 69 127 49M163 48C176 79 192 97 205 103M216 57C233 71 246 95 251 117', 'none', 2.7, 'stroke="#CCAB55"')),
 };
-const headwearOffsets = { beanie: -6, bucket: -9, cap: -7, newsboy: -8, workcap: -7, coach: -7 };
+const headwearOffsets = { beanie: -6, bucket: -9, cap: -7, newsboy: -8, postcap: -6 };
+
+
+// Finishing pass, applied to every character: one clean, hard-edged shadow shape on the far side
+// of the face, hair, hats and collars, flat colour and an even outline. No gradients or blur.
+const finishDefs = '<clipPath id="fin-half"><path d="M330 0H420V420H0V300Z"/></clipPath>';
+const fillShapes = markup => [...markup.matchAll(/<path\s+d="([^"]+)"\s+fill="([^"]+)"/g)]
+  .filter(m => m[2] !== 'none').map(m => m[1]);
+// A shadow band that hugs the lower-right inside edge of a part's biggest shapes, clipped to them.
+const shapeArea = d => {
+  const n = (d.match(/-?\d+(\.\d+)?/g) || []).map(Number);
+  const xs = n.filter((_, i) => i % 2 === 0), ys = n.filter((_, i) => i % 2 === 1);
+  return (Math.max(...xs) - Math.min(...xs)) * (Math.max(...ys) - Math.min(...ys));
+};
+const finishLayer = (id, markup, top = 1) => {
+  const shapes = fillShapes(markup).sort((a, b) => shapeArea(b) - shapeArea(a)).slice(0, top);
+  if (!shapes.length) return { defs: '', layer: '' };
+  return {
+    defs: `<clipPath id="fin-${id}">${shapes.map(d => `<path d="${d}"/>`).join('')}</clipPath>`,
+    layer: `<g clip-path="url(#fin-${id})"><g clip-path="url(#fin-half)">${shapes.map(d => `<path d="${d}" fill="none" stroke="#000000" stroke-opacity=".16" stroke-width="18"/>`).join('')}</g></g>`,
+  };
+};
+// The face: a darker crescent on the far side and under the chin, then the outline redrawn on top.
+const faceFinish = `<g clip-path="url(#head-clip)" stroke="none"><path d="${headContour}" fill="#000000" fill-opacity=".16"/><path d="${headContour}" transform="translate(-10 -8)" fill="url(#skin)"/></g><path d="${headContour}" fill="none" stroke-width="4.6"/>`;
+const lidShade = () => '';
+const ownShading = new Set(['postcap']);
+
+
+// Hair is drawn in two pieces (back hair behind the head, front hair over it). Each piece carries its
+// own outline, which leaves a hard line inside the hair where they overlap. Here the front hair's
+// outline is drawn underneath its fill and hidden wherever the backdrop is back hair, so the outline
+// only appears where hair meets the face or the background.
+const splitFrontHair = (frontMarkup, backMarkup) => {
+  const under = [];
+  const fills = frontMarkup.replace(/<path d="([^"]+)" fill="([^"]+)" stroke-width="([\d.]+)"( [^>]*)?\/>/g, (whole, d, fill, w, extra = '') => {
+    if (fill === 'none' || /stroke=/.test(extra)) return whole;
+    under.push(`<path d="${d}" fill="none" stroke-width="${(Number(w) * 2.2).toFixed(1)}"/>`);
+    return `<path d="${d}" fill="${fill}" stroke="none"${extra}/>`;
+  });
+  const backShapes = [...backMarkup.matchAll(/<path\s+d="([^"]+)"\s+fill="([^"]+)"/g)].filter(m => m[2] !== 'none').map(m => m[1]);
+  const mask = `<mask id="hair-under" maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="310"><rect width="320" height="310" fill="#FFFFFF" stroke="none"/>${backShapes.map(d => `<path d="${d}" fill="#000000" stroke="none"/>`).join('')}<path d="${headContour}" fill="#FFFFFF" stroke="none"/></mask>`;
+  // Texture lines on the back hair stop a little short of the front hair, so they end cleanly
+  // instead of being cut off by its edge.
+  const frontShapes = [...frontMarkup.matchAll(/<path\s+d="([^"]+)"\s+fill="([^"]+)"/g)].filter(m => m[2] !== 'none').map(m => m[1]);
+  const gap = `<mask id="hair-gap" maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="310"><rect width="320" height="310" fill="#FFFFFF" stroke="none"/>${frontShapes.map(d => `<path d="${d}" fill="#000000" stroke="#000000" stroke-width="30"/>`).join('')}</mask>`;
+  const back = backMarkup.replace(/<path d="[^"]+" fill="none"[^>]*stroke="[^"]+"[^>]*\/>/g, line => `<g mask="url(#hair-gap)">${line}</g>`);
+  return { mask: mask + gap, outline: `<g mask="url(#hair-under)">${under.join('')}</g>`, fills, back };
+};
+
+
+// Optional extras for characters that need them: round ears behind the head, and flat cheek colour.
+const earsMarkup = `<g id="ears">${path('M58 172C34 160 26 188 33 210C38 224 54 226 60 216Z', 'url(#skin)', 4)}${path('M44 184C42 194 46 204 52 208', 'none', 3)}${path('M260 172C284 160 292 188 285 210C280 224 264 226 258 216Z', 'url(#skin)', 4)}${path('M274 184C276 194 272 204 266 208', 'none', 3)}</g>`;
+// Moustache styles. Each is one filled shape centred on x = 159, sitting just above the mouth.
+const mustacheShapes = {
+  bushy: 'M110 212C120 200 144 198 159 207C174 198 198 200 208 212C198 217 184 214 172 212C168 218 164 219 159 219C154 219 150 218 146 212C134 214 120 217 110 212Z',
+  handlebar: 'M159 208C148 199 130 200 120 207C112 213 100 212 96 202C94 197 99 194 102 197C104 205 112 205 118 200C132 194 150 196 159 204C168 196 186 194 200 200C206 205 214 205 216 197C219 194 224 197 222 202C218 212 206 213 198 207C188 200 170 199 159 208Z',
+  walrus: 'M104 206C114 196 138 196 159 205C180 196 204 196 214 206C220 214 212 228 200 226C190 224 178 220 159 220C140 220 128 224 118 226C106 228 98 214 104 206Z',
+  chevron: 'M118 204C132 198 148 199 159 203C170 199 186 198 200 204C198 212 188 216 176 214C170 213 164 214 159 214C154 214 148 213 142 214C130 216 120 212 118 204Z',
+  pencil: 'M120 207C136 201 150 202 159 206C168 202 182 201 198 207C198 213 184 212 172 212C166 213 162 214 159 214C156 214 152 213 146 212C134 212 120 213 120 207Z',
+  foxtail: 'M118 210C128 200 146 200 159 206C172 200 190 200 200 210C192 208 180 208 170 212C166 215 162 216 159 216C156 216 152 215 148 212C138 208 126 208 118 210Z',
+  droop: 'M112 204C128 196 148 198 159 206C170 198 190 196 206 204C210 214 208 226 202 234C200 224 194 216 182 214C172 212 166 214 159 214C152 214 146 212 136 214C124 216 118 224 116 234C110 226 108 214 112 204Z',
+  english: 'M112 208C122 198 144 198 159 205C174 198 196 198 206 208C198 214 184 212 172 210C168 214 164 215 159 215C154 215 150 214 146 210C134 212 120 214 112 208Z',
+};
+const mustacheScale = { bushy: [1.16, 1.3], walrus: [1, 1], chevron: [1.1, 1.35], foxtail: [1.1, 1.4], english: [1.1, 1.3], handlebar: [1, 1.15] };
+const mustacheMarkup = style => { const [sx, sy] = mustacheScale[style] || [1, 1]; const thick = style === 'handlebar' ? ' stroke="#242123"' : ''; return `<g transform="translate(159 208) scale(${sx} ${sy}) translate(-159 -208)">${path(mustacheShapes[style] || mustacheShapes.bushy, '#242123', style === 'handlebar' ? 3.2 : 0, thick)}</g>${path('M158 176C153 188 148 199 150 205', 'none', 3.8)}`; };
+const blushMarkup = '<g clip-path="url(#head-clip)" stroke="none"><ellipse cx="94" cy="208" rx="17" ry="10" fill="#E8887C" fill-opacity=".5"/><ellipse cx="226" cy="206" rx="17" ry="10" fill="#E8887C" fill-opacity=".5"/></g>';
+
+const hatBrimCut = {
+  sunhat: 'M0 112H18L40 97L60 93.6L110 87.7L161 86L212 87.7L262 93.6L282 97L304 112H320V310H0Z',
+};
 
 function renderAvatar(name, options = {}) {
   const c = { ...cast[name], ...options };
   if (!cast[name]) throw new Error(`Unknown avatar ${name}`);
   if (!moods[c.mood]) throw new Error(`Unknown expression ${c.mood}`);
-  let defs = master.defs.replace('</defs>', `${extraDefs}</defs>`);
-  ['#F1BE80', '#F2BE80', '#F4C386'].forEach((original, i) => {
-    defs = defs.replace(original, skinColors[c.skin][i]);
-  });
+  const hatMarkup = headwear[c.headwear] || '';
+  const hairShade = { defs: '', layer: '' };
+  const collarBack = finishLayer('collar-back', collars[c.collar].back, 1);
+  const collarFront = finishLayer('collar-front', collars[c.collar].front, 1);
+  const hatShade = ownShading.has(c.headwear) ? { defs: '', layer: '' } : finishLayer('hat', hatMarkup);
   const isBackHair = Boolean(hairFrontOverrides[c.hair]);
   let hairFront = hairFrontOverrides[c.hair] || hair[c.hair];
   if (c.silverHair) hairFront = hairFront.replaceAll('#252027', '#A5AAA5');
+  let hairOutline = '';
+  let backHair = hair[c.hair] || '';
+  let hairMask = '';
+  if (isBackHair) {
+    const split = splitFrontHair(hairFront, hair[c.hair]);
+    hairFront = split.fills;
+    hairOutline = split.outline;
+    hairMask = split.mask;
+    backHair = split.back;
+  }
+  let defs = master.defs.replace('</defs>', `${extraDefs}${finishDefs}${hairMask}${hairShade.defs}${collarBack.defs}${collarFront.defs}${hatShade.defs}</defs>`);
+  ['#F1BE80', '#F2BE80', '#F4C386'].forEach((original, i) => {
+    defs = defs.replace(original, skinColors[c.skin][i]);
+  });
   const description = `${c.label}; ${c.mood} expression. Head and collar only.`;
   const hatLift = headwearOffsets[c.headwear] || 0;
-  const hat = hatLift ? `<g transform="translate(0 ${hatLift})">${headwear[c.headwear]}</g>` : headwear[c.headwear];
+  const hat = headwear[c.headwear];
   const beard = c.beard ? `<g clip-path="url(#head-clip)">${facialHair[c.beard]}</g>` : '';
   const ageMarks = c.beard ? ageDetails.replace('M131 225Q126 236 132 243M191 223Q198 233 194 241', '') : ageDetails;
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="${ink}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title description"><title id="title">Speechworks ${name} avatar</title><desc id="description">${description}</desc>${defs}${isBackHair ? hair[c.hair] : ''}${collars[c.collar].back}${head}${hairFront}${beard}${collars[c.collar].front}${c.age ? ageMarks : ''}${moods[c.mood]}${c.eyewear ? eyewear[c.eyewear] : ''}${hat}</svg>`;
+  // A brimmed hat covers the hair: back hair is hidden above the brim line.
+  const brimCut = hatBrimCut[c.headwear];
+  const hairBackCut = brimCut ? { open: '<g clip-path="url(#hair-cut)">', close: '</g>', defs: `<clipPath id="hair-cut"><path d="${brimCut}"/></clipPath>` } : { open: '', close: '', defs: '' };
+  defs = defs.replace('</defs>', `${hairBackCut.defs}</defs>`);
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="${ink}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title description"><title id="title">Speechworks ${name} avatar</title><desc id="description">${description}</desc>${defs}${isBackHair ? hairBackCut.open + backHair + hairBackCut.close : ''}${collars[c.collar].back}${collarBack.layer}${c.ears === true ? earsMarkup : ''}${hairBackCut.open}${head.replace('stroke-width="4"', 'stroke-width="4.6"')}${faceFinish}${c.blush ? blushMarkup : ''}${hairOutline}${hairFront}${hairShade.layer}${hairBackCut.close}${beard}${collars[c.collar].front}${collarFront.layer}${c.age ? ageMarks : ''}${c.mouth && c.mood === 'steady' ? steadyMood(c.mouth) : moods[c.mood]}${lidShade(moods[c.mood])}${c.mustache ? mustacheMarkup(c.mustache === true ? 'bushy' : c.mustache) : ''}${c.eyewear ? eyewear[c.eyewear] : ''}${hatLift ? `<g transform="translate(0 ${hatLift})">${hat}${hatShade.layer}</g>` : hat + hatShade.layer}</svg>`;
+  svg = svg.replace(/stroke-width="3\.5"/g, 'stroke-width="4"');
   // Prefix every reference so multiple inline avatars can safely share a DOM.
   const prefix = `${options.id || name}-${c.mood}-`;
   svg = svg.replace(/id="([^"]+)"/g, (_, id) => `id="${prefix}${id}"`)
@@ -219,6 +398,7 @@ const programCast = {
   understanding_your_voice: { name: 'headphones', mood: 'attentive' },
 };
 const aliases = {
+  'mailman-happy': { name: 'mailman', mood: 'joyful', label: 'Weathered postal worker with a blue dome cap, a chevron moustache and a happy, smiling look' },
   mirror: { name: 'bob', mood: 'effort', headwear: 'none', label: 'Front-facing bob haircut and mandarin collar' },
   guide: { name: 'turban', mood: 'determined' },
   caller: { name: 'communicator', mood: 'speaking' },
@@ -226,4 +406,4 @@ const aliases = {
   keeper: { name: 'silver', mood: 'warm' },
 };
 
-module.exports = { renderAvatar, cast, programCast, aliases, parts: { head, hair, hairFrontOverrides, headwear, headwearOffsets, collars, moods, eyewear, facialHair, ageDetails, defs: master.defs, extraDefs, skinColors } };
+module.exports = { renderAvatar, cast, programCast, aliases, finish: { finishDefs, finishLayer, faceFinish, earsMarkup }, parts: { head, hair, hairFrontOverrides, headwear, headwearOffsets, collars, moods, eyewear, facialHair, ageDetails, defs: master.defs, extraDefs, skinColors } };
