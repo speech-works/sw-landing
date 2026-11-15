@@ -443,44 +443,15 @@ export default function PrivacyPolicyPage() {
 
           <Section id="launch-list" title="14. Email Sign-up on This Website">
             <p>
-              Before the iPhone app is available, you can ask us on this website to
-              email you when it is live. Here is what that involves.
-            </p>
-            <p>
-              <strong className="text-[var(--ink)]">What we do.</strong> We send you
-              one email when the iPhone app is live. Every email has a one-click
-              unsubscribe link. We send nothing else unless you opt in to something
-              else separately.
-            </p>
-            <p>
-              <strong className="text-[var(--ink)]">What we store.</strong> Your
-              email address, your consent (the tick box and the exact words next to
-              it), the time you signed up, which page of our website you used, and a
-              short source tag from the link you came from (for example
-              &ldquo;instagram&rdquo; or &ldquo;direct&rdquo;). Our email provider
-              may also record technical details, such as your IP address, to confirm
-              your sign-up and stop abuse. We do not add analytics or tracking to the
-              sign-up form.
-            </p>
-            <p>
-              <strong className="text-[var(--ink)]">Your consent.</strong> We email
-              you only if you tick the box and then confirm in the email we send you.
-              You can withdraw consent at any time.
-            </p>
-            <p>
-              <strong className="text-[var(--ink)]">How to unsubscribe.</strong> Use
-              the unsubscribe link in any email we send, or write to{" "}
+              If you ask us to email you when the iPhone app is live, we collect
+              your email address and the time you signed up. We use Kit (kit.com),
+              a US email service, to confirm your sign-up and send that one email.
+              Every email has an unsubscribe link, and you can also write to{" "}
               <a href={`mailto:${CONTACT_EMAIL}`} className="legal-link">
                 {CONTACT_EMAIL}
               </a>{" "}
-              and ask us to delete your email. We keep it until you unsubscribe or
-              ask us to delete it.
-            </p>
-            <p>
-              <strong className="text-[var(--ink)]">Who processes it.</strong> We use
-              Buttondown (buttondown.com), a US email service, to store the list and
-              send the emails for us. It acts on our behalf. Your email is not sold
-              or shared for advertising.
+              to have your email deleted. We keep it until you unsubscribe or ask
+              us to delete it. We do not sell it or use it for advertising.
             </p>
           </Section>
 
