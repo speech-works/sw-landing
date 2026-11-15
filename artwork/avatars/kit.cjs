@@ -375,13 +375,20 @@ function renderAvatar(name, options = {}) {
   const brimCut = hatBrimCut[c.headwear];
   const hairBackCut = brimCut ? { open: '<g clip-path="url(#hair-cut)">', close: '</g>', defs: `<clipPath id="hair-cut"><path d="${brimCut}"/></clipPath>` } : { open: '', close: '', defs: '' };
   defs = defs.replace('</defs>', `${hairBackCut.defs}</defs>`);
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="${ink}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title description"><title id="title">Speechworks ${name} avatar</title><desc id="description">${description}</desc>${defs}${isBackHair ? hairBackCut.open + backHair + hairBackCut.close : ''}${collars[c.collar].back}${collarBack.layer}${c.ears === true ? earsMarkup : ''}${hairBackCut.open}${head.replace('stroke-width="4"', 'stroke-width="4.6"')}${faceFinish}${c.blush ? blushMarkup : ''}${hairOutline}${hairFront}${hairShade.layer}${hairBackCut.close}${beard}${collars[c.collar].front}${collarFront.layer}${c.age ? ageMarks : ''}${c.mouth && c.mood === 'steady' ? steadyMood(c.mouth) : moods[c.mood]}${lidShade(moods[c.mood])}${c.mustache ? mustacheMarkup(c.mustache === true ? 'bushy' : c.mustache) : ''}${c.eyewear ? eyewear[c.eyewear] : ''}${hatLift ? `<g transform="translate(0 ${hatLift})">${hat}${hatShade.layer}</g>` : hat + hatShade.layer}</svg>`;
+  const preLayer = `${isBackHair ? hairBackCut.open + backHair + hairBackCut.close : ''}${collars[c.collar].back}${collarBack.layer}${c.ears === true ? earsMarkup : ''}${hairBackCut.open}${head.replace('stroke-width="4"', 'stroke-width="4.6"')}${faceFinish}${c.blush ? blushMarkup : ''}${hairOutline}${hairFront}${hairShade.layer}${hairBackCut.close}${beard}${collars[c.collar].front}${collarFront.layer}${c.age ? ageMarks : ''}`;
+  const moodLayer = `${c.mouth && c.mood === 'steady' ? steadyMood(c.mouth) : moods[c.mood]}${lidShade(moods[c.mood])}`;
+  const postLayer = `${c.mustache ? mustacheMarkup(c.mustache === true ? 'bushy' : c.mustache) : ''}${c.eyewear ? eyewear[c.eyewear] : ''}${hatLift ? `<g transform="translate(0 ${hatLift})">${hat}${hatShade.layer}</g>` : hat + hatShade.layer}`;
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310" fill="none" stroke="${ink}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title description"><title id="title">Speechworks ${name} avatar</title><desc id="description">${description}</desc>${defs}${preLayer}${moodLayer}${postLayer}</svg>`;
   svg = svg.replace(/stroke-width="3\.5"/g, 'stroke-width="4"');
   // Prefix every reference so multiple inline avatars can safely share a DOM.
   const prefix = `${options.id || name}-${c.mood}-`;
   svg = svg.replace(/id="([^"]+)"/g, (_, id) => `id="${prefix}${id}"`)
     .replace(/url\(#([^)]+)\)/g, (_, id) => `url(#${prefix}${id})`)
     .replace('aria-labelledby="title description"', `aria-labelledby="${prefix}title ${prefix}description"`);
+  if (options.layers) {
+    const fix = text => text.replace(/stroke-width="3\.5"/g, 'stroke-width="4"').replace(/id="([^"]+)"/g, (_, id) => `id="${prefix}${id}"`).replace(/url\(#([^)]+)\)/g, (_, id) => `url(#${prefix}${id})`);
+    return { viewBox: '0 0 320 310', defs: fix(defs), pre: fix(preLayer), post: fix(postLayer), ink };
+  }
   return svg;
 }
 
@@ -406,4 +413,4 @@ const aliases = {
   keeper: { name: 'silver', mood: 'warm' },
 };
 
-module.exports = { renderAvatar, cast, programCast, aliases, finish: { finishDefs, finishLayer, faceFinish, earsMarkup }, parts: { head, hair, hairFrontOverrides, headwear, headwearOffsets, collars, moods, eyewear, facialHair, ageDetails, defs: master.defs, extraDefs, skinColors } };
+module.exports = { renderAvatar, rigPieces: () => ({ openEyes, eyesClosed }), cast, programCast, aliases, finish: { finishDefs, finishLayer, faceFinish, earsMarkup }, parts: { head, hair, hairFrontOverrides, headwear, headwearOffsets, collars, moods, eyewear, facialHair, ageDetails, defs: master.defs, extraDefs, skinColors } };
