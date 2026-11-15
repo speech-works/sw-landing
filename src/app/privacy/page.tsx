@@ -7,7 +7,7 @@ import SectionEdge from "@/app/components/SectionEdge";
 import { socialMetadata } from "@/lib/site-metadata";
 
 // NOTE: Update this whenever the policy text changes.
-const LAST_UPDATED = "September 27, 2026";
+const LAST_UPDATED = "November 15, 2026";
 const CONTACT_EMAIL = "contact@speechworks.app";
 
 export const metadata: Metadata = {
@@ -21,16 +21,18 @@ export const metadata: Metadata = {
 
 function Section({
   title,
+  id,
   children,
 }: {
   title: string;
+  id?: string;
   children: React.ReactNode;
 }) {
   const match = title.match(/^(\d+)\.\s+(.*)$/);
   const num = match?.[1];
   const heading = match?.[2] ?? title;
   return (
-    <section className="mt-12 scroll-mt-28">
+    <section id={id} className="mt-12 scroll-mt-28">
       <div className="flex items-center gap-3">
         {num && (
           <span className="inline-flex h-7 min-w-[28px] items-center justify-center rounded-lg border-[1.5px] border-[var(--ink)] bg-[var(--cast-colour)] px-2 font-mono text-[11px] font-bold tracking-wider text-[var(--ink)]">
@@ -72,7 +74,8 @@ export default function PrivacyPolicyPage() {
               &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) collects,
               uses, shares, and protects your information when you use the
               Speechworks mobile application and related services (the
-              &ldquo;Services&rdquo;). Speechworks is a practice and support app for
+              &ldquo;Services&rdquo;), and when you sign up for an email on this
+              website (see section 14). Speechworks is a practice and support app for
               people who stutter. It offers guided speech exercises, progress
               tracking, mood check-ins, AI-assisted speaking practice, and optional
               peer (&ldquo;buddy&rdquo;) connections.
@@ -438,7 +441,50 @@ export default function PrivacyPolicyPage() {
             </p>
           </Section>
 
-          <Section title="14. Contact Us">
+          <Section id="launch-list" title="14. Email Sign-up on This Website">
+            <p>
+              Before the iPhone app is available, you can ask us on this website to
+              email you when it is live. Here is what that involves.
+            </p>
+            <p>
+              <strong className="text-[var(--ink)]">What we do.</strong> We send you
+              one email when the iPhone app is live. Every email has a one-click
+              unsubscribe link. We send nothing else unless you opt in to something
+              else separately.
+            </p>
+            <p>
+              <strong className="text-[var(--ink)]">What we store.</strong> Your
+              email address, your consent (the tick box and the exact words next to
+              it), the time you signed up, which page of our website you used, and a
+              short source tag from the link you came from (for example
+              &ldquo;instagram&rdquo; or &ldquo;direct&rdquo;). Our email provider
+              may also record technical details, such as your IP address, to confirm
+              your sign-up and stop abuse. We do not add analytics or tracking to the
+              sign-up form.
+            </p>
+            <p>
+              <strong className="text-[var(--ink)]">Your consent.</strong> We email
+              you only if you tick the box and then confirm in the email we send you.
+              You can withdraw consent at any time.
+            </p>
+            <p>
+              <strong className="text-[var(--ink)]">How to unsubscribe.</strong> Use
+              the unsubscribe link in any email we send, or write to{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="legal-link">
+                {CONTACT_EMAIL}
+              </a>{" "}
+              and ask us to delete your email. We keep it until you unsubscribe or
+              ask us to delete it.
+            </p>
+            <p>
+              <strong className="text-[var(--ink)]">Who processes it.</strong> We use
+              Buttondown (buttondown.com), a US email service, to store the list and
+              send the emails for us. It acts on our behalf. Your email is not sold
+              or shared for advertising.
+            </p>
+          </Section>
+
+          <Section title="15. Contact Us">
             <p>
               If you have questions or requests regarding this Privacy Policy or your
               data, contact us at{" "}
