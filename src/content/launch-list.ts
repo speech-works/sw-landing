@@ -33,4 +33,4 @@ export const showAppLiveForm = Boolean(launchListAction) && !downloads.ios;
 
 // The exact words the visitor ticks.
 export const APP_LIVE_CONSENT =
-  "I agree to get one email when the iPhone app is live. I can unsubscribe at any time.";
+  "Email me when the Speechworks iPhone app is live, and about new programs and offers. I can unsubscribe at any time.";

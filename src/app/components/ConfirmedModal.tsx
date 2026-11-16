@@ -51,8 +51,8 @@ export default function ConfirmedModal() {
         </div>
         <h2 id={`${id}-title`}>You are on the list.</h2>
         <p className="notify-thanks">
-          Thank you for confirming. We will send you one email when the iPhone
-          app is live.
+          Thank you for confirming. We will email you when the iPhone app is
+          live, and about new programs and offers.
         </p>
         <button
           type="button"

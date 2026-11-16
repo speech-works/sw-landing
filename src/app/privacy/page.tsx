@@ -443,9 +443,10 @@ export default function PrivacyPolicyPage() {
 
           <Section id="launch-list" title="14. Email Sign-up on This Website">
             <p>
-              If you ask us to email you when the iPhone app is live, we collect
-              your email address and the time you signed up. We use Kit (kit.com),
-              a US email service, to confirm your sign-up and send that one email.
+              If you ask us to email you when the iPhone app is live, and about
+              new programs and offers, we collect your email address and the time
+              you signed up. We use Kit (kit.com), a US email service, to confirm
+              your sign-up and send those emails.
               Every email has an unsubscribe link, and you can also write to{" "}
               <a href={`mailto:${CONTACT_EMAIL}`} className="legal-link">
                 {CONTACT_EMAIL}

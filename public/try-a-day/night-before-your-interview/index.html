@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The night before your interview | Speechworks</title>
+<meta name="description" content="Try one day of Interview Ready, for adults who stutter or stammer. Write if-then lines for your interview and keep the card.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/brand/mark.svg" type="image/svg+xml">
+<style>
+/* Tokens, type and shapes match the live site. */
+@font-face{font-family:Inter;src:url(/try-a-day/fonts/Inter-Regular.ttf);font-weight:400}
+@font-face{font-family:Inter;src:url(/try-a-day/fonts/Inter-Bold.ttf);font-weight:700}
+@font-face{font-family:Inter;src:url(/try-a-day/fonts/Inter-ExtraBold.ttf);font-weight:800}
+:root{--paper:#f7f2ea;--ink:#141311;--ink-muted:#625d55;--lime:#c8f750;--hero:#ff9657;--cast:#b9ee55;--cream:#fff9e9;--peach:#ffd49e;--blue:#5b9df9;--focus:#a64508;--ease:cubic-bezier(.23,1,.32,1)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+a{color:inherit;text-underline-offset:4px}
+button{font:inherit;cursor:pointer;color:inherit}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.wrap{width:min(1200px,100% - 96px);margin-inline:auto}
+.site-header{width:min(1320px,100%);padding:27px 48px;display:flex;align-items:center;justify-content:space-between;margin:auto;gap:24px}
+.wordmark{font-weight:800;font-size:23px;letter-spacing:-1.1px;display:flex;align-items:center;gap:9px;text-decoration:none}
+.wordmark img{width:26px;height:31px}
+.site-header nav{display:flex;align-items:center;gap:30px;font-size:13px}
+.nav-link{display:flex;align-items:center;min-height:44px;opacity:.72;text-decoration:none}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:12px;border:0;border-radius:100px;padding:14px 22px;min-height:48px;font-weight:700;font-size:14px;line-height:1.2;text-decoration:none;transition:transform 220ms var(--ease)}
+.button:active:not([disabled]){transform:scale(.97)}
+.button-small{min-height:44px;padding:12px 20px;font-size:13px}
+.button-ink{background:var(--ink);color:var(--paper)}
+.button[disabled]{background:#14131118;color:#14131166;cursor:default}
+.band{background:var(--hero)}
+.breadcrumb{font-size:12px;font-weight:700;display:inline-flex;gap:8px;margin:12px 0 10px}
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:center;padding:6px 0 10px}
+.kicker{display:inline-block;font-size:12px;font-weight:800;margin:0 0 18px;padding:5px 12px;background:var(--lime);border:1.5px solid var(--ink);border-radius:100px;transform:rotate(-2deg)}
+.hero h1{font-size:clamp(42px,5.6vw,78px);font-weight:800;letter-spacing:-.055em;line-height:1;margin:0}
+.hero .lede{max-width:44ch;color:#29231e;font-size:17px;line-height:1.7;margin:22px 0 14px}
+.hero .meta{font-size:14px;color:#29231e;margin:0 0 24px}
+.stores{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.store-badge{display:flex;align-items:center;gap:10px;background:var(--ink);color:#fff;border:1.5px solid var(--ink);border-radius:10px;box-shadow:3px 3px 0 var(--ink);width:172px;min-height:53px;padding:10px 16px;text-align:left;text-decoration:none;font:inherit}
+.store-badge small{display:block;font-size:9px;line-height:1.2}
+.store-badge strong{display:block;font-size:18px;font-weight:700;line-height:1.3;letter-spacing:-.5px}
+.store-badge.ghost{background:transparent;color:var(--ink);width:auto;cursor:pointer}
+.store-badge.ghost strong{font-size:15px;letter-spacing:-.2px}
+.hero .fine{font-size:12px;color:#3f2e22;margin:14px 0 0}
+.scene{position:relative;min-height:340px;display:flex;align-items:flex-end;justify-content:flex-end}
+.bubble-h{position:absolute;top:10px;left:0;max-width:300px;background:#fff;border:2px solid var(--ink);border-radius:26px 26px 26px 6px;padding:16px 18px;font-size:15px;line-height:1.5;box-shadow:0 4px 0 var(--ink);transform:rotate(-2deg);z-index:2}
+.char{width:min(290px,58%);margin-bottom:-2px;margin-right:4%}
+.edge{height:120px;margin-top:-1px;background:linear-gradient(to bottom,var(--hero) 30px,var(--ink) 30px,var(--ink) 31.5px,var(--cream) 31.5px)}
+.edge svg{display:block;width:min(100%,1440px);height:100%;margin-inline:auto;background:var(--cream)}
+.edge .fill{fill:var(--hero)}.edge .line{stroke:var(--ink);stroke-width:1.5px;fill:none}
+.edge .compact{display:none}
+.below{max-width:760px;margin:0 auto;padding:10px 0 60px;text-align:center}
+.below p{font-size:16px;line-height:1.7;color:var(--ink-muted)}
+.site-footer{width:min(1320px,100%);margin:auto;padding:35px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+.site-footer .wordmark{font-size:19px}.site-footer .wordmark img{width:22px;height:26px}
+.site-footer nav{display:flex;gap:22px;flex-wrap:wrap;font-size:11px;color:var(--ink-muted)}
+.site-footer nav a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}
+
+/* ===== the player ===== */
+#player{position:fixed;inset:0;background:var(--cream);z-index:50;display:none;flex-direction:column}
+#player.open{display:flex}
+.p-top{display:flex;align-items:center;gap:14px;padding:16px max(16px,calc((100% - 560px)/2)) 6px}
+.p-x{flex:none;width:44px;height:44px;border:0;background:transparent;font-size:26px;line-height:1;border-radius:50%}
+.p-track{flex:1;height:12px;border:2px solid var(--ink);border-radius:100px;background:#fff;overflow:hidden}
+.p-fill{height:100%;width:0;background:var(--cast);border-right:2px solid var(--ink);transition:width 320ms var(--ease)}
+.p-fill.zero{border-right:0}
+.p-scroll{flex:1;min-height:0;overflow-y:auto;padding:10px max(20px,calc((100% - 520px)/2)) 280px;scroll-behavior:smooth}
+.p-bottom{position:absolute;left:0;right:0;bottom:0;padding:70px max(20px,calc((100% - 520px)/2)) 22px;background:linear-gradient(to bottom,#fff9e900,var(--cream) 62%);pointer-events:none}
+.p-bottom>*{pointer-events:auto}
+.sheet{border:2px solid var(--ink);border-radius:20px;padding:14px 16px;margin:0 0 12px;font-size:15px;line-height:1.55;box-shadow:0 4px 0 var(--ink)}
+.sheet.ok{background:var(--lime)}.sheet.no{background:#ffe3d1}
+.sheet b{display:block;font-size:12px;margin-bottom:4px}
+.sheet[hidden]{display:none}
+.p-go{width:100%}
+
+/* chapter marker: where we are in the day */
+.ch{display:flex;justify-content:center;margin:2px 0 16px}
+.ch span{font-size:12px;font-weight:800;padding:4px 14px;border:1.5px solid var(--ink);border-radius:100px;background:#fff}
+
+/* 1 Pip says: the guide talking. Speech bubble with a face. */
+.say{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;animation:rise 240ms var(--ease)}
+.say .av{flex:none;width:44px;height:44px;border-radius:50%;background:var(--peach);border:2px solid var(--ink);overflow:hidden;display:grid;place-items:end center}
+.say .av img{width:130%;margin-bottom:-6px}
+.say .b{background:#fff;border:2px solid var(--ink);border-radius:20px 20px 20px 6px;padding:12px 16px;font-size:17px;line-height:1.6;box-shadow:0 3px 0 var(--ink)}
+
+/* 2 You: what the reader chose or wrote. Right side, lime. */
+.you{display:flex;flex-direction:column;align-items:flex-end;margin:0 0 14px;animation:rise 240ms var(--ease)}
+.you small{font-size:11px;font-weight:700;color:var(--ink-muted);margin:0 6px 4px 0}
+.you .b{background:var(--lime);border:2px solid var(--ink);border-radius:20px 20px 6px 20px;padding:10px 16px;font-size:16px;line-height:1.5;max-width:88%}
+
+/* Reply: an empty answer box. Dashed, lime-tinted, with a pen and a blinking caret, so it reads as waiting for you. */
+.reply{display:flex;flex-direction:column;align-items:flex-end;margin:6px 0 14px;animation:rise 240ms var(--ease)}
+.reply small{font-size:11px;font-weight:700;color:var(--ink-muted);margin:0 6px 4px 0}
+.reply label{display:flex;align-items:center;gap:10px;width:100%;background:#f6fcd9;border:2px dashed var(--ink);border-radius:20px 20px 6px 20px;padding:4px 16px;cursor:text}
+.reply label:focus-within{background:#fff;border-style:solid;box-shadow:0 3px 0 var(--ink)}
+.reply svg{flex:none;width:20px;height:20px}
+.reply label input[type=text]{border:0;background:transparent;border-radius:0;padding:12px 0;margin:0;font-size:17px;flex:1;min-width:0;outline:none;box-shadow:none}
+.reply label input[type=text]::placeholder{color:#625d55}
+
+/* 3 Example: words you could say. Hangs off Pip's bubble. Square quote card. */
+.ex{margin:-4px 0 16px 54px;background:#fff;border:2px solid var(--ink);border-left-width:8px;border-radius:6px 16px 16px 6px;padding:10px 14px 12px;animation:rise 240ms var(--ease)}
+.ex small{display:block;font-size:11px;font-weight:800;color:var(--ink-muted);margin-bottom:4px}
+.ex p{margin:0;font-size:17px;line-height:1.5;font-weight:700;letter-spacing:-.01em}
+.ex.weak{background:var(--paper);border-style:dashed;border-left-style:dashed}
+
+/* 4 Your turn: a question with a check. Raised card, black tab. */
+.qc{position:relative;background:#fff;border:2px solid var(--ink);border-radius:22px;padding:24px 16px 8px;margin:22px 0 14px;box-shadow:0 4px 0 var(--ink);animation:rise 240ms var(--ease)}
+.tab{position:absolute;top:-14px;left:16px;font-size:12px;font-weight:800;padding:3px 13px;border-radius:100px;border:2px solid var(--ink);background:var(--ink);color:var(--paper)}
+.qc .ask{font-size:20px;font-weight:800;letter-spacing:-.03em;line-height:1.3;margin:0 0 14px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--ink);border-radius:16px;padding:13px 15px;margin:0 0 10px;font-size:16px;line-height:1.5}
+.opt:hover:not([disabled]){background:#fff3d9}
+.opt.right{background:var(--lime)}.opt.wrong{background:#ffe3d1}
+.opt[disabled]{cursor:default}
+
+/* 5 Try this: something to do. Warm card, white tab. */
+.tc{position:relative;background:var(--peach);border:2px solid var(--ink);border-radius:22px;padding:24px 16px 14px;margin:22px 0 14px;animation:rise 240ms var(--ease)}
+.tc .tab{background:#fff;color:var(--ink)}
+.tc .lead{font-size:17px;line-height:1.55;margin:0 0 14px}
+
+/* 6 Study: what research found. White card, bold lead, labelled rows, no face. */
+.sc{background:#fff;border:2px solid var(--ink);border-radius:14px;overflow:hidden;margin:0 0 16px;box-shadow:0 3px 0 var(--ink);animation:rise 240ms var(--ease)}
+.sc-h{display:flex;gap:10px;align-items:center;padding:10px 12px 10px 16px;background:#ece4d6;border-bottom:2px solid var(--ink);font-size:13px;font-weight:800}
+.sc-h i{width:13px;height:16px;border:1.5px solid var(--ink);border-radius:2px;background:#fff;position:relative;flex:none}
+.sc-h i::after{content:"";position:absolute;left:2px;right:2px;top:4px;height:1.5px;background:var(--ink);box-shadow:0 3px 0 var(--ink)}
+.sc-h .cite{margin-left:auto;border:1.5px solid var(--ink);background:#fff;border-radius:100px;padding:4px 12px;font-size:12px;font-weight:700;min-height:28px}
+.sc-r{padding:14px 16px 16px}
+.sc-r+.sc-r{border-top:1px solid #14131122}
+.sc-r b{display:block;font-size:11px;font-weight:800;letter-spacing:.03em;color:var(--ink-muted);margin:0 0 6px}
+.sc-r p{margin:0;font-size:16px;line-height:1.6}
+.sc-r.lead p{font-size:18px;line-height:1.45;font-weight:700;letter-spacing:-.015em}
+.sc-r.limit{background:var(--paper);border-top:2px dashed var(--ink)}
+
+/* 7 Good to know: a quiet note. Limits, promises, privacy. */
+.nt{display:flex;gap:12px;align-items:flex-start;background:#1413090c;border-radius:16px;padding:13px 16px;margin:0 0 16px;font-size:15px;line-height:1.55;color:#3b362f;animation:rise 240ms var(--ease)}
+.nt i{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font-size:12px;font-style:normal;font-weight:800;background:#fff;margin-top:.5px}
+.nt span{flex:1}
+
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.chip{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:9px 13px;font-size:16px;line-height:1.35;box-shadow:0 3px 0 var(--ink);text-align:left}
+.chip.used{opacity:.35;box-shadow:none;cursor:default}
+.slot{min-height:100px;border:2px dashed var(--ink);border-radius:18px;padding:12px;background:#fff;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;margin:0 0 16px}
+.slot .hint{color:var(--ink-muted);font-size:15px;align-self:center}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
+.tile{position:relative;text-align:left;background:#fff;border:2px solid var(--ink);border-radius:18px;padding:14px 14px 16px;min-height:96px;font-size:16px;font-weight:700;line-height:1.3;box-shadow:0 3px 0 var(--ink)}
+.tile small{display:block;font-weight:400;font-size:13px;color:var(--ink-muted);margin-top:6px;line-height:1.4}
+.tile.on{background:var(--lime)}
+.tile.on::after{content:"\2713";position:absolute;right:12px;top:8px;font-size:18px;font-weight:800}
+.hintline{font-size:14px;color:var(--ink-muted);margin:0 0 10px}
+label.f{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}
+input[type=text],textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:16px;padding:12px 14px;margin:0}
+textarea{min-height:76px;resize:vertical;line-height:1.5}
+.radio{display:flex;gap:10px;align-items:center;font-size:16px;padding:10px 14px;margin:0 0 8px;background:#fff;border:2px solid var(--ink);border-radius:16px;min-height:48px}
+.radio input{width:20px;height:20px;accent-color:var(--ink);margin:0}
+.cover{text-align:center;padding-top:18px}
+.cover .art{width:min(240px,64%);margin:0 auto 8px;background:var(--hero);border:2px solid var(--ink);border-radius:36px;box-shadow:0 5px 0 var(--ink);padding:20px 20px 0;transform:rotate(-3deg);overflow:hidden}
+.cover .art img{display:block;width:100%}
+.cover h2{font-size:clamp(30px,6vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.05;margin:24px 0 8px}
+.cover p{font-size:15px;color:var(--ink-muted);margin:0 0 6px}
+.cover .nt{text-align:left;margin:14px 0 0}
+.switch{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px 0 4px;font-size:14px;font-weight:700}
+.switch input{width:22px;height:22px;accent-color:var(--ink);margin:0}
+.phone{width:min(230px,70%);aspect-ratio:9/16;margin:6px auto 12px;background:var(--blue);border:2px solid var(--ink);border-radius:26px;box-shadow:0 5px 0 var(--ink);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.phone .stage{flex:1;position:relative;display:grid;place-items:end center}
+.phone .stage img{width:80%;margin-bottom:-2px}
+.phone .lamp{position:absolute;right:12%;top:12%;width:44px;height:44px;border-radius:50%;background:#fff3c4;border:2px solid var(--ink)}
+.phone .play{position:absolute;inset:0;display:grid;place-items:start center;padding-top:22%;background:transparent;border:0}
+.phone .play i{width:58px;height:58px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);box-shadow:0 4px 0 var(--ink);display:grid;place-items:center}
+.phone .play i::after{content:"";border-left:17px solid var(--ink);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px}
+.phone .cap{background:#000;color:#fff;font-size:11.5px;line-height:1.4;padding:10px 14px 12px;text-align:center;min-height:54px}
+.slotnote[hidden]{display:none}
+.slotnote{font-size:12px;font-weight:700;border:1.5px dashed var(--ink);border-radius:100px;padding:3px 12px;color:var(--ink-muted);display:inline-block}
+.cardwrap{background:#fff;border:2px solid var(--ink);border-radius:22px;box-shadow:0 5px 0 var(--ink);padding:22px 22px 8px;margin:0 0 16px;transform:rotate(-1deg)}
+.cardwrap h3{margin:0 0 14px;font-size:12px;color:var(--ink-muted)}
+.cardwrap p{margin:0 0 14px;padding-bottom:14px;border-bottom:1px solid #14131122;font-size:19px;line-height:1.5;font-weight:700;letter-spacing:-.01em}
+.cardwrap p:last-child{border:0}
+.rowbtns{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 14px}
+.chipbtn{border:2px solid var(--ink);background:#fff;border-radius:100px;padding:9px 16px;font-weight:700;font-size:14px;box-shadow:0 3px 0 var(--ink)}
+.path{list-style:none;margin:16px 0 22px;padding:0;position:relative}
+.path li{position:relative;padding:0 0 12px 40px;font-size:15px;line-height:1.4}
+.path li::before{content:"";position:absolute;left:11px;top:22px;bottom:-4px;border-left:2px dashed #14131155}
+.path li:last-child::before{display:none}
+.path .dot{position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;border:2px solid var(--ink);background:var(--cream);display:grid;place-items:center;font-size:11px;font-weight:800}
+.path li.here .dot{background:var(--cast)}
+.path li.here{font-weight:800}
+.path small{display:block;font-size:12px;color:var(--ink-muted);font-weight:400}
+.progcard{border:2px solid var(--ink);border-radius:22px;background:var(--hero);padding:18px 20px;margin:12px 0 16px;box-shadow:0 5px 0 var(--ink)}
+.progcard b{display:block;font-size:22px;letter-spacing:-.03em}
+.progcard span{font-size:14px;line-height:1.55;display:block;margin-top:6px;color:#29231e}
+.endmail{background:var(--ink);color:var(--paper);border-radius:22px;padding:22px;margin:22px 0 0}
+.endmail h3{margin:0 0 14px;font-size:22px;letter-spacing:-.03em;line-height:1.2}
+.endmail input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:2px solid var(--paper);border-radius:100px;padding:11px 18px;margin:0 0 10px}
+.endmail .button{background:var(--paper);color:var(--ink);width:100%}
+.endmail .consent{display:flex;gap:10px;font-size:13px;line-height:1.5;margin:12px 0 0;align-items:flex-start}
+.endmail .consent input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--paper)}
+.endmail .note{font-size:12px;color:#c8c9c0;margin:10px 0 0}
+dialog{border:2px solid var(--ink);border-radius:24px;padding:22px;max-width:min(560px,92vw);background:var(--cream);color:var(--ink);box-shadow:0 6px 0 var(--ink)}
+dialog::backdrop{background:#14131166}
+dialog h3{margin:0 0 12px;font-size:20px;letter-spacing:-.02em}
+dialog p{font-size:13.5px;line-height:1.65;color:var(--ink);margin:0 0 12px}
+.later{flex:none;padding:7px 14px;font-size:13px;min-height:36px}
+.later[hidden]{display:none}
+dialog input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:100px;padding:11px 18px;margin:0 0 12px}
+dialog .consent{display:flex;gap:10px;font-size:13.5px;line-height:1.5;margin:0 0 10px;align-items:flex-start}
+dialog .consent input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--ink)}
+dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
+.err{color:#a32d2d;font-size:13px;margin:6px 0 0}.err[hidden]{display:none}
+.endmail .err{color:#ffb4a8}
+.endmail a{color:inherit}
+.printcard{display:none}
+@media (max-width:860px){
+ .wrap{width:min(1200px,100% - 40px)}
+ .site-header{padding:18px 20px}.site-header nav .nav-link{display:none}
+ .hero{grid-template-columns:1fr;gap:8px}
+ .scene{min-height:290px}.bubble-h{max-width:64%;font-size:13px;padding:12px 14px}.char{width:52%}
+ .edge{height:76px;background:linear-gradient(to bottom,var(--hero) 18px,var(--cream) 18px)}
+ .edge svg{width:100%;background:none}.edge .wide{display:none}.edge .compact{display:block}
+ .site-footer{padding:24px 20px;flex-direction:column;align-items:flex-start;gap:6px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{body>*:not(.printcard){display:none!important}.printcard{display:block!important;padding:30px;font-family:Inter,Arial,sans-serif}.printcard h1{font-size:14px}.printcard p{font-size:22px;border-bottom:1px solid #999;padding-bottom:12px;margin:0 0 16px}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="wordmark" href="/"><img src="/brand/mark.svg" alt=""><span>Speechworks</span></a>
+  <nav aria-label="Main navigation"><a class="nav-link" href="/programs/">Programs</a><a class="nav-link" href="/about/">About</a><a class="button button-small button-ink" href="https://play.google.com/store/apps/details?id=com.speechworks.app">Get the free app &#8599;</a></nav>
+</header>
+
+<div class="band"><div class="wrap">
+  <a class="breadcrumb" href="/programs/">&larr; Interview Ready</a>
+  <section class="hero">
+    <div>
+      <p class="kicker">Try a day</p>
+      <h1>The night before your interview</h1>
+      <p class="lede">Write if-then lines for the moments of your interview. One card, one evening.</p>
+      <p class="meta">One day of Interview Ready, for adults who stutter or stammer. A short lesson, three questions and one card. It is free.</p>
+      <div class="stores">
+        <button class="button button-ink" id="open" style="box-shadow:3px 3px 0 var(--cream)">Start the day</button>
+        <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.speechworks.app" aria-label="Get Speechworks on Google Play"><svg width="26" height="29" viewBox="0 0 26 29" aria-hidden="true"><path fill="#51C4EC" d="M1 1.2v26.6L14 14.5Z"/><path fill="#74CF84" d="m1 1.2 16.9 9.7-3.9 3.6Z"/><path fill="#FFD360" d="m17.9 10.9 6.3 3.6-6.3 3.6-3.9-3.6Z"/><path fill="#F17881" d="M1 27.8 17.9 18.1 14 14.5Z"/></svg><span><small>Get it on</small><strong>Google Play</strong></span></a>
+      </div>
+      <p class="fine">Free to download, with free daily practice. Pay once for each program.</p>
+    </div>
+    <div class="scene" aria-hidden="true">
+      <div class="bubble-h">If I want more time to think, then I say, "Give me a moment to think about that."</div>
+      <img class="char" src="/characters/interview_ready.svg" alt="">
+    </div>
+  </section>
+</div></div>
+<div class="edge" aria-hidden="true">
+  <svg class="wide" viewBox="0 0 1440 140" preserveAspectRatio="none"><path class="fill" d="M0 35C220 35 250 78 510 78C640 78 724 66 808 60C822 59 835 58 848 58C849 80 839 101 822 115C860 113 891 87 902 61C1110 82 1230 35 1440 35V-1H0Z"/><path class="line" vector-effect="non-scaling-stroke" d="M0 35C220 35 250 78 510 78C640 78 724 66 808 60C822 59 835 58 848 58C849 80 839 101 822 115C860 113 891 87 902 61C1110 82 1230 35 1440 35"/></svg>
+  <svg class="compact" viewBox="0 0 390 90" preserveAspectRatio="none"><path class="fill" d="M0 22C66 22 99 49 181 49C219 49 237 44 259 42C262 59 255 71 247 79C268 78 286 59 289 42C332 47 347 22 390 22V-1H0Z"/><path class="line" vector-effect="non-scaling-stroke" d="M0 22C66 22 99 49 181 49C219 49 237 44 259 42C262 59 255 71 247 79C268 78 286 59 289 42C332 47 347 22 390 22"/></svg>
+</div>
+<div class="wrap"><div class="below"><p>Interview Ready is a 14 day program in the Speechworks app. Try one day of it here. You learn one idea, answer three questions and write a card for your interview.</p></div></div>
+<footer class="site-footer"><a class="wordmark" href="/"><img src="/brand/mark.svg" alt=""><span>Speechworks</span></a><nav aria-label="Support and legal"><a href="/programs/">Programs</a><a href="/about/">About</a><a href="https://blog.speechworks.app/">Blog</a><a href="mailto:contact@speechworks.app">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav></footer>
+
+<section id="player" aria-label="The night before your interview, try a day" role="dialog" aria-modal="true">
+  <div class="p-top">
+    <button class="p-x" id="close" aria-label="Close the sample">&times;</button>
+    <div class="p-track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track"><div class="p-fill zero" id="fill"></div></div>
+    <button class="chipbtn later" id="later" hidden>Finish later</button>
+  </div>
+  <div class="p-scroll" id="scroll"><div id="stage" aria-live="polite"></div></div>
+  <div class="p-bottom"><div class="sheet" id="sheet" hidden></div><button class="button button-ink p-go" id="go">Start the day</button></div>
+</section>
+
+<dialog id="src"><h3 id="srct">Source</h3><div id="srcb"></div><button class="button button-ink" id="srcx" style="margin-top:6px">Close</button></dialog>
+<dialog id="laterd"><h3>Finish later</h3>
+<form id="lf"><p>We email you a link back to this day.</p>
+<input type="email" name="email_address" required placeholder="you@example.com" aria-label="Email address" autocomplete="email" inputmode="email">
+<label class="consent"><input type="checkbox" required><span>Email me a link to this step. I can unsubscribe at any time.</span></label>
+<label class="consent"><input type="checkbox" id="lnews"><span>Also email me when a new free day opens, and about new programs and offers. I can unsubscribe at any time.</span></label>
+<p class="err" id="lerr" role="alert" hidden></p>
+<div class="rowbtns"><button class="button button-ink" type="submit" id="lsend">Email me the link</button><button type="button" class="chipbtn" id="lcancel">Not now</button></div>
+<p class="fine2">See our <a href="/privacy/#launch-list">privacy policy</a>.</p></form>
+<div id="lok" hidden><p><b>Thank you.</b> Check your email and confirm. After that, the link brings you back to this day.</p><button class="button button-ink" id="lclose">Close</button></div></dialog>
+<div class="printcard" id="printcard"></div>
+
+<script>
+(function(){
+var AV='/characters/interview_ready.svg';
+var PLAY='https://play.google.com/store/apps/details?id=com.speechworks.app';
+var $=function(s){return document.querySelector(s)};
+var NEWS_ACTION='https://app.kit.com/forms/10192952/subscriptions';
+var LATER_ACTION='https://app.kit.com/forms/10196903/subscriptions';
+var NEWS_CONSENT='Email me when a new free day opens, and about new programs and offers. I can unsubscribe at any time.';
+function postKit(action,fd,ok,fail){fetch(action,{method:'POST',body:fd,headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(j){if(j&&j.status==='success')ok();else fail('That did not go through. Check your email address and try again.')}).catch(function(){fail('We could not send that. Check your connection and try again.')})}
+var player=$('#player'),stage=$('#stage'),go=$('#go'),sheet=$('#sheet'),fill=$('#fill'),track=$('#track'),scroller=$('#scroll');
+
+/* ---- saved state (this device only) ---- */
+var S={skipQ:false,picked:[],lines:{},guess:'',log:{did:'',what:'',keep:''}};
+function load(){try{var j=localStorage.getItem('sw_tryaday_night_before');if(j)S=Object.assign(S,JSON.parse(j))}catch(e){}}
+function save(){try{localStorage.setItem('sw_tryaday_night_before',JSON.stringify(S))}catch(e){}}
+load();
+
+/* ---- the study cards: the wording is the checked text, grouped under three labels ---- */
+var CITE={
+ plans:{t:'A review of 642 tests',h:'<p>Sheeran, P., Listrom, O., &amp; Gollwitzer, P. M. (2024). The when and how of planning: Meta-analysis of the scope and components of implementation intentions in 642 tests. <i>European Review of Social Psychology</i>, 36(1), 162-194. <a href="https://doi.org/10.1080/10463283.2024.2334563">doi.org/10.1080/10463283.2024.2334563</a>.</p><p><b>Note.</b> The tests were with people from the general public, mostly about health habits such as exercise.</p>'},
+ feeling:{t:'A study of 30 adults who stutter',h:'<p>Jackson, E. S., Yaruss, J. S., Quesal, R. W., Terranova, V., &amp; Whalen, D. H. (2015). Responses of adults who stutter to the anticipation of stuttering. <i>Journal of Fluency Disorders</i>, 45, 38-51. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4728710/">pmc.ncbi.nlm.nih.gov/articles/PMC4728710</a>.</p><p><b>Note.</b> The 30 adults described their own experience in writing. Everyone could describe this feeling, 28 of the 30 had had speech therapy before, and they chose to take part.</p>'}
+};
+var TILES=[
+ {id:'start',t:'The start',d:'When they ask you to begin',line:'If they ask me to begin, then I say my name and the job I applied for.'},
+ {id:'time',t:'A question I want time for',d:'When you want to think first',line:'If I want more time to think, then I say, "Give me a moment to think about that."'},
+ {id:'stuck',t:'When I get stuck',d:'On a word, or when you lose your place',line:'If I get stuck on a word or lose my place, then I do [my next step].'},
+ {id:'hear',t:'A question I did not hear',d:'When you need it again',line:'If I do not hear the question, then I ask them to say it again.'},
+ {id:'own',t:'Something else',d:'Write your own moment',line:''}
+];
+var OPT_Q1=[{t:'A. A goal and a deadline.',ok:false,why:'A goal and a deadline gives a time but no moment to act on.'},{t:'B. A moment in the interview, and an action you can check.',ok:true,why:'Yes. The moment comes first. Then comes an action you can check. “If I want more time to think, then I say...” is one example.'},{t:'C. A score and a target.',ok:false,why:'An if-then plan has no score. It names a moment and an action.'}];
+var OPT_Q2=[{t:'A. “I will stay calm in the interview.”',ok:false,why:'This line names no specific moment and no action you can check.'},{t:'B. “I will practise at 7 in my room.”',ok:false,why:'This line gives a clock time and a place. It is not written as “If ..., then ...”. A when-and-where plan can help too, a little less. This one is not an if-then plan.'},{t:'C. “If they ask me to begin, then I say my name and the job I applied for.”',ok:true,why:'Yes. It names a moment, then an action you can check.'}];
+var OPT_Q3=[{t:'A. Something to do in a moment you pick.',ok:true,why:'Yes. An if-then line gives you a next step. It cannot promise how the moment will go.'},{t:'B. A sure way to get through that moment.',ok:false,why:'An if-then line cannot promise how the moment will go. It gives you something to do.'},{t:'C. A guarantee that you will follow it.',ok:false,why:'In the 642 tests, people who made plans did a little more of what they planned, on average. A plan gives you something to do. It cannot guarantee you will use it.'}];
+
+/* ---- the day, as steps. Each step has an id that goes in the web address. ---- */
+var ALL=[
+ {id:'start',k:'cover'},
+ {id:'today',ch:'Today',k:'blocks',b:[
+   {t:'pip',x:'This is a day made in the style of Interview Ready.'},
+   {t:'pip',x:'Interview Ready is a 14 day program in the Speechworks app. A day has a short lesson, some questions, one task and a short log. You can do this day on its own.'},
+   {t:'pip',x:'Tonight you finish with one card.'},
+   {t:'note',x:'Nothing here gives you a grade, and no part of it asks how you sound.'}]},
+ {id:'lesson',ch:'Lesson',k:'blocks',b:[
+   {t:'pip',x:'An interview has many parts at once. Someone asks a question. You think about your answer. You also watch the time.'},
+   {t:'pip',x:'With a plan, you decide tonight what you will do. In the interview, you already have a plan for these moments.'},
+   {t:'pip',x:'One kind of plan is called an if-then plan. It has two parts. First the moment, then what you do. Afterwards, you can check yes or no: did I use it?'},
+   {t:'ex',x:'“If this happens, then I do that.”',tag:'Example'}]},
+ {id:'which-plan',k:'mcq',skip:true,tab:'Question',q:'Here are two plans for a hard question. Which one names a moment and an action you can check?',opts:[
+   {t:'“I will be ready for hard questions.”',ok:false,why:'This plan names no moment and no action you can check.'},
+   {t:'“If I want more time to think, then I say, ‘Give me a moment to think about that.’”',ok:true,why:'Yes. This plan names both. Afterwards you can answer yes or no. Did I use my plan? Using it while you stutter still counts.'}]},
+ {id:'research',k:'blocks',b:[
+   {t:'study',cite:'plans',src:'In 2024, researchers combined the results of 642 research tests on making plans.',found:'People who named when and where they would act did a little more of what they planned than people who made no plan, on average. Plans written as if-then helped a little more than plans that only say when and where. One example of when and where is “I will walk at 7 in the park”. It has no “if” moment.',limit:'The tests were with people from the general public. Most were about health habits, such as exercise.'},
+   {t:'pip',x:'So you can try it and see how it goes for you.'}]},
+ {id:'feeling',k:'blocks',b:[
+   {t:'pip',x:'This second study is about people who stutter. It is one way to think about which moments to pick.'},
+   {t:'study',cite:'feeling',src:'In one study, 30 adults who stutter answered questions about the feeling that a stutter is about to happen.',found:'They said they have this feeling at least sometimes, and 23 of them said often or always. They called it helpful about as often as they called it harmful. Some who called it helpful said it gives them a chance to use a strategy.',limit:'Everyone in the study could describe this feeling in writing. 28 of the 30 had had speech therapy before.'}]},
+ {id:'build-line',ch:'Questions',k:'build',skip:true},
+ {id:'q1',k:'mcq',skip:true,tab:'Question 1 of 3',q:'What are the two parts of an if-then plan?',opts:OPT_Q1},
+ {id:'q2',k:'mcq',skip:true,tab:'Question 2 of 3',q:'Which line is an if-then plan?',opts:OPT_Q2},
+ {id:'q3',k:'mcq',skip:true,tab:'Question 3 of 3',q:'What does an if-then line give you?',opts:OPT_Q3},
+ {id:'pick',ch:'Your card',k:'pick'},
+ {id:'guess',k:'guess',skip:true,need:'pick'},
+ {id:'write',k:'write',need:'pick'},
+ {id:'card',k:'card',need:'lines'},
+ {id:'log',ch:'Log',k:'log',need:'lines'},
+ {id:'end',ch:'What next',k:'end'}
+];
+var steps=[],idx=0,beat=0,skipSuppress=false;
+
+function build(){steps=ALL.filter(function(s){return !(S.skipQ&&s.skip)})}
+function indexOf(id){for(var i=0;i<steps.length;i++)if(steps[i].id===id)return i;return -1}
+function cardLines(){return S.picked.map(function(id){return (S.lines[id]||'').trim()}).filter(function(t){return /^\s*if\b/i.test(t)&&/\bthen\b/i.test(t)&&t.indexOf('[')<0})}
+
+/* ---- web address follows progress: #/step-id or #/step-id/beats ---- */
+function hpush(h){try{history.pushState(null,'',h)}catch(e){location.hash=h}}
+function hrep(h){try{history.replaceState(null,'',h)}catch(e){}}
+function hashFor(id,b){return '#/'+id+(b?'/'+b:'')}
+function parseHash(){var m=(location.hash||'').match(/^#\/([a-z0-9-]+)(?:\/(\d+))?$/);return m?{id:m[1],beat:m[2]?parseInt(m[2],10):0}:null}
+function resolve(id){
+  /* a step in the address that cannot show yet (no moments picked, a skipped question) goes to the nearest step that can */
+  var all=ALL.map(function(s){return s.id}),at=all.indexOf(id);if(at<0)return 'start';
+  var s=ALL[at];
+  if(s.need==='pick'&&!S.picked.length)return 'pick';
+  if(s.need==='lines'&&!cardLines().length)return S.picked.length?'write':'pick';
+  if(indexOf(id)<0){for(var j=at+1;j<ALL.length;j++)if(indexOf(ALL[j].id)>-1)return ALL[j].id;return 'end'}
+  return id;
+}
+function show(id,b,mode){
+  build();var want=id;id=resolve(id);idx=indexOf(id);beat=(id===want)?(b||0):0;
+  var h=hashFor(id,beat);
+  if(mode==='push')hpush(h);else if(mode==='replace'||id!==want)hrep(h);
+  S.last=id;save();render();
+}
+function open(){player.classList.add('open');document.body.style.overflow=''}
+function openAt(id,b,mode){player.classList.add('open');document.body.style.overflow='hidden';show(id,b,mode)}
+function closeP(){player.classList.remove('open');document.body.style.overflow='';hrep(location.pathname+location.search);refreshOpenLabel()}
+function nextStep(){var n=steps[Math.min(idx+1,steps.length-1)].id;show(n,0,'push')}
+window.addEventListener('popstate',function(){var h=parseHash();if(h){openAt(h.id,h.beat,null)}else{player.classList.remove('open');document.body.style.overflow='';refreshOpenLabel()}});
+function refreshOpenLabel(){var o=$('#open');o.textContent=(S.last&&S.last!=='start'&&S.last!=='end')?'Continue the day':'Start the day'}
+
+/* ---- tiny helpers ---- */
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
+function setGo(label,enabled){go.textContent=label;go.disabled=!enabled}
+function showSheet(ok,title,text){sheet.hidden=false;sheet.className='sheet '+(ok?'ok':'no');sheet.innerHTML='<b>'+title+'</b>'+text}
+function hideSheet(){sheet.hidden=true;sheet.innerHTML=''}
+function progress(){var n=steps.length-1,p=n?Math.round(idx/n*100):0;fill.style.width=p+'%';fill.classList.toggle('zero',p===0);track.setAttribute('aria-valuenow',p)}
+function toTop(){scroller.scrollTo({top:0,behavior:'auto'})}
+function toBottom(){
+  /* keep the newest block in view; a block taller than the space is shown from its top so its first line is never cut off */
+  var last=stage.lastElementChild;if(!last)return;
+  var top=last.getBoundingClientRect().top-scroller.getBoundingClientRect().top+scroller.scrollTop;
+  var room=scroller.clientHeight-190,h=last.offsetHeight;
+  var want=Math.min(top-16,top+h-room);
+  scroller.scrollTo({top:Math.max(0,want),behavior:'smooth'});
+}
+function newTab(root){[].forEach.call((root||document).querySelectorAll('a[href]'),function(a){if(/^https?:|^mailto:/.test(a.getAttribute('href'))){a.target='_blank';a.rel='noopener noreferrer'}})}
+
+/* ---- the seven block types ---- */
+function B_pip(x){var d=el('div','say');var a=el('div','av');a.innerHTML='<img src="'+AV+'" alt="">';d.appendChild(a);d.appendChild(el('div','b',x));return d}
+function B_you(x){var d=el('div','you','<small>You</small>');d.appendChild(el('div','b',x));return d}
+function B_ex(x,tag,weak){var d=el('div','ex'+(weak?' weak':''),'<small>'+esc(tag||'Example')+'</small><p>'+x+'</p>');return d}
+function B_note(x){return el('div','nt','<i>i</i><span>'+x+'</span>')}
+function B_study(d){
+  var c=el('div','sc');
+  c.innerHTML='<div class="sc-h"><i></i>What research found</div><div class="sc-r lead"><b>The study</b><p>'+esc(d.src)+'</p></div><div class="sc-r"><b>What it found</b><p>'+esc(d.found)+'</p></div><div class="sc-r limit"><b>Note</b><p>'+esc(d.limit)+'</p></div>';
+  var btn=el('button','cite','Citation');btn.onclick=function(){$('#srct').textContent=CITE[d.cite].t;$('#srcb').innerHTML=CITE[d.cite].h;newTab($('#srcb'));$('#src').showModal()};
+  c.querySelector('.sc-h').appendChild(btn);return c;
+}
+function B_card(cls,tabText){var c=el('div',cls);c.appendChild(el('span','tab',esc(tabText)));return c}
+function block(d){
+  if(d.t==='pip')return B_pip(d.x);
+  if(d.t==='you')return B_you(d.x);
+  if(d.t==='ex')return B_ex(d.x,d.tag,d.weak);
+  if(d.t==='note')return B_note(d.x);
+  if(d.t==='study')return B_study(d);
+}
+function chapter(s){if(s.ch)stage.appendChild(el('div','ch','<span>'+esc(s.ch)+'</span>'))}
+
+/* ---- render ---- */
+function render(){
+  stage.innerHTML='';hideSheet();progress();toTop();
+  var s=steps[idx];chapter(s);$('#later').hidden=(s.k==='cover'||s.k==='end');
+  ({cover:cover,blocks:blocks,mcq:mcq,build:buildLine,pick:pick,guess:guessStep,write:write,card:card,log:log,end:end})[s.k](s);
+  newTab(stage);
+}
+
+function cover(){
+  var c=el('div','cover');
+  c.innerHTML='<div class="art"><img src="'+AV+'" alt=""></div><h2>The night before your interview</h2><p>One day of Interview Ready. Free.</p>';
+  var sw=el('label','switch','<input type="checkbox" id="rm"> Just read it (skip the questions)');c.appendChild(sw);
+  if(S.last&&S.last!=='start'){var ag=el('button','chipbtn','Start again');ag.style.marginTop='16px';ag.onclick=function(){S.picked=[];S.lines={};S.guess='';S.log={did:'',what:'',keep:''};S.last='start';save();show('start',0,'replace')};c.appendChild(ag)}
+  var jc=el('button','chipbtn','Skip to the card');jc.style.marginTop='16px';jc.onclick=function(){show('pick',0,'push')};c.appendChild(jc);
+  stage.appendChild(c);
+  $('#rm').checked=S.skipQ;$('#rm').addEventListener('change',function(e){S.skipQ=e.target.checked;save();build();idx=0});
+  setGo('Start the day',true);go.onclick=function(){show('today',0,'push')};
+}
+
+function blocks(s){
+  var shown=Math.max(1,Math.min(beat||1,s.b.length));
+  for(var i=0;i<shown;i++){var e=block(s.b[i]);e.style.animation='none';stage.appendChild(e)}
+  after();
+  function after(){newTab(stage);setGo('Continue',true);toBottom()}
+  go.onclick=function(){
+    if(shown<s.b.length){
+      stage.appendChild(block(s.b[shown]));shown++;hrep(hashFor(s.id,shown));after();
+    }else nextStep();
+  };
+  hrep(hashFor(s.id,shown>1?shown:0));
+}
+
+function mcq(s){
+  var card=el('div','qc');card.appendChild(el('span','tab',esc(s.tab)));
+  card.appendChild(el('p','ask',esc(s.q)));
+  stage.appendChild(card);
+  var done=false;
+  s.opts.forEach(function(o){
+    var b=el('button','opt',o.t);
+    b.onclick=function(){
+      if(done)return;
+      if(o.ok){done=true;b.classList.add('right');[].forEach.call(card.querySelectorAll('.opt'),function(x){x.disabled=true});showSheet(true,'Correct',o.why);setGo('Continue',true)}
+      else{b.classList.add('wrong');b.disabled=true;showSheet(false,'Not this one',o.why+' Try another.')}
+    };
+    card.appendChild(b);
+  });
+  setGo('Continue',false);go.onclick=function(){if(done)nextStep()};
+}
+
+function buildLine(){
+  var card=el('div','qc');card.appendChild(el('span','tab','Build the line'));
+  card.appendChild(el('p','ask','Build one if-then line. Tap the pieces in order. One piece does not belong.'));
+  stage.appendChild(card);
+  var target=['If','I want more time to think,','then','I say, “Give me a moment to think about that.”'];
+  var pool=[target[2],target[3],'and the interviewer nods',target[0],target[1]];
+  var chosen=[];
+  var slot=el('div','slot');var chips=el('div','chips');var row=el('div','rowbtns');var clr=el('button','chipbtn','Clear');row.appendChild(clr);
+  card.appendChild(slot);card.appendChild(chips);card.appendChild(row);
+  function draw(){
+    slot.innerHTML='';if(!chosen.length)slot.appendChild(el('span','hint','Tap a piece below'));
+    chosen.forEach(function(p,i){var c=el('button','chip',esc(p));c.onclick=function(){chosen.splice(i,1);draw();hideSheet();setGo('Check',chosen.length>0)};slot.appendChild(c)});
+    chips.innerHTML='';
+    pool.forEach(function(p){var used=chosen.indexOf(p)>-1;var c=el('button','chip'+(used?' used':''),esc(p));if(!used)c.onclick=function(){chosen.push(p);draw();setGo('Check',true)};else c.disabled=true;chips.appendChild(c)});
+  }
+  draw();clr.onclick=function(){chosen=[];draw();hideSheet();setGo('Check',false)};
+  var solved=false;setGo('Check',false);
+  go.onclick=function(){
+    if(solved){nextStep();return}
+    var ok=chosen.length===4&&chosen.every(function(p,i){return p===target[i]});
+    if(ok){solved=true;showSheet(true,'Correct','The moment comes first, then what you do. The line names a moment and an action you can check.');setGo('Continue',true)}
+    else if(chosen.indexOf(pool[2])>-1&&(function(){var w=chosen.filter(function(p){return p!==pool[2]});return w.length===4&&w.every(function(p,i){return p===target[i]})})())showSheet(false,'Almost','The order is right. One piece is not something you do. Take it out and check again.');
+    else showSheet(false,'Not yet','The line starts with “If” and the moment, then “then” and what you do. One piece does not belong. It is not something you do. Try again.');
+  };
+}
+
+function pick(){
+  stage.appendChild(B_pip('Think about which parts of the interview you would like a plan for. If you do not know yet, go through the interview in order, from hello to goodbye, and pick up to three parts.'));
+  var t=el('div','tc');t.appendChild(el('span','tab','Your task'));
+  t.appendChild(el('p','lead','Choose up to three moments of the interview for your card. One is enough too.'));
+  var g=el('div','tiles');var msg=el('p','hintline','');
+  t.appendChild(g);t.appendChild(msg);stage.appendChild(t);
+  function draw(){
+    g.innerHTML='';
+    TILES.forEach(function(x){
+      var on=S.picked.indexOf(x.id)>-1;
+      var b=el('button','tile'+(on?' on':''),esc(x.t)+'<small>'+esc(x.d)+'</small>');b.setAttribute('aria-pressed',on);
+      b.onclick=function(){
+        var i=S.picked.indexOf(x.id);
+        if(i>-1)S.picked.splice(i,1);
+        else if(S.picked.length>=3){msg.textContent='Three is the most for one card. Tap one to remove it first.';return}
+        else{S.picked.push(x.id);if(!(x.id in S.lines))S.lines[x.id]=x.line}
+        save();msg.textContent=S.picked.length+' of 3 picked.';setGo('Continue',S.picked.length>0);draw();
+      };
+      g.appendChild(b);
+    });
+  }
+  draw();msg.textContent=S.picked.length?S.picked.length+' of 3 picked.':'';
+  stage.appendChild(B_note('Each line gives you something to do in that moment. It cannot promise how the moment will go.'));
+  setGo('Continue',S.picked.length>0);go.onclick=nextStep;
+}
+
+function youPicked(){var names=S.picked.map(function(id){return TILES.filter(function(x){return x.id===id})[0].t});return names.join(', ')}
+
+function guessStep(){
+  stage.appendChild(B_you(esc(youPicked())));
+  stage.appendChild(B_pip('Before you write, which moment do you think will take longest to write a line for? You can skip this.'));
+  var r=el('div','reply','<small>Your answer</small><label><svg viewBox="0 0 20 20" fill="none" stroke="#141311" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l1-4L14 3l3 3L7 16z"/><path d="M12 5l3 3"/></svg><input type="text" placeholder="Type here, or skip" aria-label="Your answer"></label>');
+  var i=r.querySelector('input');i.value=S.guess;i.oninput=function(){S.guess=i.value;save()};
+  stage.appendChild(r);
+  if(!(window.matchMedia&&matchMedia('(pointer:coarse)').matches)&&!/nofocus/.test(location.search))setTimeout(function(){try{i.focus({preventScroll:true})}catch(e){i.focus()}},60);
+  setGo('Continue',true);go.onclick=nextStep;
+}
+
+function write(){
+  var t=el('div','tc');t.appendChild(el('span','tab','Your task'));
+  t.appendChild(el('p','lead','Each line starts with a suggestion. Keep it, change it, or write your own words. Write each line as “If ..., then ...”. First the moment, then what you do. If three lines is too many tonight, write one. One line is a finished card.'));
+  stage.appendChild(t);
+  var any=false,hint=el('p','hintline','');
+  function valid(x){return /^\s*if\b/i.test(x)&&/\bthen\b/i.test(x)&&x.indexOf('[')<0}
+  function recheck(){any=S.picked.some(function(id){return valid(S.lines[id]||'')});setGo('Continue',any);
+    var br=S.picked.some(function(id){return (S.lines[id]||'').indexOf('[')>-1});
+    hint.textContent=!any?'Write at least one line that starts with “If” and has “then”.':(br?'A line with [brackets] stays off your card until you replace them.':'')}
+  S.picked.forEach(function(id,n){
+    var x=TILES.filter(function(y){return y.id===id})[0];
+    t.appendChild(el('label','f','Line '+(n+1)+' · '+esc(x.t)));
+    var ta=el('textarea');ta.value=S.lines[id]||'';ta.placeholder='If ..., then ...';ta.oninput=function(){S.lines[id]=ta.value;save();recheck()};
+    t.appendChild(ta);
+    if(id==='stuck'){
+      t.appendChild(el('p','hintline','Here are some ideas. Pick one, or write your own.'));
+      var cr=el('div','chips');
+      ['pause, then carry on','start the sentence again','say “one moment” and then continue'].forEach(function(opt){
+        var c=el('button','chip',esc(opt));c.onclick=function(){var base=ta.value.replace(/then I .*$/i,'then I ');ta.value=base+opt+'.';S.lines[id]=ta.value;save();recheck()};cr.appendChild(c);
+      });
+      t.appendChild(cr);
+    }
+  });
+  t.appendChild(hint);recheck();go.onclick=function(){if(any)nextStep()};
+}
+
+function card(){
+  var L=cardLines();
+  stage.appendChild(B_pip('Your card is ready.'));
+  var w=el('div','cardwrap');w.innerHTML='<h3>YOUR CARD</h3>'+L.map(function(t){return '<p>'+esc(t)+'</p>'}).join('');stage.appendChild(w);
+  var r=el('div','rowbtns');
+  var sv=el('button','chipbtn','Save picture');sv.onclick=function(){savePic(L)};
+  var pr=el('button','chipbtn','Print');pr.onclick=function(){$('#printcard').innerHTML='<h1>My card for the interview</h1>'+L.map(function(t){return '<p>'+esc(t)+'</p>'}).join('');window.print()};
+  r.appendChild(sv);r.appendChild(pr);
+  if(navigator.share){var sh=el('button','chipbtn','Send this day to someone');sh.onclick=function(){navigator.share({title:'The night before your interview',text:'One day of Interview Ready for people who stutter or stammer.',url:location.pathname}).catch(function(){})};r.appendChild(sh)}
+  stage.appendChild(r);
+  var t=el('div','tc');t.appendChild(el('span','tab','Last step'));
+  t.appendChild(el('p','lead','Put the card where you will sit on the day of the interview. If you can, look at it during the interview.'));
+  t.lastChild.style.margin='0';stage.appendChild(t);
+  setGo('Continue',true);go.onclick=nextStep;
+}
+
+function savePic(L){
+  var W=1080,H=1920,c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
+  x.fillStyle='#fff9e9';x.fillRect(0,0,W,H);
+  x.fillStyle='#ff9657';x.fillRect(0,0,W,360);
+  x.fillStyle='#141311';x.font='800 78px Inter, Arial';x.fillText('My card',80,230);
+  x.font='700 34px Inter, Arial';x.fillText('for the interview',80,290);
+  var y=480;
+  L.forEach(function(t){
+    x.font='700 52px Inter, Arial';
+    var words=t.split(' '),line='',rows=[];
+    words.forEach(function(w){var test=line?line+' '+w:w;if(x.measureText(test).width>860&&line){rows.push(line);line=w}else line=test});rows.push(line);
+    var h=rows.length*74+70;
+    x.fillStyle='#ffffff';x.strokeStyle='#141311';x.lineWidth=5;
+    x.beginPath();x.roundRect(60,y,960,h,36);x.fill();x.stroke();
+    x.fillStyle='#141311';rows.forEach(function(r,i){x.fillText(r,100,y+80+i*74)});
+    y+=h+40;
+  });
+  x.font='700 30px Inter, Arial';x.fillStyle='#625d55';x.fillText('Speechworks',80,H-90);
+  c.toBlob(function(b){var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='my-interview-card.png';document.body.appendChild(a);a.click();a.remove()});
+}
+
+function log(){
+  stage.appendChild(B_pip('A short log to close the day. All of it is optional.'));
+  var q=el('div','qc');q.appendChild(el('span','tab','Write it down'));
+  q.appendChild(el('p','ask','What happened when you wrote the lines?'));
+  q.appendChild(el('label','f','Did you write the card?'));
+  ['Yes, three lines','A smaller version','Not tonight'].forEach(function(t){
+    var r=el('label','radio','<input type="radio" name="did" value="'+esc(t)+'"> '+esc(t));var inp=r.querySelector('input');inp.checked=S.log.did===t;inp.onchange=function(){S.log.did=t;save()};q.appendChild(r);
+  });
+  q.appendChild(el('label','f','What happened? Write it in plain facts. If you made a guess earlier, say how it compared.'));
+  var a=el('textarea');a.value=S.log.what;a.oninput=function(){S.log.what=a.value;save()};q.appendChild(a);
+  q.appendChild(el('label','f','Write one line from your card to keep.'));
+  var b=el('input');b.type='text';b.value=S.log.keep||(cardLines()[0]||'');S.log.keep=b.value;b.oninput=function(){S.log.keep=b.value;save()};q.appendChild(b);
+  q.appendChild(el('div','',''));q.lastChild.style.height='12px';
+  stage.appendChild(q);
+  setGo('Finish the day',true);go.onclick=nextStep;
+}
+
+var OUT=['Choose an interview to prepare for','Practice a first call with a recruiter','Answer "Tell me about yourself"','Decide whether to mention your stutter','Record and watch your answer','Practice questions about your work','Practice a full interview','Practice longer answers','Check your guesses about the interviewer','Practice a word you often replace','Practice with an interviewer who has less time','Try another full interview','Practice an interview with three people','Save your notes and choose your next step'];
+function end(){
+  fill.style.width='100%';fill.classList.remove('zero');
+  stage.appendChild(B_pip((cardLines().length?'Tonight you wrote plans for the moments you picked.':'Tonight you looked at plans for moments of an interview.')+' Interview Ready has practice calls with an AI interviewer, and its days build towards a full interview. You can do this day on its own, and the card is yours either way.'));
+  stage.appendChild(el('div','progcard','<b>Interview Ready</b><span>Prepare your answers. Practice with an AI interviewer. Includes 10 AI practice calls.</span>'));
+  var ul=el('ul','path');
+  ul.innerHTML='<li class="here"><span class="dot">✓</span>The night before your interview<small>This day</small></li>'+OUT.map(function(t,i){return '<li><span class="dot">'+(i+1)+'</span>'+esc(t)+'<small>Day '+(i+1)+'</small></li>'}).join('');
+  stage.appendChild(ul);
+  var st=el('div','stores');
+  st.innerHTML='<a class="store-badge" href="'+PLAY+'"><svg width="26" height="29" viewBox="0 0 26 29" aria-hidden="true"><path fill="#51C4EC" d="M1 1.2v26.6L14 14.5Z"/><path fill="#74CF84" d="m1 1.2 16.9 9.7-3.9 3.6Z"/><path fill="#FFD360" d="m17.9 10.9 6.3 3.6-6.3 3.6-3.9-3.6Z"/><path fill="#F17881" d="M1 27.8 17.9 18.1 14 14.5Z"/></svg><span><small>Get it on</small><strong>Google Play</strong></span></a>';
+  stage.appendChild(st);
+  stage.appendChild(el('p','hintline','Free to download, with free daily practice. Pay once for each program.')).style.marginTop='14px';
+  var em=el('div','endmail','<h3>Get an email when a new free day opens.</h3><form id="mf"><input type="email" name="email_address" required placeholder="you@example.com" aria-label="Email address" autocomplete="email" inputmode="email"><button class="button" type="submit">Email me</button><label class="consent"><input type="checkbox" required><span>'+NEWS_CONSENT+'</span></label><p class="err" id="merr" role="alert" hidden></p><p class="note">See our <a href="/privacy/#launch-list">privacy policy</a>.</p></form><p id="mt" hidden><b>Thank you.</b> Check your email and confirm.</p>');
+  stage.appendChild(em);
+  em.querySelector('#mf').onsubmit=function(e){e.preventDefault();var f=this,b=f.querySelector('button'),er=em.querySelector('#merr');er.hidden=true;b.disabled=true;b.textContent='Sending...';
+    postKit(NEWS_ACTION,new FormData(f),function(){f.hidden=true;em.querySelector('#mt').hidden=false},function(m){er.textContent=m;er.hidden=false;b.disabled=false;b.textContent='Email me'})};
+  var again=el('button','chipbtn','Start again');again.style.marginTop='18px';again.onclick=function(){S.picked=[];S.lines={};S.guess='';S.log={did:'',what:'',keep:''};S.last='start';save();show('start',0,'push')};stage.appendChild(again);
+  go.textContent='Close';go.disabled=false;go.onclick=closeP;
+}
+
+var laterd=$('#laterd');
+$('#later').onclick=function(){$('#lf').hidden=false;$('#lok').hidden=true;$('#lerr').hidden=true;laterd.showModal()};
+$('#lcancel').onclick=function(){laterd.close()};$('#lclose').onclick=function(){laterd.close()};
+$('#lf').onsubmit=function(e){e.preventDefault();var f=this,b=$('#lsend'),er=$('#lerr');er.hidden=true;
+  if(!LATER_ACTION){er.textContent='This is not switched on yet.';er.hidden=false;return}
+  var fd=new FormData(f);if($('#lnews').checked)fd.append('fields[news_ok]','yes');
+  b.disabled=true;b.textContent='Sending...';
+  postKit(LATER_ACTION,fd,function(){f.hidden=true;$('#lok').hidden=false;b.disabled=false;b.textContent='Email me the link'},function(m){er.textContent=m;er.hidden=false;b.disabled=false;b.textContent='Email me the link'})};
+$('#open').onclick=function(){var id=(S.last&&S.last!=='end')?S.last:'start';openAt(id,0,'push')};
+$('#close').onclick=closeP;$('#srcx').onclick=function(){$('#src').close()};
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&player.classList.contains('open')&&!$('#src').open&&!$('#laterd').open)closeP()});
+/* every link opens in a new tab so the day is never interrupted */
+newTab(document);
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(a&&!a.target&&/^https?:|^mailto:/.test(a.getAttribute('href'))){a.target='_blank';a.rel='noopener noreferrer'}},true);
+refreshOpenLabel();
+var h0=parseHash();if(h0){openAt(h0.id,h0.beat,'replace')}
+})();
+</script>
+</body>
+</html>
