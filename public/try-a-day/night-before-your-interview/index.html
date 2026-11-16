@@ -12,7 +12,7 @@
 @font-face{font-family:Inter;src:url(/try-a-day/fonts/Inter-Regular.ttf);font-weight:400}
 @font-face{font-family:Inter;src:url(/try-a-day/fonts/Inter-Bold.ttf);font-weight:700}
 @font-face{font-family:Inter;src:url(/try-a-day/fonts/Inter-ExtraBold.ttf);font-weight:800}
-:root{--paper:#f7f2ea;--ink:#141311;--ink-muted:#625d55;--lime:#c8f750;--hero:#ff9657;--cast:#b9ee55;--cream:#fff9e9;--peach:#ffd49e;--blue:#5b9df9;--focus:#a64508;--ease:cubic-bezier(.23,1,.32,1)}
+:root{--paper:#f7f2ea;--ink:#141311;--ink-muted:#625d55;--lime:#c8f750;--hero:#ff9657;--cast:#b9ee55;--cream:#fff9e9;--peach:#ffd49e;--blue:#5b9df9;--art:#95bdf3;--t-blue:#c1d7f3;--t-purple:#d7cbeb;--focus:#a64508;--ease:cubic-bezier(.23,1,.32,1)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
 a{color:inherit;text-underline-offset:4px}
@@ -22,6 +22,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 .site-header{width:min(1320px,100%);padding:27px 48px;display:flex;align-items:center;justify-content:space-between;margin:auto;gap:24px}
 .wordmark{font-weight:800;font-size:23px;letter-spacing:-1.1px;display:flex;align-items:center;gap:9px;text-decoration:none}
 .wordmark img{width:26px;height:31px}
+.site-header .wordmark img{filter:brightness(0)} /* black mark on orange, as on the live site */
 .site-header nav{display:flex;align-items:center;gap:30px;font-size:13px}
 .nav-link{display:flex;align-items:center;min-height:44px;opacity:.72;text-decoration:none}
 .button{display:inline-flex;align-items:center;justify-content:center;gap:12px;border:0;border-radius:100px;padding:14px 22px;min-height:48px;font-weight:700;font-size:14px;line-height:1.2;text-decoration:none;transition:transform 220ms var(--ease)}
@@ -30,28 +31,36 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 .button-ink{background:var(--ink);color:var(--paper)}
 .button[disabled]{background:#14131118;color:#14131166;cursor:default}
 .band{background:var(--hero)}
-.breadcrumb{font-size:12px;font-weight:700;display:inline-flex;gap:8px;margin:12px 0 10px}
-.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:center;padding:6px 0 10px}
-.kicker{display:inline-block;font-size:12px;font-weight:800;margin:0 0 18px;padding:5px 12px;background:var(--lime);border:1.5px solid var(--ink);border-radius:100px;transform:rotate(-2deg)}
-.hero h1{font-size:clamp(42px,5.6vw,78px);font-weight:800;letter-spacing:-.055em;line-height:1;margin:0}
-.hero .lede{max-width:44ch;color:#29231e;font-size:17px;line-height:1.7;margin:22px 0 14px}
-.hero .meta{font-size:14px;color:#29231e;margin:0 0 24px}
+/* hero: the same layout as the program page (/programs/interview-ready/) */
+.breadcrumb{font-size:12px;font-weight:700;display:inline-flex;gap:8px;padding:8px 0 18px;text-decoration:none}
+.hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:70px;align-items:center;padding:0 0 75px}
+.kicker{font-size:11px;font-weight:800;margin:0 0 18px}
+.hero h1{font-size:clamp(40px,5.4vw,74px);font-weight:800;letter-spacing:-.055em;line-height:1;margin:0}
+.hero .lede{max-width:47ch;color:#29231e;font-size:16px;line-height:1.8;margin:24px 0 28px}
 .stores{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .store-badge{display:flex;align-items:center;gap:10px;background:var(--ink);color:#fff;border:1.5px solid var(--ink);border-radius:10px;box-shadow:3px 3px 0 var(--ink);width:172px;min-height:53px;padding:10px 16px;text-align:left;text-decoration:none;font:inherit}
 .store-badge small{display:block;font-size:9px;line-height:1.2}
 .store-badge strong{display:block;font-size:18px;font-weight:700;line-height:1.3;letter-spacing:-.5px}
 .store-badge.ghost{background:transparent;color:var(--ink);width:auto;cursor:pointer}
 .store-badge.ghost strong{font-size:15px;letter-spacing:-.2px}
-.hero .fine{font-size:12px;color:#3f2e22;margin:14px 0 0}
-.scene{position:relative;min-height:340px;display:flex;align-items:flex-end;justify-content:flex-end}
-.bubble-h{position:absolute;top:10px;left:0;max-width:300px;background:#fff;border:2px solid var(--ink);border-radius:26px 26px 26px 6px;padding:16px 18px;font-size:15px;line-height:1.5;box-shadow:0 4px 0 var(--ink);transform:rotate(-2deg);z-index:2}
-.char{width:min(290px,58%);margin-bottom:-2px;margin-right:4%}
+.scene{position:relative;min-height:390px;border-radius:32px;background:var(--art);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);display:grid;place-items:end center;transform:rotate(3deg);overflow:hidden}
+.bubble-h{position:absolute;top:28px;left:24px;right:24px;background:var(--cream);border:2px solid var(--ink);border-radius:20px 20px 20px 4px;box-shadow:3px 4px 0 var(--ink);padding:14px 16px;font-size:15px;line-height:1.5;transform:rotate(-3deg);z-index:2}
+.bubble-h small{display:block;font-size:11px;font-weight:800;color:var(--ink-muted);margin-bottom:4px}
+.char{width:230px;transform:rotate(-6deg);margin-bottom:-6px}
+.check{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);font-size:11px;font-weight:800;flex:none;color:var(--ink)}
 .edge{height:120px;margin-top:-1px;background:linear-gradient(to bottom,var(--hero) 30px,var(--ink) 30px,var(--ink) 31.5px,var(--cream) 31.5px)}
 .edge svg{display:block;width:min(100%,1440px);height:100%;margin-inline:auto;background:var(--cream)}
 .edge .fill{fill:var(--hero)}.edge .line{stroke:var(--ink);stroke-width:1.5px;fill:none}
 .edge .compact{display:none}
-.below{max-width:760px;margin:0 auto;padding:10px 0 60px;text-align:center}
-.below p{font-size:16px;line-height:1.7;color:var(--ink-muted)}
+/* under the wave: what the day holds, like "Your daily plan" on the program page */
+.plan{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:80px;padding:56px 0 90px}
+.plan h2{font-size:40px;font-weight:800;letter-spacing:-.05em;line-height:1.05;margin:0 0 18px}
+.plan-l p{font-size:16px;line-height:1.8;color:var(--ink-muted);margin:0 0 18px;max-width:42ch}
+.plan-l .store-badge{margin-top:8px}
+.plan-l .plan-fine{font-size:12px;line-height:1.6;margin:14px 0 0}
+.plan-days{list-style:none;margin:0;padding:0;border-top:1px solid #14131125}
+.plan-days li{display:grid;grid-template-columns:44px 140px 1fr;gap:12px;align-items:baseline;padding:16px 0;border-bottom:1px solid #14131125;font-size:14px}
+.plan-days b{font-size:11px}.plan-days span{font-weight:700}.plan-days small{font-size:14px;color:var(--ink-muted)}
 .site-footer{width:min(1320px,100%);margin:auto;padding:35px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px}
 .site-footer .wordmark{font-size:19px}.site-footer .wordmark img{width:22px;height:26px}
 .site-footer nav{display:flex;gap:22px;flex-wrap:wrap;font-size:11px;color:var(--ink-muted)}
@@ -60,29 +69,46 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 /* ===== the player ===== */
 #player{position:fixed;inset:0;background:var(--cream);z-index:50;display:none;flex-direction:column}
 #player.open{display:flex}
-.p-top{display:flex;align-items:center;gap:14px;padding:16px max(16px,calc((100% - 560px)/2)) 6px}
+/* site header row, then the chapters on the left and the day on the right (like "Your daily plan" on the program page) */
+.p-top{display:flex;align-items:center;gap:18px;width:min(1200px,100% - 96px);margin:0 auto;padding:22px 0 8px}
+.p-top .wordmark{font-size:19px}.p-top .wordmark img{width:22px;height:26px}
 .p-x{flex:none;width:44px;height:44px;border:0;background:transparent;font-size:26px;line-height:1;border-radius:50%}
-.p-track{flex:1;height:12px;border:2px solid var(--ink);border-radius:100px;background:#fff;overflow:hidden}
-.p-fill{height:100%;width:0;background:var(--cast);border-right:2px solid var(--ink);transition:width 320ms var(--ease)}
+.p-track{flex:1;height:10px;border:1.5px solid var(--ink);border-radius:100px;background:#fff;overflow:hidden}
+.p-fill{height:100%;width:0;background:var(--cast);border-right:1.5px solid var(--ink);transition:width 320ms var(--ease)}
 .p-fill.zero{border-right:0}
-.p-scroll{flex:1;min-height:0;overflow-y:auto;padding:10px max(20px,calc((100% - 520px)/2)) 280px;scroll-behavior:smooth}
-.p-bottom{position:absolute;left:0;right:0;bottom:0;padding:70px max(20px,calc((100% - 520px)/2)) 22px;background:linear-gradient(to bottom,#fff9e900,var(--cream) 62%);pointer-events:none}
-.p-bottom>*{pointer-events:auto}
-.sheet{border:2px solid var(--ink);border-radius:20px;padding:14px 16px;margin:0 0 12px;font-size:15px;line-height:1.55;box-shadow:0 4px 0 var(--ink)}
+.p-scroll{flex:1;min-height:0;overflow-y:auto;scroll-behavior:smooth}
+.p-grid,.p-act{width:min(1200px,100% - 96px);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:80px}
+.p-grid{padding:30px 0 280px}
+.p-grid>#stage,.p-act>div{grid-column:2;min-width:0}
+.rail{position:sticky;top:30px;align-self:start}
+.rail small{display:block;font-size:12px;font-weight:800;color:var(--ink-muted)}
+.rail h2{font-size:44px;font-weight:800;letter-spacing:-.05em;line-height:1;margin:8px 0 26px}
+.rail ol{list-style:none;margin:0;padding:0;border-top:1px solid #14131125}
+.rail li{display:flex;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid #14131125;font-size:14px;color:var(--ink-muted)}
+.rail li b{font-size:11px;width:20px;color:var(--ink)}
+.rail li.done{color:var(--ink)}
+.rail li.here{color:var(--ink);font-weight:800}
+.rail li .check{width:18px;height:18px;font-size:10px;margin-left:auto}
+#player.nochap .rail{display:none}
+#player.nochap .p-grid,#player.nochap .p-act{width:min(520px,100% - 40px);grid-template-columns:1fr}
+#player.nochap .p-grid>#stage,#player.nochap .p-act>div{grid-column:1}
+.p-bottom{position:absolute;left:0;right:0;bottom:0;padding:50px 0 24px;background:linear-gradient(to bottom,#fff9e900,var(--cream) 55%);pointer-events:none}
+.p-act>div{pointer-events:auto}
+.sheet{border:2px solid var(--ink);border-radius:20px;padding:14px 16px;margin:0 0 12px;font-size:15px;line-height:1.55;box-shadow:3px 3px 0 var(--ink)}
 .sheet.ok{background:var(--lime)}.sheet.no{background:#ffe3d1}
 .sheet b{display:block;font-size:12px;margin-bottom:4px}
 .sheet[hidden]{display:none}
 .p-go{width:100%}
 
-/* chapter marker: where we are in the day */
-.ch{display:flex;justify-content:center;margin:2px 0 16px}
-.ch span{font-size:12px;font-weight:800;padding:4px 14px;border:1.5px solid var(--ink);border-radius:100px;background:#fff}
 
 /* 1 Pip says: the guide talking. Speech bubble with a face. */
 .say{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;animation:rise 240ms var(--ease)}
-.say .av{flex:none;width:44px;height:44px;border-radius:50%;background:var(--peach);border:2px solid var(--ink);overflow:hidden;display:grid;place-items:end center}
-.say .av img{width:130%;margin-bottom:-6px}
-.say .b{background:#fff;border:2px solid var(--ink);border-radius:20px 20px 20px 6px;padding:12px 16px;font-size:17px;line-height:1.6;box-shadow:0 3px 0 var(--ink)}
+.say .av{flex:none;width:52px;height:52px;border-radius:50%;background:var(--art);border:2px solid var(--ink);overflow:hidden;display:grid;place-items:end center}
+/* Whole head inside the circle; the circle hides the cut edge of the collar. */
+.say .av img{display:block;width:108%;margin-bottom:-9%}
+@media (max-width:860px){.say .av{width:44px;height:44px}}
+.say+.say .av{visibility:hidden}
+.say .b{background:#fff;border:2px solid var(--ink);border-radius:20px 20px 20px 4px;padding:13px 17px;font-size:17px;line-height:1.6;box-shadow:3px 4px 0 var(--ink)}
 
 /* 2 You: what the reader chose or wrote. Right side, lime. */
 .you{display:flex;flex-direction:column;align-items:flex-end;margin:0 0 14px;animation:rise 240ms var(--ease)}
@@ -93,36 +119,37 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 .reply{display:flex;flex-direction:column;align-items:flex-end;margin:6px 0 14px;animation:rise 240ms var(--ease)}
 .reply small{font-size:11px;font-weight:700;color:var(--ink-muted);margin:0 6px 4px 0}
 .reply label{display:flex;align-items:center;gap:10px;width:100%;background:#f6fcd9;border:2px dashed var(--ink);border-radius:20px 20px 6px 20px;padding:4px 16px;cursor:text}
-.reply label:focus-within{background:#fff;border-style:solid;box-shadow:0 3px 0 var(--ink)}
+.reply label:focus-within{background:#fff;border-style:solid;box-shadow:3px 3px 0 var(--ink)}
 .reply svg{flex:none;width:20px;height:20px}
 .reply label input[type=text]{border:0;background:transparent;border-radius:0;padding:12px 0;margin:0;font-size:17px;flex:1;min-width:0;outline:none;box-shadow:none}
 .reply label input[type=text]::placeholder{color:#625d55}
 
 /* 3 Example: words you could say. Hangs off Pip's bubble. Square quote card. */
-.ex{margin:-4px 0 16px 54px;background:#fff;border:2px solid var(--ink);border-left-width:8px;border-radius:6px 16px 16px 6px;padding:10px 14px 12px;animation:rise 240ms var(--ease)}
-.ex small{display:block;font-size:11px;font-weight:800;color:var(--ink-muted);margin-bottom:4px}
-.ex p{margin:0;font-size:17px;line-height:1.5;font-weight:700;letter-spacing:-.01em}
-.ex.weak{background:var(--paper);border-style:dashed;border-left-style:dashed}
+.ex{margin:4px 0 16px 56px;background:var(--t-blue);border:2px solid var(--ink);border-radius:16px;padding:12px 16px;animation:rise 240ms var(--ease)}
+.ex small{display:block;font-size:11px;font-weight:800;color:#3b4a5f;margin-bottom:2px}
+.ex p{margin:0;font-size:18px;line-height:1.5;font-weight:700;letter-spacing:-.01em}
+.ex.weak{background:var(--paper);border-style:dashed}
 
-/* 4 Your turn: a question with a check. Raised card, black tab. */
-.qc{position:relative;background:#fff;border:2px solid var(--ink);border-radius:22px;padding:24px 16px 8px;margin:22px 0 14px;box-shadow:0 4px 0 var(--ink);animation:rise 240ms var(--ease)}
-.tab{position:absolute;top:-14px;left:16px;font-size:12px;font-weight:800;padding:3px 13px;border-radius:100px;border:2px solid var(--ink);background:var(--ink);color:var(--paper)}
-.qc .ask{font-size:20px;font-weight:800;letter-spacing:-.03em;line-height:1.3;margin:0 0 14px}
+/* 4 Your turn: a question with a check. Purple card with a hard shadow, like the site's example card. */
+.qc{position:relative;background:var(--t-purple);border:2px solid var(--ink);border-radius:24px;padding:26px 20px 10px;margin:24px 0 16px;box-shadow:5px 5px 0 var(--ink);animation:rise 240ms var(--ease)}
+/* the label sits on the card's top edge */
+.tab{position:absolute;top:-14px;left:18px;font-size:12px;font-weight:800;padding:3px 13px;border-radius:100px;border:2px solid var(--ink);background:var(--ink);color:var(--paper)}
+.qc .ask{font-size:22px;font-weight:800;letter-spacing:-.035em;line-height:1.28;margin:0 0 16px}
 .opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--ink);border-radius:16px;padding:13px 15px;margin:0 0 10px;font-size:16px;line-height:1.5}
 .opt:hover:not([disabled]){background:#fff3d9}
 .opt.right{background:var(--lime)}.opt.wrong{background:#ffe3d1}
 .opt[disabled]{cursor:default}
 
 /* 5 Try this: something to do. Warm card, white tab. */
-.tc{position:relative;background:var(--peach);border:2px solid var(--ink);border-radius:22px;padding:24px 16px 14px;margin:22px 0 14px;animation:rise 240ms var(--ease)}
+.tc{position:relative;background:var(--peach);border:2px solid var(--ink);border-radius:24px;padding:26px 20px 14px;margin:24px 0 16px;box-shadow:5px 5px 0 var(--ink);animation:rise 240ms var(--ease)}
 .tc .tab{background:#fff;color:var(--ink)}
 .tc .lead{font-size:17px;line-height:1.55;margin:0 0 14px}
 
 /* 6 Study: what research found. White card, bold lead, labelled rows, no face. */
-.sc{background:#fff;border:2px solid var(--ink);border-radius:14px;overflow:hidden;margin:0 0 16px;box-shadow:0 3px 0 var(--ink);animation:rise 240ms var(--ease)}
+.sc{background:#fff;border:2px solid var(--ink);border-radius:14px;overflow:hidden;margin:0 0 16px;box-shadow:3px 3px 0 var(--ink);animation:rise 240ms var(--ease)}
 .sc-h{display:flex;gap:10px;align-items:center;padding:10px 12px 10px 16px;background:#ece4d6;border-bottom:2px solid var(--ink);font-size:13px;font-weight:800}
 .sc-h i{width:13px;height:16px;border:1.5px solid var(--ink);border-radius:2px;background:#fff;position:relative;flex:none}
-.sc-h i::after{content:"";position:absolute;left:2px;right:2px;top:4px;height:1.5px;background:var(--ink);box-shadow:0 3px 0 var(--ink)}
+.sc-h i::after{content:"";position:absolute;left:2px;right:2px;top:4px;height:1.5px;background:var(--ink);box-shadow:3px 3px 0 var(--ink)}
 .sc-h .cite{margin-left:auto;border:1.5px solid var(--ink);background:#fff;border-radius:100px;padding:4px 12px;font-size:12px;font-weight:700;min-height:28px}
 .sc-r{padding:14px 16px 16px}
 .sc-r+.sc-r{border-top:1px solid #14131122}
@@ -138,12 +165,12 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
-.chip{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:9px 13px;font-size:16px;line-height:1.35;box-shadow:0 3px 0 var(--ink);text-align:left}
+.chip{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:9px 13px;font-size:16px;line-height:1.35;box-shadow:3px 3px 0 var(--ink);text-align:left}
 .chip.used{opacity:.35;box-shadow:none;cursor:default}
 .slot{min-height:100px;border:2px dashed var(--ink);border-radius:18px;padding:12px;background:#fff;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;margin:0 0 16px}
 .slot .hint{color:var(--ink-muted);font-size:15px;align-self:center}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
-.tile{position:relative;text-align:left;background:#fff;border:2px solid var(--ink);border-radius:18px;padding:14px 14px 16px;min-height:96px;font-size:16px;font-weight:700;line-height:1.3;box-shadow:0 3px 0 var(--ink)}
+.tile{position:relative;text-align:left;background:#fff;border:2px solid var(--ink);border-radius:18px;padding:14px 14px 16px;min-height:96px;font-size:16px;font-weight:700;line-height:1.3;box-shadow:3px 3px 0 var(--ink)}
 .tile small{display:block;font-weight:400;font-size:13px;color:var(--ink-muted);margin-top:6px;line-height:1.4}
 .tile.on{background:var(--lime)}
 .tile.on::after{content:"\2713";position:absolute;right:12px;top:8px;font-size:18px;font-weight:800}
@@ -154,29 +181,29 @@ textarea{min-height:76px;resize:vertical;line-height:1.5}
 .radio{display:flex;gap:10px;align-items:center;font-size:16px;padding:10px 14px;margin:0 0 8px;background:#fff;border:2px solid var(--ink);border-radius:16px;min-height:48px}
 .radio input{width:20px;height:20px;accent-color:var(--ink);margin:0}
 .cover{text-align:center;padding-top:18px}
-.cover .art{width:min(240px,64%);margin:0 auto 8px;background:var(--hero);border:2px solid var(--ink);border-radius:36px;box-shadow:0 5px 0 var(--ink);padding:20px 20px 0;transform:rotate(-3deg);overflow:hidden}
+.cover .art{width:min(240px,64%);margin:0 auto 8px;background:var(--art);border:2px solid var(--ink);border-radius:36px;box-shadow:5px 5px 0 var(--ink);padding:20px 20px 0;transform:rotate(-3deg);overflow:hidden}
 .cover .art img{display:block;width:100%}
 .cover h2{font-size:clamp(30px,6vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.05;margin:24px 0 8px}
 .cover p{font-size:15px;color:var(--ink-muted);margin:0 0 6px}
 .cover .nt{text-align:left;margin:14px 0 0}
 .switch{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px 0 4px;font-size:14px;font-weight:700}
 .switch input{width:22px;height:22px;accent-color:var(--ink);margin:0}
-.phone{width:min(230px,70%);aspect-ratio:9/16;margin:6px auto 12px;background:var(--blue);border:2px solid var(--ink);border-radius:26px;box-shadow:0 5px 0 var(--ink);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.phone{width:min(230px,70%);aspect-ratio:9/16;margin:6px auto 12px;background:var(--blue);border:2px solid var(--ink);border-radius:26px;box-shadow:5px 5px 0 var(--ink);position:relative;overflow:hidden;display:flex;flex-direction:column}
 .phone .stage{flex:1;position:relative;display:grid;place-items:end center}
 .phone .stage img{width:80%;margin-bottom:-2px}
 .phone .lamp{position:absolute;right:12%;top:12%;width:44px;height:44px;border-radius:50%;background:#fff3c4;border:2px solid var(--ink)}
 .phone .play{position:absolute;inset:0;display:grid;place-items:start center;padding-top:22%;background:transparent;border:0}
-.phone .play i{width:58px;height:58px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);box-shadow:0 4px 0 var(--ink);display:grid;place-items:center}
+.phone .play i{width:58px;height:58px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);display:grid;place-items:center}
 .phone .play i::after{content:"";border-left:17px solid var(--ink);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px}
 .phone .cap{background:#000;color:#fff;font-size:11.5px;line-height:1.4;padding:10px 14px 12px;text-align:center;min-height:54px}
 .slotnote[hidden]{display:none}
 .slotnote{font-size:12px;font-weight:700;border:1.5px dashed var(--ink);border-radius:100px;padding:3px 12px;color:var(--ink-muted);display:inline-block}
-.cardwrap{background:#fff;border:2px solid var(--ink);border-radius:22px;box-shadow:0 5px 0 var(--ink);padding:22px 22px 8px;margin:0 0 16px;transform:rotate(-1deg)}
+.cardwrap{background:#fff;border:2px solid var(--ink);border-radius:22px;box-shadow:5px 5px 0 var(--ink);padding:22px 22px 8px;margin:0 0 16px;transform:rotate(-1deg)}
 .cardwrap h3{margin:0 0 14px;font-size:12px;color:var(--ink-muted)}
 .cardwrap p{margin:0 0 14px;padding-bottom:14px;border-bottom:1px solid #14131122;font-size:19px;line-height:1.5;font-weight:700;letter-spacing:-.01em}
 .cardwrap p:last-child{border:0}
 .rowbtns{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 14px}
-.chipbtn{border:2px solid var(--ink);background:#fff;border-radius:100px;padding:9px 16px;font-weight:700;font-size:14px;box-shadow:0 3px 0 var(--ink)}
+.chipbtn{border:2px solid var(--ink);background:#fff;border-radius:100px;padding:9px 16px;font-weight:700;font-size:14px;box-shadow:3px 3px 0 var(--ink)}
 .path{list-style:none;margin:16px 0 22px;padding:0;position:relative}
 .path li{position:relative;padding:0 0 12px 40px;font-size:15px;line-height:1.4}
 .path li::before{content:"";position:absolute;left:11px;top:22px;bottom:-4px;border-left:2px dashed #14131155}
@@ -185,7 +212,7 @@ textarea{min-height:76px;resize:vertical;line-height:1.5}
 .path li.here .dot{background:var(--cast)}
 .path li.here{font-weight:800}
 .path small{display:block;font-size:12px;color:var(--ink-muted);font-weight:400}
-.progcard{border:2px solid var(--ink);border-radius:22px;background:var(--hero);padding:18px 20px;margin:12px 0 16px;box-shadow:0 5px 0 var(--ink)}
+.progcard{border:2px solid var(--ink);border-radius:22px;background:var(--hero);padding:18px 20px;margin:12px 0 16px;box-shadow:5px 5px 0 var(--ink)}
 .progcard b{display:block;font-size:22px;letter-spacing:-.03em}
 .progcard span{font-size:14px;line-height:1.55;display:block;margin-top:6px;color:#29231e}
 .endmail{background:var(--ink);color:var(--paper);border-radius:22px;padding:22px;margin:22px 0 0}
@@ -195,7 +222,7 @@ textarea{min-height:76px;resize:vertical;line-height:1.5}
 .endmail .consent{display:flex;gap:10px;font-size:13px;line-height:1.5;margin:12px 0 0;align-items:flex-start}
 .endmail .consent input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--paper)}
 .endmail .note{font-size:12px;color:#c8c9c0;margin:10px 0 0}
-dialog{border:2px solid var(--ink);border-radius:24px;padding:22px;max-width:min(560px,92vw);background:var(--cream);color:var(--ink);box-shadow:0 6px 0 var(--ink)}
+dialog{border:2px solid var(--ink);border-radius:24px;padding:22px;max-width:min(560px,92vw);background:var(--cream);color:var(--ink);box-shadow:6px 6px 0 var(--ink)}
 dialog::backdrop{background:#14131166}
 dialog h3{margin:0 0 12px;font-size:20px;letter-spacing:-.02em}
 dialog p{font-size:13.5px;line-height:1.65;color:var(--ink);margin:0 0 12px}
@@ -212,8 +239,16 @@ dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
 @media (max-width:860px){
  .wrap{width:min(1200px,100% - 40px)}
  .site-header{padding:18px 20px}.site-header nav .nav-link{display:none}
- .hero{grid-template-columns:1fr;gap:8px}
- .scene{min-height:290px}.bubble-h{max-width:64%;font-size:13px;padding:12px 14px}.char{width:52%}
+ .hero{grid-template-columns:1fr;gap:34px;padding-bottom:40px}
+ .scene{min-height:280px;max-width:360px;width:calc(100% - 10px)}.bubble-h{font-size:14px;padding:12px 14px;top:22px;left:18px;right:18px}.char{width:170px}
+ .plan{grid-template-columns:1fr;gap:28px;padding:36px 0 60px}.plan h2{font-size:30px}
+ .plan-days li{grid-template-columns:30px 1fr;row-gap:2px}.plan-days small{grid-column:2}
+ .p-top{width:calc(100% - 32px);padding:14px 0 4px;gap:12px}.p-top .wordmark span{display:none}
+ .p-grid,.p-act{width:calc(100% - 40px);grid-template-columns:1fr;gap:0}
+ .p-grid{padding:8px 0 280px}
+ .p-grid>#stage,.p-act>div{grid-column:1}
+ .rail{position:static}.rail h2{font-size:30px;margin:4px 0 18px}.rail ol{display:none}
+ .ex{margin-left:0}
  .edge{height:76px;background:linear-gradient(to bottom,var(--hero) 18px,var(--cream) 18px)}
  .edge svg{width:100%;background:none}.edge .wide{display:none}.edge .compact{display:block}
  .site-footer{padding:24px 20px;flex-direction:column;align-items:flex-start;gap:6px}
@@ -223,27 +258,24 @@ dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
 </style>
 </head>
 <body>
+<div class="band">
 <header class="site-header">
   <a class="wordmark" href="/"><img src="/brand/mark.svg" alt=""><span>Speechworks</span></a>
   <nav aria-label="Main navigation"><a class="nav-link" href="/programs/">Programs</a><a class="nav-link" href="/about/">About</a><a class="button button-small button-ink" href="https://play.google.com/store/apps/details?id=com.speechworks.app">Get the free app &#8599;</a></nav>
 </header>
-
-<div class="band"><div class="wrap">
+<div class="wrap">
   <a class="breadcrumb" href="/programs/">&larr; Interview Ready</a>
   <section class="hero">
     <div>
       <p class="kicker">Try a day</p>
       <h1>The night before your interview</h1>
       <p class="lede">Write if-then lines for the moments of your interview. One card, one evening.</p>
-      <p class="meta">One day of Interview Ready, for adults who stutter or stammer. A short lesson, three questions and one card. It is free.</p>
       <div class="stores">
         <button class="button button-ink" id="open" style="box-shadow:3px 3px 0 var(--cream)">Start the day</button>
-        <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.speechworks.app" aria-label="Get Speechworks on Google Play"><svg width="26" height="29" viewBox="0 0 26 29" aria-hidden="true"><path fill="#51C4EC" d="M1 1.2v26.6L14 14.5Z"/><path fill="#74CF84" d="m1 1.2 16.9 9.7-3.9 3.6Z"/><path fill="#FFD360" d="m17.9 10.9 6.3 3.6-6.3 3.6-3.9-3.6Z"/><path fill="#F17881" d="M1 27.8 17.9 18.1 14 14.5Z"/></svg><span><small>Get it on</small><strong>Google Play</strong></span></a>
       </div>
-      <p class="fine">Free to download, with free daily practice. Pay once for each program.</p>
     </div>
     <div class="scene" aria-hidden="true">
-      <div class="bubble-h">If I want more time to think, then I say, "Give me a moment to think about that."</div>
+      <div class="bubble-h"><small>A line from tonight's card</small>If I want more time to think, then I say, "Give me a moment to think about that."</div>
       <img class="char" src="/characters/interview_ready.svg" alt="">
     </div>
   </section>
@@ -252,17 +284,21 @@ dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
   <svg class="wide" viewBox="0 0 1440 140" preserveAspectRatio="none"><path class="fill" d="M0 35C220 35 250 78 510 78C640 78 724 66 808 60C822 59 835 58 848 58C849 80 839 101 822 115C860 113 891 87 902 61C1110 82 1230 35 1440 35V-1H0Z"/><path class="line" vector-effect="non-scaling-stroke" d="M0 35C220 35 250 78 510 78C640 78 724 66 808 60C822 59 835 58 848 58C849 80 839 101 822 115C860 113 891 87 902 61C1110 82 1230 35 1440 35"/></svg>
   <svg class="compact" viewBox="0 0 390 90" preserveAspectRatio="none"><path class="fill" d="M0 22C66 22 99 49 181 49C219 49 237 44 259 42C262 59 255 71 247 79C268 78 286 59 289 42C332 47 347 22 390 22V-1H0Z"/><path class="line" vector-effect="non-scaling-stroke" d="M0 22C66 22 99 49 181 49C219 49 237 44 259 42C262 59 255 71 247 79C268 78 286 59 289 42C332 47 347 22 390 22"/></svg>
 </div>
-<div class="wrap"><div class="below"><p>Interview Ready is a 14 day program in the Speechworks app. Try one day of it here. You learn one idea, answer three questions and write a card for your interview.</p></div></div>
+<div class="wrap"><section class="plan" aria-labelledby="plan-title"><div class="plan-l"><h2 id="plan-title">What you do tonight</h2><p>One day of Interview Ready, for adults who stutter or stammer. A short lesson, three questions and one card. It is free.</p><p>Interview Ready is a 14 day program in the Speechworks app. Try one day of it here. You learn one idea, answer three questions and write a card for your interview.</p><a class="store-badge" href="https://play.google.com/store/apps/details?id=com.speechworks.app" aria-label="Get Speechworks on Google Play"><svg width="26" height="29" viewBox="0 0 26 29" aria-hidden="true"><path fill="#51C4EC" d="M1 1.2v26.6L14 14.5Z"/><path fill="#74CF84" d="m1 1.2 16.9 9.7-3.9 3.6Z"/><path fill="#FFD360" d="m17.9 10.9 6.3 3.6-6.3 3.6-3.9-3.6Z"/><path fill="#F17881" d="M1 27.8 17.9 18.1 14 14.5Z"/></svg><span><small>Get it on</small><strong>Google Play</strong></span></a><p class="plan-fine">Free to download, with free daily practice. Pay once for each program.</p></div><ol class="plan-days"><li><b>1</b><span>Today</span><small>What this day is.</small></li><li><b>2</b><span>Lesson</span><small>What an if-then plan is, and what research found.</small></li><li><b>3</b><span>Questions</span><small>Three questions to check the idea. You can skip them.</small></li><li><b>4</b><span>Your card</span><small>Pick up to three moments and write a line for each.</small></li><li><b>5</b><span>Log</span><small>A short note to close the day.</small></li><li><b>6</b><span>What next</span><small>Keep your card, and see the full program.</small></li></ol></section></div>
 <footer class="site-footer"><a class="wordmark" href="/"><img src="/brand/mark.svg" alt=""><span>Speechworks</span></a><nav aria-label="Support and legal"><a href="/programs/">Programs</a><a href="/about/">About</a><a href="https://blog.speechworks.app/">Blog</a><a href="mailto:contact@speechworks.app">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav></footer>
 
 <section id="player" aria-label="The night before your interview, try a day" role="dialog" aria-modal="true">
   <div class="p-top">
-    <button class="p-x" id="close" aria-label="Close the sample">&times;</button>
+    <span class="wordmark"><img src="/brand/mark.svg" alt=""><span>Speechworks</span></span>
     <div class="p-track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track"><div class="p-fill zero" id="fill"></div></div>
     <button class="chipbtn later" id="later" hidden>Finish later</button>
+    <button class="p-x" id="close" aria-label="Close the sample">&times;</button>
   </div>
-  <div class="p-scroll" id="scroll"><div id="stage" aria-live="polite"></div></div>
-  <div class="p-bottom"><div class="sheet" id="sheet" hidden></div><button class="button button-ink p-go" id="go">Start the day</button></div>
+  <div class="p-scroll" id="scroll"><div class="p-grid">
+    <aside class="rail"><small id="railn"></small><h2 id="railh"></h2><ol id="railol" aria-label="Parts of the day"></ol></aside>
+    <div id="stage" aria-live="polite"></div>
+  </div></div>
+  <div class="p-bottom"><div class="p-act"><div><div class="sheet" id="sheet" hidden></div><button class="button button-ink p-go" id="go">Start the day</button></div></div></div>
 </section>
 
 <dialog id="src"><h3 id="srct">Source</h3><div id="srcb"></div><button class="button button-ink" id="srcx" style="margin-top:6px">Close</button></dialog>
@@ -413,12 +449,20 @@ function block(d){
   if(d.t==='note')return B_note(d.x);
   if(d.t==='study')return B_study(d);
 }
-function chapter(s){if(s.ch)stage.appendChild(el('div','ch','<span>'+esc(s.ch)+'</span>'))}
+/* the chapter rail: where we are in the day. The cover has no chapter, so it shows one centred column. */
+var CHS=['Today','Lesson','Questions','Your card','Log','What next'];
+function chapterOf(id){var c='';for(var i=0;i<ALL.length;i++){if(ALL[i].ch)c=ALL[i].ch;if(ALL[i].id===id)return c}return c}
+function rail(s){
+  var c=chapterOf(s.id);player.classList.toggle('nochap',!c);if(!c)return;
+  var list=CHS.filter(function(x){return !(S.skipQ&&x==='Questions')}),n=list.indexOf(c);
+  $('#railn').textContent='Try a day · '+(n+1)+' of '+list.length;$('#railh').textContent=c;
+  $('#railol').innerHTML=list.map(function(x,i){var st=i<n?'done':(i===n?'here':'');return '<li class="'+st+'"'+(st==='here'?' aria-current="step"':'')+'><b>'+(i+1)+'</b>'+esc(x)+(st==='done'?'<span class="check" aria-label="done">&#10003;</span>':'')+'</li>'}).join('');
+}
 
 /* ---- render ---- */
 function render(){
   stage.innerHTML='';hideSheet();progress();toTop();
-  var s=steps[idx];chapter(s);$('#later').hidden=(s.k==='cover'||s.k==='end');
+  var s=steps[idx];rail(s);$('#later').hidden=(s.k==='cover'||s.k==='end');
   ({cover:cover,blocks:blocks,mcq:mcq,build:buildLine,pick:pick,guess:guessStep,write:write,card:card,log:log,end:end})[s.k](s);
   newTab(stage);
 }
