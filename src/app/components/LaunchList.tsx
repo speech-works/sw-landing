@@ -8,12 +8,8 @@ import {
   launchListAction,
   launchListHiddenFields,
 } from "@/content/launch-list";
+import { cleanTag } from "@/content/source-tag";
 
-// Keep the source tag short and safe: lower case letters, digits, "-" and "_".
-function cleanTag(value: string | null) {
-  const tag = (value ?? "").toLowerCase().trim();
-  return /^[a-z0-9_-]{1,32}$/.test(tag) ? tag : "";
-}
 
 type Props = {
   /** Where the form sits, saved with the sign-up (for example "home"). */

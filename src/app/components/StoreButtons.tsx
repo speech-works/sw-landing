@@ -1,6 +1,7 @@
 import { downloads } from "@/content/downloads";
 import { showAppLiveForm } from "@/content/launch-list";
 import NotifyBadge from "./NotifyBadge";
+import PlayBadge from "./PlayBadge";
 
 // Apple silhouette from Simple Icons (CC0):
 // https://github.com/simple-icons/simple-icons/blob/develop/icons/apple.svg
@@ -39,19 +40,13 @@ export default function StoreButtons({
 }) {
   return (
     <div className={`store-buttons${compact ? " store-buttons-compact" : ""}`}>
-      <a
-        className="store-badge pressable"
-        href={downloads.android}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Get Speechworks on Google Play"
-      >
+      <PlayBadge placement={placement}>
         <PlayMark />
         <span>
           <small>Get it on</small>
           <strong>Google Play</strong>
         </span>
-      </a>
+      </PlayBadge>
       {downloads.ios ? (
         <a
           className="store-badge pressable"
