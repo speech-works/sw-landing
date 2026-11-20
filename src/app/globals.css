@@ -2177,3 +2177,16 @@ svg {
   .offer-chat-bubble p { font-size: 13px; }
   .offer-chat-face { width: 62px; height: 62px; }
 }
+
+/* Avatar blob: the colour shape behind each avatar. The blob is drawn here (not inside the picture) so its colours can match the page it sits on.
+   AvatarFigure sets --av-a, --av-b (colours), --av-cell (pattern size) and --av-mask (the blob outline). */
+.avatar-figure { position: relative; display: inline-block; flex: none; line-height: 0; vertical-align: middle; }
+.avatar-figure > img { position: relative; display: block; }
+.avatar-blob { position: absolute; inset: 0; opacity: 0; transition: opacity 0.25s var(--ease-out); background: var(--av-a);
+  -webkit-mask: var(--av-mask) center / 100% 100% no-repeat; mask: var(--av-mask) center / 100% 100% no-repeat; }
+.avatar-figure[data-ready="1"] > .avatar-blob { opacity: 1; }
+.avatar-figure[data-kind="vstripe"] > .avatar-blob { background: repeating-linear-gradient(90deg, var(--av-a) 0 calc(var(--av-cell) / 2), var(--av-b) calc(var(--av-cell) / 2) var(--av-cell)); }
+.avatar-figure[data-kind="hstripe"] > .avatar-blob { background: repeating-linear-gradient(180deg, var(--av-a) 0 calc(var(--av-cell) / 2), var(--av-b) calc(var(--av-cell) / 2) var(--av-cell)); }
+.avatar-figure[data-kind="check"] > .avatar-blob { background: conic-gradient(var(--av-b) 25%, var(--av-a) 0 50%, var(--av-b) 0 75%, var(--av-a) 0) 0 0 / var(--av-cell) var(--av-cell); }
+.avatar-figure[data-kind="dots"] > .avatar-blob { background: radial-gradient(circle at 50% 50%, var(--av-b) 20%, transparent 21%) 0 0 / var(--av-cell) var(--av-cell), var(--av-a); }
+@media (prefers-reduced-motion: reduce) { .avatar-blob { transition: none; } }

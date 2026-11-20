@@ -1,4 +1,4 @@
-import Image from "next/image";
+import AvatarFigure from "./AvatarFigure";
 
 export const avatarNames = [
   "headphones",
@@ -58,15 +58,5 @@ export default function Avatar({
   alt?: string;
   priority?: boolean;
 }) {
-  return (
-    <Image
-      src={`/avatars/${name}.svg`}
-      width={size}
-      height={size}
-      className={`avatar ${className}`}
-      alt={alt}
-      priority={priority}
-      draggable={false}
-    />
-  );
+  return <AvatarFigure name={name} size={size} className={className} alt={alt} priority={priority} />;
 }
