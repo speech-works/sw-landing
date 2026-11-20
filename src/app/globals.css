@@ -2182,7 +2182,7 @@ svg {
    AvatarFigure sets --av-a, --av-b (colours), --av-cell (pattern size) and --av-mask (the blob outline). */
 .avatar-figure { position: relative; display: inline-block; flex: none; line-height: 0; vertical-align: middle; }
 .avatar-figure > img { position: relative; display: block; }
-.avatar-blob { position: absolute; inset: 0; opacity: 0; transition: opacity 0.25s var(--ease-out); background: var(--av-a);
+.avatar-blob { position: absolute; left: -21.875%; top: -21.875%; width: 143.75%; height: 125%; opacity: 0; transition: opacity 0.25s var(--ease-out); background: var(--av-a);
   -webkit-mask: var(--av-mask) center / 100% 100% no-repeat; mask: var(--av-mask) center / 100% 100% no-repeat; }
 .avatar-figure[data-ready="1"] > .avatar-blob { opacity: 1; }
 .avatar-figure[data-kind="vstripe"] > .avatar-blob { background: repeating-linear-gradient(90deg, var(--av-a) 0 calc(var(--av-cell) / 2), var(--av-b) calc(var(--av-cell) / 2) var(--av-cell)); }

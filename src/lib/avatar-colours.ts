@@ -29,7 +29,7 @@ export function colourGap(a: RGB, b: RGB): number {
   const p = lab(a), q = lab(b);
   return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
 }
-const MAIN_GAP = 32, SECOND_GAP = 20;      // the blob colour must differ from the page by at least this much (dE), its second colour a little less
+const MAIN_GAP = 32, SECOND_GAP = 8;      // the blob colour must differ from the page by at least this much (dE), its second colour a little less
 /** The pair (a, b) for this avatar on this page colour. b is null for a flat blob. The first pair that stands out clearly wins; else the best one. */
 export function pickBlobColours(blob: AvatarBlob, surface: RGB): { a: string; b: string | null } {
   const start = Math.max(0, blobPalette.indexOf(blob.a));
