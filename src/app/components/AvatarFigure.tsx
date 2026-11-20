@@ -20,7 +20,12 @@ export default function AvatarFigure({ name, size, className, alt, priority }: {
   const ref = useRef<HTMLSpanElement>(null);
   const [colours, setColours] = useState<{ a: string; b: string | null } | null>(null);
   useLayoutEffect(() => {
-    if (blob && ref.current) setColours(pickBlobColours(blob, surfaceOf(ref.current)));
+    if (!blob || !ref.current) return;
+    const el = ref.current, used: string[] = [];       // colours of the avatars before this one in the same row: the blobs of neighbours must not share a colour
+    for (let n = el.previousElementSibling; n; n = n.previousElementSibling) { const c = (n as HTMLElement).dataset?.blobA; if (c) used.push(c); }
+    const picked = pickBlobColours(blob, surfaceOf(el), used.slice(0, 2));
+    el.dataset.blobA = picked.a;
+    setColours(picked);
   }, [blob]);
   const image = <Image src={`/avatars/${name}.svg`} width={size} height={size} className={`avatar${blob ? "" : " " + className}`} alt={alt} priority={priority} draggable={false} />;
   if (!blob) return image;

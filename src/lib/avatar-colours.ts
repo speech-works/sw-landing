@@ -40,7 +40,7 @@ export function blobGaps(c: { a: string; b: string | null }, surface: RGB) {
 }
 /** The pair (a, b) for this avatar on this page colour. b is null for a flat blob. The first pair that stands out clearly wins; else the best one.
  *  Each avatar walks the palette in its own order, so the avatars on one page do not all fall back to the same colour. */
-export function pickBlobColours(blob: AvatarBlob, surface: RGB): { a: string; b: string | null } {
+export function pickBlobColours(blob: AvatarBlob, surface: RGB, avoid: string[] = []): { a: string; b: string | null } {
   const n = blobPalette.length, start = Math.max(0, blobPalette.indexOf(blob.a)), step = STEPS[(blob.d.length + start) % STEPS.length];
   const firsts = [blob.a, ...Array.from({ length: n - 1 }, (_, k) => blobPalette[(start + (k + 1) * step) % n])];
   const seconds = blob.kind === "flat" ? [null] : [...new Set([blob.b ?? CREAM, CREAM, NAVY, "#FFE94A", "#F6A5C0", "#A9DDF7", "#3B5BA9", "#2E8B4E"])];
@@ -50,6 +50,7 @@ export function pickBlobColours(blob: AvatarBlob, surface: RGB): { a: string; b:
     if (b === a) continue;
     const g = blobGaps({ a, b }, surface);
     const rank = Math.min(g.de / MAIN_GAP, g.dl / LIGHT_GAP, b ? g.de2! / SECOND_GAP : 9, b ? g.dl2! / SECOND_LIGHT : 9, b ? g.pair! / PAIR_GAP : 9);
+    if (rank >= 1 && avoid.includes(a)) continue;      // a neighbour in the same row already uses this colour: the blobs would merge
     if (rank >= 1) { if (a === blob.a) return { a, b }; if (!passing.some((p) => p.a === a)) passing.push({ a, b }); }      // the avatar's own colour wins when it stands out
     if (rank > bestRank) { best = { a, b }; bestRank = rank; }
   }
