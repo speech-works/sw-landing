@@ -3,7 +3,7 @@
 // the next candidates are tried. All colours come from the site palette.
 import type { AvatarBlob } from "./avatar-blobs";
 
-export const blobPalette = ["#3B5BA9", "#F6A5C0", "#F58C1B", "#2E8B4E", "#FFE94A", "#A9DDF7", "#F36B4F", "#7B2D86", "#BEDB3C", "#9ED8C4", "#C7B8F0", "#FF9EB5"];
+export const blobPalette = ["#3B5BA9", "#F6A5C0", "#F58C1B", "#2E8B4E", "#FFE94A", "#A9DDF7", "#F36B4F", "#7B2D86", "#BEDB3C", "#9ED8C4", "#C7B8F0", "#FF9EB5", "#FFF4E6", "#1F2A5C"];
 const CREAM = "#FFF4E6";
 
 export type RGB = [number, number, number];
@@ -29,7 +29,7 @@ export function colourGap(a: RGB, b: RGB): number {
   const p = lab(a), q = lab(b);
   return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
 }
-const MAIN_GAP = 32, SECOND_GAP = 8;      // the blob colour must differ from the page by at least this much (dE), its second colour a little less
+const MAIN_GAP = 48, SECOND_GAP = 10, LIGHT_GAP = 14;      // the blob colour must differ from the page by at least this much (dE), its second colour a little less
 /** The pair (a, b) for this avatar on this page colour. b is null for a flat blob. The first pair that stands out clearly wins; else the best one. */
 export function pickBlobColours(blob: AvatarBlob, surface: RGB): { a: string; b: string | null } {
   const start = Math.max(0, blobPalette.indexOf(blob.a));
@@ -42,8 +42,9 @@ export function pickBlobColours(blob: AvatarBlob, surface: RGB): { a: string; b:
   let best = candidates[0], bestRank = -1;
   for (const c of candidates) {
     const ga = colourGap(hexToRgb(c.a), surface), gb = c.b ? colourGap(hexToRgb(c.b), surface) : 1e9;
-    if (ga >= MAIN_GAP && gb >= SECOND_GAP) return c;
-    const rank = Math.min(ga / MAIN_GAP, gb / SECOND_GAP);
+    const dl = Math.abs(lab(hexToRgb(c.a))[0] - lab(surface)[0]);       // the blob must also be clearly lighter or darker than the page, not only another hue
+    if (ga >= MAIN_GAP && gb >= SECOND_GAP && dl >= LIGHT_GAP) return c;
+    const rank = Math.min(ga / MAIN_GAP, gb / SECOND_GAP, dl / LIGHT_GAP);
     if (rank > bestRank) { best = c; bestRank = rank; }
   }
   return best;
