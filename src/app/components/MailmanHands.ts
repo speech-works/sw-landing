@@ -1,5 +1,5 @@
 import { gsap } from "@/lib/motion";
-import { mailmanHands as H } from "@/lib/mailman-hands.generated";
+import { mailmanHands as DEFAULT_HANDS, type MailmanHands } from "@/lib/mailman-hands.generated";
 import { beatHeart, beatWave, handFrame, sio, type Beat, type Strip } from "@/lib/mailman-hands-core";
 
 // The hands of the Notify dialog mailman: Wave hello (kit moment h-wave) and Heart hands (kit moment h-heart).
@@ -26,7 +26,7 @@ const BLEND_MS = 260;
 const LOWER_S = 0.42;
 
 /** The hand layer as SVG text, for the same <svg> as the figure. All of it is hidden until a moment plays. */
-export function handsMarkup(uid: string) {
+export function handsMarkup(uid: string, H: MailmanHands = DEFAULT_HANDS) {
   return `<g data-hands="1" transform="${H.stageT}">${H.layer.replace(/(id="|url\(#|href="#)cd\d+/g, `$1mh${uid}`)}</g>`;
 }
 
@@ -37,7 +37,7 @@ const mix = (a: Beat, b: Beat, t: number): Beat => {
   return { ...b, up: l(a.up, b.up), spread: l(a.spread, b.spread), dy: l(a.dy, b.dy), dfa: l(a.dfa, b.dfa), dha: l(a.dha, b.dha), sk: l(a.sk, b.sk), pop: l(a.pop, b.pop), plush: l(a.plush, b.plush) };
 };
 
-export function createHands(svg: SVGSVGElement, uid: string): HandsHandle {
+export function createHands(svg: SVGSVGElement, uid: string, H: MailmanHands = DEFAULT_HANDS): HandsHandle {
   const root = svg.querySelector('[data-hands="1"]');
   const p = `mh${uid}`;
   const q = (s: string) => (root ? root.querySelector(s) : null);
@@ -181,6 +181,7 @@ export function createHands(svg: SVGSVGElement, uid: string): HandsHandle {
 
 /** For a check in the browser console only: the largest gap between this copy of the maths and the kit's own answers. */
 export function handsSelfCheck() {
+  const H = DEFAULT_HANDS;
   let worst = 0;
   const nums = (t: string) => (t.match(/-?\d+\.?\d*(?:e-?\d+)?/g) ?? []).map(Number);
   for (const k of KINDS) {

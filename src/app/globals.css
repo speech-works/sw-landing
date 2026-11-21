@@ -2132,12 +2132,22 @@ svg {
 /* The collar (y 307 of the 310-unit art) runs just past the circle's bottom edge, so no lime shows below it. */
 .offer-chat-portrait {
   position: absolute;
-  left: -26%;
-  top: -27%;
-  width: 150%;
-  height: 150%;
+  left: -11%;
+  top: -6%;
+  width: 122%;
+  height: 122%;
 }
-.offer-chat-portrait > img { display: block; width: 100%; height: 100%; }
+.offer-chat-portrait > svg { display: block; width: 100%; height: 100%; overflow: visible; }
+/* Over the popup or its link: her face zooms in, and the glasses go clear so the grin and the eyes show. */
+.offer-chat-portrait { transform-origin: 50% 56%; transition: transform 380ms cubic-bezier(.34, 1.56, .64, 1); }
+.offer-chat-portrait .cf-lens { transition: fill-opacity 260ms ease; }
+.offer-chat-portrait .cf-frame { transition: stroke-opacity 260ms ease; }
+@media (hover: hover) and (pointer: fine) {
+  .offer-chat:hover .offer-chat-portrait, .offer-chat:focus-within .offer-chat-portrait { transform: scale(1.45); }
+  .offer-chat:hover .cf-lens, .offer-chat:focus-within .cf-lens { fill-opacity: 0; }
+  .offer-chat:hover .cf-frame, .offer-chat:focus-within .cf-frame { stroke-opacity: .35; }
+}
+@media (prefers-reduced-motion: reduce) { .offer-chat-portrait, .offer-chat-portrait .cf-lens, .offer-chat-portrait .cf-frame { transition: none; } }
 
 /* In: the face springs up, then the bubble grows out of its tail toward it. */
 .offer-chat-face { animation: offer-face-in 520ms cubic-bezier(.34, 1.56, .64, 1) both; transform-origin: 50% 100%; }
@@ -2158,7 +2168,6 @@ svg {
 .offer-chat-face .rig-smile { animation: offer-smile 2.9s 500ms linear both; }
 .offer-chat-face .rig-speech { opacity: 0; animation: offer-speak 2.9s 500ms linear both; }
 .offer-chat-face .rig-mouth { transform-origin: 162px 217px; animation: offer-mouth 760ms 500ms ease-in-out 3; }
-.offer-chat-portrait > img { transform-origin: 50% 90%; animation: offer-nod 2.9s 500ms cubic-bezier(.45, 0, .55, 1) both; }
 @keyframes offer-blink { 0%, 46%, 50%, 100% { transform: scaleY(1); } 48% { transform: scaleY(.08); } }
 @keyframes offer-speak { 0%, 94% { opacity: 1; } 100% { opacity: 0; } }
 @keyframes offer-smile { 0%, 94% { opacity: 0; } 100% { opacity: 1; } }
@@ -2172,7 +2181,6 @@ svg {
   .offer-chat.is-leaving .offer-chat-bubble,
   .offer-chat.is-leaving .offer-chat-face { animation-direction: reverse; }
   .offer-chat.is-leaving { animation-duration: 220ms; }
-  .offer-chat-portrait > img,
   .offer-chat-face .rig-mouth,
   .offer-chat-face .rig-eyes { animation: none; }
 }
@@ -2197,6 +2205,19 @@ svg {
 .avatar-figure[data-kind="check"] > .avatar-blob { background: conic-gradient(var(--av-b) 25%, var(--av-a) 0 50%, var(--av-b) 0 75%, var(--av-a) 0) 0 0 / var(--av-cell) var(--av-cell); }
 .avatar-figure[data-kind="dots"] > .avatar-blob { background: radial-gradient(circle at 50% 50%, var(--av-b) 27%, transparent 28%) 0 0 / var(--av-cell) var(--av-cell), var(--av-a); }
 @media (prefers-reduced-motion: reduce) { .avatar-blob { transition: none; } }
+
+/* Program cards: on hover or keyboard focus the figure leans in (the figure rule above), the picture grows a little and the colour blob swings the other way, so the two move apart like layers. */
+.program-card .avatar-blob { transition: opacity 0.25s var(--ease-out), transform 460ms cubic-bezier(.34, 1.56, .64, 1); }
+.program-card .avatar-figure > img.avatar { transition: scale 460ms cubic-bezier(.34, 1.56, .64, 1); }
+@media (hover: hover) and (pointer: fine) {
+  .program-card:hover .avatar-blob, .program-card:focus-visible .avatar-blob { transform: rotate(-4deg) scale(1.03); }
+  .program-card:hover .avatar-figure > img.avatar, .program-card:focus-visible .avatar-figure > img.avatar { scale: 1.06; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .program-card .avatar-blob, .program-card .avatar-figure > img.avatar { transition: none; }
+  .program-card:hover .avatar-blob, .program-card:focus-visible .avatar-blob { transform: none; }
+  .program-card:hover .avatar-figure > img.avatar, .program-card:focus-visible .avatar-figure > img.avatar { scale: 1; }
+}
 
 /* The feature cards use the same new avatars as the rest of the site (they were old animated portraits). */
 .character-portrait > .avatar-figure, .partner-person .avatar-figure { --av-size: 100%; width: 100%; }

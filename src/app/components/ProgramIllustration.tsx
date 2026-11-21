@@ -2,8 +2,8 @@ import Avatar from "./Avatar";
 
 // Each program is shown by one cast member (the same ones as on the About page).
 const cast: Record<string, string> = {
-  interview_ready: "scholar",
-  hard_conversations: "communicator",
+  interview_ready: "banker",
+  hard_conversations: "phone-call",
   art_of_disclosure: "hijab",
   panic_button: "beanie",
   bouncing_back: "braids",
@@ -16,7 +16,7 @@ const cast: Record<string, string> = {
 
 const descriptions: Record<string, string> = {
   interview_ready:
-    "Speechworks avatar with a confident smile, cream newsboy cap, and blue notched collar.",
+    "Speechworks avatar in square glasses and a navy jacket, dressed for an interview.",
   hard_conversations:
     "Speechworks avatar speaking into a green headset, with a shawl collar.",
   art_of_disclosure:

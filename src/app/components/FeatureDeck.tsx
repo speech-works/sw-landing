@@ -101,7 +101,7 @@ function Preview({ index, outcome }: { index: number; outcome: boolean }) {
             <path className="call-line-pulse call-line-out" pathLength="100" d="M177 96C194 78 212 121 234 103" />
             <path className="call-line-pulse call-line-back" pathLength="100" d="M177 96C194 78 212 121 234 103" />
           </svg>
-          <StillPortrait avatar="communicator" actor="maya" />
+          <StillPortrait avatar="phone-call" actor="maya" />
           <StillPortrait avatar="beanie" actor="caller" />
         </div>
         <FeatureLink href="/programs/hard-conversations/">See the phone call program</FeatureLink>
