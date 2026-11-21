@@ -327,7 +327,7 @@ svg {
 [data-actor="caller"] { --gaze: -20px; --blink-delay: -2.4s; --speech: character-call-answer; --gesture: character-answer-nod; }
 [data-actor="partner-one"] { --gaze: -2px; --speech: character-question; --gesture: character-listen; }
 [data-actor="partner-two"] { --gaze: -20px; --blink-delay: -1.2s; --speech: character-answer; --gesture: character-patient; }
-.mirror-face .character-portrait { position: absolute; inset: 0; }
+.mirror-face .character-portrait { position: absolute; inset: 0; }  /* the mesh in FeatureDeck.tsx is fitted to mirror-quiff.svg (kit parts: quiff, light skin, crew neck) */
 [data-actor="mirror"] > svg { animation: none; }
 @keyframes character-blink { 0%, 24%, 28%, 75%, 79%, 100% { transform: scaleY(1); } 26%, 77% { transform: scaleY(.06); } }
 @keyframes character-mouth { 0%, 100% { transform: scaleY(.42); } 24% { transform: scaleY(.85); } 42% { transform: scaleY(.34); } 67% { transform: scaleY(.72); } 84% { transform: scaleY(.5); } }
@@ -399,7 +399,7 @@ svg {
 .mirror-face { position: relative; aspect-ratio: 320 / 310; }
 .mirror-face img { width: 100%; height: auto; }
 .mirror-overlay { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; }
-.mirror-mesh { stroke: #183a35; stroke-width: 1.5; stroke-linejoin: round; opacity: .4; }
+.mirror-mesh { stroke: #183a35; stroke-width: 1.3; stroke-linejoin: round; opacity: .55; }
 .mirror-detection { fill: #9ff67a; stroke: #195c36; stroke-width: 2; }
 .mirror-frame { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .mirror-legend { display: inline-flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 700; margin-top: 3px; }
@@ -2132,12 +2132,12 @@ svg {
 /* The collar (y 307 of the 310-unit art) runs just past the circle's bottom edge, so no lime shows below it. */
 .offer-chat-portrait {
   position: absolute;
-  left: -6%;
-  top: -9.9%;
-  width: 112%;
-  height: 112%;
+  left: -26%;
+  top: -27%;
+  width: 150%;
+  height: 150%;
 }
-.offer-chat-portrait > svg { display: block; width: 100%; height: 100%; }
+.offer-chat-portrait > img { display: block; width: 100%; height: 100%; }
 
 /* In: the face springs up, then the bubble grows out of its tail toward it. */
 .offer-chat-face { animation: offer-face-in 520ms cubic-bezier(.34, 1.56, .64, 1) both; transform-origin: 50% 100%; }
@@ -2158,7 +2158,7 @@ svg {
 .offer-chat-face .rig-smile { animation: offer-smile 2.9s 500ms linear both; }
 .offer-chat-face .rig-speech { opacity: 0; animation: offer-speak 2.9s 500ms linear both; }
 .offer-chat-face .rig-mouth { transform-origin: 162px 217px; animation: offer-mouth 760ms 500ms ease-in-out 3; }
-.offer-chat-portrait > svg { transform-origin: 50% 90%; animation: offer-nod 2.9s 500ms cubic-bezier(.45, 0, .55, 1) both; }
+.offer-chat-portrait > img { transform-origin: 50% 90%; animation: offer-nod 2.9s 500ms cubic-bezier(.45, 0, .55, 1) both; }
 @keyframes offer-blink { 0%, 46%, 50%, 100% { transform: scaleY(1); } 48% { transform: scaleY(.08); } }
 @keyframes offer-speak { 0%, 94% { opacity: 1; } 100% { opacity: 0; } }
 @keyframes offer-smile { 0%, 94% { opacity: 0; } 100% { opacity: 1; } }
@@ -2172,7 +2172,7 @@ svg {
   .offer-chat.is-leaving .offer-chat-bubble,
   .offer-chat.is-leaving .offer-chat-face { animation-direction: reverse; }
   .offer-chat.is-leaving { animation-duration: 220ms; }
-  .offer-chat-portrait > svg,
+  .offer-chat-portrait > img,
   .offer-chat-face .rig-mouth,
   .offer-chat-face .rig-eyes { animation: none; }
 }
@@ -2197,3 +2197,10 @@ svg {
 .avatar-figure[data-kind="check"] > .avatar-blob { background: conic-gradient(var(--av-b) 25%, var(--av-a) 0 50%, var(--av-b) 0 75%, var(--av-a) 0) 0 0 / var(--av-cell) var(--av-cell); }
 .avatar-figure[data-kind="dots"] > .avatar-blob { background: radial-gradient(circle at 50% 50%, var(--av-b) 27%, transparent 28%) 0 0 / var(--av-cell) var(--av-cell), var(--av-a); }
 @media (prefers-reduced-motion: reduce) { .avatar-blob { transition: none; } }
+
+/* The feature cards use the same new avatars as the rest of the site (they were old animated portraits). */
+.character-portrait > .avatar-figure, .partner-person .avatar-figure { --av-size: 100%; width: 100%; }
+.character-scene [data-actor="interview-man"] { left: 50%; top: 52%; width: 50%; height: auto; aspect-ratio: 1 / 1; transform: translate(-50%, -50%); }
+.character-scene [data-actor="maya"] { left: 3%; width: 40%; height: auto; aspect-ratio: 1 / 1; }
+.character-scene [data-actor="caller"] { right: 2%; top: 62%; width: 29%; height: auto; aspect-ratio: 1 / 1; }
+.partner-person .character-portrait { width: 100%; height: 100%; }

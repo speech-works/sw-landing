@@ -1,4 +1,18 @@
-import Image from "next/image";
+import Avatar from "./Avatar";
+
+// Each program is shown by one cast member (the same ones as on the About page).
+const cast: Record<string, string> = {
+  interview_ready: "scholar",
+  hard_conversations: "communicator",
+  art_of_disclosure: "hijab",
+  panic_button: "beanie",
+  bouncing_back: "braids",
+  breaking_thought_traps: "curly",
+  dating_intimacy: "flower",
+  word_swap: "turban",
+  speech_toolkit: "coils",
+  understanding_your_voice: "headphones",
+};
 
 const descriptions: Record<string, string> = {
   interview_ready:
@@ -30,13 +44,11 @@ export default function ProgramIllustration({
   decorative?: boolean;
 }) {
   return (
-    <Image
+    <Avatar
+      name={cast[program]}
+      size={288}
       className={`program-portrait program-portrait-${program}`}
-      src={`/characters/${program}.svg`}
-      width={288}
-      height={288}
       alt={decorative ? "" : descriptions[program]}
-      draggable={false}
     />
   );
 }

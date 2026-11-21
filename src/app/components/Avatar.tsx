@@ -32,7 +32,7 @@ export const avatarLabels: Record<(typeof avatarNames)[number], string> = {
   curly: "Orange beret",
   beanie: "Blue beanie",
   flower: "Coral bandana",
-  scholar: "Cream newsboy cap",
+  scholar: "Cream baseball cap",
   bob: "Ribboned sunhat",
   cap: "Lilac sun visor",
   communicator: "Green headset",
@@ -51,12 +51,14 @@ export default function Avatar({
   className = "",
   alt = "",
   priority = false,
+  plain = false,
 }: {
   name: string;
   size?: number;
   className?: string;
   alt?: string;
   priority?: boolean;
+  plain?: boolean;
 }) {
-  return <AvatarFigure name={name} size={size} className={className} alt={alt} priority={priority} />;
+  return <AvatarFigure name={name} size={size} className={className} alt={alt} priority={priority} plain={plain} />;
 }

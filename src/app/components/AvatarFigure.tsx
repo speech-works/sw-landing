@@ -15,8 +15,8 @@ function surfaceOf(el: HTMLElement): RGB {
   return PAPER;
 }
 
-export default function AvatarFigure({ name, size, className, alt, priority }: { name: string; size: number; className: string; alt: string; priority: boolean }) {
-  const blob = avatarBlobs[name];
+export default function AvatarFigure({ name, size, className, alt, priority, plain = false }: { name: string; size: number; className: string; alt: string; priority: boolean; plain?: boolean }) {
+  const blob = plain ? undefined : avatarBlobs[name];   // plain: the picture alone, no colour blob behind it
   const ref = useRef<HTMLSpanElement>(null);
   const [colours, setColours] = useState<{ a: string; b: string | null } | null>(null);
   useLayoutEffect(() => {

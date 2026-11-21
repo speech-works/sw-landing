@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { playPop, unlockAudioOnInteraction } from "@/lib/pop-sound";
+import Avatar from "./Avatar";
 
 type Phase = "hidden" | "shown" | "leaving";
 
@@ -10,7 +11,7 @@ type Phase = "hidden" | "shown" | "leaving";
 const POP_COOLDOWN_MS = 10000;
 
 /** A cast member pops up in the corner with the launch offer while the program cards are on screen. Prices vary by country, so it shows only the discount. */
-export default function OfferChat({ percent, same, face }: { percent: number; same: boolean; face: string }) {
+export default function OfferChat({ percent, same }: { percent: number; same: boolean }) {
   const pathname = usePathname();
   const [phase, setPhase] = useState<Phase>("hidden");
   const lastPop = useRef(0);
@@ -63,8 +64,7 @@ export default function OfferChat({ percent, same, face }: { percent: number; sa
         <a href="#download" className="offer-chat-link">Get the app</a>
       </div>
       <span className="offer-chat-face">
-        {/* Trusted SVG prepared at build time from our own avatar artwork. */}
-        <span className="offer-chat-portrait" dangerouslySetInnerHTML={{ __html: face }} />
+        <span className="offer-chat-portrait"><Avatar name="cap" size={84} plain /></span>
       </span>
     </aside>
   );
