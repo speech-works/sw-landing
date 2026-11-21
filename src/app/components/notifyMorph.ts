@@ -158,9 +158,13 @@ function toGlobe(refs: MorphRefs, sfx?: Sfx, faces?: Faces) {
     .to(close, { opacity: 0, duration: 0.2 }, 0)
     .add(() => sfx?.whoosh(), 0.12)
     // His face follows the story: "huh?", squeezed, then "wow!" at the pop.
-    .add(faces?.form?.to("inquisitive", 0.22) ?? gsap.timeline(), 0.05)
-    .add(faces?.form?.to("effort", 0.28) ?? gsap.timeline(), 0.34)
-    .add(faces?.form?.to("excited", 0.24) ?? gsap.timeline(), 1.02)
+    .add(faces?.form?.to("stressed", 0.22) ?? gsap.timeline(), 0.05)
+    .add(faces?.form?.to("stressed", 0.28) ?? gsap.timeline(), 0.34)
+    // nervous: the eyes dart from side to side while he gets ready to go
+    .add(() => faces?.form?.gazeTo(9, -8, 0.12), 0.1)
+    .add(() => faces?.form?.gazeTo(-9, -6, 0.12), 0.38)
+    .add(() => faces?.form?.gazeTo(8, -8, 0.12), 0.64)
+    .add(() => faces?.form?.gazeTo(-8, -6, 0.12), 0.9)
     .to(face.k, { x: face.dx, y: face.dy, duration: 0.38, ease: "power3.inOut" }, 0.12)
     .to(card, { width: SEED, height: SEED, ...round(SEED / 2), boxShadow: `0px 4px 0 ${INK}`, duration: 0.5, ease: "power3.inOut" }, 0.34)
     .add(() => sfx?.pwip(), 0.82)
@@ -208,9 +212,10 @@ function toCard(refs: MorphRefs, target: "form" | "done", w: number, pad: number
     .to(card, { width: w, height: h, ...corners(...CARD_RADII), boxShadow: CARD_SHADOW, scale: 1, duration: 0.8, ease: "elastic.out(1,.6)" }, 0.86)
     .to(face.k, { x: 0, y: 0, duration: 0.6, ease: "back.out(1.5)" }, 0.9)
     .to(rest, { y: 0, scale: 1, opacity: 1, duration: 0.5, stagger: 0.06, ease: "back.out(1.6)" }, 1.0)
-    .add(target === "done" ? (faces?.done?.to("gleeful", 0.3) ?? gsap.timeline()) : (faces?.form?.to("inquisitive", 0.3) ?? gsap.timeline()), 0.5)
-    .add(target === "done" ? (faces?.done?.to("laughing", 0.3) ?? gsap.timeline()) : (faces?.form?.to("steady", 0.4) ?? gsap.timeline()), 0.95)
-    .add(target === "done" ? (faces?.done?.to("joyful", 0.4) ?? gsap.timeline()) : gsap.timeline(), 1.4)
+    .add(target === "done" ? gsap.timeline() : (faces?.form?.to("inquisitive", 0.3) ?? gsap.timeline()), 0.5)
+    // Back from the delivery with a grin, then the heart hands to say thank you (the kit's heart hands), then the warm smile.
+    .add(target === "done" ? (faces?.done?.heart() ?? gsap.timeline()) : gsap.timeline(), 1.3)
+    .add(target === "done" ? (faces?.done?.to("joyful", 0.5) ?? gsap.timeline()) : (faces?.form?.to("steady", 0.4) ?? gsap.timeline()), target === "done" ? 3.2 : 0.95)
     .to(close, { opacity: 1, duration: 0.3 }, 1.3);
   return tl;
 }

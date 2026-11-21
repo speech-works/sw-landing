@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { Volume2, VolumeX, X } from "lucide-react";
 import MailmanFace, { loadMorph, type FaceHandle, type IdleHandle } from "./MailmanFace";
 import LaunchList from "./LaunchList";
-import { instantMotion } from "@/lib/motion";
+import { gsap, instantMotion } from "@/lib/motion";
 import { cleanup, playMorph, type MorphRefs, type MorphResult } from "./notifyMorph";
 import { createSfx, setSoundEnabled, soundEnabled, type Sfx } from "./notifySfx";
 
@@ -13,6 +13,18 @@ const HEADLINE = "Email me when the iPhone app is live.";
 const RING_X = 218;
 const RING_Y = 70;
 const TILT = -28;
+
+/** How far along the box the typed text reaches, 0 (start) to 1 (end of the box). */
+function textFraction(input: HTMLInputElement) {
+  const cs = getComputedStyle(input);
+  const ctx = (textFraction.canvas ??= document.createElement("canvas")).getContext("2d");
+  if (!ctx) return 0;
+  ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const inner = input.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const upto = input.value.slice(0, input.selectionStart ?? input.value.length);
+  return inner > 0 ? ctx.measureText(upto).width / inner : 0;
+}
+textFraction.canvas = undefined as HTMLCanvasElement | undefined;
 
 const Envelope = () => (
   <div className="notify-env">
@@ -92,6 +104,42 @@ export default function NotifyBadge({ placement }: { placement: string }) {
     idle.current?.stop();
     idle.current = null;
   };
+  // When the dialog opens he waves hello (the kit's own wave), then settles into the waiting face.
+  const waveTl = useRef<gsap.core.Timeline | null>(null);
+  const waveDelay = useRef<gsap.core.Tween | null>(null);
+  const endWave = (quick = false) => {
+    waveDelay.current?.kill();
+    waveDelay.current = null;
+    const tl = waveTl.current;
+    waveTl.current = null;
+    if (tl) {
+      tl.eventCallback("onComplete", null);
+      tl.kill();
+      void faceForm.current?.lowerHands();
+      if (!quick) faceForm.current?.to("steady", 0.35);
+    }
+  };
+  const startWave = () => {
+    const f = faceForm.current;
+    if (!f || instantMotion()) {
+      startIdle();
+      return;
+    }
+    endWave(true);
+    // a short pause so the dialog has finished popping in
+    waveDelay.current = gsap.delayedCall(0.45, () => {
+      waveDelay.current = null;
+      if (!dialog.current?.open || animating.current) return;
+      f.to("excited", 0.3);
+      const tl = f.wave();
+      waveTl.current = tl;
+      startIdle(); // blinks while he waves
+      tl.eventCallback("onComplete", () => {
+        waveTl.current = null;
+        f.to("steady", 0.45);
+      });
+    });
+  };
   const resetFaces = () => {
     faceForm.current?.set("steady");
     faceDone.current?.set("joyful");
@@ -100,7 +148,7 @@ export default function NotifyBadge({ placement }: { placement: string }) {
   const open = () => {
     void loadMorph();
     dialog.current?.showModal();
-    if (view === "form") startIdle();
+    if (view === "form") startWave();
     // Start on the card, not on a control, so no focus ring shows for mouse users.
     // Keyboard users press Tab to reach the email field.
     card.current?.focus();
@@ -109,6 +157,9 @@ export default function NotifyBadge({ placement }: { placement: string }) {
 
   // Closing the dialog stops any animation and puts the card back as it was.
   const onClosed = () => {
+    endWave(true);
+    void faceForm.current?.lowerHands();
+    void faceDone.current?.lowerHands();
     stopIdle();
     run.current += 1;
     animating.current = false;
@@ -123,6 +174,9 @@ export default function NotifyBadge({ placement }: { placement: string }) {
     if (!r || instantMotion()) return;
     const mine = ++run.current;
     animating.current = true;
+    endWave(true);
+    void faceForm.current?.lowerHands();
+    faceForm.current?.watch(null);
     stopIdle();
     // This runs from the click on "Notify me", so the browser allows sound.
     sfx.current ??= createSfx();
@@ -246,11 +300,35 @@ export default function NotifyBadge({ placement }: { placement: string }) {
                 ref={formView}
                 data-off={view !== "form" ? "" : undefined}
                 onFocus={(event) => {
-                  // He looks down at the box while the visitor types in it.
-                  if ((event.target as HTMLElement).matches('input[type="email"]')) idle.current?.lookAtInput();
+                  // He watches the box while the visitor types in it.
+                  const t = event.target as HTMLInputElement;
+                  if (t.matches('input[type="email"]') && !animating.current) {
+                    endWave();
+                    faceForm.current?.watch(textFraction(t));
+                  }
+                }}
+                onInput={(event) => {
+                  const t = event.target as HTMLInputElement;
+                  if (t.matches('input[type="email"]') && !animating.current) {
+                    endWave();
+                    faceForm.current?.watch(textFraction(t));
+                  }
                 }}
                 onBlur={(event) => {
-                  if ((event.target as HTMLElement).matches('input[type="email"]')) idle.current?.resume();
+                  if ((event.target as HTMLElement).matches('input[type="email"]')) faceForm.current?.watch(null);
+                }}
+                onChange={(event) => {
+                  // He winks when the box is ticked: Speechworks likes that.
+                  const t = event.target as HTMLInputElement;
+                  if (t.matches('input[type="checkbox"]') && t.checked && !animating.current && !instantMotion()) {
+                    const face = faceForm.current;
+                    endWave(true);
+                    face?.watch(null);
+                    face?.to("joyful", 0.15);
+                    const tl = face?.wink(0.25);
+                    // back to the resting face once the wink is done (unless the visitor has moved on)
+                    tl?.call(() => { if (!animating.current) face?.to("steady", 0.4); });
+                  }
                 }}
               >
                 <div className="notify-face" aria-hidden="true">
