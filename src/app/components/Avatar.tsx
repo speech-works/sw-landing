@@ -1,4 +1,4 @@
-import Image from "next/image";
+import AvatarFigure from "./AvatarFigure";
 
 export const avatarNames = [
   "headphones",
@@ -32,7 +32,7 @@ export const avatarLabels: Record<(typeof avatarNames)[number], string> = {
   curly: "Orange beret",
   beanie: "Blue beanie",
   flower: "Coral bandana",
-  scholar: "Cream newsboy cap",
+  scholar: "Cream baseball cap",
   bob: "Ribboned sunhat",
   cap: "Lilac sun visor",
   communicator: "Green headset",
@@ -51,22 +51,20 @@ export default function Avatar({
   className = "",
   alt = "",
   priority = false,
+  plain = false,
+  art,
+  behind,
 }: {
   name: string;
   size?: number;
   className?: string;
   alt?: string;
   priority?: boolean;
+  plain?: boolean;
+  /** Replaces the picture (for example an animated figure); the colour blob stays. */
+  art?: React.ReactNode;
+  /** Drawn under the colour blob (for example a window behind it). */
+  behind?: React.ReactNode;
 }) {
-  return (
-    <Image
-      src={`/avatars/${name}.svg`}
-      width={size}
-      height={size}
-      className={`avatar ${className}`}
-      alt={alt}
-      priority={priority}
-      draggable={false}
-    />
-  );
+  return <AvatarFigure name={name} size={size} className={className} alt={alt} priority={priority} plain={plain} art={art} behind={behind} />;
 }

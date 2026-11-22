@@ -1,3 +1,7 @@
+// NOTE: the Notify dialog no longer uses the file this script writes (src/lib/mailman-face.generated.ts, the old art).
+// The dialog mailman now comes from the characters kit. To rebuild it, run in sw-characters:
+//   node web/scripts/export_face_rig.mjs name=mailman site=<path to this checkout>
+// It writes src/lib/mailman-rig.generated.ts and src/lib/mailman-rig-core.ts. This script is kept so the old art can still be built.
 // Builds src/lib/mailman-face.generated.ts: the mailman split into a still part
 // (head, hair, collar, moustache, cap) and the pieces that move (eyes, brows, mouth),
 // so his expression can change smoothly. Run: npm run artwork:face

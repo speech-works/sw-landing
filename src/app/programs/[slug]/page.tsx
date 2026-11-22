@@ -57,8 +57,8 @@ export default async function ProgramPage({ params }: Props) {
                   Pay once for this program. No subscription needed.
                 </p>
               </div>
-              <div className={`detail-art tone-${program.color}`}>
-                <ProgramIllustration program={program.key} />
+              <div className={`detail-art tone-${program.color}${program.key === "interview_ready" ? " detail-art-open" : program.key === "hard_conversations" ? " detail-art-open detail-art-call" : program.key === "art_of_disclosure" ? " detail-art-open detail-art-balloons" : program.key === "panic_button" ? " detail-art-open detail-art-tiger": program.key === "understanding_your_voice" ? " detail-art-open detail-art-iceberg" : program.key === "bouncing_back" ? " detail-art-open detail-art-bounce" : program.key === "dating_intimacy" ? " detail-art-open detail-art-dating" : program.key === "word_swap" ? " detail-art-open detail-art-gift" : program.key === "breaking_thought_traps" ? " detail-art-open detail-art-cage" : program.key === "speech_toolkit" ? " detail-art-open detail-art-crayons" : ""}`}>
+                <ProgramIllustration program={program.key} animated />
               </div>
             </section>
           </div>

@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Avatar from "./Avatar";
-import CharacterPortrait from "./CharacterPortrait";
 import { gsap, useGSAP } from "@/lib/motion";
 
 const features = ["Interview", "AI calls", "Mirror", "Partner"];
@@ -31,23 +30,34 @@ const bringForward = (order: number[], next: number) => {
   return slot <= 0 ? order : [...order.slice(slot), ...order.slice(0, slot)];
 };
 
+
+function StillPortrait({ avatar, actor }: { avatar: string; actor: "interview-man" | "maya" | "caller" | "partner-one" | "partner-two" }) {
+  return (
+    <div className="character-portrait" data-actor={actor} aria-hidden="true">
+      <Avatar name={avatar} size={200} />
+    </div>
+  );
+}
+
 function MirrorFace() {
   return (
     <div className="mirror-visual" aria-hidden="true">
       <div className="mirror-face">
-        <CharacterPortrait name="mirror" actor="mirror" />
+        <div className="character-portrait" data-actor="mirror" aria-hidden="true"><Avatar name="mirror-quiff" size={320} plain /></div>
         <svg className="mirror-overlay" viewBox="0 0 320 310" focusable="false">
-          <g className="mirror-mesh">
-            <path d="M76 147L113 134L159 144L207 133L246 147L254 189L241 226L215 247L160 267L104 246L75 224L65 189Z" />
-            <path d="M76 147L91 177L65 189L107 205L75 224L130 234L104 246M113 134L91 177L132 181L159 144L188 181L226 177L207 133M246 147L226 177L254 189L212 205L241 226L191 234L215 247" />
-            <path d="M91 177L107 205L132 181L151 207L159 144M226 177L212 205L188 181L171 207L159 144M107 205L151 207L130 234L160 251L191 234L171 207L212 205M75 224L104 246L130 234L160 267L191 234L215 247M151 207L160 216L171 207M130 234L160 216L191 234M160 251V267" />
-          </g>
-          <path className="mirror-scan" d="M65 147H254" />
-          <g className="mirror-detection">
-            <rect x="125" y="139" width="10" height="10" rx="1" />
-            <rect x="185" y="139" width="10" height="10" rx="1" />
-            <rect x="71" y="218" width="10" height="10" rx="1" />
-            <rect x="235" y="218" width="10" height="10" rx="1" />
+          <g transform="matrix(1.18 0 0 1.116 -28.8 18)">
+            <g className="mirror-mesh">
+              <path d="M92 108L125 98L160 96L196 98L230 108L230 133L227 165L223 190L203 210L160 224L117 210L97 190L95 165L92 133Z" />
+              <path d="M92 108L122 108L124 138L92 133M230 108L197 108L196 138L230 133M125 98L122 108L160 96L197 108L196 98M122 108L160 120L197 108M160 96V120M124 138L160 120L196 138M124 138L157 163L196 138" />
+              <path d="M92 133L95 165L124 138M230 133L227 165L196 138M95 165L139 187L157 163L181 187L227 165M95 165L97 190L139 187M227 165L223 190L181 187M97 190L117 210L139 187L160 193L117 210M223 190L203 210L181 187L160 193L203 210M117 210L160 224L203 210M139 187L181 187M157 163L160 193" />
+            </g>
+            <path className="mirror-scan" d="M92 138H230" />
+            <g className="mirror-detection">
+              <rect x="119" y="133" width="10" height="10" rx="1" />
+              <rect x="191" y="133" width="10" height="10" rx="1" />
+              <rect x="93" y="181" width="10" height="10" rx="1" />
+              <rect x="217" y="181" width="10" height="10" rx="1" />
+            </g>
           </g>
           <path className="mirror-frame" d="M24 48V22H50M270 22H296V48M24 262V288H50M270 288H296V262" />
         </svg>
@@ -74,7 +84,7 @@ function Preview({ index, outcome }: { index: number; outcome: boolean }) {
         <div className="preview-top"><span>{outcome ? "Job interviews" : "Interview practice"}</span><Briefcase size={18} aria-hidden="true" /></div>
         <h2 className="feature-headline">{outcome ? <>Show what<br />you can do.</> : <>Practice for<br />your job interview.</>}</h2>
         <div className="character-scene interview-scene" aria-hidden="true">
-          <CharacterPortrait name="interview" actor="interview-man" />
+          <StillPortrait avatar="banker" actor="interview-man" />
         </div>
         <FeatureLink href="/programs/interview-ready/">See the interview program</FeatureLink>
       </>
@@ -91,8 +101,8 @@ function Preview({ index, outcome }: { index: number; outcome: boolean }) {
             <path className="call-line-pulse call-line-out" pathLength="100" d="M177 96C194 78 212 121 234 103" />
             <path className="call-line-pulse call-line-back" pathLength="100" d="M177 96C194 78 212 121 234 103" />
           </svg>
-          <CharacterPortrait name="communicator" actor="maya" />
-          <CharacterPortrait name="beanie" actor="caller" />
+          <StillPortrait avatar="phone-call" actor="maya" />
+          <StillPortrait avatar="beanie" actor="caller" />
         </div>
         <FeatureLink href="/programs/hard-conversations/">See the phone call program</FeatureLink>
       </>
@@ -113,9 +123,9 @@ function Preview({ index, outcome }: { index: number; outcome: boolean }) {
       <div className="preview-top"><span>{outcome ? "Speaking partner" : "Partner practice"}</span><Users size={18} aria-hidden="true" /></div>
       <h2 className="feature-headline">{outcome ? <>Talk with someone<br />who stutters too.</> : <>Practice with someone<br />who stutters too.</>}</h2>
       <div className="partner-preview" aria-hidden="true">
-        <div className="partner-person"><CharacterPortrait name="curly" actor="partner-one" /></div>
+        <div className="partner-person"><StillPortrait avatar="curly" actor="partner-one" /></div>
         <div className="partner-connection"><span /><Heart size={22} /><span /></div>
-        <div className="partner-person"><CharacterPortrait name="hijab" actor="partner-two" /></div>
+        <div className="partner-person"><StillPortrait avatar="hijab" actor="partner-two" /></div>
       </div>
       <FeatureLink href="#download">Get the app</FeatureLink>
     </>

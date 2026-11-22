@@ -31,9 +31,9 @@ const edits: [from: string, to: string][] = [
 const PUPILS = /<path d="M(?:123\.7 153\.8|222 152\.1)[^"]*" fill="#19191F" stroke="none" \/>(?:<circle[^>]*\/>)?/g;
 
 export function visorChatFace(): string {
-  let svg = readFileSync(join(process.cwd(), "public/avatars/cap.svg"), "utf8");
+  let svg = readFileSync(join(process.cwd(), "public/avatars/cap-classic.svg"), "utf8");
   for (const [from, to] of edits) {
-    if (!svg.includes(from)) throw new Error(`cap.svg changed shape; update src/lib/chat-face.ts (missing: ${from.slice(0, 60)})`);
+    if (!svg.includes(from)) throw new Error(`cap-classic.svg changed shape; update src/lib/chat-face.ts (missing: ${from.slice(0, 60)})`);
     svg = svg.replace(from, to);
   }
   let pupils = 0;
