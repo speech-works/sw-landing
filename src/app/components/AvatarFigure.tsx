@@ -15,7 +15,7 @@ function surfaceOf(el: HTMLElement): RGB {
   return PAPER;
 }
 
-export default function AvatarFigure({ name, size, className, alt, priority, plain = false }: { name: string; size: number; className: string; alt: string; priority: boolean; plain?: boolean }) {
+export default function AvatarFigure({ name, size, className, alt, priority, plain = false, art, behind }: { name: string; size: number; className: string; alt: string; priority: boolean; plain?: boolean; art?: React.ReactNode; behind?: React.ReactNode }) {
   const blob = plain ? undefined : avatarBlobs[name];   // plain: the picture alone, no colour blob behind it
   const ref = useRef<HTMLSpanElement>(null);
   const [colours, setColours] = useState<{ a: string; b: string | null } | null>(null);
@@ -27,7 +27,7 @@ export default function AvatarFigure({ name, size, className, alt, priority, pla
     el.dataset.blobA = picked.a;
     setColours(picked);
   }, [blob]);
-  const image = <Image src={`/avatars/${name}.svg`} width={size} height={size} className={`avatar${blob ? "" : " " + className}`} alt={alt} priority={priority} draggable={false} />;
+  const image = art ?? <Image src={`/avatars/${name}.svg`} width={size} height={size} className={`avatar${blob ? "" : " " + className}`} alt={alt} priority={priority} draggable={false} />;
   if (!blob) return image;
   const shapes = `<path d='${blob.d}'/>${blob.top ? `<path d='${blob.top}'/>` : ""}${blob.dots.map(([x, y, r]) => `<circle cx='${x}' cy='${y}' r='${r}'/>`).join("")}`;
   const mask = `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='-70 -75 460 400' preserveAspectRatio='none'>${shapes}</svg>`)}")`;
@@ -37,6 +37,7 @@ export default function AvatarFigure({ name, size, className, alt, priority, pla
   } as React.CSSProperties;
   return (
     <span ref={ref} className={`avatar-figure ${className}`} data-kind={blob.kind} data-ready={colours ? "1" : "0"} style={style}>
+      {behind}
       <span className="avatar-blob" aria-hidden="true" />
       {image}
     </span>

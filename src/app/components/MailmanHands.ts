@@ -1,6 +1,6 @@
 import { gsap } from "@/lib/motion";
 import { mailmanHands as DEFAULT_HANDS, type MailmanHands } from "@/lib/mailman-hands.generated";
-import { beatHeart, beatWave, handFrame, sio, type Beat, type Strip } from "@/lib/mailman-hands-core";
+import { beatChin, beatHeart, beatWave, handFrame, sio, type Beat, type Strip } from "@/lib/mailman-hands-core";
 
 // The hands of the Notify dialog mailman: Wave hello (kit moment h-wave) and Heart hands (kit moment h-heart).
 // The drawings, the sleeve, the cuff, the seam and the shadows are the characters kit's own hand layer
@@ -14,12 +14,16 @@ export type HandsHandle = {
   wave: () => gsap.core.Timeline;
   /** Heart hands, the whole moment (about 2.6 s): the hands rise from below, pulse, lower. */
   heart: () => gsap.core.Timeline;
+  /** Hand at the chin, the whole moment (about 3 s): a thinking hand rises from below, nods, lowers. Only for figures exported with chin=1. */
+  chin: () => gsap.core.Timeline;
   /** Lower any hands smoothly from where they are. Resolves when they are down. */
   stop: () => Promise<void>;
 };
 
-type Kind = "wave" | "heart";
-const KINDS: Kind[] = ["wave", "heart"];
+type Kind = "wave" | "heart" | "chin";
+const KINDS: Kind[] = ["wave", "heart", "chin"];
+/** The name of each hand drawing in the exported layer. */
+const ART: Record<Kind, string> = { wave: "wave", heart: "heart3", chin: "chin" };
 /** When a moment starts while its hands are still up, the old pose and the new one are mixed for this long (ms). */
 const BLEND_MS = 260;
 /** Time to lower the hands on stop() (s). */
@@ -31,7 +35,7 @@ export function handsMarkup(uid: string, H: MailmanHands = DEFAULT_HANDS) {
 }
 
 const mx = (m: number[]) => `matrix(${m.map((v) => +v.toFixed(5)).join(" ")})`;
-const beatOf = (k: Kind, ms: number): Beat => (k === "wave" ? beatWave(ms) : beatHeart(ms));
+const beatOf = (k: Kind, ms: number): Beat => (k === "wave" ? beatWave(ms) : k === "chin" ? beatChin(ms) : beatHeart(ms));
 const mix = (a: Beat, b: Beat, t: number): Beat => {
   const l = (x: number, y: number) => x + (y - x) * t;
   return { ...b, up: l(a.up, b.up), spread: l(a.spread, b.spread), dy: l(a.dy, b.dy), dfa: l(a.dfa, b.dfa), dha: l(a.dha, b.dha), sk: l(a.sk, b.sk), pop: l(a.pop, b.pop), plush: l(a.plush, b.plush) };
@@ -42,7 +46,7 @@ export function createHands(svg: SVGSVGElement, uid: string, H: MailmanHands = D
   const p = `mh${uid}`;
   const q = (s: string) => (root ? root.querySelector(s) : null);
   const parts = KINDS.map((k, i) => ({
-    g: q(`[data-hand="${k === "wave" ? "wave" : "heart3"}"]`),
+    g: q(`[data-hand="${ART[k]}"]`),
     clip: q(`#${p}h${i} path`),
     sleeve: root?.querySelectorAll("[data-arm]")[i] ?? null,
     cuffClip: q(`#${p}c${i} path`),
@@ -58,7 +62,8 @@ export function createHands(svg: SVGSVGElement, uid: string, H: MailmanHands = D
   parts[1].g?.querySelector(":scope > circle")?.setAttribute("display", "none");
   // arm contact shadow (wave only): one silhouette of each hand drawing in each region; the wave one is the first of each pair
   const armShadow = q("[data-armshadow]");
-  const armShadowHands = root ? Array.from(root.querySelectorAll("[data-shadow-hand]")).filter((_e, i) => i % 2 === 0) : [];
+  const nArts = root ? Math.max(1, root.querySelectorAll("[data-hand]").length) : 1;
+  const armShadowHands = root ? Array.from(root.querySelectorAll("[data-shadow-hand]")).filter((_e, i) => i % nArts === 0) : [];
 
   const set = (e: Element | null, k: string, v: string) => {
     if (e && e.getAttribute(k) !== v) e.setAttribute(k, v);
@@ -73,13 +78,13 @@ export function createHands(svg: SVGSVGElement, uid: string, H: MailmanHands = D
     set(gr, "y2", String(s.y2));
   };
 
-  const state: Record<Kind, { b: Beat | null; tw: gsap.core.Tween | null }> = { wave: { b: null, tw: null }, heart: { b: null, tw: null } };
+  const state: Record<Kind, { b: Beat | null; tw: gsap.core.Tween | null }> = { wave: { b: null, tw: null }, heart: { b: null, tw: null }, chin: { b: null, tw: null } };
 
   /** One frame of one moment: the kit's maths gives the numbers, the elements get them (the kit web drawer does the same). */
   const draw = (k: Kind, b: Beat) => {
     state[k].b = b;
-    const M = H[k];
-    const e = parts[k === "wave" ? 0 : 1];
+    const M = H[k] as NonNullable<(typeof H)[Kind]>;
+    const e = parts[KINDS.indexOf(k)];
     const show = b.up > 0;
     const s = handFrame(M.hands[0], M.variantA, b, show, H.shoulder, M.shadow);
     const disp = show ? "inline" : "none";
@@ -137,7 +142,7 @@ export function createHands(svg: SVGSVGElement, uid: string, H: MailmanHands = D
   };
 
   const play = (k: Kind) => {
-    const M = H[k];
+    const M = H[k] as NonNullable<(typeof H)[Kind]>;
     const s = state[k];
     const o = { t: 0 };
     let from: Beat | null = null;
@@ -147,7 +152,7 @@ export function createHands(svg: SVGSVGElement, uid: string, H: MailmanHands = D
       duration: M.dur / 1000,
       ease: "none",
       onStart: () => {
-        lower(k === "wave" ? "heart" : "wave", 0.3); // the other hands go down while these come up
+        KINDS.forEach((o2) => o2 !== k && lower(o2, 0.3)); // the other hands go down while these come up
         if (s.tw && s.tw !== tw) s.tw.kill();
         s.tw = tw;
         from = s.b && s.b.up > 0 ? s.b : null; // these hands are still up: start from the pose they have (nothing jumps)
@@ -170,9 +175,10 @@ export function createHands(svg: SVGSVGElement, uid: string, H: MailmanHands = D
   return {
     wave: () => play("wave"),
     heart: () => play("heart"),
+    chin: () => play("chin"),
     stop: () =>
       new Promise<void>((done) => {
-        const wait = Math.max(lower("wave"), lower("heart"));
+        const wait = Math.max(...KINDS.map((k) => lower(k)));
         if (wait) gsap.delayedCall(wait, done);
         else done();
       }),
@@ -184,7 +190,7 @@ export function handsSelfCheck() {
   const H = DEFAULT_HANDS;
   let worst = 0;
   const nums = (t: string) => (t.match(/-?\d+\.?\d*(?:e-?\d+)?/g) ?? []).map(Number);
-  for (const k of KINDS) {
+  for (const k of KINDS.filter((x): x is "wave" | "heart" => x !== "chin")) {
     for (const [ms, want] of H.check[k]) {
       const got = handFrame(H[k].hands[0], H[k].variantA, beatOf(k, ms), true, H.shoulder, H[k].shadow);
       for (const [a, b] of [[got.transform, want.transform], [got.sleeve, want.sleeve], [got.cuff, want.cuff], [got.seam.d, want.seam]] as [string, string][]) {

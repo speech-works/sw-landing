@@ -52,6 +52,8 @@ export default function Avatar({
   alt = "",
   priority = false,
   plain = false,
+  art,
+  behind,
 }: {
   name: string;
   size?: number;
@@ -59,6 +61,10 @@ export default function Avatar({
   alt?: string;
   priority?: boolean;
   plain?: boolean;
+  /** Replaces the picture (for example an animated figure); the colour blob stays. */
+  art?: React.ReactNode;
+  /** Drawn under the colour blob (for example a window behind it). */
+  behind?: React.ReactNode;
 }) {
-  return <AvatarFigure name={name} size={size} className={className} alt={alt} priority={priority} plain={plain} />;
+  return <AvatarFigure name={name} size={size} className={className} alt={alt} priority={priority} plain={plain} art={art} behind={behind} />;
 }

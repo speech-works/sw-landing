@@ -55,3 +55,9 @@ export function playPop() {
   osc.start(start);
   osc.stop(start + 0.075);
 }
+
+/** The shared audio context when it is running (after the visitor's first click, tap or key), else null. */
+export function runningAudio(): AudioContext | null {
+  if (context && context.state !== "running") void context.resume().catch(() => {});
+  return context && context.state === "running" ? context : null;
+}

@@ -220,6 +220,15 @@ export function beatHeart(ms: number): Beat {
     ny: C.ny * io(seg(c, C.nyIn[0], C.nyIn[1])) * (1 - io(seg(c, C.nyOut[0], C.nyOut[1]))), face: c > MOMENTS['h-heart'].faceIn && c < MOMENTS['h-heart'].faceOff, pop: 1 + C.pop * b, plush: pl };
 }
 
+/** hands-rig.js AT.chin: Hand at the chin. The hand turns a little with the nod (rot goes into the hand angle, not into the wrist swing). */
+export function beatChin(ms: number): Beat {
+  'worklet';
+  const C = CHIN, T = POSES.chin.dur, c = clamp(ms, 0, T), n = seg(c, C.seg[0], C.seg[1]), nod = C.nod * Math.sin(2 * Math.PI * C.freq * n) * bump(n);
+  return { up: up2(ms, T, UP2.i, UP2.o), spread: 0, dy: nod * C.dyK, dfa: 0, dha: C.rot * Math.sin(2 * Math.PI * C.freq * n - C.rotPh) * bump(n), wrist: false, sk: 0,
+    tilt: C.tilt * io(seg(c, C.tiltIn[0], C.tiltIn[1])) * (1 - io(seg(c, C.tiltOut[0], C.tiltOut[1]))), ny: C.dip * bump(seg(c, C.dipSeg[0], C.dipSeg[1])) + nod,
+    face: c > MOMENTS['h-chin'].faceIn && c < MOMENTS['h-chin'].faceOff, pop: 1, plush: 0 };
+}
+
 /** hands-rig.js frame(): where the wrist is, the hand angle, the forearm direction and the sleeve width. enter = [0,0] (pm.js P2). */
 export function poseHand(h: PrepHand, A: boolean, b: Beat): Posed {
   'worklet';

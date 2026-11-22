@@ -347,7 +347,6 @@ svg {
   margin-top: auto;
   padding-top: 12px;
   min-height: 50px;
-  border-top: 1px solid #14131135;
   flex-shrink: 0;
 }
 .feature-action strong,
@@ -370,7 +369,6 @@ svg {
   border-radius: 50%;
   flex-shrink: 0;
 }
-.feature-card-0 .feature-action { border-color: #ffffff30; }
 .feature-card-0 .feature-action strong { color: var(--lime); }
 .feature-card-0 .feature-action small { color: #d0cdc3; }
 .feature-card-0 .feature-action-arrow { background: var(--lime); color: var(--ink); border-color: var(--lime); }
@@ -2206,17 +2204,14 @@ svg {
 .avatar-figure[data-kind="dots"] > .avatar-blob { background: radial-gradient(circle at 50% 50%, var(--av-b) 27%, transparent 28%) 0 0 / var(--av-cell) var(--av-cell), var(--av-a); }
 @media (prefers-reduced-motion: reduce) { .avatar-blob { transition: none; } }
 
-/* Program cards: on hover or keyboard focus the figure leans in (the figure rule above), the picture grows a little and the colour blob swings the other way, so the two move apart like layers. */
-.program-card .avatar-blob { transition: opacity 0.25s var(--ease-out), transform 460ms cubic-bezier(.34, 1.56, .64, 1); }
-.program-card .avatar-figure > img.avatar { transition: scale 460ms cubic-bezier(.34, 1.56, .64, 1); }
+/* Program cards: on hover or keyboard focus the picture and its colour blob grow a little TOGETHER, as one piece. The blob always covers the base of the figure, so the body never comes out of it. */
+.program-card .avatar-figure { transition: scale 460ms cubic-bezier(.34, 1.56, .64, 1); }
 @media (hover: hover) and (pointer: fine) {
-  .program-card:hover .avatar-blob, .program-card:focus-visible .avatar-blob { transform: rotate(-4deg) scale(1.03); }
-  .program-card:hover .avatar-figure > img.avatar, .program-card:focus-visible .avatar-figure > img.avatar { scale: 1.06; }
+  .program-card:hover .avatar-figure, .program-card:focus-visible .avatar-figure { scale: 1.05; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .program-card .avatar-blob, .program-card .avatar-figure > img.avatar { transition: none; }
-  .program-card:hover .avatar-blob, .program-card:focus-visible .avatar-blob { transform: none; }
-  .program-card:hover .avatar-figure > img.avatar, .program-card:focus-visible .avatar-figure > img.avatar { scale: 1; }
+  .program-card .avatar-figure { transition: none; }
+  .program-card:hover .avatar-figure, .program-card:focus-visible .avatar-figure { scale: 1; }
 }
 
 /* The feature cards use the same new avatars as the rest of the site (they were old animated portraits). */
@@ -2225,3 +2220,102 @@ svg {
 .character-scene [data-actor="maya"] { left: 3%; width: 40%; height: auto; aspect-ratio: 1 / 1; }
 .character-scene [data-actor="caller"] { right: 2%; top: 62%; width: 29%; height: auto; aspect-ratio: 1 / 1; }
 .partner-person .character-portrait { width: 100%; height: 100%; }
+
+/* The animated Job interview avatar fills the avatar box like the picture it replaces; its speech bubbles may leave the box. */
+.interview-art { position: absolute; inset: 0; display: block; }
+.interview-art > svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.interview-art > img.avatar { position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-width: none; margin: 0; border: 0; border-radius: 0; }
+/* An animated figure is cut by the blob outline inside its own picture, so the blob must not swing on hover: a swing would open a gap under the body. The animation is the hover effect. */
+.program-card .avatar-figure:has(> .interview-art) > .avatar-blob,
+.program-card:hover .avatar-figure:has(> .interview-art) > .avatar-blob,
+.program-card:focus-visible .avatar-figure:has(> .interview-art) > .avatar-blob { transform: none; }
+
+/* The Job interview program page: the animated scene stands on the page itself, no blue box. It sits to the left; the bigger table reaches out to the right, past the blob. */
+.detail-art.detail-art-open, .page-hero .detail-art.detail-art-open { background: none; border: 0; box-shadow: none; transform: none; padding: 0; margin: 0; place-items: center start; }
+.detail-art-open .program-portrait { width: min(90%, 380px); height: auto; transform: none; margin-left: -18%; }
+.page-hero:has(.detail-art-open) { overflow-x: clip; }
+@media (max-width: 640px) { .detail-art-open .program-portrait { width: min(64%, 245px); margin-left: 0; } .detail-art.detail-art-open { min-height: 0; } }
+
+/* The Phone call program page: the call-desk scene is wide (the desk crosses out of the blob), so the figure is smaller and centred in its column. */
+.detail-art-call .program-portrait { width: min(56%, 265px); margin-left: auto; margin-right: auto; }
+.detail-art.detail-art-call { place-items: center; }
+@media (max-width: 640px) { .detail-art-call .program-portrait { width: min(46%, 170px); } }
+
+.page-hero .detail-art.detail-art-open.tone-orange, .page-hero .detail-art.detail-art-open.tone-blue { background: none !important; }
+
+/* the call-scene window: hidden until its animation shows it (with reduced motion it is simply there) */
+.call-window { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .call-window { opacity: 1; } }
+
+/* The Talking about your stutter page: the balloons rise above her head, so the picture gets room above. */
+.detail-art-balloons .program-portrait { width: min(62%, 285px); margin-left: auto; margin-right: auto; transform: translateY(70px); }
+.page-hero .detail-art.detail-art-balloons { place-items: end center; padding-top: 120px; }
+.page-hero .detail-art.detail-art-open.tone-purple { background: none !important; }
+@media (max-width: 640px) { .detail-art-balloons .program-portrait { width: min(40%, 140px); margin-left: auto; margin-right: auto; transform: translateY(14px); } .page-hero .detail-art.detail-art-balloons { padding-top: 190px; padding-bottom: 20px; } }
+
+/* The Panic Button page: a big arched window behind him (it reaches above and beside the picture), a wide desk in front. */
+.panic-window { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; opacity: 1; }
+.detail-art-panic .program-portrait { width: min(56%, 255px); margin-left: auto; margin-right: auto; }
+.page-hero .detail-art.detail-art-panic { place-items: end center; padding-top: 175px; padding-bottom: 20px; }
+.page-hero .detail-art.detail-art-open.tone-lime { background: none !important; }
+@media (max-width: 640px) { .detail-art-panic .program-portrait { width: min(44%, 160px); } .page-hero .detail-art.detail-art-panic { padding-top: 130px; } }
+
+/* Panic Button: the colour blob is the back-most layer, then the window, then him. */
+.detail-art-panic .avatar-blob { z-index: 0; }
+.detail-art-panic .panic-window { z-index: 1; }
+.detail-art-panic .interview-art { z-index: 2; }
+
+/* The Panic Button page (the tiger that becomes a kitten): the roaring tiger stands to his left, so the picture sits right of centre in its box. */
+.detail-art-tiger .program-portrait { width: min(54%, 250px); margin-left: auto; margin-right: 30%; }
+.page-hero .detail-art.detail-art-tiger { place-items: center end; padding-top: 0; }
+.page-hero .detail-art.detail-art-open.tone-lime { background: none !important; }
+@media (max-width: 640px) { .detail-art-tiger .program-portrait { width: min(46%, 165px); margin-right: 12%; } }
+
+/* The Bouncing Back page: the ball bounces on her left and rolls across to her right, so the picture sits in the middle with room on both sides. */
+.detail-art-bounce .program-portrait { width: min(58%, 285px); margin-left: 15%; margin-right: auto; }
+.page-hero .detail-art.detail-art-bounce { place-items: center start; padding-top: 0; }
+.page-hero .detail-art.detail-art-open.tone-peach { background: none !important; }
+@media (max-width: 640px) { .detail-art-bounce .program-portrait { width: min(54%, 195px); margin-left: 18%; } .page-hero .detail-art.detail-art-bounce { padding-top: 120px; } }
+
+/* The Understanding your stutter page (the iceberg): his face is the tip; the water and the tall dark body reach below the picture, so the art box gets room below. */
+.detail-art-iceberg .program-portrait { width: min(54%, 250px); margin-left: auto; margin-right: auto; }
+.page-hero .detail-art.detail-art-iceberg { place-items: start center; padding-top: 24px; padding-bottom: 290px; }
+.page-hero .detail-art.detail-art-open.tone-purple { background: none !important; }
+@media (max-width: 640px) { .detail-art-iceberg .program-portrait { width: min(46%, 170px); } .page-hero .detail-art.detail-art-iceberg { padding-bottom: 205px; } }
+
+/* The Dating and relationships page: two people at a pond inside one wavy blob; the whole scene is one wide picture (820 x 470 units), the figures are placed in it in percent. */
+.dating-scene { position: relative; display: block; width: 100%; aspect-ratio: 820 / 610; line-height: 0; }
+.dating-scene > svg, .dating-scene > img.dating-fig { position: absolute; display: block; overflow: visible; max-width: none; margin: 0; border: 0; border-radius: 0; transform: none; }
+.dating-back, .dating-front { inset: 0; width: 100%; height: 100%; }
+.dating-front { pointer-events: none; }
+.dating-w { left: 8.78%; top: 37.705%; width: 39.024%; height: 50.82%; }
+.dating-m { left: 58.86%; top: 35.738%; width: 34.341%; height: 44.72%; }
+.detail-art-dating .program-portrait, .detail-art-dating .dating-scene { width: min(124%, 600px); margin-left: -22%; transform: none; }
+.page-hero .detail-art.detail-art-dating { place-items: center start; }
+.page-hero .detail-art.detail-art-open.tone-pink { background: none !important; }
+@media (max-width: 640px) { .detail-art-dating .dating-scene { width: 100%; margin-left: 0; } }
+
+/* The Word Swap page: a plain box is set down on his left and a gold gift box opens on his right; the scene reaches out on both sides of the picture. */
+.detail-art-gift .program-portrait { width: min(66%, 305px); margin-left: auto; margin-right: auto; transform: translateX(-12%); }
+.page-hero .detail-art.detail-art-gift { place-items: center; padding-top: 70px; }
+.page-hero .detail-art.detail-art-open.tone-orange { background: none !important; }
+@media (max-width: 640px) { .detail-art-gift .program-portrait { width: min(56%, 205px); } .page-hero .detail-art.detail-art-gift { padding-top: 60px; } }
+
+/* The Breaking Thought Traps page (Curly in a cage under a rain cloud): the scene is wide (the cage, the sun and the clouds reach out of the picture), so the figure is small and centred with room above. */
+.detail-art-cage .program-portrait { width: min(46%, 235px); margin-left: auto; margin-right: auto; }
+.page-hero .detail-art.detail-art-cage { place-items: end center; padding-top: 300px; padding-bottom: 30px; }
+@media (max-width: 640px) { .detail-art-cage .program-portrait { width: min(38%, 135px); } .page-hero .detail-art.detail-art-cage { padding-top: 180px; padding-bottom: 24px; } }
+
+/* The Speech Toolkit page: the crayon box stands to her right and the crayons lift above her shoulder, so she sits a little left of the middle. */
+.detail-art-crayons .program-portrait { width: min(54%, 280px); margin-left: auto; margin-right: auto; transform: translateX(-38%); }
+.page-hero .detail-art.detail-art-crayons { place-items: end center; padding-top: 130px; padding-bottom: 30px; }
+@media (max-width: 640px) { .detail-art-crayons .program-portrait { width: min(50%, 185px); } .page-hero .detail-art.detail-art-crayons { padding-top: 100px; padding-bottom: 24px; } }
+.page-hero .detail-art.detail-art-crayons { padding-top: 230px; }
+@media (max-width: 640px) { .page-hero .detail-art.detail-art-crayons { padding-top: 130px; } }
+
+/* The Dating page sky: stars twinkle and the lanterns drift up and down a little (still with reduced motion). */
+.dating-back .dt-star { transform-box: fill-box; transform-origin: center; animation: dt-twinkle 3.2s ease-in-out infinite; }
+.dating-back .dt-lan { animation: dt-drift 7s ease-in-out infinite; }
+@keyframes dt-twinkle { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+@keyframes dt-drift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@media (prefers-reduced-motion: reduce) { .dating-back .dt-star, .dating-back .dt-lan { animation: none; } }
