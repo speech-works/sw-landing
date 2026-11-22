@@ -233,3 +233,7 @@ export const avatarBlobs: Record<string, AvatarBlob> = {
   "dots": []
  }
 };
+
+// kit-built avatars that sit on the home page hero borrow the colour blob of a similar figure
+avatarBlobs["chat-star"] = { ...avatarBlobs.curly };
+avatarBlobs["mirror-quiff"] = { ...avatarBlobs.silver };
