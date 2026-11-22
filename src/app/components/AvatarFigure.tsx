@@ -27,7 +27,7 @@ export default function AvatarFigure({ name, size, className, alt, priority, pla
     el.dataset.blobA = picked.a;
     setColours(picked);
   }, [blob]);
-  const image = art ?? <Image src={`/avatars/${name}.svg`} width={size} height={size} className={`avatar${blob ? "" : " " + className}`} alt={alt} priority={priority} draggable={false} />;
+  const image = art ?? <Image src={`/avatars/${name}.svg?v=20261122`} width={size} height={size} className={`avatar${blob ? "" : " " + className}`} alt={alt} priority={priority} draggable={false} />;
   if (!blob) return image;
   const shapes = `<path d='${blob.d}'/>${blob.top ? `<path d='${blob.top}'/>` : ""}${blob.dots.map(([x, y, r]) => `<circle cx='${x}' cy='${y}' r='${r}'/>`).join("")}`;
   const mask = `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='-70 -75 460 400' preserveAspectRatio='none'>${shapes}</svg>`)}")`;

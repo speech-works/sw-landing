@@ -268,16 +268,16 @@ export default function FeatureDeck({ outcome = false, paused = false }: { outco
       onKeyDownCapture={() => setKeyboardInput(true)}
       onPointerDownCapture={() => setKeyboardInput(false)} data-reveal>
       <div className="hero-avatar hero-avatar-one">
-        <div className="depth-portrait" data-depth="1.15"><Avatar name="phone-call" size={114} priority /></div>
+        <div className="depth-portrait" data-depth="1.15"><Avatar name="turban" size={114} priority /></div>
       </div>
       <div className="hero-avatar hero-avatar-two">
-        <div className="depth-portrait" data-depth="-0.85"><Avatar name="mirror-quiff" size={100} priority /></div>
+        <div className="depth-portrait" data-depth="-0.85"><Avatar name="silver" size={96} priority /></div>
       </div>
       <div className="hero-avatar hero-avatar-three">
-        <div className="depth-portrait" data-depth="0.75"><Avatar name="mailman-happy" size={104} priority /></div>
+        <div className="depth-portrait" data-depth="0.75"><Avatar name="pigtails" size={104} priority /></div>
       </div>
       <div className="hero-avatar hero-avatar-four">
-        <div className="depth-portrait" data-depth="-1.1"><Avatar name="chat-star" size={122} priority /></div>
+        <div className="depth-portrait" data-depth="-1.1"><Avatar name="coils" size={122} priority /></div>
       </div>
       <span className="hero-doodle doodle-one" aria-hidden="true">
         ✳
