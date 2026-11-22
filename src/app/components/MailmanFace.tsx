@@ -86,7 +86,7 @@ const WINK_SIDE = 1; // the eye on the viewer's right closes
 
 /** The picture as SVG text, with one state's attributes written in (for the first paint). */
 function markupFor(uid: string, state: Record<string, RigAttrs>) {
-  let html = R.svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "").replace(/(id="|url\(#|href="#)cd\d+/g, `$1mf${uid}`);
+  let html = R.svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "").replace(/(id="|url\(#|href="#)cd\d+/g, (_m: string, a: string) => `${a}mf${uid}`);
   for (const i in state) {
     html = html.replace(new RegExp(`<(\\w+)([^>]*?) data-i="${i}"(/?)>`), (_m, tag: string, attrs: string, close: string) => {
       let s = attrs;

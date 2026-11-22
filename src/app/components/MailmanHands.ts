@@ -31,7 +31,7 @@ const LOWER_S = 0.42;
 
 /** The hand layer as SVG text, for the same <svg> as the figure. All of it is hidden until a moment plays. */
 export function handsMarkup(uid: string, H: MailmanHands = DEFAULT_HANDS) {
-  return `<g data-hands="1" transform="${H.stageT}">${H.layer.replace(/(id="|url\(#|href="#)cd\d+/g, `$1mh${uid}`)}</g>`;
+  return `<g data-hands="1" transform="${H.stageT}">${H.layer.replace(/(id="|url\(#|href="#)cd\d+/g, (_m: string, a: string) => `${a}mh${uid}`)}</g>`;
 }
 
 const mx = (m: number[]) => `matrix(${m.map((v) => +v.toFixed(5)).join(" ")})`;

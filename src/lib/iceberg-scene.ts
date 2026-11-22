@@ -7,7 +7,7 @@ const INK = "#242329";
 const DK = "#0E2A2A";
 const hj = 'stroke-linejoin="round" stroke-linecap="round"';
 
-// fixed-seed grain: tiny vector dots
+// constant-seed grain: tiny vector dots
 const grain = (() => {
   let s = 11;
   const R = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };

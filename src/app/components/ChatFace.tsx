@@ -28,7 +28,7 @@ R.eyes.lid0.forEach(addKeys);
 
 /** The picture as SVG text, with one state's attributes written in (for the first paint). */
 function markupFor(uid: string, state: Record<string, RigAttrs>) {
-  let html = R.svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "").replace(/(id="|url\(#|href="#)cd\d+/g, `$1cf${uid}`)
+  let html = R.svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "").replace(/(id="|url\(#|href="#)cd\d+/g, (_m: string, a: string) => `${a}cf${uid}`)
     // the two glasses layers get a class, so the page can make them clear on hover
     .replace('fill="#14131C" fill-opacity="0.55"', 'class="cf-lens" fill="#14131C" fill-opacity="0.55"')
     .replace('fill="none" stroke="#FFE04A"', 'class="cf-frame" fill="none" stroke="#FFE04A"');

@@ -62,7 +62,7 @@ function derive(rig: MailmanRig, custom: Record<string, CustomFace> | undefined)
 
 /** The picture as SVG text, with one state's attributes written in (for the first paint). `cut`: a path (in the picture's units) that the figure is cut by below the head line, the avatar's colour blob. */
 function markupFor(uid: string, rig: MailmanRig, keys: Record<string, string[]>, state: Record<string, RigAttrs>, extra: string, cut?: string) {
-  let html = rig.svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "").replace(/(id="|url\(#|href="#)cd\d+/g, `$1rf${uid}`);
+  let html = rig.svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "").replace(/(id="|url\(#|href="#)cd\d+/g, (_m: string, a: string) => `${a}rf${uid}`);
   for (const i in state) {
     html = html.replace(new RegExp(`<(\\w+)([^>]*?) data-i="${i}"(/?)>`), (_m, tag: string, attrs: string, close: string) => {
       let s = attrs;

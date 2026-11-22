@@ -98,7 +98,7 @@ export const MOMENTS: Record<string, { pose: string; peakMs: number; lead: numbe
 /** live.js frame(): what a full shrug (S.shrug = 1) does. */
 export const SHRUG = { lift: 12, tilt: 3, sink: 5, brow: 3, browUp: 3 };
 
-/** live.js: springs (k, c) and caps (rule M2). The web steps them once a display frame; the core steps them at a fixed 1/60 s. */
+/** live.js: springs (k, c) and caps (rule M2). The web steps them once a display frame; the core steps them at a constant 1/60 s. */
 export const SPRINGS = { rotK: 40, rotC: 9, rotCap: 6, nyK: 55, nyC: 10, nyCap: 8, gazeK: 260, gazeC: 30, stepMs: 1000 / 60, settleMs: 800 };
 
 /** live.js: head pivot (kit units), face change time, blink kinds (seconds). */

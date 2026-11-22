@@ -13,7 +13,7 @@ import { cardSounds } from "@/lib/card-sounds";
 // Leaving the card plays it backwards quickly, so he is standing again. With reduced motion nothing moves: the finished scene shows, with no sound.
 // The art is the layered scene in /public/scenes/interview-scene.svg (built by scripts/build-interview-scene.cjs). It loads when the card is first
 // pointed at (or soon after the page is idle); until then the card shows the plain banker picture, which is the same art as the first frame.
-// Every layer that touches the blob bottom (the front body, the back body, the chair) is cut by one fixed blob clip, so it ends on the blob outline at every frame.
+// Every layer that touches the blob bottom (the front body, the back body, the chair) is cut by one constant blob clip, so it ends on the blob outline at every frame.
 
 const SRC = "/scenes/interview-scene.svg";
 let cache: Promise<string> | null = null;
@@ -159,9 +159,9 @@ export default function InterviewAvatar({ className = "", alt = "", open = false
       const NS = "http://www.w3.org/2000/svg";
       const tg = document.createElementNS(NS, "g") as unknown as SVGPathElement;
       trail = tg;
-      // three thin speed streaks that curve behind the plane (different lengths and side offsets)
-      const STREAKS = [{ off: -7, from: 0.016, len: 0.07, op: 0.9 }, { off: 0, from: 0.03, len: 0.055, op: 0.7 }, { off: 7, from: 0.012, len: 0.04, op: 0.8 }];
-      const lines = STREAKS.map((st) => {
+      // three thin speed trails that curve behind the plane (different lengths and side offsets)
+      const TRAILS = [{ off: -7, from: 0.016, len: 0.07, op: 0.9 }, { off: 0, from: 0.03, len: 0.055, op: 0.7 }, { off: 7, from: 0.012, len: 0.04, op: 0.8 }];
+      const lines = TRAILS.map((st) => {
         const l = document.createElementNS(NS, "path");
         l.setAttribute("fill", "none"); l.setAttribute("stroke", "#FFFFFF"); l.setAttribute("stroke-width", "2"); l.setAttribute("stroke-linecap", "round"); l.setAttribute("opacity", String(st.op));
         tg.appendChild(l);
@@ -171,8 +171,8 @@ export default function InterviewAvatar({ className = "", alt = "", open = false
       const u = { v: 0 };
       let passed = false;
       if (withSound) cardSounds.sweep();
-      const streaks = (k: number) => {
-        STREAKS.forEach((st, i) => {
+      const trails = (k: number) => {
+        TRAILS.forEach((st, i) => {
           const pts: string[] = [];
           for (let j = 0; j <= 8; j++) {
             const uu = u.v - st.from - (st.len * j) / 8;
@@ -193,7 +193,7 @@ export default function InterviewAvatar({ className = "", alt = "", open = false
           if (u.v > 0.5 && rot < 0) rot += 360;
           const k = 1 + 0.26 * (o.z + 0.687);
           plane.setAttribute("transform", `translate(${(o.x - CX0).toFixed(2)} ${(o.y - CY0).toFixed(2)}) translate(${CX0} ${CY0}) rotate(${rot.toFixed(2)}) scale(${k.toFixed(3)}) translate(${-CX0} ${-CY0})`);
-          streaks(k);
+          trails(k);
           gazeAt(o.x, o.y);
           if (withSound && !passed && o.z > 0.9) { passed = true; cardSounds.flip(); }
         },
