@@ -237,3 +237,9 @@ export const avatarBlobs: Record<string, AvatarBlob> = {
 // kit-built avatars that sit on the home page hero borrow the colour blob of a similar figure
 avatarBlobs["chat-star"] = { ...avatarBlobs.curly };
 avatarBlobs["mirror-quiff"] = { ...avatarBlobs.silver };
+
+// the Speechworks mascot (the Crew look, built on the banker figure) uses the banker blob
+avatarBlobs["mascot"] = { ...avatarBlobs.banker };
+avatarBlobs["mascot-f"] = { ...avatarBlobs.bob };
+// Interview Ready's "You": the banker without glasses, so he does not look like the mascot
+avatarBlobs["banker-b"] = { ...avatarBlobs.banker };

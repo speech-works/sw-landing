@@ -5,6 +5,7 @@ import { avatarBlobs } from "@/lib/avatar-blobs";
 import { playPop, unlockAudioOnInteraction } from "@/lib/pop-sound";
 import { heroStories } from "@/content/program-page";
 import { useInView } from "./useInView";
+import { useMascot } from "@/lib/useMascot";
 
 const INK = "#141311";
 // Where each tail points: just outside the speaker's head (matches the card positions in program-page.css).
@@ -42,6 +43,7 @@ export default function HeroStory({ program, you, label }: { program: string; yo
   const [ref, inView] = useInView<HTMLDivElement>(0.3);
   const [beat, setBeat] = useState(0);
   const [run, setRun] = useState(0);
+  const mascot = useMascot();
 
   useEffect(() => unlockAudioOnInteraction(), []);
   useEffect(() => {
@@ -71,7 +73,7 @@ export default function HeroStory({ program, you, label }: { program: string; yo
       </span>
       {/* 2. Speechworks helps */}
       <svg className="hs-arrow hs-a1" viewBox="0 0 140 90" aria-hidden="true"><path d="M6 78C20 40 52 30 60 52C66 70 40 74 46 52C54 26 92 18 128 14M128 14L110 4M128 14L114 28" fill="none" stroke={INK} strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-      <div className="hs-card hs-sw"><BlobAvatar name="silver" fill={{ a: "#8fb8ff" }} id="hs-sw" /><span className="hs-tag dark">Speechworks</span></div>
+      <div className={`hs-card hs-sw${mascot ? "" : " mascot-wait"}`}><BlobAvatar name={mascot ?? "mascot"} fill={{ a: "#8fb8ff" }} id="hs-sw" /><span className="hs-tag dark">Speechworks</span></div>
       <ComicBubble kind="say" shape="oval" tilt={2} seed={7} tip={TIP.help} cls="hs-help" show={beat >= 2}>{lines(data.help)}</ComicBubble>
       {/* 3. the real moment */}
       <svg className="hs-arrow hs-a2" viewBox="0 0 120 110" aria-hidden="true"><path d="M10 8C60 14 96 36 100 96M100 96L86 82M100 96L112 80" fill="none" stroke={INK} strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" /></svg>

@@ -37,7 +37,8 @@ export default async function ProgramPage({ params }: Props) {
   if (!program) notFound();
   const discount = launchDiscount(program.key);
   const page = programPage(program);
-  const you = cast[program.key] ?? "banker";
+  // Interview Ready: the banker without glasses, so "You" never looks like the Speechworks mascot (same suit and hair)
+  const you = program.key === "interview_ready" ? "banker-b" : cast[program.key] ?? "banker";
   return (
     <div className="site-shell">
       <Navbar />
