@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import "./motion.css";
 import "./home.css";
+import "./program-page.css";
 import SiteMotion from "./components/SiteMotion";
 import OfferChat from "./components/OfferChat";
 import { programs } from "@/content/programs";

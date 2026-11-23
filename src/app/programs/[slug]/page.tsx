@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { programs } from "@/content/programs";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import ProgramIllustration from "../../components/ProgramIllustration";
+import { cast, heroLabel } from "../../components/ProgramIllustration";
+import HeroStory from "../../components/HeroStory";
 import DownloadSection from "../../components/DownloadSection";
-import ProgramTakeaway from "../../components/ProgramTakeaway";
+import ProgramKit from "../../components/ProgramKit";
+import ProgramSteps from "../../components/ProgramSteps";
+import ProgramChat from "../../components/ProgramChat";
 import SectionEdge from "../../components/SectionEdge";
 import { socialMetadata } from "@/lib/site-metadata";
 import { launchDiscount } from "@/content/pricing";
+import { programPage } from "@/content/program-page";
 export const dynamicParams = false;
 export function generateStaticParams() {
   return programs.map(({ slug }) => ({ slug }));
@@ -32,67 +36,41 @@ export default async function ProgramPage({ params }: Props) {
   const program = programs.find((item) => item.slug === slug);
   if (!program) notFound();
   const discount = launchDiscount(program.key);
+  const page = programPage(program);
+  const you = cast[program.key] ?? "banker";
   return (
     <div className="site-shell">
       <Navbar />
       <main id="main-content">
         <div className="page-hero">
           <div className="section-wrap">
-            <Link className="breadcrumb" href="/programs/">
-              <ArrowLeft size={15} /> All programs
-            </Link>
             <section className="detail-hero" data-reveal>
               <div>
                 <p className="section-kicker">
                   {program.days} days · Pay once
                 </p>
-                <h1>{program.label}</h1>
+                <h1>{program.label}<span className="pg-dot">.</span></h1>
                 <p className="program-app-name">In the app: {program.title}</p>
                 <p className="detail-description">{program.detail}</p>
-                <a href="#download" className="button button-ink pressable">
-                  Get the app <ArrowUpRight size={17} />
-                </a>
-                <p className="detail-purchase-note">
-                  {discount !== null && <>Launch offer: <strong>{discount}% off</strong>. </>}
-                  Pay once for this program. No subscription needed.
+                <div className="pg-ctas">
+                  <Link href="/programs/" className="pg-secondary pressable">All programs</Link>
+                  <a href="#download" className="button button-ink pressable">
+                    Get the app <ArrowUpRight size={17} />
+                  </a>
+                </div>
+                <p className="pg-offer">
+                  {discount !== null && <><b>{discount}% off</b> at launch. </>}
+                  Pay once, no subscription.
                 </p>
               </div>
-              <div className={`detail-art tone-${program.color}${program.key === "interview_ready" ? " detail-art-open" : program.key === "hard_conversations" ? " detail-art-open detail-art-call" : program.key === "art_of_disclosure" ? " detail-art-open detail-art-balloons" : program.key === "panic_button" ? " detail-art-open detail-art-tiger": program.key === "understanding_your_voice" ? " detail-art-open detail-art-iceberg" : program.key === "bouncing_back" ? " detail-art-open detail-art-bounce" : program.key === "dating_intimacy" ? " detail-art-open detail-art-dating" : program.key === "word_swap" ? " detail-art-open detail-art-gift" : program.key === "breaking_thought_traps" ? " detail-art-open detail-art-cage" : program.key === "speech_toolkit" ? " detail-art-open detail-art-crayons" : ""}`}>
-                <ProgramIllustration program={program.key} animated />
-              </div>
+              <HeroStory program={program.key} you={you} label={heroLabel(program.key)} />
             </section>
           </div>
         </div>
         <SectionEdge kind="hero" />
-        <div className="section-wrap">
-          <ul className="detail-includes" aria-label="What is included">
-            {program.includes.map((item) => (
-              <li key={item} data-reveal>
-                <Check size={18} />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          <section className="outline-section" aria-labelledby="outline-title">
-            <div data-reveal>
-              <h2 id="outline-title">
-                Your daily plan
-              </h2>
-              <p>
-                New days open over time. The app shows when you can start the next day. You can return to completed days.
-              </p>
-            </div>
-            <ol className="program-outline">
-              {program.outline.map((day, index) => (
-                <li key={index} data-reveal>
-                  <span>Day {index + 1}</span>
-                  {day.title}
-                </li>
-              ))}
-            </ol>
-          </section>
-          <ProgramTakeaway programKey={program.key} />
-        </div>
+        <ProgramKit data={page} days={program.days} you={you} />
+        <ProgramSteps data={page} dayTitles={program.outline.map((day) => day.title)} />
+        <ProgramChat data={page} you={you} />
         <DownloadSection programTitle={program.title} placement={`program-${slug}`} />
       </main>
       <Footer />

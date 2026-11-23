@@ -11,7 +11,7 @@ import WordSwapAvatar from "./WordSwapAvatar";
 import CrayonAvatar from "./CrayonAvatar";
 
 // Each program is shown by one cast member (the same ones as on the About page).
-const cast: Record<string, string> = {
+export const cast: Record<string, string> = {
   interview_ready: "banker",
   hard_conversations: "phone-call",
   art_of_disclosure: "hijab",
@@ -45,6 +45,13 @@ const descriptions: Record<string, string> = {
   understanding_your_voice:
     "Speechworks avatar with an attentive expression, swept hair, and mint headphones.",
 };
+
+/** Alt text for the program's hero picture. */
+export function heroLabel(program: string) {
+  return program === "interview_ready"
+    ? "You practice with Speechworks, which asks: Tell me about yourself. Then the real interviewer asks the same question."
+    : descriptions[program] ?? "";
+}
 
 export default function ProgramIllustration({
   program,
