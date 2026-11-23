@@ -9,7 +9,7 @@ type Example = {
   stages: { label: string; text: string }[];
 };
 
-const examples: Record<string, Example> = {
+export const examples: Record<string, Example> = {
   "interview_ready": {
     "title": "Try an interview question.",
     "description": "Practice an answer based on your work.",
