@@ -37,7 +37,7 @@ export default function ProgramChat({ data, you }: { data: ProgramPageData; you:
           const me = beat.who === "you";
           return (
             <li key={i} className={`pc3-beat ${me ? "me" : "sw"}${i < shown ? " show" : ""}`} style={{ "--k": i } as React.CSSProperties}>
-              <ComicBubble kind="say" aim=".pc3-av" shape={me ? "box" : "oval"} tilt={[-2.5, 2, -1.5, 2.5][i % 4]} seed={i + 2} cls="pc3-bub" show={i < shown} tone={me ? "#9cc0ff" : "#fffdf6"}>{beat.text}</ComicBubble>
+              <ComicBubble kind="say" aim=".pc3-av" shape={me ? "box" : "oval"} tilt={[-2.5, 2, -1.5, 2.5][i % 4]} seed={i + 2} lean={i % 2 ? 0.2 : -0.2} bend={i % 2 ? 1.2 : -1.2} cls="pc3-bub" show={i < shown} tone={me ? "#9cc0ff" : "#fffdf6"}>{beat.text}</ComicBubble>
               <Avatar name={me ? you : mascot ?? "mascot"} size={200} className={`pc3-av${!me && !mascot ? " mascot-wait" : ""}`} />
               <small className="pc3-who">{me ? "You" : "Speechworks"}</small>
             </li>

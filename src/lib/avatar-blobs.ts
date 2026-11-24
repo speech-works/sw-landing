@@ -243,3 +243,5 @@ avatarBlobs["mascot"] = { ...avatarBlobs.banker };
 avatarBlobs["mascot-f"] = { ...avatarBlobs.bob };
 // Interview Ready's "You": the banker without glasses, so he does not look like the mascot
 avatarBlobs["banker-b"] = { ...avatarBlobs.banker };
+// the Word Swap barista (site-only apron) is built on the beanie figure, so he uses its blob
+avatarBlobs["barista"] = { ...avatarBlobs.beanie };

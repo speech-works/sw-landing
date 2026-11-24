@@ -61,15 +61,17 @@ function outline(shape: BubbleShape, w: number, h: number, seed: number) {
  * Tail tip at a measured point on a speaker's drawing: `pt` in the avatar's viewBox units ("-60 -5 440 315"),
  * pushed `gap` px along `dir` so the drawn tail (ink included) stops just short of the head.
  */
-export type Anchor = { el: string; pt: [number, number]; dir: [number, number]; gap?: number };
+export type Anchor = { el: string; pt?: [number, number]; dir: [number, number]; gap?: number; auto?: boolean };
 
-export default function ComicBubble({ kind, shape, tip, aim, anchor, cls, show, tone = "#fffdf6", tilt = 0, seed = 1, dashed = false, children }: {
+export default function ComicBubble({ kind, shape, tip, aim, anchor, cls, show, tone = "#fffdf6", tilt = 0, seed = 1, dashed = false, bend = 1, lean = 0, children }: {
   kind: "say" | "think"; cls: string; show: boolean; tone?: string; children: React.ReactNode;
   /** A whisper: dashed outline (only the listener hears it). */ dashed?: boolean;
   shape?: BubbleShape; tilt?: number; seed?: number;
   /** Tail tip as a share of the host box. */ tip?: Pt;
   /** Or: CSS selector of the speaker inside the host; the tail aims at the top middle of it. */ aim?: string;
   /** Or: an exact point on the speaker's outline. */ anchor?: Anchor;
+  /** Which way the tail curves and how much: 1 is the default gentle curve, -1 the other side. */ bend?: number;
+  /** Where the tail leaves the bubble, as a share of its width left (-) or right (+) of the tip. */ lean?: number;
 }) {
   const uid = "cb" + useId().replace(/:/g, "");
   const ref = useRef<HTMLDivElement>(null);
@@ -90,9 +92,18 @@ export default function ComicBubble({ kind, shape, tip, aim, anchor, cls, show, 
         let cx = 0, cy = 0;
         for (let n: HTMLElement | null = card; n && n !== host; n = n.offsetParent as HTMLElement | null) { cx += n.offsetLeft; cy += n.offsetTop; }
         const u = card.offsetWidth / 440;
+        // auto: the top middle of the figure's own drawing (the first group in its picture), in the same units
+        let pt = anchor.pt;
+        if (anchor.auto) {
+          const art = card.querySelector("svg > g") as SVGGraphicsElement | null;
+          if (!art) return;
+          const bb = art.getBBox();
+          pt = [bb.x + bb.width / 2, bb.y];
+        }
+        if (!pt) return;
         // the ink line sticks out past the tail tip by half its width, so add that to the gap
         const g = (anchor.gap ?? 2) + (kind === "think" ? 0 : dashed ? 2 : 3.5);
-        x = cx + (anchor.pt[0] + 60) * u + anchor.dir[0] * g; y = cy + (anchor.pt[1] + 5) * u + anchor.dir[1] * g;
+        x = cx + (pt[0] + 60) * u + anchor.dir[0] * g; y = cy + (pt[1] + 5) * u + anchor.dir[1] * g;
       } else if (aim) {
         const t = host.querySelector(aim) as HTMLElement | null;
         if (!t) return;
@@ -133,7 +144,8 @@ export default function ComicBubble({ kind, shape, tip, aim, anchor, cls, show, 
     const { w, h } = box, cx = w / 2, cy = h / 2, rx = w / 2, ry = h / 2;
     let { tx, ty } = box;
     // Where the tail leaves the bubble: the edge point facing the tip.
-    const a = Math.atan2((ty - cy) / ry, (tx - cx) / rx);
+    // lean: the tail leaves the bubble this share of its width to one side of the tip, so it slants down to the speaker
+    const a = Math.atan2((ty - cy) / ry, (tx + lean * w - cx) / rx);
     const ex = cx + rx * Math.cos(a), ey = cy + ry * Math.sin(a);
     let ux = tx - ex, uy = ty - ey, ul = Math.hypot(ux, uy);
     const nx = Math.cos(a) / rx, ny = Math.sin(a) / ry, nl = Math.hypot(nx, ny), onx = nx / nl, ony = ny / nl;
@@ -145,7 +157,7 @@ export default function ComicBubble({ kind, shape, tip, aim, anchor, cls, show, 
     if (kind === "say") {
       const bx = ex - onx * 10, by = ey - ony * 10, half = Math.min(12, w * 0.07), tnx = -ony, tny = onx;
       const b1 = [bx + tnx * half, by + tny * half], b2 = [bx - tnx * half, by - tny * half];
-      const dx = tx - ex, dy = ty - ey, dl = Math.hypot(dx, dy) || 1, qx = (-dy / dl) * 9, qy = (dx / dl) * 9;
+      const dx = tx - ex, dy = ty - ey, dl = Math.hypot(dx, dy) || 1, qx = (-dy / dl) * 9 * bend, qy = (dx / dl) * 9 * bend;
       const tailD = `M${f(b1[0])} ${f(b1[1])}Q${f((b1[0] + tx) / 2 + qx)} ${f((b1[1] + ty) / 2 + qy)} ${f(tx)} ${f(ty)}Q${f((b2[0] + tx) / 2 + qx)} ${f((b2[1] + ty) / 2 + qy)} ${f(b2[0])} ${f(b2[1])}`;
       extra = <path d={tailD + "Z"} />;
       tailPath = <path d={tailD} pathLength={100} />;
@@ -154,7 +166,9 @@ export default function ComicBubble({ kind, shape, tip, aim, anchor, cls, show, 
       const ang = (Math.atan2(dy, dx) * 180) / Math.PI;
       const at = (d: number) => [ex + dx * d, ey + dy * d];
       // the smallest dot ends right at the tip (ink included); the others step back toward the cloud
-      const d2 = L - 2.4 - 3, d1 = Math.max(d2 - 18, 9), d0 = Math.max(d1 - 21, 4);
+      // each dot clears the next by about 6 units, and the first clears the cloud's lumps (they bulge past the oval the tail leaves from)
+      let d2 = L - 2.4 - 3, d1 = d2 - 18, d0 = d1 - 21;
+      if (d0 < 14) { d0 = 14; d1 = Math.max(d1, d0 + 19); d2 = Math.max(d2, d1 + 15); }
       const dots: [number, number, number][] = [[d0, 6.5, 4.6], [d1, 4.6, 3.3], [d2, 3.2, 2.4]];
       // each dot is its own piece so the thought can grow dot by dot from the head (index 0 is next to the cloud)
       extra = <>{dots.map(([d, a, b], i) => {
