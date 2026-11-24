@@ -97,6 +97,17 @@ type Props = {
   viewBox?: string;
 };
 
+/** The teeth mask: the mouth's box, grown by half its outline and 1 unit, so the teeth never show outside the mouth. */
+function fitTeethMask(rect: Element, mouth: Element) {
+  let b: DOMRect;
+  try { b = (mouth as SVGGraphicsElement).getBBox(); } catch { return; }
+  const pad = (+(mouth.getAttribute("stroke-width") ?? 0)) / 2 + 1;
+  rect.setAttribute("x", (b.x - pad).toFixed(2));
+  rect.setAttribute("y", (b.y - pad).toFixed(2));
+  rect.setAttribute("width", (b.width + 2 * pad).toFixed(2));
+  rect.setAttribute("height", (b.height + 2 * pad).toFixed(2));
+}
+
 const RigFace = forwardRef<RigFaceHandle, Props>(function RigFace({ rig, hands: handsData, initial, custom, cut, className, overlay, underlay, viewBox }, ref) {
   const uid = useId().replace(/:/g, "");
   const D = useMemo(() => derive(rig, custom), [rig, custom]);
@@ -114,8 +125,29 @@ const RigFace = forwardRef<RigFaceHandle, Props>(function RigFace({ rig, hands: 
     svg.current?.querySelectorAll("[data-i]").forEach((e) => {
       map[e.getAttribute("data-i") as string] = e;
     });
+    // The teeth keep their full width while a mouth closes, so a closing laugh left a strip of teeth outside a small mouth.
+    // Mask the teeth to the mouth's outer box (its outline included), kept in step with the mouth on every frame. Not the mouth's own shape:
+    // on a laugh the mouth's top edge dips in the middle and the teeth sit across it, so its shape would hide them. Still faces do not change.
+    const teeth = rig.roles.teeth === undefined ? undefined : map[rig.roles.teeth], mouth = map[rig.roles.mouth];
+    if (svg.current && teeth && mouth && teeth.parentNode === mouth.parentNode) {
+      const NS = "http://www.w3.org/2000/svg", id = `rf${uid}tm`;
+      const mask = document.createElementNS(NS, "mask");
+      mask.setAttribute("id", id);
+      mask.setAttribute("maskUnits", "userSpaceOnUse");
+      for (const [k, v] of [["x", "-2000"], ["y", "-2000"], ["width", "6000"], ["height", "6000"]]) mask.setAttribute(k, v);
+      const shape = document.createElementNS(NS, "rect");
+      shape.setAttribute("fill", "#fff");
+      mask.appendChild(shape);
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("mask", `url(#${id})`);
+      teeth.parentNode?.insertBefore(g, teeth);
+      g.appendChild(teeth);
+      svg.current.insertBefore(mask, svg.current.firstChild);
+      map.teethMask = shape;
+      fitTeethMask(shape, mouth);
+    }
     els.current = map;
-  }, [html]);
+  }, [html, rig, uid]);
 
   useImperativeHandle(ref, () => {
     const { kit, keys, pupils } = D;
@@ -153,7 +185,10 @@ const RigFace = forwardRef<RigFaceHandle, Props>(function RigFace({ rig, hands: 
       setA(ro.brow, "d", F.browD);
       setA(ro.mouth, "d", F.mouthD);
       setA(ro.mouth, "stroke-width", F.mouthSw.toFixed(2));
+      const tm = els.current.teethMask;
+      if (tm && ro.mouth !== undefined && els.current[ro.mouth]) fitTeethMask(tm, els.current[ro.mouth]);
       show(ro.teeth, F.teethO);
+      setA(ro.teeth, "opacity", F.teethO >= 1 ? null : F.teethO.toFixed(3));
       if (F.teethO) {
         setA(ro.teeth, "d", F.teethD);
         setA(ro.teeth, "transform", mx(F.teethM));

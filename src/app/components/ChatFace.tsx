@@ -118,6 +118,7 @@ const ChatFace = forwardRef<ChatFaceHandle, { className?: string }>(function Cha
       setA(ro.mouth, "d", F.mouthD);
       setA(ro.mouth, "stroke-width", F.mouthSw.toFixed(2));
       show(ro.teeth, F.teethO);
+      setA(ro.teeth, "opacity", F.teethO >= 1 ? null : F.teethO.toFixed(3));
       if (F.teethO) {
         setA(ro.teeth, "d", F.teethD);
         setA(ro.teeth, "transform", mx(F.teethM));
