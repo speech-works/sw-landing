@@ -253,7 +253,7 @@
 .st-real { position: absolute; left: 61%; top: 54%; width: 36%; }
 .st-real .st-fig { animation-delay: -3s; }
 .st-swwrap { left: 38%; top: 11%; width: 28%; scale: 0; opacity: 0; transform-origin: 50% 100%; }
-.st-swwrap.in { animation: pgBub .55s cubic-bezier(.34, 1.56, .64, 1) forwards; }
+.st-swwrap.in { animation: stDrop .5s ease-out .3s forwards; } /* waits for the question bubble to fade out first */
 .st-sw .st-fig { animation-delay: -1.5s; transform-origin: 67.8% 24.8%; }
 .st .hs-tag { left: 50%; bottom: -24px; translate: -50% 0; }
 .st-b { position: absolute; }
@@ -340,3 +340,6 @@
 @keyframes stBuzz { 0%, 55%, 100% { rotate: 0deg; } 60% { rotate: -9deg; } 66% { rotate: 8deg; } 72% { rotate: -7deg; } 78% { rotate: 5deg; } 84% { rotate: 0deg; } }
 @keyframes stBuzzLines { 0%, 52%, 100% { opacity: 0; } 60%, 84% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .st-phone.on .st-phone-art, .st-phone.on .st-buzz { animation: none; opacity: 1; } }
+
+/* Speechworks pops in with only a small overshoot, so its label never swells into a bubble beside it */
+@keyframes stDrop { 0% { scale: 0; opacity: 0; } 70% { scale: 1.02; opacity: 1; } 100% { scale: 1; opacity: 1; } }

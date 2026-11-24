@@ -61,3 +61,38 @@ export function runningAudio(): AudioContext | null {
   if (context && context.state !== "running") void context.resume().catch(() => {});
   return context && context.state === "running" ? context : null;
 }
+
+export type ChimeKind = "bell" | "glass" | "sparkle";
+
+/**
+ * A soft chime for the moment Speechworks whispers its tip (story hero only). Quieter than the pop, under half a second.
+ * bell: two soft notes, a fifth apart. glass: one bell-like note. sparkle: three quick rising notes.
+ */
+export function playChime(kind: ChimeKind = "bell") {
+  const ctx = context;
+  if (!ctx) return;
+  if (ctx.state !== "running") {
+    ctx.resume().then(() => { if (ctx.state === "running") playChime(kind); }, () => {});
+    return;
+  }
+  const t0 = ctx.currentTime + 0.005;
+  const out = ctx.createGain();
+  out.gain.setValueAtTime(1, t0);
+  out.connect(ctx.destination);
+  // one bell-like note: a sine with a faint inharmonic partial, fast attack, gentle decay
+  const note = (freq: number, at: number, peak: number, decay: number) => {
+    [[1, 1], [2.76, 0.18]].forEach(([mult, share]) => {
+      const osc = ctx.createOscillator(), g = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(freq * mult, at);
+      g.gain.setValueAtTime(0.0001, at);
+      g.gain.exponentialRampToValueAtTime(peak * share, at + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, at + decay * (mult > 1 ? 0.5 : 1));
+      osc.connect(g); g.connect(out);
+      osc.start(at); osc.stop(at + decay + 0.02);
+    });
+  };
+  if (kind === "bell") { note(784, t0, 0.05, 0.32); note(1175, t0 + 0.11, 0.045, 0.38); }
+  else if (kind === "glass") { note(1568, t0, 0.045, 0.45); }
+  else { note(1047, t0, 0.035, 0.2); note(1319, t0 + 0.06, 0.035, 0.22); note(1568, t0 + 0.12, 0.04, 0.32); }
+}
