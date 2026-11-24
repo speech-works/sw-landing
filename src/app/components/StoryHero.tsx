@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { avatarBlobs } from "@/lib/avatar-blobs";
-import { playPop, unlockAudioOnInteraction } from "@/lib/pop-sound";
+import { playChime, playPop, unlockAudioOnInteraction } from "@/lib/pop-sound";
 import type { MailmanRig } from "@/lib/mailman-rig.generated";
 import RigFace, { type RigFaceHandle } from "./RigFace";
 import ComicBubble, { type Anchor } from "./ComicBubble";
@@ -134,7 +134,7 @@ export default function StoryHero({ program, you: youName }: { program: string; 
       [3900, () => { setBeat(3); playPop(); S.gazeTo(-14, 11, 0.4); void S.to("listening", 0.3); }],
       [4500, () => { void Y.to("curious", 0.4); Y.gazeTo(9, -13, 0.4); if (data.prop !== "phone") R.gazeTo(-14, 6, 0.4); }],
       // 4. Speechworks whispers the tip
-      [5100, () => { setBeat(4); playPop(); void S.to("warm", 0.4); }],
+      [5100, () => { setBeat(4); playChime("sparkle"); void S.to("warm", 0.4); }],
       // 5. the thought goes, you smile: you know what to say
       [6900, () => { setBeat(5); void Y.to("proud", 0.5); }],
       // 6. you turn to the other person and answer; Speechworks watches, pleased
