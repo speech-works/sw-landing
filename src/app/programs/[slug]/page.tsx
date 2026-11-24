@@ -5,8 +5,8 @@ import { ArrowUpRight } from "lucide-react";
 import { programs } from "@/content/programs";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { cast, heroLabel } from "../../components/ProgramIllustration";
-import HeroStory from "../../components/HeroStory";
+import { cast } from "../../components/ProgramIllustration";
+import StoryHero from "../../components/StoryHero";
 import DownloadSection from "../../components/DownloadSection";
 import ProgramKit from "../../components/ProgramKit";
 import ProgramSteps from "../../components/ProgramSteps";
@@ -38,7 +38,7 @@ export default async function ProgramPage({ params }: Props) {
   const discount = launchDiscount(program.key);
   const page = programPage(program);
   // Interview Ready: the banker without glasses, so "You" never looks like the Speechworks mascot (same suit and hair)
-  const you = program.key === "interview_ready" ? "banker-b" : cast[program.key] ?? "banker";
+  const you = program.key === "interview_ready" ? "banker-b" : program.key === "dating_intimacy" ? "scholar" : cast[program.key] ?? "banker";
   return (
     <div className="site-shell">
       <Navbar />
@@ -64,7 +64,7 @@ export default async function ProgramPage({ params }: Props) {
                   Pay once, no subscription.
                 </p>
               </div>
-              <HeroStory program={program.key} you={you} label={heroLabel(program.key)} />
+              <StoryHero program={program.key} you={you} />
             </section>
           </div>
         </div>

@@ -9,42 +9,42 @@ export type PracticeCall = { avatar: string; title: string; day: number };
 export type ChatBeat = { who: "you" | "speechworks"; text: string };
 export type PlanStep = { title: string; first: number; last: number };
 /**
- * Hero picture, three beats: you think (thought bubble and a "?"), Speechworks helps, then the real moment
- * (the "?" becomes a lightbulb and you, or the other person, speak). Lines use "\n" for line breaks.
+ * Hero story, in a triangle: the other person asks (bottom right), you get stuck (a thought), Speechworks drops in at the top
+ * and whispers one tip, then you answer. Lines use "\n" for line breaks.
  */
-export type HeroStory = { thought: string; help: string; real: string; realAvatar: string; final: { who: "you" | "real"; text: string }; alt: string };
+export type StoryScript = { prop?: "phone"; real: string; realAvatar: string; ask: string; thought: string; help: string; answer: string; alt: string };
 
-export const heroStories: Record<string, HeroStory> = {
-  interview_ready: { thought: "What do I say\nabout myself?", help: "Start with one\nproject you know.", real: "Real interview", realAvatar: "hijab",
-    final: { who: "you", text: "I led the move to\na new system." },
-    alt: "You wonder what to say about yourself. Speechworks suggests starting with one project you know. In the real interview, you talk about the project." },
-  hard_conversations: { thought: "What if they ask\nsomething new?", help: "Let's practice\nthe call first.", real: "Real call", realAvatar: "saltpepper",
-    final: { who: "you", text: "Hi, I am calling\nabout a repair." },
-    alt: "You worry they will ask something new. Speechworks offers to practice the call first. Then you make the real call about a repair." },
-  art_of_disclosure: { thought: "Should I\ntell them?", help: "You decide what\nto share, and when.", real: "A coworker", realAvatar: "bob",
-    final: { who: "you", text: "I stutter. Give\nme a moment." },
-    alt: "You wonder whether to tell a coworker. Speechworks reminds you that you decide what to share. Then you tell your coworker in your own words." },
-  panic_button: { thought: "What if I\nfreeze?", help: "Notice three\nthings around you.", real: "Real conversation", realAvatar: "coach",
-    final: { who: "you", text: "I would like\nto start." },
-    alt: "You worry about freezing before speaking. Speechworks asks you to notice three things around you. Then you say you would like to start." },
-  bouncing_back: { thought: "I keep going\nover it.", help: "What actually\nhappened?", real: "Next conversation", realAvatar: "cap",
-    final: { who: "you", text: "Hi! Good to\nsee you." },
-    alt: "After a hard conversation you keep going over it. Speechworks asks what actually happened. Then you start your next conversation." },
-  breaking_thought_traps: { thought: "They will think\nI am odd.", help: "Let's test\nthat thought.", real: "Real moment", realAvatar: "bald",
-    final: { who: "real", text: "Go on, what were\nyou saying?" },
-    alt: "You think people will judge you. Speechworks suggests testing that thought. In a real moment, the other person asks you to go on." },
-  dating_intimacy: { thought: "When do I mention\nmy stutter?", help: "Say it your way,\nor not at all.", real: "A date", realAvatar: "pigtails",
-    final: { who: "real", text: "Tell me more\nabout you." },
-    alt: "You wonder when to mention your stutter on a date. Speechworks says you can say it your way, or not at all. Your date asks to hear more about you." },
-  word_swap: { thought: "Coffee... no,\nmaybe just tea?", help: "Try the word\nyou wanted.", real: "Coffee shop", realAvatar: "workcap",
-    final: { who: "you", text: "A coffee,\nplease." },
-    alt: "You think about swapping coffee for tea, an easier word. Speechworks suggests trying the word you wanted. At the coffee shop you order a coffee." },
-  speech_toolkit: { thought: "My words feel\nstuck.", help: "Try a soft start\non the first word.", real: "Real conversation", realAvatar: "cowboy",
-    final: { who: "you", text: "Hey, how are\nyou doing?" },
-    alt: "Your words feel stuck. Speechworks suggests a soft start on the first word. Then you greet someone in a real conversation." },
-  understanding_your_voice: { thought: "Why does it come\nand go?", help: "Let's look at what\npeople do not see.", real: "A friend", realAvatar: "scholar",
-    final: { who: "real", text: "What is it like\nfor you?" },
-    alt: "You wonder why your stutter comes and goes. Speechworks helps you look at what people do not see. A friend asks what it is like for you." },
+export const storyScripts: Record<string, StoryScript> = {
+  interview_ready: { real: "Interviewer", realAvatar: "hijab", ask: "Tell me a little\nabout yourself.", thought: "Should I tell\nthem I stutter?",
+    help: "338 viewers rated\nan 'I stutter'\nopener as more\nconfident.", answer: "Sure. I stutter,\nso I may pause.\nI'm a designer.",
+    alt: "The interviewer says: Tell me a little about yourself. You think: Should I tell them I stutter? Speechworks whispers: 338 viewers rated an 'I stutter' opener as more confident. You answer: Sure. I stutter, so I may pause. I'm a designer." },
+  hard_conversations: { real: "Phone call", realAvatar: "saltpepper", ask: "Can I have your\norder number,\nplease?", thought: "My mind just\nwent blank.",
+    help: "Stress makes\nmemory worse for\neveryone. Keep the\nnumber on paper.", answer: "One moment,\nplease. It's\n44, 17, 92.",
+    alt: "On a phone call, the person says: Can I have your order number, please? You think: My mind just went blank. Speechworks whispers: Stress makes memory worse for everyone. Keep the number on paper. You answer: One moment, please. It's 44, 17, 92." },
+  art_of_disclosure: { real: "Coworker", realAvatar: "bob", ask: "Was your mic\ncutting out on the\ncall?", thought: "Should I just\nblame the mic?",
+    help: "In 15 of 18\nstudies, saying\n'I stutter' went\nwell.", answer: "No, it's fine.\nI stutter, so\nI sometimes\npause.",
+    alt: "A coworker says: Was your mic cutting out on the call? You think: Should I just blame the mic? Speechworks whispers: In 15 of 18 studies, saying 'I stutter' went well. You answer: No, it's fine. I stutter, so I sometimes pause." },
+  panic_button: { real: "Meeting", realAvatar: "coach", ask: "Can you say a\nquick hello to the\nteam?", thought: "Please,\nnot now.",
+    help: "75 of 177 adults\nsaid stuttering on\npurpose made fear\nsmaller.", answer: "H-h-hello,\neveryone.\nI'm Sam,\nfrom design.",
+    alt: "In a meeting, someone says: Can you say a quick hello to the team? You think: Please, not now. Speechworks whispers: 75 of 177 adults said stuttering on purpose made fear smaller. You answer: H-h-hello, everyone. I'm Sam, from design." },
+  bouncing_back: { real: "Friend", realAvatar: "cap", ask: "Still thinking\nabout that call?", thought: "I'm trying\nnot to.",
+    help: "Pushing a thought\naway often brings\nit back. Say it\nout loud.", answer: "Yes, I still am.\nI got stuck,\nbut I said it all.",
+    alt: "A friend says: Still thinking about that call? You think: I'm trying not to. Speechworks whispers: Pushing a thought away often brings it back. Say it out loud. You answer: Yes, I still am. I got stuck, but I said it all." },
+  breaking_thought_traps: { prop: "phone", real: "Coworker", realAvatar: "bald", ask: "Sorry, one second.\nMy phone.", thought: "He's bored.\nIt's my stutter.",
+    help: "In 44 studies,\nanxious minds read\npauses as bad.\nIt's just a phone.", answer: "No problem.\nSo, here is my\nplan for Friday.",
+    alt: "A coworker looks at his ringing phone and says: Sorry, one second. My phone. You think: He's bored. It's my stutter. Speechworks whispers: In 44 studies, anxious minds read pauses as bad. It's just a phone. You answer: No problem. So, here is my plan for Friday." },
+  dating_intimacy: { real: "A date", realAvatar: "pigtails", ask: "You first. What do\nyou do?", thought: "Should I tell\nher I stutter?",
+    help: "25 adults tried\nboth. Telling or\nnot felt the same.\nYour choice.", answer: "I teach m-music\nto kids. I love it.\nAnd you?",
+    alt: "On a date, she says: You first. What do you do? You think: Should I tell her I stutter? Speechworks whispers: 25 adults tried both. Telling or not felt the same. Your choice. You answer: I teach m-music to kids. I love it. And you?" },
+  word_swap: { real: "Coffee shop", realAvatar: "barista", ask: "What name should I\nwrite on your cup?", thought: "Jaspreet is hard.\nJust say Jas?",
+    help: "132 of 133 adults\nwho stutter swap\nlike this. Then\nadd the full name.", answer: "Jas. Jaspreet,\nactually.",
+    alt: "At a coffee shop, the barista says: What name should I write on your cup? You think: Jaspreet is hard. Just say Jas? Speechworks whispers: 132 of 133 adults who stutter swap like this. Then add the full name. You answer: Jas. Jaspreet, actually." },
+  speech_toolkit: { real: "Neighbor", realAvatar: "cowboy", ask: "Coffee at my place\non Saturday?", thought: "The S always\ngets stuck.",
+    help: "Try a soft start.\nSay the S gently\nand keep your\nvoice moving.", answer: "Sssaturday\nworks. See you\nat ten!",
+    alt: "A neighbor says: Coffee at my place on Saturday? You think: The S always gets stuck. Speechworks whispers: Try a soft start. Say the S gently and keep your voice moving. You answer: Sssaturday works. See you at ten!" },
+  understanding_your_voice: { real: "A friend", realAvatar: "scholar", ask: "You were fine last\nweek. What\nhappened?", thought: "Did I do\nsomething wrong?",
+    help: "Studies show\nstuttering changes\nday to day. You\ndid nothing wrong.", answer: "Nothing happened.\nMy stutter\nchanges day\nto day.",
+    alt: "A friend says: You were fine last week. What happened? You think: Did I do something wrong? Speechworks whispers: Studies show stuttering changes day to day. You did nothing wrong. You answer: Nothing happened. My stutter changes day to day." },
 };
 
 type Extra = {
