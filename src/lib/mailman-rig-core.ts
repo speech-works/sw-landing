@@ -66,7 +66,8 @@ export function faceFrame(rig: FaceRig, v: FaceV): FaceFrame {
   return {
     browD: `M${f1(b[0])} ${f1(b[1])}Q${f1(b[2])} ${f1(b[3])} ${f1(b[4])} ${f1(b[5])}M${f1(b[6])} ${f1(b[7])}Q${f1(b[8])} ${f1(b[9])} ${f1(b[10])} ${f1(b[11])}`,
     mouthD: d + 'Z', mouthSw: Math.max(.01, v.sw),
-    teethO: v.open > .02 ? 1 : 0, teethD: `M${f1(t[0])} ${f1(t[1])}L${f1(t[2])} ${f1(t[3])}L${f1(t[4])} ${f1(t[5])}Q${f1(t[6])} ${f1(t[7])} ${f1(t[8])} ${f1(t[9])}L${f1(t[10])} ${f1(t[11])}Q${f1(t[12])} ${f1(t[13])} ${f1(t[14])} ${f1(t[15])}Z`,
+    teethO: v.open > .12 ? Math.min(1, (v.open - .12) / .2) : 0,  // the teeth fade in and out with the mouth, so a closing mouth never leaves a strip of teeth
+    teethD: `M${f1(t[0])} ${f1(t[1])}L${f1(t[2])} ${f1(t[3])}L${f1(t[4])} ${f1(t[5])}Q${f1(t[6])} ${f1(t[7])} ${f1(t[8])} ${f1(t[9])}L${f1(t[10])} ${f1(t[11])}Q${f1(t[12])} ${f1(t[13])} ${f1(t[14])} ${f1(t[15])}Z`,
     teethM: [1, 0, 0, v.open, 0, t[1] * (1 - v.open)],                        // teeth grow down from the top edge of the mouth
     tongueO: tg > .02 ? 1 : 0, tongueM: [tg, 0, 0, tg, 500 * (1 - tg), 742 * (1 - tg)],   // the tongue grows from the floor of the mouth
     cheekO: v.cheek > .02 ? 1 : 0, cheekM: [1, 0, 0, 1, 0, 50 * (1 - v.cheek)],         // the cheek lift slides up from the cheek
