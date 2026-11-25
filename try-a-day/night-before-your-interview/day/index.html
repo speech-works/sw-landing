@@ -77,159 +77,232 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 .site-footer nav{display:flex;gap:22px;flex-wrap:wrap;font-size:11px;color:var(--ink-muted)}
 .site-footer nav a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}
 
-/* ===== the player ===== */
-#player{position:fixed;inset:0;background:var(--cream);z-index:50;display:none;flex-direction:column}
+/* ===== the player =====
+   Direction B (approved 2026-11-25): the day wears the Speechworks app's design system, "Vivid" light
+   (sw-fe-m-2/DESIGN.md). The page around it keeps the site look. Every colour below is a Vivid role. */
+#player{--canvas:#F7F2EA;--raised:#FBF8F2;--sunken:#EFE8DC;--card:#FFFDF8;--elev:#FFFEFB;--control:#E4D8C1;
+  --hair:rgba(42,32,24,.08);--line:rgba(42,32,24,.12);--strong:rgba(42,32,24,.20);
+  --tx:#26221C;--tx2:#57514A;--tx3:#736C61;--or:#FF9040;--onor:#2A1505;--sec:#EDE5D8;--lime:#C8F750;--onlime:#20300A;
+  --okt:#1E7A45;--link:#A84600;--sel:#BF5000;--limeT:rgba(200,247,80,.30);--orT:rgba(255,144,64,.14);--purT:rgba(139,123,240,.16);--infoT:rgba(91,157,249,.16);
+  --e2:0 2px 8px rgba(42,32,24,.10);--e3:0 12px 24px rgba(42,32,24,.16);--scrim:rgba(42,32,24,.45);
+  position:fixed;inset:0;background:var(--canvas);color:var(--tx);z-index:50;display:none;flex-direction:column;overflow:hidden}
 #player.open{display:flex}
-/* site header row, then the chapters on the left and the day on the right (like "Your daily plan" on the program page) */
-.p-top{display:flex;align-items:center;gap:18px;width:min(1200px,100% - 96px);margin:0 auto;padding:22px 0 8px}
-.p-top .wordmark{font-size:19px}.p-top .wordmark img{width:22px;height:26px}
-.p-x{flex:none;width:44px;height:44px;border:0;background:transparent;font-size:26px;line-height:1;border-radius:50%}
-.p-track{flex:1;height:10px;border:1.5px solid var(--ink);border-radius:100px;background:#fff;overflow:hidden}
-.p-fill{height:100%;width:0;background:var(--cast);border-right:1.5px solid var(--ink);transition:width 320ms var(--ease)}
-.p-fill.zero{border-right:0}
-.p-scroll{flex:1;min-height:0;overflow-y:auto;scroll-behavior:smooth}
+#player button:focus-visible,#player a:focus-visible,#player input:focus-visible,#player textarea:focus-visible{outline:3px solid var(--sel);outline-offset:2px}
+/* the logo, faint, behind the day */
+.p-wm{position:absolute;right:-70px;bottom:70px;width:320px;height:380px;z-index:0;pointer-events:none;background:rgba(42,32,24,.045);-webkit-mask:url(/brand/mark.svg) center/contain no-repeat;mask:url(/brand/mark.svg) center/contain no-repeat;transform:rotate(-8deg)}
+/* the top: close, one bar in parts, more */
+.p-top{position:relative;z-index:3;display:flex;align-items:center;gap:12px;width:min(1200px,100% - 96px);margin:0 auto;padding:20px 0 6px}
+.p-ic{flex:none;width:40px;height:40px;border:0;border-radius:50%;background:var(--sec);color:var(--tx);display:grid;place-items:center;cursor:pointer}
+.p-ic svg{width:18px;height:18px}
+.p-track{flex:1;display:flex;gap:4px}
+.p-track i{flex:1;height:6px;border-radius:6px;background:var(--control);position:relative;overflow:hidden}
+.p-track i::after{content:"";position:absolute;left:0;top:0;bottom:0;width:var(--p,0%);background:var(--or);border-radius:6px;transition:width 320ms var(--ease)}
+.later{display:none!important}
+.p-scroll{position:relative;z-index:1;flex:1;min-height:0;overflow-y:auto;scroll-behavior:smooth}
 .p-grid,.p-act{width:min(1200px,100% - 96px);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:80px}
 .p-grid{padding:30px 0 280px}
 .p-grid>#stage,.p-act>div{grid-column:2;min-width:0}
 .rail{position:sticky;top:30px;align-self:start}
-.rail small{display:block;font-size:12px;font-weight:800;color:var(--ink-muted)}
-.rail h2{font-size:44px;font-weight:800;letter-spacing:-.05em;line-height:1;margin:8px 0 26px}
-.rail ol{list-style:none;margin:0;padding:0;border-top:1px solid #14131125}
-.rail li{display:flex;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid #14131125;font-size:14px;color:var(--ink-muted)}
-.rail li b{font-size:11px;width:20px;color:var(--ink)}
-.rail li.done{color:var(--ink)}
-.rail li.here{color:var(--ink);font-weight:800}
-.rail li .check{width:18px;height:18px;font-size:10px;margin-left:auto}
+.rail small{display:block;font-size:13px;line-height:16px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--tx3)}
+.rail h2{font-size:32px;line-height:40px;font-weight:700;letter-spacing:-.5px;margin:6px 0 22px}
+.rail ol{list-style:none;margin:0;padding:6px 16px;background:var(--card);border:1px solid var(--hair);border-radius:24px}
+.rail li{display:flex;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--hair);font-size:15px;color:var(--tx3)}
+.rail li:first-child{border-top:0}
+.rail li b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--sec);display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--tx2)}
+.rail li.done{color:var(--tx)}
+.rail li.here{color:var(--tx);font-weight:600}
+.rail li.here b{background:var(--or);color:var(--onor)}
+.rail li .check{margin-left:auto}
 #player.nochap .rail{display:none}
 #player.nochap .p-grid,#player.nochap .p-act{width:min(520px,100% - 40px);grid-template-columns:1fr}
 #player.nochap .p-grid>#stage,#player.nochap .p-act>div{grid-column:1}
-.p-bottom{position:absolute;left:0;right:0;bottom:0;padding:50px 0 24px;background:linear-gradient(to bottom,#fff9e900,var(--cream) 55%);pointer-events:none}
+.p-bottom{position:absolute;left:0;right:0;bottom:0;z-index:4;padding:44px 0 22px;background:linear-gradient(to bottom,rgba(247,242,234,0),var(--canvas) 50%);pointer-events:none}
 .p-act>div{pointer-events:auto}
-.sheet{border:2px solid var(--ink);border-radius:20px;padding:14px 16px;margin:0 0 12px;font-size:15px;line-height:1.55;box-shadow:3px 3px 0 var(--ink)}
-.sheet.ok{background:var(--lime)}.sheet.no{background:#ffe3d1}
-.sheet b{display:block;font-size:12px;margin-bottom:4px}
+/* the answer rises from the bottom, above the button */
+.sheet{background:var(--raised);border-radius:24px;padding:16px 18px;margin:0 0 12px;font-size:16px;line-height:24px;color:var(--tx);box-shadow:var(--e3);animation:sheetin 300ms var(--ease)}
+.sheet b{display:flex;align-items:center;gap:10px;font-size:18px;line-height:24px;font-weight:600;margin-bottom:6px}
+.sheet b::before{content:"";flex:none;width:26px;height:26px;border-radius:50%;background:var(--control)}
+.sheet.ok b{color:var(--okt)}
+.sheet.ok b::before{background:#5BD98A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2308351F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4L18 8'/%3E%3C/svg%3E") center/16px no-repeat}
 .sheet[hidden]{display:none}
-.p-go{width:100%}
+@keyframes sheetin{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+#player .button{border-radius:36px}
+.p-go{width:100%;min-height:56px!important;background:var(--or)!important;color:var(--onor)!important;font-size:16px!important;font-weight:600!important}
+.p-go[disabled]{background:var(--sunken)!important;color:var(--tx3)!important}
+/* the more menu */
+.p-scrim{position:absolute;inset:0;z-index:8;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity 220ms}
+.p-scrim.on{opacity:1;pointer-events:auto}
+.p-menu{position:absolute;left:50%;bottom:0;z-index:9;width:min(520px,100%);transform:translate(-50%,105%);transition:transform 300ms var(--ease);background:var(--raised);border-radius:28px 28px 0 0;padding:10px 16px 24px;box-shadow:var(--e3)}
+.p-menu.on{transform:translate(-50%,0)}
+.p-menu .grab{width:38px;height:5px;border-radius:5px;background:var(--control);margin:0 auto 10px}
+.mrow{display:flex;gap:14px;align-items:center;width:100%;text-align:left;border:0;background:none;padding:12px 8px;border-radius:16px;font-size:16px;line-height:22px;color:var(--tx);cursor:pointer}
+.mrow:hover{background:var(--sunken)}
+.mrow em{flex:none;width:40px;height:40px;border-radius:12px;background:var(--orT);color:var(--sel);display:grid;place-items:center;font-style:normal}
+.mrow em svg{width:18px;height:18px}
+.mrow small{display:block;font-size:13px;line-height:18px;color:var(--tx3)}
+.mrow .tg{margin-left:auto;flex:none;width:44px;height:26px;border-radius:13px;background:var(--control);position:relative;transition:background 200ms}
+.mrow .tg::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:var(--e2);transition:transform 200ms var(--ease)}
+.mrow[aria-checked=true] .tg{background:var(--or)}.mrow[aria-checked=true] .tg::after{transform:translateX(18px)}
+.mrow[hidden]{display:none}
+/* the door: one line when you arrive from "Start the day" */
+.p-door{position:absolute;left:50%;bottom:104px;z-index:6;width:min(480px,calc(100% - 32px));transform:translate(-50%,10px);opacity:0;pointer-events:none;background:var(--tx);color:var(--canvas);border-radius:16px;padding:11px 14px;font-size:14px;line-height:20px;font-weight:500;text-align:center;transition:opacity 360ms var(--ease),transform 360ms var(--ease)}
+.p-door.on{opacity:1;transform:translate(-50%,0)}
+#player.arrive .p-scroll,#player.arrive .p-top{animation:arrive 520ms var(--ease) both}
+@keyframes arrive{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
-
-/* 1 Pip says: the guide talking. Speech bubble with a face. */
-.say{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;animation:rise 240ms var(--ease)}
+/* 1 Pip says: the guide talking, on a soft app card */
+.say{display:flex;gap:10px;align-items:flex-end;margin:0 0 12px;animation:rise 240ms var(--ease)}
 .say .av{flex:none;--av-size:68px;margin:14px 16px 0 14px}
 @media (max-width:860px){.say .av{--av-size:58px;margin:12px 14px 0 12px}}
 .say+.say .av{visibility:hidden}
-.say .b{background:#fff;border:2px solid var(--ink);border-radius:20px 20px 20px 4px;padding:13px 17px;font-size:17px;line-height:1.6;box-shadow:3px 4px 0 var(--ink)}
+.say .b{min-width:0;background:var(--card);border:1px solid var(--hair);box-shadow:var(--e2);border-radius:20px 20px 20px 6px;padding:13px 17px;font-size:17px;line-height:26px}
+.say .b mark{background:linear-gradient(transparent 58%,var(--limeT) 58%);color:inherit;font-weight:600;padding:0 1px}
+/* lesson: one bubble at a time */
+.ticks{display:flex;gap:4px;margin:0 0 12px 98px}
+.ticks i{flex:1;height:4px;border-radius:4px;background:var(--control)}
+.ticks i.on{background:var(--tx)}
+.say.big .b{font-size:19px;line-height:29px;min-height:150px}
+@media (max-width:860px){.ticks{margin-left:84px}.say.big .b{font-size:18px;line-height:27px}}
 
-/* 2 You: what the reader chose or wrote. Right side, lime. */
-.you{display:flex;flex-direction:column;align-items:flex-end;margin:0 0 14px;animation:rise 240ms var(--ease)}
-.you small{font-size:11px;font-weight:700;color:var(--ink-muted);margin:0 6px 4px 0}
-.you .b{background:var(--lime);border:2px solid var(--ink);border-radius:20px 20px 6px 20px;padding:10px 16px;font-size:16px;line-height:1.5;max-width:88%}
+/* 2 You: what the reader chose or wrote */
+.you{display:flex;flex-direction:column;align-items:flex-end;margin:0 0 12px;animation:rise 240ms var(--ease)}
+.you small{font-size:12px;font-weight:600;color:var(--tx3);margin:0 6px 4px 0}
+.you .b{background:var(--lime);color:var(--onlime);border-radius:20px 20px 6px 20px;padding:10px 16px;font-size:16px;line-height:24px;max-width:88%}
 
-/* Reply: an empty answer box. Dashed, lime-tinted, with a pen and a blinking caret, so it reads as waiting for you. */
-.reply{display:flex;flex-direction:column;align-items:flex-end;margin:6px 0 14px;animation:rise 240ms var(--ease)}
-.reply small{font-size:11px;font-weight:700;color:var(--ink-muted);margin:0 6px 4px 0}
-.reply label{display:flex;align-items:center;gap:10px;width:100%;background:#f6fcd9;border:2px dashed var(--ink);border-radius:20px 20px 6px 20px;padding:4px 16px;cursor:text}
-.reply label:focus-within{background:#fff;border-style:solid;box-shadow:3px 3px 0 var(--ink)}
-.reply svg{flex:none;width:20px;height:20px}
-.reply label input[type=text]{border:0;background:transparent;border-radius:0;padding:12px 0;margin:0;font-size:17px;flex:1;min-width:0;outline:none;box-shadow:none}
-.reply label input[type=text]::placeholder{color:#625d55}
+/* Reply: an empty answer box */
+.reply{display:flex;flex-direction:column;align-items:flex-end;margin:6px 0 12px;animation:rise 240ms var(--ease)}
+.reply small{font-size:12px;font-weight:600;color:var(--tx3);margin:0 6px 4px 0}
+/* your answer is typed straight into your own lime bubble (picked in review, 2026-11-25) */
+.reply label{display:block;width:88%;background:rgba(200,247,80,.45);border-radius:20px 20px 6px 20px;padding:2px 16px;cursor:text;transition:background 200ms}
+.reply label:focus-within{background:var(--lime);box-shadow:0 0 0 2px var(--sel)}
+#player .reply label input[type=text]{display:block;width:100%;border:0;background:transparent;border-radius:0;padding:12px 0;margin:0;font-size:17px;line-height:24px;color:var(--onlime);outline:none;box-shadow:none}
+#player .reply label input[type=text]::placeholder{color:#4E6B0A}
 
-/* 3 Example: words you could say. Hangs off Pip's bubble. Square quote card. */
-.ex{margin:4px 0 16px 56px;background:var(--t-blue);border:2px solid var(--ink);border-radius:16px;padding:12px 16px;animation:rise 240ms var(--ease)}
-.ex small{display:block;font-size:11px;font-weight:800;color:#3b4a5f;margin-bottom:2px}
-.ex p{margin:0;font-size:18px;line-height:1.5;font-weight:700;letter-spacing:-.01em}
-.ex.weak{background:var(--paper);border-style:dashed}
+/* 3 Example */
+.ex{margin:4px 0 14px 98px;background:var(--infoT);border-radius:16px;padding:12px 16px;animation:rise 240ms var(--ease)}
+.ex small{display:block;font-size:12px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--tx2);margin-bottom:2px}
+.ex p{margin:0;font-size:18px;line-height:26px;font-weight:600}
+.ex.weak{background:var(--sunken)}
 
-/* 4 Your turn: a question with a check. Purple card with a hard shadow, like the site's example card. */
-.qc{position:relative;background:var(--t-purple);border:2px solid var(--ink);border-radius:24px;padding:26px 20px 10px;margin:24px 0 16px;box-shadow:5px 5px 0 var(--ink);animation:rise 240ms var(--ease)}
-/* the label sits on the card's top edge */
-.tab{position:absolute;top:-14px;left:18px;font-size:12px;font-weight:800;padding:3px 13px;border-radius:100px;border:2px solid var(--ink);background:var(--ink);color:var(--paper)}
-.qc .ask{font-size:22px;font-weight:800;letter-spacing:-.035em;line-height:1.28;margin:0 0 16px}
-.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--ink);border-radius:16px;padding:13px 15px;margin:0 0 10px;font-size:16px;line-height:1.5}
-.opt:hover:not([disabled]){background:#fff3d9}
-.opt.right{background:var(--lime)}.opt.wrong{background:#ffe3d1}
+/* a list card (Today: "A day has") */
+.lst{background:var(--card);border:1px solid var(--hair);border-radius:24px;overflow:hidden;margin:2px 0 14px 98px;box-shadow:var(--e2);animation:rise 240ms var(--ease)}
+.lst h4{margin:0;padding:14px 16px 4px;font-size:13px;line-height:16px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--tx3)}
+.lst div{display:flex;gap:12px;align-items:center;padding:11px 16px;border-top:1px solid var(--hair);font-size:16px}
+.lst h4+div{border-top:0}
+.lst em{flex:none;width:28px;height:28px;border-radius:50%;background:var(--sec);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:600;color:var(--tx2)}
+@media (max-width:860px){.lst,.ex{margin-left:0}}
+
+/* 4 Your turn: a question card */
+.qc{position:relative;background:var(--card);border:1px solid var(--hair);border-radius:28px;padding:18px 16px 10px;margin:8px 0 14px;box-shadow:var(--e2);animation:rise 240ms var(--ease)}
+.tab{display:inline-block;font-size:12px;line-height:16px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;padding:4px 8px;border-radius:8px;background:var(--purT);color:#5A4DC0;margin:0 0 12px}
+.qc .ask{font-size:19px;line-height:27px;font-weight:600;margin:0 0 14px}
+.opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--elev);border:1px solid var(--strong);border-radius:20px;padding:14px;margin:0 0 10px;font-size:16px;line-height:23px;color:var(--tx);cursor:pointer;transition:background 200ms,border-color 200ms}
+.opt::before{content:"";flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--control);box-sizing:border-box;transition:border-width 200ms,border-color 200ms}
+.opt:hover:not([disabled]){border-color:var(--sel)}
+.opt.right{border-color:#5BD98A;background:rgba(91,217,138,.14)}.opt.right::before{border:7px solid #5BD98A}
+.opt.wrong{background:var(--sunken);border-color:var(--line)}.opt.wrong::before{border:7px solid var(--control)}
 .opt[disabled]{cursor:default}
 
-/* 5 Try this: something to do. Warm card, white tab. */
-.tc{position:relative;background:var(--peach);border:2px solid var(--ink);border-radius:24px;padding:26px 20px 14px;margin:24px 0 16px;box-shadow:5px 5px 0 var(--ink);animation:rise 240ms var(--ease)}
-.tc .tab{background:#fff;color:var(--ink)}
-.tc .lead{font-size:17px;line-height:1.55;margin:0 0 14px}
+/* 5 Try this: something to do */
+.tc{position:relative;background:var(--card);border:1px solid var(--hair);border-radius:28px;padding:18px 16px 14px;margin:8px 0 14px;box-shadow:var(--e2);animation:rise 240ms var(--ease)}
+.tc .tab{background:var(--orT);color:var(--link)}
+.tc .lead{font-size:16px;line-height:24px;margin:0 0 14px}
 
-/* 6 Study: what research found. White card, bold lead, labelled rows, no face. */
-.sc{background:#fff;border:2px solid var(--ink);border-radius:14px;overflow:hidden;margin:0 0 16px;box-shadow:3px 3px 0 var(--ink);animation:rise 240ms var(--ease)}
-.sc-h{display:flex;gap:10px;align-items:center;padding:10px 12px 10px 16px;background:#ece4d6;border-bottom:2px solid var(--ink);font-size:13px;font-weight:800}
-.sc-h i{width:13px;height:16px;border:1.5px solid var(--ink);border-radius:2px;background:#fff;position:relative;flex:none}
-.sc-h i::after{content:"";position:absolute;left:2px;right:2px;top:4px;height:1.5px;background:var(--ink);box-shadow:3px 3px 0 var(--ink)}
-.sc-h .cite{margin-left:auto;border:1.5px solid var(--ink);background:#fff;border-radius:100px;padding:4px 12px;font-size:12px;font-weight:700;min-height:28px}
+/* 6 Study: what research found */
+.sc{background:var(--card);border:1px solid var(--hair);border-radius:24px;overflow:hidden;margin:0 0 14px;box-shadow:var(--e2);animation:rise 240ms var(--ease)}
+.sc-h{display:flex;gap:10px;align-items:center;padding:10px 12px 10px 16px;background:var(--sunken);font-size:13px;line-height:16px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--tx2)}
+.sc-h i{display:none}
+.sc-h .cite{margin-left:auto;border:0;background:var(--card);border-radius:18px;padding:6px 12px;font-size:13px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--link);min-height:32px;cursor:pointer;box-shadow:var(--e2)}
 .sc-r{padding:14px 16px 16px}
-.sc-r+.sc-r{border-top:1px solid #14131122}
-.sc-r b{display:block;font-size:11px;font-weight:800;letter-spacing:.03em;color:var(--ink-muted);margin:0 0 6px}
-.sc-r p{margin:0;font-size:16px;line-height:1.6}
-.sc-r.lead p{font-size:18px;line-height:1.45;font-weight:700;letter-spacing:-.015em}
-.sc-r.limit{background:var(--paper);border-top:2px dashed var(--ink)}
+.sc-r+.sc-r{border-top:1px solid var(--hair)}
+.sc-r b{display:block;font-size:12px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--tx3);margin:0 0 6px}
+.sc-r p{margin:0;font-size:16px;line-height:24px}
+.sc-r.lead p{font-size:18px;line-height:26px;font-weight:600}
+.sc-r.limit{background:var(--raised)}
 
-/* 7 Good to know: a quiet note. Limits, promises, privacy. */
-.nt{display:flex;gap:12px;align-items:flex-start;background:#1413090c;border-radius:16px;padding:13px 16px;margin:0 0 16px;font-size:15px;line-height:1.55;color:#3b362f;animation:rise 240ms var(--ease)}
-.nt i{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font-size:12px;font-style:normal;font-weight:800;background:#fff;margin-top:.5px}
+/* 7 Good to know */
+.nt{display:flex;gap:12px;align-items:flex-start;background:var(--sunken);border-radius:16px;padding:12px 14px;margin:0 0 14px;font-size:15px;line-height:22px;color:var(--tx2);animation:rise 240ms var(--ease)}
+.nt i{flex:none;width:22px;height:22px;border-radius:50%;background:var(--control);display:grid;place-items:center;font-size:12px;font-style:normal;font-weight:700;color:var(--tx)}
 .nt span{flex:1}
 
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
-.chip{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:9px 13px;font-size:16px;line-height:1.35;box-shadow:3px 3px 0 var(--ink);text-align:left}
-.chip.used{opacity:.35;box-shadow:none;cursor:default}
-.slot{min-height:100px;border:2px dashed var(--ink);border-radius:18px;padding:12px;background:#fff;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;margin:0 0 16px}
-.slot .hint{color:var(--ink-muted);font-size:15px;align-self:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.chip{background:var(--elev);border:1px solid var(--strong);border-radius:20px;padding:9px 13px;font-size:16px;line-height:22px;color:var(--tx);text-align:left;cursor:pointer;transition:transform 160ms var(--ease),opacity 160ms}
+.chip:active{transform:scale(.96)}
+.chip.used{opacity:.3;cursor:default}
+/* build the line: the pieces join one sentence */
+.slot{min-height:104px;border-radius:18px;padding:12px 14px;background:var(--sunken);margin:0 0 14px;font-size:19px;line-height:30px;font-weight:600}
+.slot .hint{color:var(--tx3);font-size:15px;font-weight:400}
+.slot .pc{background:linear-gradient(transparent 60%,var(--limeT) 60%);padding:0 1px;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.slot .pc:hover{text-decoration:line-through;text-decoration-color:var(--tx3)}
+@keyframes pop{0%{transform:scale(.85);opacity:0}100%{transform:none;opacity:1}}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
-.tile{position:relative;text-align:left;background:#fff;border:2px solid var(--ink);border-radius:18px;padding:14px 14px 16px;min-height:96px;font-size:16px;font-weight:700;line-height:1.3;box-shadow:3px 3px 0 var(--ink)}
-.tile small{display:block;font-weight:400;font-size:13px;color:var(--ink-muted);margin-top:6px;line-height:1.4}
-.tile.on{background:var(--lime)}
-.tile.on::after{content:"\2713";position:absolute;right:12px;top:8px;font-size:18px;font-weight:800}
-.hintline{font-size:14px;color:var(--ink-muted);margin:0 0 10px}
-label.f{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}
-input[type=text],textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:16px;padding:12px 14px;margin:0}
-textarea{min-height:76px;resize:vertical;line-height:1.5}
-.radio{display:flex;gap:10px;align-items:center;font-size:16px;padding:10px 14px;margin:0 0 8px;background:#fff;border:2px solid var(--ink);border-radius:16px;min-height:48px}
-.radio input{width:20px;height:20px;accent-color:var(--ink);margin:0}
+.tile{position:relative;text-align:left;background:var(--elev);border:1px solid var(--strong);border-radius:20px;padding:14px 14px 16px;min-height:96px;font-size:16px;font-weight:600;line-height:22px;color:var(--tx);cursor:pointer}
+.tile small{display:block;font-weight:400;font-size:13px;color:var(--tx3);margin-top:6px;line-height:18px}
+.tile.on{background:var(--or);border-color:var(--or);color:var(--onor)}
+.tile.on small{color:var(--onor);opacity:.75}
+.tile.on::after{content:"\2713";position:absolute;right:12px;top:8px;font-size:17px;font-weight:700}
+.hintline{font-size:14px;line-height:20px;color:var(--tx3);margin:0 0 10px}
+label.f{display:block;font-size:14px;line-height:20px;font-weight:600;margin:14px 0 6px}
+#player input[type=text],#player textarea{width:100%;font:inherit;font-size:16px;color:var(--tx);background:var(--card);border:1px solid #D9D1C3;border-radius:16px;padding:12px 14px;margin:0}
+#player input[type=text]:focus,#player textarea:focus{border-color:var(--sel);outline:none}
+#player textarea{min-height:76px;resize:vertical;line-height:24px}
+.radio{display:flex;gap:12px;align-items:center;font-size:16px;padding:12px 14px;margin:0 0 8px;background:var(--elev);border:1px solid var(--strong);border-radius:16px;min-height:48px;cursor:pointer}
+.radio input{width:20px;height:20px;accent-color:var(--sel);margin:0}
 .cover{text-align:center;padding-top:18px}
 .cover .art{--av-size:190px;margin:34px auto 6px;display:block;width:var(--av-size)}
-.cover h2{font-size:clamp(30px,6vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.05;margin:24px 0 8px}
-.cover p{font-size:15px;color:var(--ink-muted);margin:0 0 6px}
+.cover h2{font-size:32px;line-height:40px;font-weight:700;letter-spacing:-.5px;margin:24px 0 8px}
+.cover p{font-size:16px;color:var(--tx2);margin:0 0 6px}
 .cover .nt{text-align:left;margin:14px 0 0}
-.switch{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px 0 4px;font-size:14px;font-weight:700}
-.switch input{width:22px;height:22px;accent-color:var(--ink);margin:0}
-.phone{width:min(230px,70%);aspect-ratio:9/16;margin:6px auto 12px;background:var(--blue);border:2px solid var(--ink);border-radius:26px;box-shadow:5px 5px 0 var(--ink);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.switch{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px 0 4px;font-size:15px;font-weight:600}
+.switch input{width:22px;height:22px;accent-color:var(--sel);margin:0}
+.phone{width:min(230px,70%);aspect-ratio:9/16;margin:6px auto 12px;background:var(--info,#5B9DF9);border-radius:26px;box-shadow:var(--e3);position:relative;overflow:hidden;display:flex;flex-direction:column}
 .phone .stage{flex:1;position:relative;display:grid;place-items:end center}
 .phone .stage img{width:80%;margin-bottom:-2px}
-.phone .lamp{position:absolute;right:12%;top:12%;width:44px;height:44px;border-radius:50%;background:#fff3c4;border:2px solid var(--ink)}
 .phone .play{position:absolute;inset:0;display:grid;place-items:start center;padding-top:22%;background:transparent;border:0}
-.phone .play i{width:58px;height:58px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);display:grid;place-items:center}
-.phone .play i::after{content:"";border-left:17px solid var(--ink);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px}
+.phone .play i{width:58px;height:58px;border-radius:50%;background:var(--card);box-shadow:var(--e3);display:grid;place-items:center}
+.phone .play i::after{content:"";border-left:17px solid var(--tx);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px}
 .phone .cap{background:#000;color:#fff;font-size:11.5px;line-height:1.4;padding:10px 14px 12px;text-align:center;min-height:54px}
 .slotnote[hidden]{display:none}
-.slotnote{font-size:12px;font-weight:700;border:1.5px dashed var(--ink);border-radius:100px;padding:3px 12px;color:var(--ink-muted);display:inline-block}
-.cardwrap{background:#fff;border:2px solid var(--ink);border-radius:22px;box-shadow:5px 5px 0 var(--ink);padding:22px 22px 8px;margin:0 0 16px;transform:rotate(-1deg)}
-.cardwrap h3{margin:0 0 14px;font-size:12px;color:var(--ink-muted)}
-.cardwrap p{margin:0 0 14px;padding-bottom:14px;border-bottom:1px solid #14131122;font-size:19px;line-height:1.5;font-weight:700;letter-spacing:-.01em}
-.cardwrap p:last-child{border:0}
-.rowbtns{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 14px}
-.chipbtn{border:2px solid var(--ink);background:#fff;border-radius:100px;padding:9px 16px;font-weight:700;font-size:14px;box-shadow:3px 3px 0 var(--ink)}
+.slotnote{font-size:12px;font-weight:600;border:1px dashed var(--strong);border-radius:100px;padding:3px 12px;color:var(--tx3);display:inline-block}
+/* your card: each line on its own note */
+.cardwrap{background:var(--elev);border:1px solid var(--hair);border-radius:24px;box-shadow:var(--e3);padding:18px 16px 8px;margin:0 0 16px;animation:rise 240ms var(--ease)}
+.cardwrap h3{margin:0 0 12px;font-size:13px;line-height:16px;font-weight:600;letter-spacing:.3px;color:var(--tx3)}
+.kn{border-radius:16px;padding:12px 14px;margin:0 0 10px;font-size:18px;line-height:26px;font-weight:600}
+.kn small{display:block;font-size:11px;line-height:16px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--tx2);margin-bottom:2px}
+.kn.n0{background:var(--purT)}.kn.n1{background:var(--orT)}.kn.n2{background:var(--infoT)}
+.rowbtns{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+#player .chipbtn{border:0;background:var(--sec);color:var(--tx);border-radius:22px;padding:11px 16px;font-weight:600;font-size:14px;box-shadow:none;cursor:pointer}
+/* what next */
+.dday{display:flex;gap:14px;align-items:center;margin:0 0 14px;animation:rise 240ms var(--ease)}
+.dday .dm{flex:none;width:64px;height:64px;border-radius:50%;background:var(--lime);color:var(--onlime);display:grid;place-items:center;animation:pop 520ms var(--ease)}
+.dday .dm svg{width:30px;height:30px}
+.dday b{display:block;font-size:22px;line-height:28px;font-weight:700}
+.dday span{font-size:15px;color:var(--tx2)}
+.did{list-style:none;margin:0 0 16px;padding:4px 16px;background:var(--card);border:1px solid var(--hair);border-radius:24px}
+.did li{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--hair);font-size:16px}
+.did li:first-child{border-top:0}
+.did i{flex:none;width:22px;height:22px;border-radius:50%;background:var(--limeT);color:var(--okt);display:grid;place-items:center;font-size:11px;font-style:normal;font-weight:700}
 .path{list-style:none;margin:16px 0 22px;padding:0;position:relative}
 .path li{position:relative;padding:0 0 12px 40px;font-size:15px;line-height:1.4}
-.path li::before{content:"";position:absolute;left:11px;top:22px;bottom:-4px;border-left:2px dashed #14131155}
+.path li::before{content:"";position:absolute;left:11px;top:24px;bottom:-4px;border-left:2px dashed var(--control)}
 .path li:last-child::before{display:none}
-.path .dot{position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;border:2px solid var(--ink);background:var(--cream);display:grid;place-items:center;font-size:11px;font-weight:800}
-.path li.here .dot{background:var(--cast)}
-.path li.here{font-weight:800}
-.path small{display:block;font-size:12px;color:var(--ink-muted);font-weight:400}
-.progcard{border:2px solid var(--ink);border-radius:22px;background:var(--hero);padding:18px 20px;margin:12px 0 16px;box-shadow:5px 5px 0 var(--ink)}
-.progcard b{display:block;font-size:22px;letter-spacing:-.03em}
-.progcard span{font-size:14px;line-height:1.55;display:block;margin-top:6px;color:#29231e}
-.endmail{background:var(--ink);color:var(--paper);border-radius:22px;padding:22px;margin:22px 0 0}
-.endmail h3{margin:0 0 14px;font-size:22px;letter-spacing:-.03em;line-height:1.2}
-.endmail input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:2px solid var(--paper);border-radius:100px;padding:11px 18px;margin:0 0 10px}
-.endmail .button{background:var(--paper);color:var(--ink);width:100%}
-.endmail .consent{display:flex;gap:10px;font-size:13px;line-height:1.5;margin:12px 0 0;align-items:flex-start}
-.endmail .consent input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--paper)}
-.endmail .note{font-size:12px;color:#c8c9c0;margin:10px 0 0}
+.path .dot{position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--sec);display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--tx2)}
+.path li.here .dot{background:var(--lime);color:var(--onlime)}
+.path li.here{font-weight:600}
+.path small{display:block;font-size:12px;color:var(--tx3);font-weight:400}
+.progcard{border-radius:24px;background:linear-gradient(135deg,#FF9040,#FF6B00);color:var(--onor);padding:18px 20px;margin:12px 0 16px}
+.progcard b{display:block;font-size:22px;line-height:28px;font-weight:700}
+.progcard span{font-size:14px;line-height:20px;display:block;margin-top:6px}
+.endmail{background:var(--card);border:1px solid var(--hair);box-shadow:var(--e2);border-radius:24px;padding:20px;margin:22px 0 0}
+.endmail h3{margin:0 0 14px;font-size:20px;line-height:26px;font-weight:700}
+.endmail input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--tx);background:var(--card);border:1px solid #D9D1C3;border-radius:28px;padding:12px 18px;margin:0 0 10px}
+.endmail .button{background:var(--or);color:var(--onor);width:100%;min-height:52px;font-weight:600}
+.endmail .consent{display:flex;gap:10px;font-size:13px;line-height:1.5;margin:12px 0 0;align-items:flex-start;color:var(--tx2)}
+.endmail .consent input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--sel)}
+.endmail .note{font-size:12px;color:var(--tx3);margin:10px 0 0}
+#player .check{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--limeT);border:0;color:var(--okt);font-size:11px;font-weight:700;flex:none}
+
 /* Dialogs: same shell and card as the "Get notified" dialog on the home page */
 dialog{margin:auto;padding:0;border:0;background:transparent;color:var(--ink);max-width:none;max-height:none;overflow:visible}
 dialog::backdrop{background:rgb(20 19 17 / .62)}
@@ -269,7 +342,7 @@ dialog .consent input{width:22px;height:22px;flex:none;margin:0;accent-color:var
 .lfx{pointer-events:none}.lring{border:2.5px solid var(--ink);border-radius:50%;z-index:5}.ldot{width:11px;height:11px;border-radius:50%;border:2px solid var(--ink);z-index:5}
 dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
 .err{color:#a32d2d;font-size:13px;margin:6px 0 0}.err[hidden]{display:none}
-.endmail .err{color:#ffb4a8}
+.endmail .err{color:#C4363B}
 .endmail a{color:inherit}
 .printcard{display:none}
 @media (max-width:860px){
@@ -279,11 +352,12 @@ dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
  .scene{max-width:360px;width:calc(100% - 10px);gap:64px;margin:0 auto}.bubble-h{font-size:14px;padding:12px 14px}.char{--av-size:190px}
  .plan{grid-template-columns:1fr;gap:28px;padding:36px 0 60px}.plan h2{font-size:30px}
  .plan-days li{grid-template-columns:30px 1fr;row-gap:2px}.plan-days small{grid-column:2}
- .p-top{width:calc(100% - 32px);padding:14px 0 4px;gap:12px}.p-top .wordmark span{display:none}
+ .p-top{width:calc(100% - 32px);padding:14px 0 4px;gap:10px}
  .p-grid,.p-act{width:calc(100% - 40px);grid-template-columns:1fr;gap:0}
  .p-grid{padding:8px 0 280px}
  .p-grid>#stage,.p-act>div{grid-column:1}
- .rail{position:static}.rail h2{font-size:30px;margin:4px 0 18px}.rail ol{display:none}
+ .rail{position:static}.rail h2{font-size:28px;line-height:34px;letter-spacing:-.4px;margin:4px 0 16px}.rail ol{display:none}
+ .p-wm{right:-90px;bottom:120px;width:260px;height:310px}
  .ex{margin-left:0}
  .edge{height:76px;background:linear-gradient(to bottom,var(--hero) 18px,var(--cream) 18px)}
  .edge svg{width:100%;background:none}.edge .wide{display:none}.edge .compact{display:block}
@@ -295,17 +369,26 @@ dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
 </head>
 <body>
 <section id="player" aria-label="The night before your interview, try a day" role="dialog" aria-modal="true">
+  <div class="p-wm" aria-hidden="true"></div>
   <div class="p-top">
-    <a class="wordmark" href="/" aria-label="Speechworks home"><img src="/brand/mark.svg" alt=""><span>Speechworks</span></a>
-    <div class="p-track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track"><div class="p-fill zero" id="fill"></div></div>
+    <button class="p-ic" id="close" aria-label="Leave the day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="p-track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track"></div>
     <button class="chipbtn later" id="later" hidden>Finish later</button>
-    <button class="p-x" id="close" aria-label="Close the sample">&times;</button>
+    <button class="p-ic" id="more" aria-label="More" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
   </div>
   <div class="p-scroll" id="scroll"><div class="p-grid">
     <aside class="rail"><small id="railn"></small><h2 id="railh"></h2><ol id="railol" aria-label="Parts of the day"></ol></aside>
     <div id="stage" aria-live="polite"></div>
   </div></div>
   <div class="p-bottom"><div class="p-act"><div><div class="sheet" id="sheet" hidden></div><button class="button button-ink p-go" id="go">Start the day</button></div></div></div>
+  <div class="p-door" id="door" role="status">This is how a day looks in the Speechworks app.</div>
+  <div class="p-scrim" id="mscrim"></div>
+  <div class="p-menu" id="menu" role="menu" aria-label="More">
+    <div class="grab"></div>
+    <button class="mrow" role="menuitem" id="mlater"><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></em><span>Finish later<small>We email you a link back to this step</small></span></button>
+    <button class="mrow" role="menuitemcheckbox" aria-checked="false" id="mread"><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"/></svg></em><span>Just read it<small>Skip the questions</small></span><span class="tg" aria-hidden="true"></span></button>
+    <button class="mrow" role="menuitem" id="mleave"><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10"/></svg></em><span>Leave the day<small>Your answers stay on this device</small></span></button>
+  </div>
 </section>
 
 <dialog id="src" aria-labelledby="srct"><div class="dlg-card"><button type="button" class="dlg-x" id="srcx2" aria-label="Close">&times;</button><h3 id="srct">Source</h3><div id="srcb"></div><button class="button button-ink" id="srcx">Close</button></div></dialog>
@@ -331,7 +414,7 @@ var $=function(s){return document.querySelector(s)};
 var NEWS_ACTION='https://app.kit.com/forms/10192952/subscriptions';
 var NEWS_CONSENT='Email me when a new free day opens, and about new programs and offers. I can unsubscribe at any time.';
 function postKit(action,fd,ok,fail){fetch(action,{method:'POST',body:fd,headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(j){if(j&&j.status==='success')ok();else fail('That did not go through. Check your email address and try again.')}).catch(function(){fail('We could not send that. Check your connection and try again.')})}
-var player=$('#player'),stage=$('#stage'),go=$('#go'),sheet=$('#sheet'),fill=$('#fill'),track=$('#track'),scroller=$('#scroll');
+var player=$('#player'),stage=$('#stage'),go=$('#go'),sheet=$('#sheet'),track=$('#track'),scroller=$('#scroll');
 
 /* ---- saved state (this device only) ---- */
 var S={skipQ:false,picked:[],lines:{},guess:'',log:{did:'',what:'',keep:''}};
@@ -360,13 +443,14 @@ var ALL=[
  {id:'start',k:'cover'},
  {id:'today',ch:'Today',k:'blocks',b:[
    {t:'pip',x:'This is a day made in the style of Interview Ready.'},
-   {t:'pip',x:'Interview Ready is a 14 day paid program in the Speechworks app. A day has a short lesson, some questions, one task and a short log. You can do this day on its own.'},
+   {t:'pip',x:'Interview Ready is a 14 day paid program in the Speechworks app. You can do this day on its own.'},
+   {t:'list',h:'A day has',items:['A short lesson','Some questions','One task','A short log']},
    {t:'pip',x:'Tonight you finish with one card.'},
    {t:'note',x:'Nothing here gives you a grade, and no part of it asks how you sound.'}]},
- {id:'lesson',ch:'Lesson',k:'blocks',b:[
+ {id:'lesson',ch:'Lesson',k:'blocks',paged:true,b:[
    {t:'pip',x:'An interview has many parts at once. Someone asks a question. You think about your answer. You also watch the time.'},
-   {t:'pip',x:'With a plan, you decide tonight what you will do. In the interview, you already have a plan for these moments.'},
-   {t:'pip',x:'One kind of plan is called an if-then plan. It has two parts. First the moment, then what you do. Afterwards, you can check yes or no: did I use it?'},
+   {t:'pip',x:'With a plan, you decide tonight what you will do. In the interview, <mark>you already have a plan</mark> for these moments.'},
+   {t:'pip',x:'One kind of plan is called an if-then plan. It has two parts. <mark>First the moment, then what you do.</mark> Afterwards, you can check yes or no: did I use it?'},
    {t:'ex',x:'“If this happens, then I do that.”',tag:'Example'}]},
  {id:'which-plan',k:'mcq',skip:true,tab:'Question',q:'Here are two plans for a hard question. Which one names a moment and an action you can check?',opts:[
    {t:'“I will be ready for hard questions.”',ok:false,why:'This plan names no moment and no action you can check.'},
@@ -427,7 +511,15 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 function setGo(label,enabled){go.textContent=label;go.disabled=!enabled}
 function showSheet(ok,title,text){sheet.hidden=false;sheet.className='sheet '+(ok?'ok':'no');sheet.innerHTML='<b>'+title+'</b>'+text}
 function hideSheet(){sheet.hidden=true;sheet.innerHTML=''}
-function progress(){var n=steps.length-1,p=n?Math.round(idx/n*100):0;fill.style.width=p+'%';fill.classList.toggle('zero',p===0);track.setAttribute('aria-valuenow',p)}
+function progress(inner){
+  /* one part per chapter; the current part fills through its steps (and through the bubbles of a step) */
+  var list=CHS.filter(function(x){return !(S.skipQ&&x==='Questions')}),s=steps[idx],c=chapterOf(s.id),n=list.indexOf(c),f=0;
+  if(n>-1){var first=-1,count=0;steps.forEach(function(x,i){if(chapterOf(x.id)===c){if(first<0)first=i;count++}});
+    f=Math.min(1,((idx-first)+(inner==null?1:inner))/count)}
+  if(s.k==='end'){n=list.length-1;f=1}
+  if(track.children.length!==list.length)track.innerHTML=list.map(function(){return '<i></i>'}).join('');
+  [].forEach.call(track.children,function(e,i){e.style.setProperty('--p',(i<n?100:i===n?Math.round(f*100):0)+'%')});
+  var all=n<0?0:Math.round((n+f)/list.length*100);track.setAttribute('aria-valuenow',all)}
 function toTop(){scroller.scrollTo({top:0,behavior:'auto'})}
 function toBottom(){
   /* keep the newest block in view; a block taller than the space is shown from its top so its first line is never cut off */
@@ -450,6 +542,7 @@ function B_study(d){
   var btn=el('button','cite','Citation');btn.onclick=function(){$('#srct').textContent=CITE[d.cite].t;$('#srcb').innerHTML=CITE[d.cite].h;newTab($('#srcb'));$('#src').showModal()};
   c.querySelector('.sc-h').appendChild(btn);return c;
 }
+function B_list(d){return el('div','lst','<h4>'+esc(d.h)+'</h4>'+d.items.map(function(x,i){return '<div><em>'+(i+2)+'</em>'+esc(x)+'</div>'}).join(''))}
 function B_card(cls,tabText){var c=el('div',cls);c.appendChild(el('span','tab',esc(tabText)));return c}
 function block(d){
   if(d.t==='pip')return B_pip(d.x);
@@ -457,6 +550,7 @@ function block(d){
   if(d.t==='ex')return B_ex(d.x,d.tag,d.weak);
   if(d.t==='note')return B_note(d.x);
   if(d.t==='study')return B_study(d);
+  if(d.t==='list')return B_list(d);
 }
 /* the chapter rail: where we are in the day. The cover has no chapter, so it shows one centred column. */
 var CHS=['Today','Lesson','Questions','Your card','Log','What next'];
@@ -471,7 +565,7 @@ function rail(s){
 /* ---- render ---- */
 function render(){
   stage.innerHTML='';hideSheet();progress();toTop();
-  var s=steps[idx];rail(s);$('#later').hidden=(s.k==='cover'||s.k==='end');
+  var s=steps[idx];rail(s);$('#mlater').hidden=(s.k==='cover'||s.k==='end');$('#mread').hidden=(s.k==='end');$('#mread').setAttribute('aria-checked',S.skipQ);
   ({cover:cover,blocks:blocks,mcq:mcq,build:buildLine,pick:pick,guess:guessStep,write:write,card:card,log:log,end:end})[s.k](s);
   newTab(stage);
 }
@@ -488,16 +582,32 @@ function cover(){
 }
 
 function blocks(s){
+  if(s.paged)return paged(s);
   var shown=Math.max(1,Math.min(beat||1,s.b.length));
   for(var i=0;i<shown;i++){var e=block(s.b[i]);e.style.animation='none';stage.appendChild(e)}
   after();
-  function after(){newTab(stage);setGo('Continue',true);toBottom()}
+  function after(){newTab(stage);setGo('Continue',true);toBottom();progress(shown/s.b.length)}
   go.onclick=function(){
     if(shown<s.b.length){
       stage.appendChild(block(s.b[shown]));shown++;hrep(hashFor(s.id,shown));after();
     }else nextStep();
   };
   hrep(hashFor(s.id,shown>1?shown:0));
+}
+/* the lesson: one bubble at a time, "1 of 3" ticks, the example with the last bubble */
+function paged(s){
+  var pips=s.b.filter(function(x){return x.t==='pip'}),rest=s.b.filter(function(x){return x.t!=='pip'});
+  var n=Math.max(1,Math.min(beat||1,pips.length));
+  function draw(){
+    stage.innerHTML='';
+    stage.appendChild(el('div','ticks',pips.map(function(x,i){return '<i class="'+(i<n?'on':'')+'"></i>'}).join('')));
+    var b=B_pip(pips[n-1].x);b.classList.add('big');stage.appendChild(b);
+    if(n===pips.length)rest.forEach(function(x){stage.appendChild(block(x))});
+    newTab(stage);setGo('Continue',true);progress(n/pips.length);toTop();
+  }
+  draw();
+  go.onclick=function(){if(n<pips.length){n++;hrep(hashFor(s.id,n));draw()}else nextStep()};
+  hrep(hashFor(s.id,n>1?n:0));
 }
 
 function mcq(s){
@@ -528,7 +638,7 @@ function buildLine(){
   card.appendChild(slot);card.appendChild(chips);card.appendChild(row);
   function draw(){
     slot.innerHTML='';if(!chosen.length)slot.appendChild(el('span','hint','Tap a piece below'));
-    chosen.forEach(function(p,i){var c=el('button','chip',esc(p));c.onclick=function(){chosen.splice(i,1);draw();hideSheet();setGo('Check',chosen.length>0)};slot.appendChild(c)});
+    chosen.forEach(function(p,i){if(i)slot.appendChild(document.createTextNode(' '));var c=el('span','pc',esc(p));c.setAttribute('role','button');c.tabIndex=0;c.setAttribute('aria-label','Remove: '+p);c.onclick=function(){chosen.splice(i,1);draw();hideSheet();setGo('Check',chosen.length>0)};c.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.onclick()}};slot.appendChild(c)});
     chips.innerHTML='';
     pool.forEach(function(p){var used=chosen.indexOf(p)>-1;var c=el('button','chip'+(used?' used':''),esc(p));if(!used)c.onclick=function(){chosen.push(p);draw();setGo('Check',true)};else c.disabled=true;chips.appendChild(c)});
   }
@@ -574,7 +684,7 @@ function youPicked(){var names=S.picked.map(function(id){return TILES.filter(fun
 function guessStep(){
   stage.appendChild(B_you(esc(youPicked())));
   stage.appendChild(B_pip('Before you write, which moment do you think will take longest to write a line for? You can skip this.'));
-  var r=el('div','reply','<small>Your answer</small><label><svg viewBox="0 0 20 20" fill="none" stroke="#141311" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l1-4L14 3l3 3L7 16z"/><path d="M12 5l3 3"/></svg><input type="text" placeholder="Type here, or skip" aria-label="Your answer"></label>');
+  var r=el('div','reply','<small>Your answer</small><label><input type="text" placeholder="Type here, or skip" aria-label="Your answer"></label>');
   var i=r.querySelector('input');i.value=S.guess;i.oninput=function(){S.guess=i.value;save()};
   stage.appendChild(r);
   if(!(window.matchMedia&&matchMedia('(pointer:coarse)').matches)&&!/nofocus/.test(location.search))setTimeout(function(){try{i.focus({preventScroll:true})}catch(e){i.focus()}},60);
@@ -610,7 +720,8 @@ function write(){
 function card(){
   var L=cardLines();
   stage.appendChild(B_pip('Your card is ready.'));
-  var w=el('div','cardwrap');w.innerHTML='<h3>YOUR CARD</h3>'+L.map(function(t){return '<p>'+esc(t)+'</p>'}).join('');stage.appendChild(w);
+  var notes=S.picked.filter(function(id){var t=(S.lines[id]||'').trim();return /^\s*if\b/i.test(t)&&/\bthen\b/i.test(t)&&t.indexOf('[')<0});
+  var w=el('div','cardwrap');w.innerHTML='<h3>YOUR CARD</h3>'+notes.map(function(id,i){var x=TILES.filter(function(y){return y.id===id})[0];return '<div class="kn n'+(i%3)+'"><small>'+esc(x.t)+'</small>'+esc(S.lines[id].trim())+'</div>'}).join('');stage.appendChild(w);
   var r=el('div','rowbtns');
   var sv=el('button','chipbtn','Save picture');sv.onclick=function(){savePic(L)};
   var pr=el('button','chipbtn','Print');pr.onclick=function(){$('#printcard').innerHTML='<h1>My card for the interview</h1>'+L.map(function(t){return '<p>'+esc(t)+'</p>'}).join('');window.print()};
@@ -661,13 +772,16 @@ function log(){
   setGo('Finish the day',true);go.onclick=nextStep;
 }
 
-var OUT=['Choose an interview to prepare for','Practice a first call with a recruiter','Answer "Tell me about yourself"','Decide whether to mention your stutter','Record and watch your answer','Practice questions about your work','Practice a full interview','Practice longer answers','Check your guesses about the interviewer','Practice a word you often replace','Practice with an interviewer who has less time','Try another full interview','Practice an interview with three people','Save your notes and choose your next step'];
+var IR_DAYS=['Choose an interview to prepare for','Practice a first call with a recruiter','Answer "Tell me about yourself"','Decide whether to mention your stutter','Record and watch your answer','Practice questions about your work','Practice a full interview','Practice longer answers','Check your guesses about the interviewer','Practice a word you often replace','Practice with an interviewer who has less time','Try another full interview','Practice an interview with three people','Save your notes and choose your next step'];
 function end(){
-  fill.style.width='100%';fill.classList.remove('zero');
-  stage.appendChild(B_pip((cardLines().length?'Tonight you wrote plans for the moments you picked.':'Tonight you looked at plans for moments of an interview.')+' Interview Ready has practice calls with an AI interviewer, and its days build towards a full interview. You can do this day on its own, and the card is yours either way.'));
+  progress(1);
+  var dd=el('div','dday','<div class="dm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div><b>Day done</b><span>Your card is yours either way.</span></div>');stage.appendChild(dd);
+  var did=CHS.filter(function(x){return x!=='Today'&&x!=='What next'&&!(S.skipQ&&x==='Questions')});
+  stage.appendChild(el('ul','did',did.map(function(x){return '<li><i aria-hidden="true">&#10003;</i>'+esc(x)+'</li>'}).join('')));
+  stage.appendChild(B_pip((cardLines().length?'Tonight you wrote plans for the moments you picked.':'Tonight you looked at plans for moments of an interview.')+' Interview Ready has practice calls with an AI interviewer, and its days build towards a full interview.'));
   stage.appendChild(el('div','progcard','<b>Interview Ready</b><span>Prepare your answers. Practice with an AI interviewer. Includes 10 AI practice calls.</span>'));
   var ul=el('ul','path');
-  ul.innerHTML='<li class="here"><span class="dot">✓</span>The night before your interview<small>This day</small></li>'+OUT.map(function(t,i){return '<li><span class="dot">'+(i+1)+'</span>'+esc(t)+'<small>Day '+(i+1)+'</small></li>'}).join('');
+  ul.innerHTML='<li class="here"><span class="dot">✓</span>The night before your interview<small>This day</small></li>'+IR_DAYS.map(function(t,i){return '<li><span class="dot">'+(i+1)+'</span>'+esc(t)+'<small>Day '+(i+1)+'</small></li>'}).join('');
   stage.appendChild(ul);
   var st=el('div','stores');
   st.innerHTML='<a class="store-badge" href="'+PLAY+'"><svg width="26" height="29" viewBox="0 0 26 29" aria-hidden="true"><path fill="#51C4EC" d="M1 1.2v26.6L14 14.5Z"/><path fill="#74CF84" d="m1 1.2 16.9 9.7-3.9 3.6Z"/><path fill="#FFD360" d="m17.9 10.9 6.3 3.6-6.3 3.6-3.9-3.6Z"/><path fill="#F17881" d="M1 27.8 17.9 18.1 14 14.5Z"/></svg><span><small>Get it on</small><strong>Google Play</strong></span></a>';
@@ -778,7 +892,16 @@ $('#lcopy').onclick=function(){
     if(!ok){sfx.bwomp();if(faceH){faceH.to('thinking',.3);setTimeout(function(){if(faceH)faceH.to('smile',.5)},1400)}lmsg.textContent='Could not copy. Select the link above and copy it.';lmsg.hidden=false;return}
     if(matchMedia('(prefers-reduced-motion: reduce)').matches||!lface.offsetHeight){lbtn.textContent='Copied ✓';sfx.tada();return}
     lrun=true;lplay()})};
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&player.classList.contains('open')&&!$('#src').open&&!$('#laterd').open)closeP()});
+var menu=$('#menu'),mscrim=$('#mscrim');
+function menuOn(on){menu.classList.toggle('on',on);mscrim.classList.toggle('on',on);$('#more').setAttribute('aria-expanded',on);if(on)setTimeout(function(){var f=menu.querySelector('.mrow:not([hidden])');if(f)f.focus()},60)}
+$('#more').onclick=function(){menuOn(!menu.classList.contains('on'))};mscrim.onclick=function(){menuOn(false)};
+$('#close').onclick=closeP;$('#mleave').onclick=closeP;
+$('#mlater').onclick=function(){menuOn(false);$('#later').onclick()};
+$('#mread').onclick=function(){S.skipQ=!S.skipQ;save();menuOn(false);var id=steps[idx].id;build();show(id,0,'replace')};
+document.addEventListener('keydown',function(e){if(e.key!=='Escape'||!player.classList.contains('open')||$('#src').open||$('#laterd').open)return;if(menu.classList.contains('on')){menuOn(false);return}closeP()});
+/* the door: arriving from "Start the day" on the landing page */
+(function(){var d=false;try{d=sessionStorage.getItem('sw_door')==='1';sessionStorage.removeItem('sw_door')}catch(e){}
+  if(!d)return;player.classList.add('arrive');var t=$('#door');setTimeout(function(){t.classList.add('on')},420);setTimeout(function(){t.classList.remove('on')},4600)})();
 /* every link opens in a new tab so the day is never interrupted */
 newTab(document);
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(a&&!a.target&&/^https?:|^mailto:/.test(a.getAttribute('href'))){a.target='_blank';a.rel='noopener noreferrer'}},true);
