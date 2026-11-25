@@ -6,6 +6,7 @@ import type { MailmanRig, RigAttrs } from "@/lib/mailman-rig.generated";
 import type { MailmanHands } from "@/lib/mailman-hands.generated";
 import { FACE_MS, faceAt, faceFrame, faceKit, type FaceKit, type FaceT, type FaceV } from "@/lib/mailman-rig-core";
 import { createHands, handsMarkup, type HandsHandle } from "./MailmanHands";
+import { addSkin, cornerShift, gapLine, gateAt, skinGate, SKIN_DETAIL, type DetailId, type SkinMeasure, type SkinRig } from "@/lib/skin-details-core";
 
 // A figure of the characters kit that can change its face and raise a kit hand: the same way of working as MailmanFace (the Notify dialog), for any
 // figure exported by sw-characters (web/scripts/export_face_rig.mjs and export_hands.mjs). The figure is the kit's picture drawn by the kit's drawer; the brows,
@@ -95,6 +96,8 @@ type Props = {
   underlay?: ReactNode;
   /** The picture's box in units: the figure's own 320 x 310 by default; a larger one lets props leave the picture. */
   viewBox?: string;
+  /** Skin details from the kit (sw-characters core/src/skin.ts), for example ["freckles", "dimples"]. They follow the face on every frame. */
+  details?: DetailId[];
 };
 
 /** The teeth mask: the mouth's box, grown by half its outline and 1 unit, so the teeth never show outside the mouth. */
@@ -108,10 +111,22 @@ function fitTeethMask(rect: Element, mouth: Element) {
   rect.setAttribute("height", (b.height + 2 * pad).toFixed(2));
 }
 
-const RigFace = forwardRef<RigFaceHandle, Props>(function RigFace({ rig, hands: handsData, initial, custom, cut, className, overlay, underlay, viewBox }, ref) {
+type Skin = { m: SkinMeasure; gated: { id: DetailId; els: Element[] }[]; sides: { l: boolean; el: Element }[]; gap: Element | null; gate: Record<string, number> };
+
+const RigFace = forwardRef<RigFaceHandle, Props>(function RigFace({ rig, hands: handsData, initial, custom, cut, className, overlay, underlay, viewBox, details }, ref) {
   const uid = useId().replace(/:/g, "");
   const D = useMemo(() => derive(rig, custom), [rig, custom]);
-  const html = useMemo(() => markupFor(uid, rig, D.keys, rig.rest[initial], handsData ? handsMarkup(uid, handsData) : "", cut), [uid, rig, D, initial, cut, handsData]);
+  const detailKey = details?.join(",") ?? "";
+  // the figure with its skin details put in (the face rig itself does not change)
+  const dressed = useMemo(() => {
+    if (!detailKey) return { svg: rig.svg, m: null };
+    try {
+      return addSkin(rig.svg, rig.rig as unknown as SkinRig, rig.roles, detailKey.split(","), initial);
+    } catch {
+      return { svg: rig.svg, m: null };   // a figure the details cannot measure is drawn without them
+    }
+  }, [rig, detailKey, initial]);
+  const html = useMemo(() => markupFor(uid, { ...rig, svg: dressed.svg }, D.keys, rig.rest[initial], handsData ? handsMarkup(uid, handsData) : "", cut), [uid, rig, dressed, D, initial, cut, handsData]);
   // The same object every render: React 19 writes innerHTML again whenever this prop is a new object, which would wipe the moving parts.
   const inner = useMemo(() => ({ __html: html }), [html]);
   const svg = useRef<SVGSVGElement>(null);
@@ -119,6 +134,7 @@ const RigFace = forwardRef<RigFaceHandle, Props>(function RigFace({ rig, hands: 
   const els = useRef<Record<string, Element>>({});
   const last = useRef<FaceV>(D.kit.rest[initial].v);
   const active = useRef<gsap.core.Tween | null>(null);
+  const skin = useRef<Skin | null>(null);
 
   useLayoutEffect(() => {
     const map: Record<string, Element> = {};
@@ -147,7 +163,22 @@ const RigFace = forwardRef<RigFaceHandle, Props>(function RigFace({ rig, hands: 
       fitTeethMask(shape, mouth);
     }
     els.current = map;
-  }, [html, rig, uid]);
+    // the skin details: the layers that show only on some faces, the layers that follow a mouth corner, the brow gap
+    skin.current = null;
+    if (svg.current && dressed.m) {
+      const ids = [...new Set([...svg.current.querySelectorAll("g[data-sd]")].map((e) => e.getAttribute("data-sd") as DetailId))];
+      const sk: Skin = {
+        m: dressed.m,
+        gated: ids.filter((id) => SKIN_DETAIL[id]?.faces).map((id) => ({ id, els: [...svg.current!.querySelectorAll(`g[data-sd="${id}"]`)] })),
+        sides: [...svg.current.querySelectorAll("[data-side]")].map((el) => ({ l: el.getAttribute("data-side") === "l", el })),
+        gap: svg.current.querySelector('line[data-sd="browGap"]'),
+        gate: Object.fromEntries(ids.map((id) => [id, skinGate(id, initial)])),
+      };
+      const s = cornerShift(sk.m, rig.rig.t[initial].mouth);
+      for (const { l, el } of sk.sides) { const [x, y] = l ? s.l : s.r; el.setAttribute("transform", `translate(${x.toFixed(2)} ${y.toFixed(2)})`); }
+      skin.current = sk;
+    }
+  }, [html, rig, uid, dressed, initial]);
 
   useImperativeHandle(ref, () => {
     const { kit, keys, pupils } = D;
@@ -203,12 +234,21 @@ const RigFace = forwardRef<RigFaceHandle, Props>(function RigFace({ rig, hands: 
       });
       if (v.line !== null) eyesAt(1 + v.line, v.lid < 0.5);
       else eyesAt(v.lid, false);
+      const sk = skin.current;
+      if (sk) {
+        for (const g of sk.gated) { const o = sk.gate[g.id].toFixed(3); for (const e of g.els) if (e.getAttribute("opacity") !== o) e.setAttribute("opacity", o); }
+        const s = cornerShift(sk.m, v.mouth);
+        for (const { l, el } of sk.sides) { const [x, y] = l ? s.l : s.r; el.setAttribute("transform", `translate(${x.toFixed(2)} ${y.toFixed(2)})`); }
+        const gl = sk.gap && gapLine(v.brow);
+        if (sk.gap && gl) for (const k of ["x1", "y1", "x2", "y2"] as const) sk.gap.setAttribute(k, String(gl[k]));
+      }
     };
 
     const to = (name: string, duration = 0.4) => {
       const target = kit.rest[name].v;
       const st = { p: 0 };
       let from: FaceV | null = null;
+      let g0: Record<string, number> = {};
       const tl = gsap.timeline();
       const tw: gsap.core.Tween = gsap.to(st, {
         p: 1,
@@ -220,14 +260,19 @@ const RigFace = forwardRef<RigFaceHandle, Props>(function RigFace({ rig, hands: 
           // start from the face as it is now, also in the middle of another change (nothing jumps)
           const c = last.current;
           from = { ...c, arc: c.line !== null ? 1 : 0, still: false };
+          g0 = { ...skin.current?.gate };
         },
         onUpdate: () => {
           if (!from) return;
+          const sk = skin.current;
+          if (sk) for (const g of sk.gated) sk.gate[g.id] = st.p >= 1 ? skinGate(g.id, name) : gateAt(g0[g.id] ?? 0, skinGate(g.id, name), st.p * FACE_MS);
           const v = st.p >= 1 ? target : faceAt(from, target, st.p * FACE_MS);
           last.current = v;
           apply(v);
         },
         onComplete: () => {
+          const sk = skin.current;
+          if (sk) for (const g of sk.gated) sk.gate[g.id] = skinGate(g.id, name);
           last.current = target;
           apply(target);
           if (active.current === tw) active.current = null;
