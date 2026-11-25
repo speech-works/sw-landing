@@ -230,15 +230,43 @@ textarea{min-height:76px;resize:vertical;line-height:1.5}
 .endmail .consent{display:flex;gap:10px;font-size:13px;line-height:1.5;margin:12px 0 0;align-items:flex-start}
 .endmail .consent input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--paper)}
 .endmail .note{font-size:12px;color:#c8c9c0;margin:10px 0 0}
-dialog{border:2px solid var(--ink);border-radius:24px;padding:22px;max-width:min(560px,92vw);background:var(--cream);color:var(--ink);box-shadow:6px 6px 0 var(--ink)}
-dialog::backdrop{background:#14131166}
-dialog h3{margin:0 0 12px;font-size:20px;letter-spacing:-.02em}
-dialog p{font-size:13.5px;line-height:1.65;color:var(--ink);margin:0 0 12px}
+/* Dialogs: same shell and card as the "Get notified" dialog on the home page */
+dialog{margin:auto;padding:0;border:0;background:transparent;color:var(--ink);max-width:none;max-height:none;overflow:visible}
+dialog::backdrop{background:rgb(20 19 17 / .62)}
+dialog[open]{animation:dlg-in 300ms cubic-bezier(.34,1.4,.64,1) both}
+dialog[open]::backdrop{animation:dlg-fade 220ms ease-out both}
+@keyframes dlg-in{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes dlg-fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){dialog[open],dialog[open]::backdrop{animation:none}}
+.dlg-card{position:relative;width:min(440px,calc(100vw - 32px));max-height:calc(100svh - 32px);overflow-y:auto;padding:36px 30px 30px;border:2px solid var(--ink);border-radius:4px 28px 28px 28px;background:#fff9e9;box-shadow:5px 6px 0 var(--ink);text-align:center}
+.dlg-x{position:absolute;top:8px;right:8px;display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--ink);font-size:26px;line-height:1;cursor:pointer}
+.dlg-x:hover{background:#14131114}
+.dlg-card h3{margin:0 0 12px;font-size:26px;line-height:1.15;letter-spacing:-1px;font-weight:700;text-wrap:balance}
+.dlg-card p{font-size:15px;line-height:1.55;color:var(--ink-muted);margin:0 auto 16px;max-width:34ch;text-wrap:balance}
+.dlg-card .button{width:100%;min-height:52px;margin-top:6px}
+#src .dlg-card{text-align:left}#src .dlg-card h3{padding-right:36px}#src .dlg-card p{max-width:none;text-wrap:wrap}
 .later{flex:none;padding:7px 14px;font-size:13px;min-height:36px}
 .later[hidden]{display:none}
 dialog input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:100px;padding:11px 18px;margin:0 0 12px}
 dialog .consent{display:flex;gap:10px;font-size:13.5px;line-height:1.5;margin:0 0 10px;align-items:flex-start}
 dialog .consent input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--ink)}
+/* "Finish later": the card folds into the guide, chain links circle the guide, the card grows back (same idea as the home page "Notify me" dialog) */
+#laterd .later-card{position:relative;width:min(440px,calc(100vw - 32px));padding:30px;text-align:center}
+#laterd .later-card>*{position:relative;z-index:2}
+#laterd .later-card>.lchrome{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0;border:2px solid var(--ink);border-radius:4px 28px 28px 28px;background:#fff9e9;box-shadow:5px 6px 0 var(--ink)}
+#laterd .later-card>.dlg-x,#laterd .later-card>.lsound{position:absolute}
+#laterd .lsound{top:8px;left:8px;display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer}
+#laterd .lsound:hover{background:#14131114}
+#laterd .later-card>.lface{z-index:3;height:96px;width:96px;margin:22px auto 12px;transform-origin:50% 100%}
+#laterd .lface .avatar-figure{--av-size:96px}
+#laterd h3{margin:0 0 12px;font-size:26px;line-height:1.15;letter-spacing:-1px;font-weight:700;text-wrap:balance}
+#laterd p{font-size:15px;line-height:1.55;color:var(--ink-muted);margin:0 auto 16px;max-width:34ch;text-wrap:balance}
+#laterd p.lurl{max-width:none;text-align:left;font-size:13px;line-height:1.4;background:#fff;border:1.5px solid #14131133;border-radius:12px;padding:11px 14px;margin:0 0 18px;word-break:break-all;text-wrap:wrap}
+#laterd .lbtn{width:100%;min-height:52px;margin-top:6px}
+#laterd p.lmsg{color:#a32d2d;font-size:13px;margin:12px auto 0}
+#laterd .later-card>.lfx,#laterd .later-card>.llink{position:absolute}
+.llink{left:0;top:0;width:72px;height:40px;margin:-20px 0 0 -36px;opacity:0;will-change:transform;pointer-events:none}
+.lfx{pointer-events:none}.lring{border:2.5px solid var(--ink);border-radius:50%;z-index:5}.ldot{width:11px;height:11px;border-radius:50%;border:2px solid var(--ink);z-index:5}
 dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
 .err{color:#a32d2d;font-size:13px;margin:6px 0 0}.err[hidden]{display:none}
 .endmail .err{color:#ffb4a8}
@@ -280,16 +308,17 @@ dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
   <div class="p-bottom"><div class="p-act"><div><div class="sheet" id="sheet" hidden></div><button class="button button-ink p-go" id="go">Start the day</button></div></div></div>
 </section>
 
-<dialog id="src"><h3 id="srct">Source</h3><div id="srcb"></div><button class="button button-ink" id="srcx" style="margin-top:6px">Close</button></dialog>
-<dialog id="laterd"><h3>Finish later</h3>
-<form id="lf"><p>We email you a link back to this day.</p>
-<input type="email" name="email_address" required placeholder="you@example.com" aria-label="Email address" autocomplete="email" inputmode="email">
-<label class="consent"><input type="checkbox" required><span>Email me a link to this step. I can unsubscribe at any time.</span></label>
-<label class="consent"><input type="checkbox" id="lnews"><span>Also email me when a new free day opens, and about new programs and offers. I can unsubscribe at any time.</span></label>
-<p class="err" id="lerr" role="alert" hidden></p>
-<div class="rowbtns"><button class="button button-ink" type="submit" id="lsend">Email me the link</button><button type="button" class="chipbtn" id="lcancel">Not now</button></div>
-<p class="fine2">See our <a href="/privacy/#launch-list">privacy policy</a>.</p></form>
-<div id="lok" hidden><p><b>Thank you.</b> Check your email and confirm. After that, the link brings you back to this day.</p><button class="button button-ink" id="lclose">Close</button></div></dialog>
+<dialog id="src" aria-labelledby="srct"><div class="dlg-card"><button type="button" class="dlg-x" id="srcx2" aria-label="Close">&times;</button><h3 id="srct">Source</h3><div id="srcb"></div><button class="button button-ink" id="srcx">Close</button></div></dialog>
+<dialog id="laterd" aria-labelledby="laterh"><div class="later-card" id="lcard">
+<div class="lchrome" id="lchrome"></div>
+<button type="button" class="dlg-x" id="lclose" aria-label="Close">&times;</button>
+<button type="button" class="lsound" id="lsound" aria-pressed="true" aria-label="Turn sound off"></button>
+<div class="lface" id="lface"></div>
+<h3 id="laterh">Finish later</h3>
+<p class="lintro">Your answers are saved in this browser. To come back, open this link on the same phone or computer, in the same browser.</p>
+<p class="lurl" id="lurl"></p>
+<button class="button button-ink lbtn" type="button" id="lcopy">Copy link</button>
+<p class="lmsg" id="lmsg" role="alert" hidden></p></div></dialog>
 <div class="printcard" id="printcard"></div>
 
 <script>
@@ -300,7 +329,6 @@ var HOME='/try-a-day/night-before-your-interview/';
 var PLAY='https://play.google.com/store/apps/details?id=com.speechworks.app';
 var $=function(s){return document.querySelector(s)};
 var NEWS_ACTION='https://app.kit.com/forms/10192952/subscriptions';
-var LATER_ACTION='https://app.kit.com/forms/10196903/subscriptions';
 var NEWS_CONSENT='Email me when a new free day opens, and about new programs and offers. I can unsubscribe at any time.';
 function postKit(action,fd,ok,fail){fetch(action,{method:'POST',body:fd,headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(j){if(j&&j.status==='success')ok();else fail('That did not go through. Check your email address and try again.')}).catch(function(){fail('We could not send that. Check your connection and try again.')})}
 var player=$('#player'),stage=$('#stage'),go=$('#go'),sheet=$('#sheet'),fill=$('#fill'),track=$('#track'),scroller=$('#scroll');
@@ -654,14 +682,102 @@ function end(){
 }
 
 var laterd=$('#laterd');
-$('#later').onclick=function(){$('#lf').hidden=false;$('#lok').hidden=true;$('#lerr').hidden=true;laterd.showModal()};
-$('#lcancel').onclick=function(){laterd.close()};$('#lclose').onclick=function(){laterd.close()};
-$('#lf').onsubmit=function(e){e.preventDefault();var f=this,b=$('#lsend'),er=$('#lerr');er.hidden=true;
-  if(!LATER_ACTION){er.textContent='This is not switched on yet.';er.hidden=false;return}
-  var fd=new FormData(f);if($('#lnews').checked)fd.append('fields[news_ok]','yes');
-  b.disabled=true;b.textContent='Sending...';
-  postKit(LATER_ACTION,fd,function(){f.hidden=true;$('#lok').hidden=false;b.disabled=false;b.textContent='Email me the link'},function(m){er.textContent=m;er.hidden=false;b.disabled=false;b.textContent='Email me the link'})};
-$('#close').onclick=closeP;$('#srcx').onclick=function(){$('#src').close()};
+function dayLink(){return location.origin+location.pathname+location.hash}
+$('#lclose').onclick=function(){laterd.close()};
+$('#srcx').onclick=$('#srcx2').onclick=function(){$('#src').close()};
+[].forEach.call(document.querySelectorAll('dialog'),function(d){d.addEventListener('click',function(e){if(e.target!==d)return;var r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()})});
+/* ---- Finish later: the card folds into the guide, chain links circle the guide, the card grows back.
+   Sounds are made in the browser (Web Audio), quiet and short, and can be turned off with the speaker button.
+   Same sounds and the same on/off switch as the "Notify me" dialog on the home page. ---- */
+var SKEY='speechworks-notify-sound',AC=null,OUT=null;
+function sndOn(){try{return localStorage.getItem(SKEY)!=='off'}catch(e){return true}}
+function setSnd(v){try{localStorage.setItem(SKEY,v?'on':'off')}catch(e){}}
+function ens(){if(!sndOn())return null;if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C();var cp=AC.createDynamicsCompressor();OUT=AC.createGain();OUT.gain.value=.55;OUT.connect(cp);cp.connect(AC.destination)}if(AC.state==='suspended')AC.resume();return AC}
+function tone(o){var c=ens();if(!c)return;var t0=c.currentTime+(o.at||0),dur=o.dur,vol=o.vol==null?.25:o.vol,osc=c.createOscillator(),g=c.createGain();osc.type=o.type||'sine';osc.frequency.setValueAtTime(o.from,t0);osc.frequency.exponentialRampToValueAtTime(Math.max(20,o.to||o.from),t0+dur);g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(vol,t0+.012);g.gain.exponentialRampToValueAtTime(.0001,t0+dur);osc.connect(g);g.connect(OUT);
+  if(o.wobble){var l=c.createOscillator(),d=c.createGain();l.frequency.value=o.wobble[0];d.gain.value=o.wobble[1];l.connect(d);d.connect(osc.frequency);l.start(t0);l.stop(t0+dur+.05)}osc.start(t0);osc.stop(t0+dur+.05)}
+function swish(dur,from,to,vol,at){var c=ens();if(!c)return;var t0=c.currentTime+(at||0),buf=c.createBuffer(1,Math.ceil(c.sampleRate*dur),c.sampleRate),d=buf.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1;var src=c.createBufferSource();src.buffer=buf;var bp=c.createBiquadFilter();bp.type='bandpass';bp.Q.value=1.4;bp.frequency.setValueAtTime(from,t0);bp.frequency.exponentialRampToValueAtTime(to,t0+dur);var g=c.createGain();g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(vol,t0+dur*.35);g.gain.exponentialRampToValueAtTime(.0001,t0+dur);src.connect(bp);bp.connect(g);g.connect(OUT);src.start(t0)}
+var NOTES=[784,988,1175];
+var sfx={
+  squash:function(){tone({from:340,to:170,dur:.12,vol:.28})},
+  whoosh:function(){swish(.28,500,2400,.11)},
+  pwip:function(){tone({from:1150,to:430,dur:.12,vol:.24})},
+  boing:function(){tone({from:170,to:560,dur:.14,vol:.3,type:'triangle',wobble:[26,46]});tone({from:560,to:230,dur:.34,at:.13,vol:.26,type:'triangle',wobble:[26,34]})},
+  tink:function(i){tone({from:NOTES[i%3],dur:.1,vol:.07})},
+  land:function(){tone({from:720,to:520,dur:.08,vol:.2});tone({from:620,to:430,dur:.08,at:.09,vol:.2});tone({from:520,to:340,dur:.1,at:.18,vol:.2})},
+  pop:function(){tone({from:480,to:1500,dur:.07,vol:.2})},
+  tada:function(){[523.25,659.25,783.99,1046.5].forEach(function(f,i){tone({from:f,dur:.24,at:i*.085,vol:.2,type:'triangle'})});swish(.3,3000,7000,.05,.3)},
+  bwomp:function(){tone({from:300,to:190,dur:.18,vol:.22});tone({from:230,to:120,dur:.3,at:.17,vol:.22})}
+};
+var ICON_ON='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
+var ICON_OFF='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/></svg>';
+function paintSnd(){var on=sndOn(),b=$('#lsound');b.innerHTML=on?ICON_ON:ICON_OFF;b.setAttribute('aria-pressed',on);b.setAttribute('aria-label',on?'Turn sound off':'Turn sound on')}
+$('#lsound').onclick=function(){var next=!sndOn();setSnd(next);paintSnd();if(next){ens();sfx.tink(1)}};
+
+var lcard=$('#lcard'),lchrome=$('#lchrome'),lface=$('#lface'),lbtn=$('#lcopy'),lmsg=$('#lmsg'),lrun=false,lraf=0,lgen=0;
+var SPRING='cubic-bezier(.34,1.4,.64,1)';
+function lA(el,kf,o){return el.animate(kf,Object.assign({fill:'both',easing:SPRING},o||{})).finished.catch(function(){})}
+function lwait(ms){return new Promise(function(r){setTimeout(r,ms)})}
+/* the guide's face moves (blinks, and changes with the story): a small script, loaded the first time the dialog opens */
+var faceH=null,faceIdle=null,REDUCED=function(){return matchMedia('(prefers-reduced-motion: reduce)').matches};
+function loadFace(name){return new Promise(function(res){if(window.SWFace&&window.SWFace[name])return res(true);var sc=document.createElement('script');sc.src='/try-a-day/faces/'+name+'.js?v=20261125';sc.onload=function(){res(!!(window.SWFace&&window.SWFace[name]))};sc.onerror=function(){res(false)};document.head.appendChild(sc)})}
+function dropFace(){if(faceIdle){faceIdle.stop();faceIdle=null}if(faceH){faceH.destroy();faceH=null}}
+function startFace(){var gen=lgen;loadFace(GUIDE.img).then(function(ok){if(!ok||gen!==lgen||!laterd.open||REDUCED())return;var fg=lface.querySelector('.avatar-figure'),im=fg&&fg.querySelector('img');if(!fg||!im)return;try{faceH=window.SWFace[GUIDE.img](fg,'calm')}catch(e){faceH=null;return}im.remove();faceIdle=faceH.idle();setTimeout(function(){if(faceH&&gen===lgen)faceH.to('smile',.45)},500)})}
+function lreset(){dropFace();lgen++;cancelAnimationFrame(lraf);lrun=false;lcard.getAnimations({subtree:true}).forEach(function(a){a.cancel()});[].forEach.call(lcard.querySelectorAll('.lfx,.llink'),function(e){e.remove()});lbtn.textContent='Copy link';lmsg.hidden=true}
+laterd.addEventListener('close',lreset);
+var LCOL=['#c8f750','#F6A5C0','#fff9e9'];
+function linkSVG(c){return '<svg viewBox="0 0 54 30" width="72" height="40" fill="'+c+'" stroke="#141311" stroke-width="3.2"><rect x="2" y="3" width="30" height="24" rx="12"/><rect x="22" y="3" width="30" height="24" rx="12"/></svg>'}
+function lburst(cx,cy,n){var cols=['#c8f750','#F6A5C0','#fff9e9','#F58C1B'];for(var i=0;i<n;i++){var d=document.createElement('span');d.className='lfx ldot';d.style.cssText='left:'+(cx-5)+'px;top:'+(cy-5)+'px;background:'+cols[i%4];lcard.appendChild(d);var a=(i/n)*Math.PI*2+.3,r=96+(i%3)*18;lA(d,[{transform:'translate(0,0) scale(.4)',opacity:1},{transform:'translate('+Math.cos(a)*r+'px,'+Math.sin(a)*r+'px) scale(1)',opacity:1,offset:.6},{transform:'translate('+Math.cos(a)*(r+12)+'px,'+Math.sin(a)*(r+12)+'px) scale(.2)',opacity:0}],{duration:640,easing:'ease-out'})}}
+function lring(cx,cy,size,delay){var r=document.createElement('span');r.className='lfx lring';r.style.cssText='left:'+(cx-size/2)+'px;top:'+(cy-size/2)+'px;width:'+size+'px;height:'+size+'px';lcard.appendChild(r);return lA(r,[{transform:'scale(.3)',opacity:.9},{transform:'scale(1.8)',opacity:0}],{duration:580,delay:delay||0,easing:'ease-out'})}
+var RX=172,RY=54,TILT=-28*Math.PI/180,front=[false,false,false],landed=false;
+function placeLinks(links,t){var ORB=2000,IMP=380,LOOP=1150,grow=Math.min(1,t/300),imp=t>ORB?Math.min(1,(t-ORB)/IMP):0,rr=(1-imp)*grow,pos=[];
+  if(imp>0&&!landed){landed=true;sfx.land()}
+  links.forEach(function(l,i){var a=(t/LOOP)*Math.PI*2+i*(Math.PI*2/3)+imp*2.2,x=Math.cos(a)*RX*rr,y=Math.sin(a)*RY*rr,X=x*Math.cos(TILT)-y*Math.sin(TILT),Y=x*Math.sin(TILT)+y*Math.cos(TILT),fr=Math.sin(a)>0,sc=(.8+.3*Math.sin(a))*(1-.7*imp);
+    if(fr&&!front[i]&&grow>.9&&imp===0)sfx.tink(i);front[i]=fr;
+    pos.push([X,Y]);l.style.opacity=1;l.style.zIndex=fr?4:2;l.style.transform='translate('+X+'px,'+Y+'px) rotate('+(a*57.3+90)+'deg) scale('+sc+')'});return pos}
+function copyText(u,done){
+  var fin=false;function cb(v){if(fin)return;fin=true;done(v)}
+  function viaOld(){var t=document.createElement('textarea');t.value=u;t.setAttribute('readonly','');t.style.cssText='position:fixed;opacity:0;top:0;left:0';laterd.appendChild(t);t.select();var r=false;try{r=document.execCommand('copy')}catch(e){}t.remove();cb(r)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(function(){cb(true)},viaOld);setTimeout(function(){if(!fin)viaOld()},700)}else{viaOld()}}
+async function lplay(){
+  var gen=lgen,alive=function(){return gen===lgen&&laterd.open};
+  lcard.getAnimations({subtree:true}).forEach(function(a){a.cancel()});lbtn.textContent='Copy link';
+  var kids=['.dlg-x','.lsound','h3','.lintro','.lurl','.lbtn'].map(function(q){return lcard.querySelector(q)});
+  var W=lcard.offsetWidth,H=lcard.offsetHeight,cx=W/2,cy=lface.offsetTop+48,D=176;
+  var fr=lface.getBoundingClientRect(),fx=fr.left+fr.width/2,fy=fr.top+fr.height/2;
+  var offs=kids.map(function(k){var r=k.getBoundingClientRect();return{dx:fx-(r.left+r.width/2),dy:fy-(r.top+r.height/2)}});
+  var from={left:'0px',top:'0px',width:W+'px',height:H+'px',borderRadius:'4px 28px 28px 28px',backgroundColor:'#fff9e9'};
+  var disc={left:(cx-D/2)+'px',top:(cy-D/2)+'px',width:D+'px',height:D+'px',borderRadius:'50%',backgroundColor:'#c8f750'};
+  sfx.squash();setTimeout(sfx.whoosh,120);if(faceH){faceH.to('curious',.25);setTimeout(function(){if(alive()&&faceH)faceH.to('listening',.3)},280)}
+  /* 1. fold: the text flies into the guide while the card shrinks to a disc behind the guide */
+  kids.forEach(function(k,i){lA(k,[{transform:'none',opacity:1},{transform:'translate('+offs[i].dx+'px,'+offs[i].dy+'px) scale(.1)',opacity:0}],{duration:420,delay:i*40,easing:'cubic-bezier(.55,0,.8,.3)'})});
+  setTimeout(sfx.pwip,520);
+  await lA(lchrome,[from,disc],{duration:560,delay:90,easing:'cubic-bezier(.6,0,.3,1)'});if(!alive())return;
+  /* 2. the disc pops and three chain links circle the guide */
+  sfx.boing();if(faceH)faceH.to('smile',.3);
+  lA(lchrome,[disc,Object.assign({},disc,{transform:'scale(1.1,.92)'}),Object.assign({},disc,{transform:'scale(.97,1.04)'}),Object.assign({},disc,{transform:'none'})],{duration:420,easing:'ease-out'});
+  var links=[0,1,2].map(function(i){var e=document.createElement('span');e.className='llink';e.style.left=cx+'px';e.style.top=cy+'px';e.innerHTML=linkSVG(LCOL[i]);lcard.appendChild(e);return e});
+  RX=Math.min(172,W/2-30);landed=false;front=[false,false,false];
+  var t0=performance.now();
+  await new Promise(function(done){(function tick(now){if(!alive()){done();return}var t=now-t0,pos=placeLinks(links,t);if(faceH&&t<1950){var q=pos[0],cl=function(v,a,b){return Math.max(a,Math.min(b,v))};faceH.look(cl(q[0]/RX*18,-18,18),cl(q[1]/RY*8,-10,12))}if(t>=2380){done();return}lraf=requestAnimationFrame(tick)})(t0)});
+  links.forEach(function(l){l.remove()});if(!alive())return;
+  /* 3. pop: ring, dots, the guide hops */
+  sfx.pop();if(faceH){faceH.to('laugh',.25);faceH.gazeTo(0,0,.2)}lring(cx,cy,D);lring(cx,cy,D,130);lburst(cx,cy,12);setTimeout(function(){[].forEach.call(lcard.querySelectorAll('.lfx'),function(e){e.remove()})},1000);
+  lA(lface,[{transform:'translateY(0) scale(1,1)'},{transform:'translateY(2px) scale(1.07,.9)',offset:.15},{transform:'translateY(-18px) scale(.96,1.08)',offset:.5},{transform:'translateY(0) scale(1.05,.93)',offset:.8},{transform:'none'}],{duration:560,easing:'ease-out'});
+  await lwait(380);if(!alive())return;
+  /* 4. the card grows back out of the guide, and the button says it is done */
+  lbtn.textContent='Copied ✓';if(faceH)faceH.to('proud',.4);sfx.pwip();setTimeout(sfx.boing,220);setTimeout(sfx.tada,340);
+  lA(lchrome,[disc,from],{duration:560,easing:SPRING});
+  await Promise.all(kids.map(function(k,i){return lA(k,[{transform:'translate('+offs[i].dx+'px,'+offs[i].dy+'px) scale(.1)',opacity:0},{transform:'none',opacity:1}],{duration:480,delay:120+(5-i)*45})}));
+  if(alive()){lrun=false;setTimeout(function(){if(alive()&&faceH)faceH.to('smile',.5)},1100)}
+}
+$('#later').onclick=function(){$('#lurl').textContent=dayLink();lreset();lface.innerHTML=fig(GUIDE.img,GUIDE.blob,GUIDE.kind,GUIDE.a,GUIDE.b,'');paintSnd();laterd.showModal();startFace();
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches)lA(lface,[{opacity:0,transform:'translateY(-22px) scale(.6)'},{opacity:1,transform:'none'}],{duration:480,delay:140})};
+$('#lcopy').onclick=function(){
+  if(lrun)return;ens();lmsg.hidden=true;
+  copyText(dayLink(),function(ok){
+    if(!ok){sfx.bwomp();if(faceH){faceH.to('thinking',.3);setTimeout(function(){if(faceH)faceH.to('smile',.5)},1400)}lmsg.textContent='Could not copy. Select the link above and copy it.';lmsg.hidden=false;return}
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches||!lface.offsetHeight){lbtn.textContent='Copied ✓';sfx.tada();return}
+    lrun=true;lplay()})};
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&player.classList.contains('open')&&!$('#src').open&&!$('#laterd').open)closeP()});
 /* every link opens in a new tab so the day is never interrupted */
 newTab(document);
