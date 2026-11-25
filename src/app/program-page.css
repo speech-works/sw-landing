@@ -343,3 +343,30 @@
 
 /* Speechworks pops in with only a small overshoot, so its label never swells into a bubble beside it */
 @keyframes stDrop { 0% { scale: 0; opacity: 0; } 70% { scale: 1.02; opacity: 1; } 100% { scale: 1; opacity: 1; } }
+
+/* ---------- free day: a lime hero, so it reads as different from the orange paid programs ---------- */
+.free-day .site-header,
+.free-day .page-hero,
+.free-day .section-edge-hero { --hero-colour: #c8f750; }
+.free-day .detail-hero h1 .pg-dot { background: #fff9e9; }
+.free-day .st-check circle { fill: #F6A5C0; }
+
+/* Free-day "You leave with a card": the payoff first, then three steps */
+.free-day .day-parts { display: grid; grid-template-columns: 1.05fr 1fr; gap: 72px; align-items: center; padding-block: 90px 80px; }
+.free-day .day-parts h2 { font-weight: 800; font-size: clamp(36px, 4.2vw, 56px); letter-spacing: -.06em; line-height: 1; text-wrap: balance; max-width: 13ch; }
+.free-day .day-parts-copy > p { font-size: 16px; line-height: 1.6; color: #454037; max-width: 40ch; margin-top: 22px; }
+.free-day .day-steps { list-style: none; margin: 30px 0 34px; padding: 0; display: grid; gap: 18px; }
+.free-day .day-steps li { display: flex; gap: 16px; align-items: flex-start; }
+.free-day .day-step-n { flex: none; width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--ink); background: #c8f750; display: grid; place-items: center; font-weight: 800; font-size: 15px; }
+.free-day .day-steps b { display: block; font-size: 16px; font-weight: 700; color: var(--ink); }
+.free-day .day-steps div span { display: block; font-size: 14px; line-height: 1.55; color: #454037; margin-top: 2px; max-width: 38ch; }
+.free-day .day-card { margin: 0; border: 2px solid var(--ink); border-radius: 22px; background: #fff; padding: 26px 28px 22px; box-shadow: 6px 6px 0 var(--ink); rotate: 1.2deg; }
+.free-day .day-card-label { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; background: #c8f750; border: 1.5px solid var(--ink); border-radius: 999px; padding: 5px 12px; }
+.free-day .day-card ul { list-style: none; margin: 18px 0 0; padding: 0; }
+.free-day .day-card li { font-size: 17px; line-height: 1.45; font-weight: 600; padding: 15px 0; border-bottom: 1.5px dashed #14131140; }
+.free-day .day-card li:last-child { border-bottom: 0; }
+.free-day .day-card figcaption { font-size: 13px; line-height: 1.5; color: #454037; margin-top: 8px; }
+@media (max-width: 860px) {
+  .free-day .day-parts { grid-template-columns: 1fr; gap: 44px; padding-block: 58px 56px; }
+  .free-day .day-card { rotate: 0deg; }
+}

@@ -63,6 +63,14 @@ export default async function ProgramPage({ params }: Props) {
                   {discount !== null && <><b>{discount}% off</b> at launch. </>}
                   Pay once, no subscription.
                 </p>
+                {program.key === "interview_ready" && (
+                  <p className="detail-free-day">
+                    Not sure yet?{" "}
+                    <a href="/try-a-day/night-before-your-interview/">
+                      Try a free day first <ArrowUpRight size={14} aria-hidden="true" />
+                    </a>
+                  </p>
+                )}
               </div>
               <StoryHero program={program.key} you={you} />
             </section>

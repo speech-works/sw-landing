@@ -15,6 +15,10 @@ export type PlanStep = { title: string; first: number; last: number };
 export type StoryScript = { prop?: "phone"; real: string; realAvatar: string; ask: string; thought: string; help: string; answer: string; alt: string };
 
 export const storyScripts: Record<string, StoryScript> = {
+  // the free "Try a day" page (not a program): the same story, with this day's if-then idea
+  free_day: { real: "Interviewer", realAvatar: "hijab", ask: "Tell me about a\nproject you led.", thought: "I need a\nmoment to think.",
+    help: "In 642 tests,\nif-then plans\nhelped people\na little.", answer: "Give me a moment\nto think about\nthat.",
+    alt: "The interviewer says: Tell me about a project you led. You think: I need a moment to think. Speechworks whispers: In 642 tests, if-then plans helped people a little. You answer: Give me a moment to think about that." },
   interview_ready: { real: "Interviewer", realAvatar: "hijab", ask: "Tell me a little\nabout yourself.", thought: "Should I tell\nthem I stutter?",
     help: "338 viewers rated\nan 'I stutter'\nopener as more\nconfident.", answer: "Sure. I stutter,\nso I may pause.\nI'm a designer.",
     alt: "The interviewer says: Tell me a little about yourself. You think: Should I tell them I stutter? Speechworks whispers: 338 viewers rated an 'I stutter' opener as more confident. You answer: Sure. I stutter, so I may pause. I'm a designer." },

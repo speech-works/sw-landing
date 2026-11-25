@@ -5,8 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The night before your interview | Speechworks</title>
 <meta name="description" content="Try a free day made in the style of Interview Ready, for adults who stutter or stammer. Write if-then lines for your interview and keep the card.">
-<meta name="robots" content="noindex, nofollow">
-<link rel="icon" href="/brand/mark.svg" type="image/svg+xml">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://speechworks.app/try-a-day/night-before-your-interview/">
+<link rel="icon" href="/icon.svg" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="/apple-icon.png" type="image/png" sizes="1024x1024">
 <style>
 /* Tokens, type and shapes match the live site. */
 @font-face{font-family:Inter;src:url(/try-a-day/fonts/Inter-Regular.ttf);font-weight:400}
@@ -43,10 +45,19 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 .store-badge strong{display:block;font-size:18px;font-weight:700;line-height:1.3;letter-spacing:-.5px}
 .store-badge.ghost{background:transparent;color:var(--ink);width:auto;cursor:pointer}
 .store-badge.ghost strong{font-size:15px;letter-spacing:-.2px}
-.scene{position:relative;min-height:390px;border-radius:32px;background:var(--art);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);display:grid;place-items:end center;transform:rotate(3deg);overflow:hidden}
-.bubble-h{position:absolute;top:28px;left:24px;right:24px;background:var(--cream);border:2px solid var(--ink);border-radius:20px 20px 20px 4px;box-shadow:3px 4px 0 var(--ink);padding:14px 16px;font-size:15px;line-height:1.5;transform:rotate(-3deg);z-index:2}
+
+/* New avatar kit, as on the live site: the figure stands on its colour blob (the body ends on the blob, the whole collar shows). Same rules as AvatarFigure. */
+:root{--blob-banker:url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'-70%20-75%20460%20400'%20preserveAspectRatio%3D'none'%3E%3Cpath%20d%3D'M322.5%20162.6C320.2%20148.2%20308.6%20141.4%20301.2%20134.0C293.8%20126.6%20286.0%20123.1%20278.1%20118.1C270.2%20113.0%20264.5%20108.2%20253.7%20103.8C242.9%2099.4%20239.6%2095.1%20213.4%2091.6C187.3%2088.1%20125.7%2084.3%2096.8%2082.6C67.8%2080.9%2054.5%2079.0%2039.7%2081.4C24.9%2083.9%2014.7%2089.8%207.8%2097.3C0.9%20104.8%20-0.0%20115.4%20-1.7%20126.5C-3.5%20137.6%20-3.0%20148.3%20-2.7%20163.9C-2.4%20179.6%20-2.8%20206.3%200.1%20220.3C3.1%20234.3%207.8%20239.5%2015.0%20247.9C22.2%20256.3%2032.1%20264.3%2043.5%20270.8C54.8%20277.4%2068.6%20283.1%2083.1%20287.3C97.7%20291.5%20114.0%20294.5%20130.8%20295.9C147.6%20297.3%20167.1%20297.3%20183.9%20295.9C200.6%20294.5%20217.0%20291.5%20231.5%20287.3C246.1%20283.1%20259.8%20277.4%20271.2%20270.8C282.5%20264.3%20292.4%20256.3%20299.7%20247.9C307.0%20239.5%20311.0%20234.6%20314.8%20220.4C318.7%20206.1%20324.8%20177.0%20322.5%20162.6Z'%2F%3E%3C%2Fsvg%3E");--blob-bob:url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'-70%20-75%20460%20400'%20preserveAspectRatio%3D'none'%3E%3Cpath%20d%3D'M330.0%20169.7C333.5%20148.9%20332.4%20115.1%20323.1%2095.9C313.8%2076.7%20291.3%2062.2%20274.0%2054.4C256.7%2046.5%20235.4%2048.9%20219.1%2048.7C202.8%2048.6%20189.5%2053.5%20176.1%2053.5C162.6%2053.6%20152.5%2051.7%20138.4%2049.1C124.4%2046.6%20109.4%2039.2%2091.9%2038.4C74.4%2037.6%2051.5%2035.8%2033.3%2044.3C15.1%2052.9%20-8.0%2069.1%20-17.5%2089.7C-26.9%20110.3%20-28.4%20146.2%20-23.3%20168.0C-18.2%20189.7%204.7%20207.0%2013.1%20220.3C21.5%20233.6%2020.6%20239.4%2027.3%20247.8C34.0%20256.2%2043.0%20264.2%2053.5%20270.7C63.9%20277.3%2076.5%20283.1%2089.8%20287.3C103.1%20291.5%20118.1%20294.5%20133.4%20295.9C148.7%20297.3%20166.3%20297.3%20181.6%20295.9C196.9%20294.5%20211.9%20291.5%20225.2%20287.3C238.6%20283.1%20251.2%20277.3%20261.6%20270.7C272.0%20264.2%20281.1%20256.2%20287.8%20247.8C294.5%20239.4%20294.8%20233.3%20301.8%20220.3C308.8%20207.2%20326.4%20190.4%20330.0%20169.7Z'%2F%3E%3C%2Fsvg%3E")}
+.avatar-figure{position:relative;display:inline-block;flex:none;line-height:0;vertical-align:middle;width:var(--av-size);aspect-ratio:1/1;container-type:inline-size}
+.avatar-figure>img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;margin:0;border:0}
+.avatar-blob{--av-cell:calc(var(--av-k) * 100cqw);position:absolute;left:-21.875%;top:-21.875%;width:143.75%;height:125%;background:var(--av-a);-webkit-mask:var(--av-mask) center/100% 100% no-repeat;mask:var(--av-mask) center/100% 100% no-repeat}
+.avatar-figure[data-blob=banker]{--av-mask:var(--blob-banker);--av-k:0.1375}
+.avatar-figure[data-blob=bob]{--av-mask:var(--blob-bob);--av-k:0}
+.avatar-figure[data-kind=hstripe]>.avatar-blob{background:repeating-linear-gradient(180deg,var(--av-a) 0 calc(var(--av-cell)/2),var(--av-b) calc(var(--av-cell)/2) var(--av-cell))}
+.scene{position:relative;display:flex;flex-direction:column;align-items:center;gap:56px;padding:8px 0 24px;transform:rotate(2deg)}
+.bubble-h{position:relative;width:min(100%,380px);background:var(--cream);border:2px solid var(--ink);border-radius:20px 20px 20px 4px;box-shadow:3px 4px 0 var(--ink);padding:14px 16px;font-size:15px;line-height:1.5;transform:rotate(-2deg);z-index:2}
 .bubble-h small{display:block;font-size:11px;font-weight:800;color:var(--ink-muted);margin-bottom:4px}
-.char{width:230px;transform:rotate(-6deg);margin-bottom:-6px}
+.char{--av-size:240px;transform:rotate(-3deg)}
 .check{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);font-size:11px;font-weight:800;flex:none;color:var(--ink)}
 .edge{height:120px;margin-top:-1px;background:linear-gradient(to bottom,var(--hero) 30px,var(--ink) 30px,var(--ink) 31.5px,var(--cream) 31.5px)}
 .edge svg{display:block;width:min(100%,1440px);height:100%;margin-inline:auto;background:var(--cream)}
@@ -103,10 +114,8 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 
 /* 1 Pip says: the guide talking. Speech bubble with a face. */
 .say{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;animation:rise 240ms var(--ease)}
-.say .av{flex:none;width:52px;height:52px;border-radius:50%;background:var(--art);border:2px solid var(--ink);overflow:hidden;display:grid;place-items:end center}
-/* Whole head inside the circle; the circle hides the cut edge of the collar. */
-.say .av img{display:block;width:108%;margin-bottom:-9%}
-@media (max-width:860px){.say .av{width:44px;height:44px}}
+.say .av{flex:none;--av-size:68px;margin:14px 16px 0 14px}
+@media (max-width:860px){.say .av{--av-size:58px;margin:12px 14px 0 12px}}
 .say+.say .av{visibility:hidden}
 .say .b{background:#fff;border:2px solid var(--ink);border-radius:20px 20px 20px 4px;padding:13px 17px;font-size:17px;line-height:1.6;box-shadow:3px 4px 0 var(--ink)}
 
@@ -181,8 +190,7 @@ textarea{min-height:76px;resize:vertical;line-height:1.5}
 .radio{display:flex;gap:10px;align-items:center;font-size:16px;padding:10px 14px;margin:0 0 8px;background:#fff;border:2px solid var(--ink);border-radius:16px;min-height:48px}
 .radio input{width:20px;height:20px;accent-color:var(--ink);margin:0}
 .cover{text-align:center;padding-top:18px}
-.cover .art{width:min(240px,64%);margin:0 auto 8px;background:var(--art);border:2px solid var(--ink);border-radius:36px;box-shadow:5px 5px 0 var(--ink);padding:20px 20px 0;transform:rotate(-3deg);overflow:hidden}
-.cover .art img{display:block;width:100%}
+.cover .art{--av-size:190px;margin:34px auto 6px;display:block;width:var(--av-size)}
 .cover h2{font-size:clamp(30px,6vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.05;margin:24px 0 8px}
 .cover p{font-size:15px;color:var(--ink-muted);margin:0 0 6px}
 .cover .nt{text-align:left;margin:14px 0 0}
@@ -240,7 +248,7 @@ dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
  .wrap{width:min(1200px,100% - 40px)}
  .site-header{padding:18px 20px}.site-header nav .nav-link{display:none}
  .hero{grid-template-columns:1fr;gap:34px;padding-bottom:40px}
- .scene{min-height:280px;max-width:360px;width:calc(100% - 10px)}.bubble-h{font-size:14px;padding:12px 14px;top:22px;left:18px;right:18px}.char{width:170px}
+ .scene{max-width:360px;width:calc(100% - 10px);gap:64px;margin:0 auto}.bubble-h{font-size:14px;padding:12px 14px}.char{--av-size:190px}
  .plan{grid-template-columns:1fr;gap:28px;padding:36px 0 60px}.plan h2{font-size:30px}
  .plan-days li{grid-template-columns:30px 1fr;row-gap:2px}.plan-days small{grid-column:2}
  .p-top{width:calc(100% - 32px);padding:14px 0 4px;gap:12px}.p-top .wordmark span{display:none}
@@ -258,38 +266,9 @@ dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
 </style>
 </head>
 <body>
-<div class="band">
-<header class="site-header">
-  <a class="wordmark" href="/"><img src="/brand/mark.svg" alt=""><span>Speechworks</span></a>
-  <nav aria-label="Main navigation"><a class="nav-link" href="/programs/">Programs</a><a class="nav-link" href="/about/">About</a><a class="button button-small button-ink" href="https://play.google.com/store/apps/details?id=com.speechworks.app">Get the free app &#8599;</a></nav>
-</header>
-<div class="wrap">
-  <a class="breadcrumb" href="/programs/">&larr; Interview Ready</a>
-  <section class="hero">
-    <div>
-      <p class="kicker">Try a day</p>
-      <h1>The night before your interview</h1>
-      <p class="lede">Write if-then lines for the moments of your interview. One card, one evening.</p>
-      <div class="stores">
-        <button class="button button-ink" id="open" style="box-shadow:3px 3px 0 var(--cream)">Start the day</button>
-      </div>
-    </div>
-    <div class="scene" aria-hidden="true">
-      <div class="bubble-h"><small>A line from tonight's card</small>If I want more time to think, then I say, "Give me a moment to think about that."</div>
-      <img class="char" src="/characters/interview_ready.svg" alt="">
-    </div>
-  </section>
-</div></div>
-<div class="edge" aria-hidden="true">
-  <svg class="wide" viewBox="0 0 1440 140" preserveAspectRatio="none"><path class="fill" d="M0 35C220 35 250 78 510 78C640 78 724 66 808 60C822 59 835 58 848 58C849 80 839 101 822 115C860 113 891 87 902 61C1110 82 1230 35 1440 35V-1H0Z"/><path class="line" vector-effect="non-scaling-stroke" d="M0 35C220 35 250 78 510 78C640 78 724 66 808 60C822 59 835 58 848 58C849 80 839 101 822 115C860 113 891 87 902 61C1110 82 1230 35 1440 35"/></svg>
-  <svg class="compact" viewBox="0 0 390 90" preserveAspectRatio="none"><path class="fill" d="M0 22C66 22 99 49 181 49C219 49 237 44 259 42C262 59 255 71 247 79C268 78 286 59 289 42C332 47 347 22 390 22V-1H0Z"/><path class="line" vector-effect="non-scaling-stroke" d="M0 22C66 22 99 49 181 49C219 49 237 44 259 42C262 59 255 71 247 79C268 78 286 59 289 42C332 47 347 22 390 22"/></svg>
-</div>
-<div class="wrap"><section class="plan" aria-labelledby="plan-title"><div class="plan-l"><h2 id="plan-title">What you do tonight</h2><p>A free day made in the style of Interview Ready, for adults who stutter or stammer. A short lesson, three questions and one card.</p><p>Interview Ready is a 14 day paid program in the Speechworks app. This day is made in its style, and you can do it on its own. You learn one idea, answer three questions and write a card for your interview.</p><a class="store-badge" href="https://play.google.com/store/apps/details?id=com.speechworks.app" aria-label="Get Speechworks on Google Play"><svg width="26" height="29" viewBox="0 0 26 29" aria-hidden="true"><path fill="#51C4EC" d="M1 1.2v26.6L14 14.5Z"/><path fill="#74CF84" d="m1 1.2 16.9 9.7-3.9 3.6Z"/><path fill="#FFD360" d="m17.9 10.9 6.3 3.6-6.3 3.6-3.9-3.6Z"/><path fill="#F17881" d="M1 27.8 17.9 18.1 14 14.5Z"/></svg><span><small>Get it on</small><strong>Google Play</strong></span></a><p class="plan-fine">Free to download, with free daily practice. Pay once for each program.</p></div><ol class="plan-days"><li><b>1</b><span>Today</span><small>What this day is.</small></li><li><b>2</b><span>Lesson</span><small>What an if-then plan is, and what research found.</small></li><li><b>3</b><span>Questions</span><small>Three questions to check the idea. You can skip them.</small></li><li><b>4</b><span>Your card</span><small>Pick up to three moments and write a line for each.</small></li><li><b>5</b><span>Log</span><small>A short note to close the day.</small></li><li><b>6</b><span>What next</span><small>Keep your card, and see the full program.</small></li></ol></section></div>
-<footer class="site-footer"><a class="wordmark" href="/"><img src="/brand/mark.svg" alt=""><span>Speechworks</span></a><nav aria-label="Support and legal"><a href="/programs/">Programs</a><a href="/about/">About</a><a href="https://blog.speechworks.app/">Blog</a><a href="mailto:contact@speechworks.app">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav></footer>
-
 <section id="player" aria-label="The night before your interview, try a day" role="dialog" aria-modal="true">
   <div class="p-top">
-    <span class="wordmark"><img src="/brand/mark.svg" alt=""><span>Speechworks</span></span>
+    <a class="wordmark" href="/" aria-label="Speechworks home"><img src="/brand/mark.svg" alt=""><span>Speechworks</span></a>
     <div class="p-track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track"><div class="p-fill zero" id="fill"></div></div>
     <button class="chipbtn later" id="later" hidden>Finish later</button>
     <button class="p-x" id="close" aria-label="Close the sample">&times;</button>
@@ -315,7 +294,9 @@ dialog .fine2{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
 
 <script>
 (function(){
-var AV='/characters/interview_ready.svg';
+var GUIDE=Math.random()<.5?{img:'mascot',blob:'banker',kind:'hstripe',a:'#F58C1B',b:'#F6A5C0'}:{img:'mascot-f',blob:'bob',kind:'flat',a:'#9ED8C4',b:'#9ED8C4'};
+function fig(img,blob,kind,a,b,cls){return '<span class="avatar-figure '+cls+'" data-blob="'+blob+'" data-kind="'+kind+'" style="--av-a:'+a+';--av-b:'+b+'"><span class="avatar-blob"></span><img src="/avatars/'+img+'.svg?v=20261122" alt="" draggable="false"></span>'}
+var HOME='/try-a-day/night-before-your-interview/';
 var PLAY='https://play.google.com/store/apps/details?id=com.speechworks.app';
 var $=function(s){return document.querySelector(s)};
 var NEWS_ACTION='https://app.kit.com/forms/10192952/subscriptions';
@@ -407,10 +388,10 @@ function show(id,b,mode){
 }
 function open(){player.classList.add('open');document.body.style.overflow=''}
 function openAt(id,b,mode){player.classList.add('open');document.body.style.overflow='hidden';show(id,b,mode)}
-function closeP(){player.classList.remove('open');document.body.style.overflow='';hrep(location.pathname+location.search);refreshOpenLabel()}
+function closeP(){document.body.style.overflow='';location.href=HOME}
 function nextStep(){var n=steps[Math.min(idx+1,steps.length-1)].id;show(n,0,'push')}
-window.addEventListener('popstate',function(){var h=parseHash();if(h){openAt(h.id,h.beat,null)}else{player.classList.remove('open');document.body.style.overflow='';refreshOpenLabel()}});
-function refreshOpenLabel(){var o=$('#open');o.textContent=(S.last&&S.last!=='start'&&S.last!=='end')?'Continue the day':'Start the day'}
+window.addEventListener('popstate',function(){var h=parseHash();if(h){openAt(h.id,h.beat,null)}else{player.classList.remove('open');document.body.style.overflow='';location.href=HOME}});
+
 
 /* ---- tiny helpers ---- */
 function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
@@ -431,7 +412,7 @@ function toBottom(){
 function newTab(root){[].forEach.call((root||document).querySelectorAll('a[href]'),function(a){if(/^https?:|^mailto:/.test(a.getAttribute('href'))){a.target='_blank';a.rel='noopener noreferrer'}})}
 
 /* ---- the seven block types ---- */
-function B_pip(x){var d=el('div','say');var a=el('div','av');a.innerHTML='<img src="'+AV+'" alt="">';d.appendChild(a);d.appendChild(el('div','b',x));return d}
+function B_pip(x){var d=el('div','say');var a=el('div','av');a.innerHTML=fig(GUIDE.img,GUIDE.blob,GUIDE.kind,GUIDE.a,GUIDE.b,'');d.appendChild(a);d.appendChild(el('div','b',x));return d}
 function B_you(x){var d=el('div','you','<small>You</small>');d.appendChild(el('div','b',x));return d}
 function B_ex(x,tag,weak){var d=el('div','ex'+(weak?' weak':''),'<small>'+esc(tag||'Example')+'</small><p>'+x+'</p>');return d}
 function B_note(x){return el('div','nt','<i>i</i><span>'+x+'</span>')}
@@ -469,7 +450,7 @@ function render(){
 
 function cover(){
   var c=el('div','cover');
-  c.innerHTML='<div class="art"><img src="'+AV+'" alt=""></div><h2>The night before your interview</h2><p>A free day, made in the style of Interview Ready.</p>';
+  c.innerHTML='<div class="art">'+fig('banker-b','banker','hstripe','#3B5BA9','#FFF4E6','')+'</div><h2>The night before your interview</h2><p>A free day, made in the style of Interview Ready.</p>';
   var sw=el('label','switch','<input type="checkbox" id="rm"> Just read it (skip the questions)');c.appendChild(sw);
   if(S.last&&S.last!=='start'){var ag=el('button','chipbtn','Start again');ag.style.marginTop='16px';ag.onclick=function(){S.picked=[];S.lines={};S.guess='';S.log={did:'',what:'',keep:''};S.last='start';save();show('start',0,'replace')};c.appendChild(ag)}
   var jc=el('button','chipbtn','Skip to the card');jc.style.marginTop='16px';jc.onclick=function(){show('pick',0,'push')};c.appendChild(jc);
@@ -680,14 +661,12 @@ $('#lf').onsubmit=function(e){e.preventDefault();var f=this,b=$('#lsend'),er=$('
   var fd=new FormData(f);if($('#lnews').checked)fd.append('fields[news_ok]','yes');
   b.disabled=true;b.textContent='Sending...';
   postKit(LATER_ACTION,fd,function(){f.hidden=true;$('#lok').hidden=false;b.disabled=false;b.textContent='Email me the link'},function(m){er.textContent=m;er.hidden=false;b.disabled=false;b.textContent='Email me the link'})};
-$('#open').onclick=function(){var id=(S.last&&S.last!=='end')?S.last:'start';openAt(id,0,'push')};
 $('#close').onclick=closeP;$('#srcx').onclick=function(){$('#src').close()};
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&player.classList.contains('open')&&!$('#src').open&&!$('#laterd').open)closeP()});
 /* every link opens in a new tab so the day is never interrupted */
 newTab(document);
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(a&&!a.target&&/^https?:|^mailto:/.test(a.getAttribute('href'))){a.target='_blank';a.rel='noopener noreferrer'}},true);
-refreshOpenLabel();
-var h0=parseHash();if(h0){openAt(h0.id,h0.beat,'replace')}
+var h0=parseHash();if(h0){openAt(h0.id,h0.beat,'replace')}else{openAt((S.last&&S.last!=='end')?S.last:'start',0,'replace')}
 })();
 </script>
 </body>

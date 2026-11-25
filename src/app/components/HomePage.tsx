@@ -79,6 +79,10 @@ export default function HomePage({ outcome = false, preview = false }: { outcome
           </div>
           <div className="programs-footnote" data-reveal>
             <span>Pay once for a program. Keep your notes and completed days.</span>
+            <a className="text-link" href="/try-a-day/night-before-your-interview/">
+              Try a free day: the night before your interview{" "}
+              <ArrowUpRight size={15} aria-hidden="true" />
+            </a>
           </div>
         </section>
         <HowProgramsWork outcome={outcome} />

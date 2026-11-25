@@ -88,7 +88,7 @@ const REPLAY = <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 
  * The program page hero story, in a triangle: the other person asks (bottom right), you get stuck (a thought, worried face),
  * Speechworks drops in at the top and you look at each other while it whispers one tip, then you smile and answer.
  */
-export default function StoryHero({ program, you: youName }: { program: string; you: string }) {
+export default function StoryHero({ program, you: youName, realFill }: { program: string; you: string; realFill?: Fill }) {
   const data = storyScripts[program];
   const [ref, inView] = useInView<HTMLDivElement>(0.3);
   const [rigs, setRigs] = useState<{ you: MailmanRig | null; sw: MailmanRig | null; real: MailmanRig | null } | null>(null);
@@ -154,7 +154,7 @@ export default function StoryHero({ program, you: youName }: { program: string; 
         <Person name={mascot ?? "mascot"} rig={rigs?.sw ?? null} overlay={PROPS} fill={{ a: "#8fb8ff" }} id="st-sw" face={sw} cls="st-sw" tag="Speechworks" dark initial="listening" />
       </div>
       <Person name={youName} rig={rigs?.you ?? null} fill={{ a: "#3B5BA9", b: "#fff4e6", kind: "hstripe" }} id="st-you" face={you} cls="st-you" tag="You" />
-      <Person name={data.realAvatar} rig={rigs?.real ?? null} overlay={data.prop === "phone" ? <g className={`st-phone${beat >= 1 && beat < 5 ? " on" : ""}`}>{PHONE}</g> : undefined} fill={{ a: "#c6f35b", b: "#fff4e6", kind: "dots" }} id="st-real" face={real} cls="st-real" tag={data.real} />
+      <Person name={data.realAvatar} rig={rigs?.real ?? null} overlay={data.prop === "phone" ? <g className={`st-phone${beat >= 1 && beat < 5 ? " on" : ""}`}>{PHONE}</g> : undefined} fill={realFill ?? { a: "#c6f35b", b: "#fff4e6", kind: "dots" }} id="st-real" face={real} cls="st-real" tag={data.real} />
 
       <ComicBubble kind="say" shape="oval" seed={11} tilt={2} anchor={at.real} cls={`st-b st-ask${beat >= 3 ? " gone" : ""}`} show={beat >= 1} tone="#c7aaf3">{lines(data.ask)}</ComicBubble>
       <ComicBubble kind="think" seed={3} tilt={-2} anchor={at.you} cls={`st-b st-think${beat >= 5 ? " gone" : ""}`} show={beat >= 2}>{lines(data.thought)}</ComicBubble>
