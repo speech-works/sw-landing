@@ -172,10 +172,11 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 /* Reply: an empty answer box */
 .reply{display:flex;flex-direction:column;align-items:flex-end;margin:6px 0 12px;animation:rise 240ms var(--ease)}
 .reply small{font-size:12px;font-weight:600;color:var(--tx3);margin:0 6px 4px 0}
-.reply label{display:flex;align-items:center;gap:10px;width:100%;background:var(--card);border:1px solid #D9D1C3;border-radius:20px 20px 6px 20px;padding:4px 16px;cursor:text}
-.reply label:focus-within{border-color:var(--sel)}
-.reply svg{flex:none;width:20px;height:20px;opacity:.6}
-.reply label input[type=text]{border:0;background:transparent;border-radius:0;padding:12px 0;margin:0;font-size:17px;flex:1;min-width:0;outline:none;box-shadow:none}
+/* your answer is typed straight into your own lime bubble (picked in review, 2026-11-25) */
+.reply label{display:block;width:88%;background:rgba(200,247,80,.45);border-radius:20px 20px 6px 20px;padding:2px 16px;cursor:text;transition:background 200ms}
+.reply label:focus-within{background:var(--lime);box-shadow:0 0 0 2px var(--sel)}
+#player .reply label input[type=text]{display:block;width:100%;border:0;background:transparent;border-radius:0;padding:12px 0;margin:0;font-size:17px;line-height:24px;color:var(--onlime);outline:none;box-shadow:none}
+#player .reply label input[type=text]::placeholder{color:#4E6B0A}
 
 /* 3 Example */
 .ex{margin:4px 0 14px 98px;background:var(--infoT);border-radius:16px;padding:12px 16px;animation:rise 240ms var(--ease)}
@@ -683,7 +684,7 @@ function youPicked(){var names=S.picked.map(function(id){return TILES.filter(fun
 function guessStep(){
   stage.appendChild(B_you(esc(youPicked())));
   stage.appendChild(B_pip('Before you write, which moment do you think will take longest to write a line for? You can skip this.'));
-  var r=el('div','reply','<small>Your answer</small><label><svg viewBox="0 0 20 20" fill="none" stroke="#141311" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l1-4L14 3l3 3L7 16z"/><path d="M12 5l3 3"/></svg><input type="text" placeholder="Type here, or skip" aria-label="Your answer"></label>');
+  var r=el('div','reply','<small>Your answer</small><label><input type="text" placeholder="Type here, or skip" aria-label="Your answer"></label>');
   var i=r.querySelector('input');i.value=S.guess;i.oninput=function(){S.guess=i.value;save()};
   stage.appendChild(r);
   if(!(window.matchMedia&&matchMedia('(pointer:coarse)').matches)&&!/nofocus/.test(location.search))setTimeout(function(){try{i.focus({preventScroll:true})}catch(e){i.focus()}},60);
