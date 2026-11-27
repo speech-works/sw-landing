@@ -88,4 +88,3 @@ fs.copyFileSync(
 );
 console.log("Synced current app logo and icons.");
 
-require("./build-avatar-artwork.cjs");
