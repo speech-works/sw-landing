@@ -10,10 +10,7 @@
     "lint": "eslint src",
     "lint:dashes": "node ./scripts/check-no-dashes.mjs",
     "lint:copy": "node ./scripts/check-copy-rules.mjs",
-    "sync:mobile": "node scripts/sync-mobile-content.cjs",
-    "artwork:build": "node scripts/build-avatar-artwork.cjs",
-    "artwork:characters": "node scripts/build-character-artwork.cjs",
-    "artwork:face": "node scripts/build-mailman-face.cjs"
+    "sync:mobile": "node scripts/sync-mobile-content.cjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

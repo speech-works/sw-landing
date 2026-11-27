@@ -38,21 +38,16 @@ node scripts/sync-mobile-content.cjs
 ```
 
 Program portraits live in `src/app/components/ProgramIllustration.tsx`. The
-twenty-character SVG cast is built from the approved illustration proof in
-`artwork/avatars/`. Every portrait uses the same head path and eye anchors, with
-separate hair, headwear, expression and collar layers. Portraits stop at the
-collar and shoulders. The art has transparent backgrounds and contains no
-embedded raster images.
+characters are the layered kit of the `sw-characters` repository, not this one:
+the avatar pictures in `public/avatars/` are its site stills
+(`web/scripts/run_site_stills.mjs`), and the face rigs, hands, blobs and skin
+details in `src/lib/` (`*.generated.ts`, each naming the script that wrote it)
+come from its export scripts. Change a character in sw-characters, then export
+it here. The animated program scenes (tiger, cage, call and so on) are the
+site's own and are built here (`scripts/build-*-scene.cjs`).
 
-```sh
-npm run artwork:build
-```
-
-This exports the website's avatar and program SVGs plus a portable part catalogue
-at `artwork/avatars/export/parts.json`. Mobile sync also invokes this exporter,
-so it does not restore the former mobile artwork over the approved designs.
-The mobile app itself has not been migrated to this new cast yet. See
-`artwork/avatars/README.md` for the source structure and integration notes.
+The app's program covers are app art: their source is in the app repository
+(`design/program-covers/`).
 
 Builds use the checked-in assets; sibling repositories are not required.
 The logo in `public/brand/mark.svg` and app icons come from
